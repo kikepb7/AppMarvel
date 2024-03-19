@@ -8,6 +8,9 @@
     <string name="toast_buttonComics">Botón comics</string>
     <string name="toast_buttonCharacters">Botón personajes</string>
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Fragments' placeholder text -->
+    <string name="series_view">VISTA DE SERIES</string>
+    <string name="comics_view">VISTA DE COMICS</string>
+    <string name="characters_view">VISTA DE PERSONAJES</string>
 </resources>

@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.enriquepalmadev.appmarvel.databinding.ActivityMainBinding
 import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
+import androidx.navigation.fragment.findNavController
 
 class HomeFragment : Fragment() {
 
@@ -32,12 +32,16 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         // Listener de los botones
         binding.buttonComics.setOnClickListener{
+            // Navega a la ruta indicada en main_graph.xml
+            findNavController().navigate(R.id.action_homeFragment_to_comicsFragment)
             Toast.makeText(context, "Botón comics", Toast.LENGTH_SHORT).show()
         }
         binding.buttonCharacters.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_seriesFragment)
             Toast.makeText(context, "Botón personajes", Toast.LENGTH_SHORT).show()
         }
         binding.buttonFilmsAndSeries.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
             Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
         }
         return inflater.inflate(R.layout.fragment_home, container, false)
