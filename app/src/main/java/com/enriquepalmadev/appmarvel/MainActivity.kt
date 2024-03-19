@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         // Listener de los botones
         binding.buttonComics.setOnClickListener{
-            Toast.makeText(this, "Botón comics", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Botón comics!", Toast.LENGTH_SHORT).show()
         }
         binding.buttonCharacters.setOnClickListener{
             Toast.makeText(this, "Botón personajes", Toast.LENGTH_SHORT).show()
