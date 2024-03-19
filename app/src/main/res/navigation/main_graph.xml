@@ -5,7 +5,6 @@
     android:id="@+id/main_graph"
     app:startDestination="@+id/homeFragment">
 
-
     <fragment
         android:id="@+id/comicsFragment"
         android:name="com.enriquepalmadev.appmarvel.ComicsFragment"

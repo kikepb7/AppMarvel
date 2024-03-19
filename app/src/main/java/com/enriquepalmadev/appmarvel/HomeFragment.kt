@@ -22,13 +22,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         // Listener de los botones
         binding.buttonComics.setOnClickListener{
@@ -44,6 +37,14 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
             Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
         }
+        // TODO: Use the ViewModel
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 }
