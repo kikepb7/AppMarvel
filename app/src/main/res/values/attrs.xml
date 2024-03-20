@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MarvelButton">
+        <attr name="android:background">@color/red</attr>
+        <attr name="android:text">"null"</attr>
+        <attr name="android:height">60dp</attr>
+        <attr name="android:width">400dp</attr>
+    </declare-styleable>
+</resources>
