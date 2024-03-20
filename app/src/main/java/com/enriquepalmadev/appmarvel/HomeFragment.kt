@@ -20,19 +20,21 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
-        // Listener de los botones
-        binding.buttonComics.setOnClickListener {
-            // Navega a la ruta indicada en main_graph.xml
-            findNavController().navigate(R.id.action_homeFragment_to_comicsFragment)
-            Toast.makeText(context, "Botón comics", Toast.LENGTH_SHORT).show()
-        }
-        binding.buttonCharacters.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
-            Toast.makeText(context, "Botón personajes", Toast.LENGTH_SHORT).show()
-        }
-        binding.buttonFilmsAndSeries.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_filmsAndSeriesFragment)
-            Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
+        // Button Listener
+        binding.apply {
+            // Navigate through the path indicated in "main_graph.xml"
+            buttonComics.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_comicsFragment)
+                Toast.makeText(context, "Botón comics", Toast.LENGTH_SHORT).show()
+            }
+            buttonCharacters.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
+                Toast.makeText(context, "Botón personajes", Toast.LENGTH_SHORT).show()
+            }
+            buttonFilmsAndSeries.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_filmsAndSeriesFragment)
+                Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
