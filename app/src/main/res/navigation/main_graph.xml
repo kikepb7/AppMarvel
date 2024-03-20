@@ -11,7 +11,7 @@
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" />
     <fragment
-        android:id="@+id/seriesFragment"
+        android:id="@+id/filmsAndSeriesFragment"
         android:name="com.enriquepalmadev.appmarvel.SeriesFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_series" />
@@ -21,8 +21,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_seriesFragment"
-            app:destination="@id/seriesFragment" />
+            android:id="@+id/action_homeFragment_to_filmsAndSeriesFragment"
+            app:destination="@id/filmsAndSeriesFragment" />
         <action
             android:id="@+id/action_homeFragment_to_comicsFragment"
             app:destination="@id/comicsFragment" />

@@ -10,7 +10,7 @@
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
 
     <!-- Fragments' placeholder text -->
-    <string name="series_view">VISTA DE SERIES</string>
+    <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
     <string name="comics_view">VISTA DE COMICS</string>
     <string name="characters_view">VISTA DE PERSONAJES</string>
 </resources>

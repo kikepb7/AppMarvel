@@ -27,11 +27,11 @@ class HomeFragment : Fragment() {
             Toast.makeText(context, "Botón comics", Toast.LENGTH_SHORT).show()
         }
         binding.buttonCharacters.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_seriesFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
             Toast.makeText(context, "Botón personajes", Toast.LENGTH_SHORT).show()
         }
         binding.buttonFilmsAndSeries.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_filmsAndSeriesFragment)
             Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
         }
 
