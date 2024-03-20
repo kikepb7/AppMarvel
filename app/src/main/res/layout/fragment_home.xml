@@ -8,43 +8,39 @@
     android:background="@drawable/background_image"
     tools:context=".HomeFragment">
 
-    <Button
+
+    <com.enriquepalmadev.appmarvel.ButtonHome
         android:id="@+id/button_comics"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_comics"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="256dp"
+        app:buttonText="COMICS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.309" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.enriquepalmadev.appmarvel.ButtonHome
         android:id="@+id/button_characters"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_characters"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_comics"
-        app:layout_constraintVertical_bias="0.105" />
+        android:layout_marginTop="16dp"
+        app:buttonText="PERSONAJES"
+        app:layout_constraintEnd_toEndOf="@+id/button_comics"
+        app:layout_constraintStart_toStartOf="@+id/button_comics"
+        app:layout_constraintTop_toBottomOf="@+id/button_comics" />
 
-    <Button
+    <com.enriquepalmadev.appmarvel.ButtonHome
         android:id="@+id/button_films_and_series"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_films_and_series"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_characters"
-        app:layout_constraintVertical_bias="0.127" />
+        android:layout_marginTop="16dp"
+        app:buttonText="SERIES Y PELÍCULAS"
+        app:layout_constraintEnd_toEndOf="@+id/button_characters"
+        app:layout_constraintStart_toStartOf="@+id/button_characters"
+        app:layout_constraintTop_toBottomOf="@+id/button_characters" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

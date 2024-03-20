@@ -6,4 +6,10 @@
         <item name="android:width">200dp</item>
         <item name="android:height">60dp</item>
     </style>
+
+    <style name="HomeButton" parent="@style/Base.Theme.AppMarvel">
+        <item name="fontFamily">sans-serif-black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
