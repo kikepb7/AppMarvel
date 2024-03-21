@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="buttons" parent="@style/Base.Theme.AppMarvel">
-        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
+        <item name="foregroundButton">@drawable/marvel_button</item>
         <item name="android:width">200dp</item>
-        <item name="android:height">60dp</item>
+        <item name="android:height">50dp</item>
     </style>
 </resources>

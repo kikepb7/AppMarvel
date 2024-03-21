@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -19,11 +21,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
         // Listener de los botones
-
         binding.apply {
-            button1.setText(R.string.button_comics)
-
-            /*
             buttonComics.setOnClickListener {
                 // Navega a la ruta indicada en main_graph.xml
                 findNavController().navigate(R.id.action_homeFragment_to_comicsFragment)
@@ -37,9 +35,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_homeFragment_to_filmsAndSeriesFragment)
                 Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
             }
-             */
         }
-
         return binding.root
     }
 }
