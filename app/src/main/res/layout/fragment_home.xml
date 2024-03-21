@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
-    tools:context=".HomeFragment">
+    tools:context=".view.HomeFragment">
 
 
-    <com.enriquepalmadev.appmarvel.ButtonHome
+    <com.enriquepalmadev.appmarvel.view.components.ButtonHome
         android:id="@+id/button_comics"
         style="@style/buttons"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.enriquepalmadev.appmarvel.ButtonHome
+    <com.enriquepalmadev.appmarvel.view.components.ButtonHome
         android:id="@+id/button_characters"
         style="@style/buttons"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="@+id/button_comics"
         app:layout_constraintTop_toBottomOf="@+id/button_comics" />
 
-    <com.enriquepalmadev.appmarvel.ButtonHome
+    <com.enriquepalmadev.appmarvel.view.components.ButtonHome
         android:id="@+id/button_films_and_series"
         style="@style/buttons"
         android:layout_width="wrap_content"
