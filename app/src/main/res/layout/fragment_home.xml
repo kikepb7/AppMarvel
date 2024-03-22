@@ -9,8 +9,8 @@
     tools:context=".view.HomeFragment">
 
 
-    <com.enriquepalmadev.appmarvel.view.components.ButtonHome
-        android:id="@+id/button_comics"
+    <com.enriquepalmadev.appmarvel.view.components.CustomButton
+        android:id="@+id/buttonComics"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,27 +20,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.enriquepalmadev.appmarvel.view.components.ButtonHome
-        android:id="@+id/button_characters"
+    <com.enriquepalmadev.appmarvel.view.components.CustomButton
+        android:id="@+id/buttonCharacters"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:buttonText="PERSONAJES"
-        app:layout_constraintEnd_toEndOf="@+id/button_comics"
-        app:layout_constraintStart_toStartOf="@+id/button_comics"
-        app:layout_constraintTop_toBottomOf="@+id/button_comics" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonComics"
+        app:layout_constraintStart_toStartOf="@+id/buttonComics"
+        app:layout_constraintTop_toBottomOf="@+id/buttonComics" />
 
-    <com.enriquepalmadev.appmarvel.view.components.ButtonHome
+    <com.enriquepalmadev.appmarvel.view.components.CustomButton
         android:id="@+id/button_films_and_series"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:buttonText="SERIES Y PELÍCULAS"
-        app:layout_constraintEnd_toEndOf="@+id/button_characters"
-        app:layout_constraintStart_toStartOf="@+id/button_characters"
-        app:layout_constraintTop_toBottomOf="@+id/button_characters" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonCharacters"
+        app:layout_constraintStart_toStartOf="@+id/buttonCharacters"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCharacters" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

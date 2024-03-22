@@ -1,8 +1,7 @@
-package com.enriquepalmadev.appmarvel.view.component
+package com.enriquepalmadev.appmarvel.view.components
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.Gravity.CENTER
 import androidx.appcompat.widget.AppCompatButton
 import com.enriquepalmadev.appmarvel.R
 
@@ -20,7 +19,7 @@ class CustomButton @JvmOverloads constructor(
         // Obtener los atributos personalizados
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomButton)
         // Obtener el texto personalizado del botón
-        val customText = typedArray.getString(R.styleable.CustomButton_buttonName)
+        val customText = typedArray.getString(R.styleable.CustomButton_buttonText)
         // Aplicar el texto personalizado al botón
         text = customText
         // Liberar los recursos del TypedArray
