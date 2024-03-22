@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.7")
+    implementation("androidx.activity:activity:1.8.0")
     val navVersion = "2.7.7"
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -62,4 +63,11 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    /*GLIDE*/
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    /*Coil*/
+    implementation("io.coil-kt:coil:2.6.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    /*RecyclerView*/
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 }
