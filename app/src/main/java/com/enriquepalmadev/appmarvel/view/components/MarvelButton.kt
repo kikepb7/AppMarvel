@@ -1,7 +1,8 @@
-package com.enriquepalmadev.appmarvel
+package com.enriquepalmadev.appmarvel.view.components
 
 import android.content.Context
 import android.util.AttributeSet
+import com.enriquepalmadev.appmarvel.R
 
 class MarvelButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
