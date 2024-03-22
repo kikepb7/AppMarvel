@@ -6,45 +6,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
-    tools:context=".HomeFragment">
+    tools:context=".view.HomeFragment">
 
-    <Button
-        android:id="@+id/button_comics"
+    <com.enriquepalmadev.appmarvel.view.components.MarvelButton
+        android:id="@+id/buttonComics"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_comics"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="244dp"
+        app:buttonText="@string/button_comics"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.309" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_characters"
+    <com.enriquepalmadev.appmarvel.view.components.MarvelButton
+        android:id="@+id/buttonCharacters"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_characters"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="44dp"
+        app:buttonText="@string/button_characters"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_comics"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonComics" />
 
-    <Button
-        android:id="@+id/button_films_and_series"
+    <com.enriquepalmadev.appmarvel.view.components.MarvelButton
+        android:id="@+id/buttonFilmsAndSeries"
         style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_films_and_series"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="44dp"
+        app:buttonText="@string/button_films_and_series"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_characters"
-        app:layout_constraintVertical_bias="0.127" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCharacters" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

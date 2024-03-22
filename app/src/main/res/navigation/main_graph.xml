@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/comicsFragment"
-        android:name="com.enriquepalmadev.appmarvel.ComicsFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.ComicsFragment"
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" />
     <fragment
         android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.SeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment"
         android:label="fragment_series"
-        tools:layout="@layout/fragment_series" />
+        tools:layout="@layout/fragment_films_series" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.enriquepalmadev.appmarvel.HomeFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.enriquepalmadev.appmarvel.CharactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" />
 </navigation>

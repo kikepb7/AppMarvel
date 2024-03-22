@@ -13,4 +13,7 @@
     <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
     <string name="comics_view">VISTA DE COMICS</string>
     <string name="characters_view">VISTA DE PERSONAJES</string>
+
+    <!-- Films and series' fragment's placeholder text -->
+    <string name="search">Buscar…</string>
 </resources>
