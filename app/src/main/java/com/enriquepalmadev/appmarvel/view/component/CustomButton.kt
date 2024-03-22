@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.component
+package com.enriquepalmadev.appmarvel.view.component
 
 import android.content.Context
 import android.util.AttributeSet
@@ -17,15 +17,14 @@ class CustomButton @JvmOverloads constructor(
     private var buttonName: String? = null
 
     init {
-
-        // Obtain name of  buttonName
+        // Obtener los atributos personalizados
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomButton)
-        buttonName = typedArray.getString(R.styleable.CustomButton_buttonName)
+        // Obtener el texto personalizado del botón
+        val customText = typedArray.getString(R.styleable.CustomButton_buttonName)
+        // Aplicar el texto personalizado al botón
+        text = customText
+        // Liberar los recursos del TypedArray
         typedArray.recycle()
-
-        // Initialice button style.
-        setTextColor(resources.getColor(android.R.color.white))
-        setBackgroundColor(resources.getColor(android.R.color.holo_red_dark))
-        gravity = CENTER
     }
+
 }

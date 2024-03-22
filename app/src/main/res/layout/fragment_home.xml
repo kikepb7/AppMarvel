@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
-    tools:context=".HomeFragment">
+    tools:context=".view.HomeFragment">
 
-    <com.enriquepalmadev.appmarvel.component.CustomButton
+    <com.enriquepalmadev.appmarvel.view.component.CustomButton
         android:id="@+id/button_comics"
-        style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_comics"
+        app:buttonName="@string/button_comics"
+        style="@style/buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -21,13 +21,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.309" />
 
-    <com.enriquepalmadev.appmarvel.component.CustomButton
-
-    android:id="@+id/button_characters"
-        style="@style/buttons"
+    <com.enriquepalmadev.appmarvel.view.component.CustomButton
+        android:id="@+id/button_characters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_characters"
+        style="@style/buttons"
+        app:buttonName="@string/button_characters"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -35,12 +34,12 @@
         app:layout_constraintTop_toBottomOf="@+id/button_comics"
         app:layout_constraintVertical_bias="0.105" />
 
-    <com.enriquepalmadev.appmarvel.component.CustomButton
+    <com.enriquepalmadev.appmarvel.view.component.CustomButton
         android:id="@+id/button_films_and_series"
-        style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_films_and_series"
+        app:buttonName="@string/button_films_and_series"
+        style="@style/buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
