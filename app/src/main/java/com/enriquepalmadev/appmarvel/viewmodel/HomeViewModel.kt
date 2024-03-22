@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel
+package com.enriquepalmadev.appmarvel.viewmodel
 
 import androidx.lifecycle.ViewModel
 
