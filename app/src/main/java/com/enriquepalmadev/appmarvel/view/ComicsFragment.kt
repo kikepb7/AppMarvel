@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
-import com.enriquepalmadev.appmarvel.viewmodel.ComicImageViewModel
+import com.enriquepalmadev.appmarvel.viewmodel.ComicsViewModel
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
-    private val comicImageViewModel: ComicImageViewModel by viewModels()
+    private val comicsViewModel: ComicsViewModel by viewModels()
 
+    // Part of fragments life cycle. It's call when fragments is being created
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,7 +27,9 @@ class ComicsFragment : Fragment() {
         binding = FragmentComicsBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        comicImageViewModel.imageModel.observe(viewLifecycleOwner) { currentImage ->
+        comicsViewModel.imageModel.observe(viewLifecycleOwner) { currentImage ->
+
+            // Using Glide library
             Glide.with(this)
                 .load(currentImage.image)
                 .apply(
@@ -33,12 +37,16 @@ class ComicsFragment : Fragment() {
                         .error(R.drawable.error_404)
                 )
                 .into(binding.imgComic)
+
+
+            // Using Coil library
+            //binding.imgComic.load("https://www.milcomics.com/1306405-large_default/spiderman-01.jpg")
         }
 
 
         // If you touch the screen the image will change automatically
         view.setOnClickListener {
-            comicImageViewModel.nextComic()
+            comicsViewModel.nextComic()
         }
 
         return view

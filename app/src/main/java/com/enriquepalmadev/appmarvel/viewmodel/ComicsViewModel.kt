@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.enriquepalmadev.appmarvel.model.ComicProvider
 import com.enriquepalmadev.appmarvel.model.ComicsModel
 
-class ComicImageViewModel : ViewModel() {
+class ComicsViewModel : ViewModel() {
 
-    // Encapsula el modelo en un LiveData
+    // Encapsulates the model in a LiveData
     val imageModel = MutableLiveData<ComicsModel>()
 
     fun randomImage() {
