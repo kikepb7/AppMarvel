@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view.components
+package com.enriquepalmadev.appmarvel.view.utilsfilmsseries
 
 import android.content.Context
 import android.util.AttributeSet

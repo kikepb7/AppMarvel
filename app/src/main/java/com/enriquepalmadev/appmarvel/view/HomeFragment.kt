@@ -12,7 +12,7 @@ import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    // Binding para acceder a los objetos de la vista del activity_main.xml
+    // Binding to access to view objects on activity_main.xml
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
