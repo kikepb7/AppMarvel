@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
+import com.enriquepalmadev.appmarvel.model.Comic
+import com.enriquepalmadev.appmarvel.model.ComicProvider
+import com.enriquepalmadev.appmarvel.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.viewmodel.ComicsViewModel
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
-    private val comicsViewModel: ComicsViewModel by viewModels()
 
     // Part of fragments life cycle. It's call when fragments is being created
     override fun onCreateView(
@@ -25,20 +29,27 @@ class ComicsFragment : Fragment() {
     ): View {
 
         binding = FragmentComicsBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
 
-            // Using Glide library
-            Glide.with(this)
-                .load("https://www.milcomics.com/1306405-large_default/spiderman-01.jpg")
-                .apply(
-                    RequestOptions().fallback(R.drawable.ic_launcher_background)
-                        .error(R.drawable.error_404)
-                )
-                .into(binding.imgComic)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            // Using Coil library
-            //binding.imgComic.load("https://www.milcomics.com/1306405-large_default/spiderman-01.jpg")
+        initRecyclerView(binding.rvComics)
+    }
 
-        return view
+    private fun initRecyclerView(view: View) {
+        val manager = LinearLayoutManager(view.context)
+
+        binding.rvComics.apply {
+            layoutManager = manager
+            adapter = ComicsAdapter(ComicProvider.comicsList) { comic -> onItemSelected(comic) }
+        }
+    }
+
+    private fun onItemSelected(comic: Comic) {
+        binding.apply {
+            rvComics.findNavController().navigate(R.id.action_comicsFragment_to_comicDetail)
+        }
     }
 }

@@ -5,16 +5,7 @@
     android:id="@+id/main_graph"
     app:startDestination="@+id/homeFragment">
 
-    <fragment
-        android:id="@+id/comicsFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.ComicsFragment"
-        android:label="fragment_comics"
-        tools:layout="@layout/fragment_comics" />
-    <fragment
-        android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment"
-        android:label="fragment_series"
-        tools:layout="@layout/fragment_films_series" />
+    <!-- HOME FRAGMENT -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.enriquepalmadev.appmarvel.view.HomeFragment"
@@ -30,6 +21,33 @@
             android:id="@+id/action_homeFragment_to_charactersFragment"
             app:destination="@id/charactersFragment" />
     </fragment>
+
+    <!-- COMICS FRAGMENT -->
+    <fragment
+        android:id="@+id/comicsFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.ComicsFragment"
+        android:label="fragment_comics"
+        tools:layout="@layout/fragment_comics" >
+        <action
+            android:id="@+id/action_comicsFragment_to_comicDetail"
+            app:destination="@+id/comicDetail" />
+    </fragment>
+
+    <!-- COMIC DETAIL FRAGMENT -->
+    <fragment
+        android:id="@+id/comicDetail"
+        android:name="com.enriquepalmadev.appmarvel.view.ComicDetail"
+        android:label="fragment_comic_detail"
+        tools:layout="@layout/fragment_comic_detail" />
+
+    <!-- FILMS AND SERIES FRAGMENT -->
+    <fragment
+        android:id="@+id/filmsAndSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment"
+        android:label="fragment_series"
+        tools:layout="@layout/fragment_films_series" />
+
+    <!-- CHARACTER FRAGMENT -->
     <fragment
         android:id="@+id/charactersFragment"
         android:name="com.enriquepalmadev.appmarvel.view.CharactersFragment"
