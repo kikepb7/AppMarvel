@@ -27,27 +27,17 @@ class ComicsFragment : Fragment() {
         binding = FragmentComicsBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        comicsViewModel.imageModel.observe(viewLifecycleOwner) { currentImage ->
-
             // Using Glide library
             Glide.with(this)
-                .load(currentImage.image)
+                .load("https://www.milcomics.com/1306405-large_default/spiderman-01.jpg")
                 .apply(
                     RequestOptions().fallback(R.drawable.ic_launcher_background)
                         .error(R.drawable.error_404)
                 )
                 .into(binding.imgComic)
 
-
             // Using Coil library
             //binding.imgComic.load("https://www.milcomics.com/1306405-large_default/spiderman-01.jpg")
-        }
-
-
-        // If you touch the screen the image will change automatically
-        view.setOnClickListener {
-            comicsViewModel.nextComic()
-        }
 
         return view
     }
