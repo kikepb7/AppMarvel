@@ -1,3 +1,3 @@
 package com.enriquepalmadev.appmarvel.model
 
-data class ComicsModel(val image: String)
+data class Comic(val image: String)
