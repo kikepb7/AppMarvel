@@ -40,35 +40,45 @@ android {
 }
 
 dependencies {
+    val appCompatVersion = "1.6.1"
+    val materialVersion = "1.11.0"
+    val constraintLayoutVersion = "2.1.4"
+    val legacySupportVersion = "1.0.0"
+    val liveDataVersion = "2.7.0"
+    val fragmentVersion = "1.6.2"
     val navVersion = "2.7.7"
+    val viewModelVersion = "2.7.0"
+    val glideVersion = "4.16.0"
+    val coilVersion = "2.6.0"
+    val jUnitVersion = "4.13.2"
+    val jUnitTestVersion = "1.1.5"
+    val espressoVersion = "3.5.1"
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.appcompat:appcompat:$appCompatVersion")
+    implementation("com.google.android.material:material:$materialVersion")
+    implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
+    implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
 
     /* LIVE DATA */
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$liveDataVersion")
 
     /* FRAGMENT */
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
     /* NAVIGATION */
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     /* VIEWMODEL */
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion")
 
     /* GLIDE */
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
 
     /* COIL */
-    implementation("io.coil-kt:coil:2.6.0")
+    implementation("io.coil-kt:coil:$coilVersion")
 
-
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }
