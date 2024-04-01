@@ -13,19 +13,16 @@
         android:layout_height="match_parent">
 
 
-        <EditText
-            android:id="@+id/et_search"
+        <SearchView
+            android:id="@+id/searchView_seriesAndFilms"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:hint="@string/search"
             android:inputType="text"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_search"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.023" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
             android:id="@+id/btn_search"
@@ -33,23 +30,21 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:text="@string/search"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/searchView_seriesAndFilms"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/et_search"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.023" />
+            app:layout_constraintStart_toEndOf="@+id/searchView_seriesAndFilms"
+            app:layout_constraintTop_toTopOf="@id/searchView_seriesAndFilms" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_films_series"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_search"
-            app:layout_constraintVertical_bias="0.02" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView_seriesAndFilms" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
