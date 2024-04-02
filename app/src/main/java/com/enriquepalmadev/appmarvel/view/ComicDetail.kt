@@ -9,9 +9,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
+import com.enriquepalmadev.appmarvel.model.Comic
 import com.enriquepalmadev.appmarvel.model.ComicProvider
 
 class ComicDetail : Fragment() {
+
+    companion object {
+        val KEY_ID = "id"
+    }
+
+    /*
+
+     */
+    private val comicId by lazy { arguments?.getString(KEY_ID) }
 
     private lateinit var binding: FragmentComicDetailBinding
 
@@ -22,9 +32,13 @@ class ComicDetail : Fragment() {
 
         binding = FragmentComicDetailBinding.inflate(layoutInflater)
 
-        val comicId = arguments?.getString("id")
+//        val comicPrueba = arguments?.getSerializable("comic") as Comic
+
+
+
+
         val comic = comicId?.let {
-            ComicProvider.comicsList.get(comicId.toInt())
+            ComicProvider.comicsList.get(comicId!!.toInt())
         }
 
         Glide.with(binding.ivComic.context)
