@@ -9,13 +9,26 @@
     <string name="toast_buttonCharacters">Botón personajes</string>
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
 
-    <!-- Fragments' placeholder text -->
+    <!-- Fragments' text -->
     <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
     <string name="comics_view">VISTA DE COMICS</string>
     <string name="characters_view">VISTA DE PERSONAJES</string>
 
-    <!-- Films and series' fragment's placeholder text -->
-    <string name="orderby">Ordenar por…</string>
+    <!-- Films and series' fragment's text -->
+    <string name="orderby">Order by…</string>
+
+    <!-- Films and series' items' text -->
     <string name="fav_off">off</string>
     <string name="fav_on">on</string>
+
+    <!-- Films and series' dialog "order by" texts -->
+    <string name="orderby_alphabet">by alphabet</string>
+    <string name="orderby_year">from newer to older</string>
+    <string name="orderby_fav_first">by Favourites first</string>
+    <string name="orderby_fav_only">by Favourites only</string>
+    <string name="msg_orderby">Ordering</string>
+    <string name="dialog_title">Order films and series...</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_canceled">Canceled</string>
 </resources>

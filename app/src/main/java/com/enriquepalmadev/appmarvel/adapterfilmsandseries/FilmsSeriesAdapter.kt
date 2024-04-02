@@ -23,8 +23,10 @@ class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
         holder.bind(film_serie)
     }
 
-    fun refreshList(filmsSeriesList: ArrayList<FilmsSeriesDataclass>){
+    fun refreshList(filmsSeriesList: ArrayList<FilmsSeriesDataclass>): ArrayList<FilmsSeriesDataclass>{
+        this.filmsSeriesList.clear()
         this.filmsSeriesList.addAll(filmsSeriesList)
         notifyDataSetChanged()
+        return filmsSeriesList
     }
 }
