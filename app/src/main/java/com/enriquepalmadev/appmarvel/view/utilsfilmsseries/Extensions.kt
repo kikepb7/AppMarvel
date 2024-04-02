@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.enriquepalmadev.appmarvel.R
 import java.io.InputStream
 import java.nio.charset.Charset
 
@@ -26,7 +28,17 @@ fun getJsonFromAssets(context: Context, file: String): String? {
 fun ImageView.loadImage(image: String) {
     Glide.with(this)
         .load(image)
+        .apply(
+            RequestOptions().fallback(R.drawable.capitan_america)
+                .error(R.drawable.error_404))
         .into(this)
+    /*
+    Glide.with(this)
+        .load(image)
+        //.placeholder(R.drawable.ic_launcher_background)
+        .into(this)
+
+     */
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachRoot: Boolean = true): View =

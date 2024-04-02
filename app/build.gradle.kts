@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation("com.android.car.ui:car-ui-lib:2.6.0")
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.11.0"
     val constraintLayoutVersion = "2.1.4"

@@ -15,5 +15,5 @@
     <string name="characters_view">VISTA DE PERSONAJES</string>
 
     <!-- Films and series' fragment's placeholder text -->
-    <string name="search">Buscar…</string>
+    <string name="orderby">Ordenar por…</string>
 </resources>

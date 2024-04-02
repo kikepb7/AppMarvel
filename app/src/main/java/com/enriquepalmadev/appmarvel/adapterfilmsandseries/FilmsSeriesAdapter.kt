@@ -1,19 +1,18 @@
 package com.enriquepalmadev.appmarvel.adapterfilmsandseries
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
-import com.enriquepalmadev.appmarvel.view.utilsfilmsseries.inflate
 
 class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     private val filmsSeriesList = arrayListOf<FilmsSeriesDataclass>()
 
     // Maybe it will cause an error
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsSeriesViewHolder {
-        val view :View = parent.inflate(R.layout.item_films_series)
-        return FilmsSeriesViewHolder(view)
+        val binding = ItemFilmsSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FilmsSeriesViewHolder(binding)
     }
 
     // Number of items
@@ -25,7 +24,7 @@ class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     }
 
     fun refreshList(filmsSeriesList: ArrayList<FilmsSeriesDataclass>){
-        filmsSeriesList.addAll(this.filmsSeriesList)
+        this.filmsSeriesList.addAll(filmsSeriesList)
         notifyDataSetChanged()
     }
 }

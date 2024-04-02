@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.adapterfilmsandseries.FilmsSeriesAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
@@ -28,9 +27,8 @@ class FilmsSeriesFragment : Fragment() {
 
         filmsSeriesAdapter.refreshList(getListFromJson())
 
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_films_series, container, false)
+        return bindingFilmsSeries.root
     }
 
     private fun getListFromJson(): ArrayList<FilmsSeriesDataclass>{

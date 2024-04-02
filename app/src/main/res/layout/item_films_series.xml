@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:ratio="1"
+            app:ratio="1.5"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
