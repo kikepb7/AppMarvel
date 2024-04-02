@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
 import com.enriquepalmadev.appmarvel.model.Comic
-import com.enriquepalmadev.appmarvel.model.ComicProvider
-import com.enriquepalmadev.appmarvel.view.ComicDetail.Companion.KEY_ID
+import com.enriquepalmadev.appmarvel.view.ComicDetailFragment.Companion.KEY_ID
 import com.enriquepalmadev.appmarvel.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.viewmodel.State
@@ -29,46 +28,51 @@ class ComicsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        binding = FragmentComicsBinding.inflate(inflater, container, false)
+        binding = FragmentComicsBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initializes the observer in case the screen state changes
         initObserver()
 
-        initRecyclerView(binding.rvComics)
+        // Call the viewModel to bring us the list of comics
+        viewModel.getComicsList()
     }
 
     private fun initObserver() {
         viewModel.state.onEach { state ->
             when(state) {
                 State.Error -> TODO()
-                is State.ListRecived -> TODO()
+                is State.ListReceived -> initRecyclerView(state.listComics)
                 State.Loading -> TODO()
+                is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
             }
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun initRecyclerView(view: View) {
-        val manager = LinearLayoutManager(view.context)
-
-        binding.rvComics.apply {
-            layoutManager = manager
-            adapter = ComicsAdapter(ComicProvider.comicsList) { comic -> onItemSelected(comic) }
-        }
-    }
-
-    private fun onItemSelected(comic: Comic) {
+    private fun navigateToComicDetail(comicId: Long) {
         val bundle = Bundle().apply {
-            putString(KEY_ID, comic.id.toString())
+            putLong(KEY_ID, comicId)
 //            putSerializable("comic", comic)
         }
         binding.apply {
             rvComics.findNavController().navigate(R.id.action_comicsFragment_to_comicDetail, bundle)
+        }
+    }
+
+    private fun initRecyclerView(list: List<Comic>) {
+        binding.rvComics.apply {
+            val manager = LinearLayoutManager(this.context)
+
+            layoutManager = manager
+
+            adapter = ComicsAdapter(list) { comic ->
+                viewModel.onItemSelected(comic.id)
+            }
         }
     }
 }

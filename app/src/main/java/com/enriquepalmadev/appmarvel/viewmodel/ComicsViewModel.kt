@@ -1,29 +1,34 @@
 package com.enriquepalmadev.appmarvel.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.model.Comic
 import com.enriquepalmadev.appmarvel.model.ComicProvider
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 
 class ComicsViewModel : ViewModel() {
     val state = MutableSharedFlow<State>()
-    // Diferencias MutableSharedFlow y Chanel
 
-    /*
-    by viewModels() -> Propietario Fragment
+    fun getComicsList() {
+        viewModelScope.launch {
+            val listComic = ComicProvider.comicsList
 
-    by activityViewModels() ->
-     */
+            state.emit(State.ListReceived(listComic))
+        }
+    }
 
-    suspend fun getData() {
-        val listComic = ComicProvider.comicsList
-
-        state.emit(State.ListRecived(listComic))
+    fun onItemSelected(id: Long) {
+        viewModelScope.launch {
+            state.emit(State.NavigateToDetail(id))
+        }
     }
 }
 
+// Different possible states
 sealed class State {
     data object Loading : State()
     data object Error : State()
-    data class ListRecived(val list: List<Comic>) : State()
+    data class ListReceived(val listComics: List<Comic>) : State()
+    data class NavigateToDetail(val comicId: Long): State()
 }

@@ -30,13 +30,18 @@
         tools:layout="@layout/fragment_comics" >
         <action
             android:id="@+id/action_comicsFragment_to_comicDetail"
-            app:destination="@+id/comicDetail" />
+            app:destination="@+id/comicDetail" >
+
+            <argument
+                android:name="comicId"
+                app:argType="long" />
+        </action>
     </fragment>
 
     <!-- COMIC DETAIL FRAGMENT -->
     <fragment
         android:id="@+id/comicDetail"
-        android:name="com.enriquepalmadev.appmarvel.view.ComicDetail"
+        android:name="com.enriquepalmadev.appmarvel.view.ComicDetailFragment"
         android:label="fragment_comic_detail"
         tools:layout="@layout/fragment_comic_detail" />
 
