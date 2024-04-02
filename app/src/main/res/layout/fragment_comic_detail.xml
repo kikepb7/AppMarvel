@@ -45,5 +45,70 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ImageView
+            android:id="@+id/ivComic"
+            android:layout_width="128dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="128dp"
+            app:layout_constraintEnd_toEndOf="@+id/comicId"
+            app:layout_constraintStart_toStartOf="@+id/backArrow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/ivComic"
+            app:layout_constraintStart_toStartOf="@+id/ivComic"
+            app:layout_constraintTop_toBottomOf="@+id/ivComic">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TÍTULO"
+                    app:layout_constraintEnd_toEndOf="@+id/ivComic"
+                    app:layout_constraintStart_toStartOf="@+id/ivComic"
+                    app:layout_constraintTop_toBottomOf="@+id/ivComic" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="DESCRIPCIÓN"
+                    app:layout_constraintEnd_toEndOf="@+id/ivComic"
+                    app:layout_constraintStart_toStartOf="@+id/ivComic"
+                    app:layout_constraintTop_toBottomOf="@+id/ivComic" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="PRECIO"
+                    app:layout_constraintEnd_toEndOf="@+id/ivComic"
+                    app:layout_constraintStart_toStartOf="@+id/ivComic"
+                    app:layout_constraintTop_toBottomOf="@+id/ivComic" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </FrameLayout>
