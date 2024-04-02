@@ -16,4 +16,6 @@
 
     <!-- Films and series' fragment's placeholder text -->
     <string name="orderby">Ordenar por…</string>
+    <string name="fav_off">off</string>
+    <string name="fav_on">on</string>
 </resources>

@@ -32,13 +32,6 @@ fun ImageView.loadImage(image: String) {
             RequestOptions().fallback(R.drawable.capitan_america)
                 .error(R.drawable.error_404))
         .into(this)
-    /*
-    Glide.with(this)
-        .load(image)
-        //.placeholder(R.drawable.ic_launcher_background)
-        .into(this)
-
-     */
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachRoot: Boolean = true): View =
