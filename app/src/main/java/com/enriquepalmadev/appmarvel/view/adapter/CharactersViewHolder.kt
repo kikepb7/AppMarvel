@@ -8,7 +8,7 @@ import coil.transform.CircleCropTransformation
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
 import com.enriquepalmadev.appmarvel.model.Character
-
+import com.enriquepalmadev.appmarvel.view.utils.loadImage
 
 
 class CharactersViewHolder(view: View) : ViewHolder(view)
@@ -20,12 +20,14 @@ class CharactersViewHolder(view: View) : ViewHolder(view)
         onClickListener: (Character) -> Unit
     ){
 
-        binding.imageButton.load(character.image) {
+        binding.imageButton.loadImage(character.image)
+
+        /*binding.imageButton.load(character.image) {
             crossfade(true)
             size(800, 800)
             scale(Scale.FILL)
             placeholder(R.drawable.cargando)
-        }
+        }*/
 
         binding.tvTexto.text = character.nombre
 

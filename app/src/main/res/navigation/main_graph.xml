@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetail"
-        android:name="com.enriquepalmadev.appmarvel.view.CharacterDetail"
+        android:name="com.enriquepalmadev.appmarvel.view.CharacterDetailFragment"
         android:label="fragment_character_detail"
         tools:layout="@layout/fragment_character_detail" />
 </navigation>

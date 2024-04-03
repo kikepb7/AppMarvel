@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentCharacterDetailBinding
 
-class CharacterDetail : Fragment() {
+class CharacterDetailFragment : Fragment() {
 
+    companion object{
+        const val KEY_ID = "id"
+    }
     private lateinit var  binding: FragmentCharacterDetailBinding
 
     override fun onCreateView(

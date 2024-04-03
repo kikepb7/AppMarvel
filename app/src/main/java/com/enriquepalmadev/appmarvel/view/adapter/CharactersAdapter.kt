@@ -1,10 +1,12 @@
 package com.enriquepalmadev.appmarvel.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import  com.enriquepalmadev.appmarvel.model.Character
+import kotlinx.coroutines.flow.Flow
 
 class CharactersAdapter(
     private val charactersList: List<Character>,
