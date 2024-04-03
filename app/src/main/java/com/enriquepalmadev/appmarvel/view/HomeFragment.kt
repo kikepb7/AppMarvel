@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
+import com.enriquepalmadev.appmarvel.view.utils.navigateTo
 
 class HomeFragment : Fragment() {
 
@@ -24,17 +25,11 @@ class HomeFragment : Fragment() {
         // Button Listener
         binding.apply {
             // Navigate through the path indicated in "main_graph.xml"
-            buttonComics.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_comicsFragment)
-                Toast.makeText(context, "Botón comics", Toast.LENGTH_SHORT).show()
-            }
-            buttonCharacters.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_charactersFragment)
-                Toast.makeText(context, "Botón personajes", Toast.LENGTH_SHORT).show()
-            }
-            buttonFilmsAndSeries.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_filmsAndSeriesFragment)
-                Toast.makeText(context, "Botón películas y series", Toast.LENGTH_SHORT).show()
+            binding.apply {
+                // Navigate through the path indicated in "main_graph.xml"
+                buttonComics.navigateTo(R.id.action_homeFragment_to_comicsFragment)
+                buttonCharacters.navigateTo(R.id.action_homeFragment_to_charactersFragment)
+                buttonFilmsAndSeries.navigateTo(R.id.action_homeFragment_to_filmsAndSeriesFragment)
             }
         }
 
