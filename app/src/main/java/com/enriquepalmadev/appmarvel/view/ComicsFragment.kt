@@ -57,7 +57,7 @@ class ComicsFragment : Fragment() {
     private fun navigateToComicDetail(comicId: Long) {
         val bundle = Bundle().apply {
             putLong(KEY_ID, comicId)
-//            putSerializable("comic", comic)
+//              putSerializable("comic", comic)
         }
         binding.apply {
             rvComics.findNavController().navigate(R.id.action_comicsFragment_to_comicDetail, bundle)

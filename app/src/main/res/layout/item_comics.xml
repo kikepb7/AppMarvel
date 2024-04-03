@@ -19,7 +19,22 @@
             android:layout_marginStart="8dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/comic_image_description" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:maxWidth="30dp"
+            android:maxHeight="30dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_favorite_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvComicID"
+            app:layout_constraintStart_toEndOf="@+id/ibImageComic"
+            app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
 
         <TextView
             android:id="@+id/tvComicID"

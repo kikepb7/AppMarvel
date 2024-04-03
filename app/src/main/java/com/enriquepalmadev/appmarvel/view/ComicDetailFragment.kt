@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 class ComicDetailFragment : Fragment() {
 
     companion object {
-        val KEY_ID = "id"
+        const val KEY_ID = "id"
     }
 
     private val comicId by lazy { arguments?.getLong(KEY_ID) }
@@ -50,15 +50,31 @@ class ComicDetailFragment : Fragment() {
         viewModel.state.onEach { state ->
             when (state) {
                 is DetailState.ComicDetail -> {
+                    hideLoader()
                     showComicDetail(state.comic)
                 }
 
-                DetailState.Error -> {}
-                DetailState.Loading -> {}
+                DetailState.Error -> {
+                    hideLoader()
+                }
+                DetailState.Loading -> {
+                    showLoader()
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    // Progress Bar
+    private fun hideLoader() {
+        binding.detailProgressBar.visibility = View.GONE
+    }
+
+    private fun showLoader() {
+        binding.detailProgressBar.visibility = View.VISIBLE
+    }
+
+
+    // Comic
     private fun showComicDetail(comic: Comic) {
         binding.apply {
             Glide.with(ivComic.context)
