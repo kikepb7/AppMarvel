@@ -1,9 +1,9 @@
-package com.enriquepalmadev.appmarvel.viewmodel
+package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.enriquepalmadev.appmarvel.model.ComicProvider
-import com.enriquepalmadev.appmarvel.model.ComicsModel
+import com.enriquepalmadev.appmarvel.domain.model.ComicProvider
+import com.enriquepalmadev.appmarvel.domain.model.ComicsModel
 
 class ComicsViewModel : ViewModel() {
 

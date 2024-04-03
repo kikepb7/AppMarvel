@@ -1,9 +1,9 @@
-package com.enriquepalmadev.appmarvel.viewmodel
+package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.appmarvel.model.Character
-import com.enriquepalmadev.appmarvel.model.CharacterProvider
+import com.enriquepalmadev.appmarvel.domain.model.Character
+import com.enriquepalmadev.appmarvel.domain.model.CharacterProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view
+package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
-import com.enriquepalmadev.appmarvel.viewmodel.ComicsViewModel
+import com.enriquepalmadev.appmarvel.ui.viewmodel.ComicsViewModel
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding

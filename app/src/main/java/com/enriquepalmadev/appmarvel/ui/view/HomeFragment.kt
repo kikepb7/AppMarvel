@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view
+package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

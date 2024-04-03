@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.model
+package com.enriquepalmadev.appmarvel.domain.model
 
 class ComicProvider {
 

@@ -5,12 +5,27 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/imageButton"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="146dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerInside" />
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="146dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/ivFavourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:layout_gravity="top|end"
+            android:src="@drawable/ic_border_favorite_24dp"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tvTexto"
@@ -20,5 +35,6 @@
         android:padding="8dp"
         android:textColor="@color/white"
         android:textSize="16sp" />
+
 </LinearLayout>
 

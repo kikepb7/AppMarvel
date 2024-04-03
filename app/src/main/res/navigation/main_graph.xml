@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/comicsFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.ComicsFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.ComicsFragment"
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" />
     <fragment
         android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.FilmsSeriesFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_films_series" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.HomeFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -32,16 +32,16 @@
     </fragment>
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.CharactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" >
         <action
-            android:id="@+id/action_charactersFragment_to_characterDetail"
-            app:destination="@id/characterDetail" />
+            android:id="@+id/action_charactersFragment_to_itemDetailsCharactersFragment"
+            app:destination="@id/itemDetailsCharactersFragment" />
     </fragment>
     <fragment
-        android:id="@+id/characterDetail"
-        android:name="com.enriquepalmadev.appmarvel.view.CharacterDetailFragment"
-        android:label="fragment_character_detail"
-        tools:layout="@layout/fragment_character_detail" />
+        android:id="@+id/itemDetailsCharactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.ItemDetailsCharactersFragment"
+        android:label="fragment_item_details_characters"
+        tools:layout="@layout/fragment_item_details_characters" />
 </navigation>
