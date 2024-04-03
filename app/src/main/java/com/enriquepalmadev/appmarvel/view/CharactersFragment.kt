@@ -1,11 +1,10 @@
 package com.enriquepalmadev.appmarvel.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,9 +12,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentCharactersBinding
+import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
 import com.enriquepalmadev.appmarvel.model.Character
 import com.enriquepalmadev.appmarvel.view.adapter.CharactersAdapter
-import com.enriquepalmadev.appmarvel.view.CharacterDetailFragment.Companion.KEY_ID
 import com.enriquepalmadev.appmarvel.viewmodel.CharactersViewModel
 import com.enriquepalmadev.appmarvel.viewmodel.CharactersViewModel.State
 import kotlinx.coroutines.delay
@@ -23,8 +22,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 
-class CharactersFragment : Fragment(), OnClickListener {
-    lateinit var binding: FragmentCharactersBinding
+class CharactersFragment : Fragment() {
+    private lateinit var binding: FragmentCharactersBinding
+    private lateinit var bindingItem: ItemSuperheroBinding
     private val viewModel : CharactersViewModel by viewModels()
 
     override fun onCreateView(
@@ -57,7 +57,12 @@ class CharactersFragment : Fragment(), OnClickListener {
                 State.Loading -> showLoader()
                 is State.NavigateToDetail -> {
                     hideLoader()
-                    navigateToCharacterDetail(state.characterId)
+                    bindingItem.apply {
+                        imageButton.setOnClickListener{
+                            navigateToCharacterDetail(state.characterId)
+                            Log.i("INFO Fragment", "Ha sido pulsado.")
+                        }
+                    }
                 }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -70,6 +75,7 @@ class CharactersFragment : Fragment(), OnClickListener {
     private fun showLoader(){
         binding.progressBar.visibility = View.VISIBLE
     }
+
     private fun navigateToCharacterDetail(characterId : Long){
 
         binding.apply {
@@ -89,9 +95,4 @@ class CharactersFragment : Fragment(), OnClickListener {
         }
     }
 
-    override fun onClick(v: View?) {
-        if(){
-
-        }
-    }
 }
