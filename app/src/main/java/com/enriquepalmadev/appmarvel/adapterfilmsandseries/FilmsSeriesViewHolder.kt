@@ -1,7 +1,6 @@
 package com.enriquepalmadev.appmarvel.adapterfilmsandseries
 
 import android.view.View
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
@@ -17,16 +16,6 @@ class FilmsSeriesViewHolder(private val binding: ItemFilmsSeriesBinding): Recycl
     fun bind(film_serie: FilmsSeriesDataclass){
         binding.textFilmsSeries.text = film_serie.name
         binding.imageFilmsSeries.loadImage(film_serie.cover)
-
-        /*
-
-        for (i in favFilmsSeries){
-            if(i==film_serie.id){
-                binding.btnFav.setImageResource(R.drawable.ic_full_favorite_24dp)
-            }
-        }
-
-         */
 
         binding.btnFav.setOnClickListener(View.OnClickListener {
             if(binding.btnFav.contentDescription=="on"){

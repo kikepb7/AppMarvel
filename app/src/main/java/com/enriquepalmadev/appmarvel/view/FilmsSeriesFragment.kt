@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.adapterfilmsandseries.FilmsSeriesAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
@@ -24,7 +26,7 @@ class FilmsSeriesFragment : Fragment() {
     ): View? {
         bindingFilmsSeries = FragmentFilmsSeriesBinding.inflate(inflater)
 
-        filmsSeriesAdapter = FilmsSeriesAdapter()
+        filmsSeriesAdapter = FilmsSeriesAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
         bindingFilmsSeries.rvFilmsSeries.adapter = filmsSeriesAdapter // Setting the Adapter in the RecyclerView
 
         // Getting the list of Films and Series
@@ -92,5 +94,13 @@ class FilmsSeriesFragment : Fragment() {
     // Snackbar function
     private fun showSnackbar(view: View, msg: String){
         Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun onFilmSerieClicked(filmOrSerie: FilmsSeriesDataclass){
+        val filmsSeriesData = Bundle()
+        filmsSeriesData.putSerializable("objectFilmOrSerie", filmOrSerie)
+
+        findNavController().navigate(R.id.action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment, filmsSeriesData)
+        Toast.makeText(context, "Item", Toast.LENGTH_SHORT).show()
     }
 }

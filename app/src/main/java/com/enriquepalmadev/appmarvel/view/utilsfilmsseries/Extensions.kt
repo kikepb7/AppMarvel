@@ -29,8 +29,10 @@ fun ImageView.loadImage(image: String) {
     Glide.with(this)
         .load(image)
         .apply(
-            RequestOptions().fallback(R.drawable.capitan_america)
-                .error(R.drawable.error_404))
+            RequestOptions()
+                .error(R.drawable.error_404)
+        )
+        .placeholder(R.drawable.cargando)
         .into(this)
 }
 

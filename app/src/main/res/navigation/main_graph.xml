@@ -10,16 +10,22 @@
         android:name="com.enriquepalmadev.appmarvel.view.ComicsFragment"
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" />
+
     <fragment
         android:id="@+id/filmsAndSeriesFragment"
         android:name="com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment"
         android:label="fragment_series"
-        tools:layout="@layout/fragment_films_series" />
+        tools:layout="@layout/fragment_films_series">
+        <action
+            android:id="@+id/action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment"
+            app:destination="@id/itemDetailsFilmsSeriesFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.enriquepalmadev.appmarvel.view.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_filmsAndSeriesFragment"
             app:destination="@id/filmsAndSeriesFragment" />
@@ -29,10 +35,19 @@
         <action
             android:id="@+id/action_homeFragment_to_charactersFragment"
             app:destination="@id/charactersFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/charactersFragment"
         android:name="com.enriquepalmadev.appmarvel.view.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" />
+
+    <fragment
+        android:id="@+id/itemDetailsFilmsSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.view.ItemDetailsFilmsSeriesFragment"
+        android:label="item_details_films_series_fragment"
+        tools:layout="@layout/item_details_films_series" />
+
 </navigation>
