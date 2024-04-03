@@ -32,7 +32,7 @@ fun ImageView.loadImage(image: String) {
             RequestOptions()
                 .error(R.drawable.error_404)
         )
-        .placeholder(R.drawable.cargando)
+        .placeholder(R.drawable.loading)
         .into(this)
 }
 

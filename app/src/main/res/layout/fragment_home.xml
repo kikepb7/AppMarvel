@@ -10,7 +10,7 @@
 
     <com.enriquepalmadev.appmarvel.view.components.MarvelButton
         android:id="@+id/buttonComics"
-        style="@style/buttons"
+        style="@style/main_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="244dp"
@@ -21,7 +21,7 @@
 
     <com.enriquepalmadev.appmarvel.view.components.MarvelButton
         android:id="@+id/buttonCharacters"
-        style="@style/buttons"
+        style="@style/main_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -32,7 +32,7 @@
 
     <com.enriquepalmadev.appmarvel.view.components.MarvelButton
         android:id="@+id/buttonFilmsAndSeries"
-        style="@style/buttons"
+        style="@style/main_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"

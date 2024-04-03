@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="buttons" parent="@style/Base.Theme.AppMarvel">
+    <style name="main_buttons" parent="@style/Base.Theme.AppMarvel">
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
@@ -9,5 +9,16 @@
         <item name="foregroundButton">@drawable/marvel_button</item>
         <item name="android:width">200dp</item>
         <item name="android:height">50dp</item>
+    </style>
+
+    <style name="searchview" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:inputType">text</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:queryHint">@string/search</item>
+    </style>
+
+    <style name="orderby_button" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:text">@string/orderby</item>
     </style>
 </resources>

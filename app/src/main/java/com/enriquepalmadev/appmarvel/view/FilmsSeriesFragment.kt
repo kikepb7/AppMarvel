@@ -102,9 +102,7 @@ class FilmsSeriesFragment : Fragment() {
     private fun onFilmSerieClicked(filmOrSerie: FilmsSeriesDataclass){
         val filmsSeriesData = Bundle()
         filmsSeriesData.putSerializable("objectFilmOrSerie", filmOrSerie)
-
         findNavController().navigate(R.id.action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment, filmsSeriesData)
-        Toast.makeText(context, "Item", Toast.LENGTH_SHORT).show()
     }
 
     private fun searchingFilmsSeries() {

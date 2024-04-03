@@ -16,21 +16,18 @@
 
         <android.widget.SearchView
             android:id="@+id/searchView_seriesAndFilms"
+            style="@style/searchview"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:layout_marginStart="5dp"
-            android:queryHint="@string/search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0"/>
 
         <Button
             android:id="@+id/btn_orderby"
+            style="@style/orderby_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/orderby"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
