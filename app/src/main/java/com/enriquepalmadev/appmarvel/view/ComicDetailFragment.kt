@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
 import com.enriquepalmadev.appmarvel.model.Comic
+import com.enriquepalmadev.appmarvel.view.utils.loadImage
 import com.enriquepalmadev.appmarvel.viewmodel.ComicDetailViewModel
 import com.enriquepalmadev.appmarvel.viewmodel.DetailState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -50,6 +49,7 @@ class ComicDetailFragment : Fragment() {
         viewModel.state.onEach { state ->
             when (state) {
                 is DetailState.ComicDetail -> {
+                    delay(500)
                     hideLoader()
                     showComicDetail(state.comic)
                 }
@@ -57,6 +57,7 @@ class ComicDetailFragment : Fragment() {
                 DetailState.Error -> {
                     hideLoader()
                 }
+
                 DetailState.Loading -> {
                     showLoader()
                 }
@@ -77,15 +78,7 @@ class ComicDetailFragment : Fragment() {
     // Comic
     private fun showComicDetail(comic: Comic) {
         binding.apply {
-            Glide.with(ivComic.context)
-                .load(comic.image)
-                .apply(
-                    RequestOptions()
-                        .error(R.drawable.error_404)
-                )
-                .into(ivComic)
-
-
+            ivComic.loadImage(comic.image)
             comicId.text = comic.id.toString()
             tvTitle.text = comic.title
             tvDescription.text = comic.description

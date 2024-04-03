@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.appmarvel.R
@@ -16,8 +18,10 @@ import com.enriquepalmadev.appmarvel.view.ComicDetailFragment.Companion.KEY_ID
 import com.enriquepalmadev.appmarvel.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.viewmodel.State
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
@@ -45,9 +49,9 @@ class ComicsFragment : Fragment() {
     private fun initObserver() {
         viewModel.state.onEach { state ->
             when(state) {
-                State.Error -> TODO()
+                State.Error -> {}
                 is State.ListReceived -> initRecyclerView(state.listComics)
-                State.Loading -> TODO()
+                State.Loading -> {}
                 is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
             }
         }
@@ -66,9 +70,7 @@ class ComicsFragment : Fragment() {
 
     private fun initRecyclerView(list: List<Comic>) {
         binding.rvComics.apply {
-            val manager = LinearLayoutManager(this.context)
-
-            layoutManager = manager
+            layoutManager = LinearLayoutManager(this.context)
 
             adapter = ComicsAdapter(list) { comic ->
                 viewModel.onItemSelected(comic.id)

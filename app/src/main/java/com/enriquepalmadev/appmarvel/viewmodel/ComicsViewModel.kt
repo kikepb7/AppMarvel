@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.model.Comic
 import com.enriquepalmadev.appmarvel.model.ComicProvider
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class ComicsViewModel : ViewModel() {

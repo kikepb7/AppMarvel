@@ -12,8 +12,8 @@ class ComicDetailViewModel : ViewModel() {
 
     fun getComicDetail(comicId: Long) {
         viewModelScope.launch {
-            val comic = ComicProvider.comicsList.find {
-                it.id.toInt() == comicId.toInt()
+            val comic = ComicProvider.comicsList.find {comic ->
+                comic.id.toInt() == comicId.toInt()
             }
 
             comic?.let { state.emit(DetailState.ComicDetail(it)) }

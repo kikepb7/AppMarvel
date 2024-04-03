@@ -7,6 +7,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemComicsBinding
 import com.enriquepalmadev.appmarvel.model.Comic
+import com.enriquepalmadev.appmarvel.view.utils.loadImage
 
 class ComicsViewHolder(view: View) : ViewHolder(view) {
 
@@ -16,13 +17,7 @@ class ComicsViewHolder(view: View) : ViewHolder(view) {
         comic: Comic,
         onClickListener: (Comic) -> Unit
     ) {
-        Glide.with(binding.ibImageComic.context)
-            .load(comic.image)
-            .apply(
-                RequestOptions()
-                    .error(R.drawable.error_404)
-            )
-            .into(binding.ibImageComic)
+        binding.ibImageComic.loadImage(comic.image)
 
         binding.tvComicID.text = comic.id.toString()
         binding.tvComicTitle.text = comic.title
