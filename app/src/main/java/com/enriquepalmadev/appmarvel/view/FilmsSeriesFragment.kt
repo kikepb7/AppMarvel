@@ -1,7 +1,6 @@
 package com.enriquepalmadev.appmarvel.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,18 +24,16 @@ class FilmsSeriesFragment : Fragment() {
     ): View? {
         bindingFilmsSeries = FragmentFilmsSeriesBinding.inflate(inflater)
 
-        Log.d(":::JSON", getListFromJson().toString())
         filmsSeriesAdapter = FilmsSeriesAdapter()
-        bindingFilmsSeries.rvFilmsSeries.adapter = filmsSeriesAdapter
+        bindingFilmsSeries.rvFilmsSeries.adapter = filmsSeriesAdapter // Setting the Adapter in the RecyclerView
 
         // Getting the list of Films and Series
         listOfFilmsAndSeries = filmsSeriesAdapter.refreshList(getListFromJson())
 
         // When we press the button "Order by..."
-        bindingFilmsSeries.btnOrderby.setOnClickListener(View.OnClickListener {
-            listOfFilmsAndSeries = dialogOrderBy(bindingFilmsSeries)
-        })
-
+        bindingFilmsSeries.btnOrderby.setOnClickListener {
+            listOfFilmsAndSeries = dialogOrderBy(bindingFilmsSeries, listOfFilmsAndSeries)
+        }
 
         // Inflate the layout for this fragment
         return bindingFilmsSeries.root
@@ -54,8 +51,8 @@ class FilmsSeriesFragment : Fragment() {
     // Function to order the items of the RecyclerView
     private fun orderListBy(arrayList: ArrayList<FilmsSeriesDataclass>, selectedItem: String): ArrayList<FilmsSeriesDataclass> {
         when(selectedItem){
-            getString(R.string.orderby_year)-> arrayList.sortedByDescending { it.year }
-            getString(R.string.orderby_alphabet)-> arrayList.sortedBy { it.name }
+            getString(R.string.orderby_year)-> return ArrayList(arrayList.sortedByDescending { it.year })
+            getString(R.string.orderby_alphabet)-> return ArrayList(arrayList.sortedBy { it.name })
             // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
             // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
         }
@@ -63,8 +60,8 @@ class FilmsSeriesFragment : Fragment() {
     }
 
     // Dialog to select the items order
-    private fun dialogOrderBy(binding: FragmentFilmsSeriesBinding): ArrayList<FilmsSeriesDataclass> {
-
+    private fun dialogOrderBy(binding: FragmentFilmsSeriesBinding, arraylist: ArrayList<FilmsSeriesDataclass>): ArrayList<FilmsSeriesDataclass> {
+        var filmsAndSeriesList :ArrayList<FilmsSeriesDataclass> = arraylist
         var selectedItemIndex :Int = 0
         val arrayItems = arrayOf(getString(R.string.orderby_year),
             getString(R.string.orderby_alphabet),
@@ -81,15 +78,15 @@ class FilmsSeriesFragment : Fragment() {
                 }
                 .setPositiveButton(getString(R.string.dialog_ok)){dialog, which ->
                     showSnackbar(binding.root, getString(R.string.msg_orderby)+" "+selectedItem)
-                    listOfFilmsAndSeries = orderListBy(listOfFilmsAndSeries, selectedItem)
-                    filmsSeriesAdapter.refreshList(listOfFilmsAndSeries)
+                    filmsAndSeriesList = orderListBy(arraylist, selectedItem)
+                    filmsSeriesAdapter.refreshList(filmsAndSeriesList)
                 }
                 .setNegativeButton(getString(R.string.dialog_cancel)){dialog, which ->
                     showSnackbar(binding.root, getString(R.string.dialog_canceled))
                 }
                 .show()
         }
-        return listOfFilmsAndSeries
+        return filmsAndSeriesList
     }
 
     // Snackbar function

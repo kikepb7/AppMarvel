@@ -34,6 +34,8 @@ fun ImageView.loadImage(image: String) {
         .into(this)
 }
 
+// We can use this function at the same way that if we write it in the Adapter (FilmsSeriesAdapter), by this way
+// we can use it more than one time
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachRoot)
 

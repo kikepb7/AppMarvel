@@ -10,6 +10,7 @@ class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     private val filmsSeriesList = arrayListOf<FilmsSeriesDataclass>()
 
     // Maybe it will cause an error
+    // This method returns the fragment's view inflate with the items' view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsSeriesViewHolder {
         val binding = ItemFilmsSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FilmsSeriesViewHolder(binding)
@@ -18,15 +19,17 @@ class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     // Number of items
     override fun getItemCount(): Int = filmsSeriesList.size
 
+    // This method paint for each item (position) the ViewHolder (a "wrapper" of a view)
     override fun onBindViewHolder(holder: FilmsSeriesViewHolder, position: Int) {
         val film_serie :FilmsSeriesDataclass = filmsSeriesList[position]
         holder.bind(film_serie)
     }
 
+    // This method filled the list in the RecyclerView
     fun refreshList(filmsSeriesList: ArrayList<FilmsSeriesDataclass>): ArrayList<FilmsSeriesDataclass>{
         this.filmsSeriesList.clear()
         this.filmsSeriesList.addAll(filmsSeriesList)
-        notifyDataSetChanged()
+        notifyDataSetChanged() // This method refresh the list in the screen
         return filmsSeriesList
     }
 }
