@@ -16,6 +16,7 @@
 
     <!-- Films and series' fragment's text -->
     <string name="orderby">Order by…</string>
+    <string name="search">Search…</string>
 
     <!-- Films and series' items' text -->
     <string name="fav_off">off</string>

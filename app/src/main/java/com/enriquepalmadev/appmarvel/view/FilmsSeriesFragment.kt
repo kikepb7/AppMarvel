@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
@@ -19,7 +20,7 @@ import com.google.gson.Gson
 class FilmsSeriesFragment : Fragment() {
     private lateinit var filmsSeriesAdapter :FilmsSeriesAdapter
     private lateinit var bindingFilmsSeries: FragmentFilmsSeriesBinding
-    private var listOfFilmsAndSeries: ArrayList<FilmsSeriesDataclass> = ArrayList()
+    private var copyListOfFilmsAndSeries: ArrayList<FilmsSeriesDataclass> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,12 +31,14 @@ class FilmsSeriesFragment : Fragment() {
         bindingFilmsSeries.rvFilmsSeries.adapter = filmsSeriesAdapter // Setting the Adapter in the RecyclerView
 
         // Getting the list of Films and Series
-        listOfFilmsAndSeries = filmsSeriesAdapter.refreshList(getListFromJson())
+        copyListOfFilmsAndSeries = filmsSeriesAdapter.refreshList(getListFromJson())
 
         // When we press the button "Order by..."
         bindingFilmsSeries.btnOrderby.setOnClickListener {
-            listOfFilmsAndSeries = dialogOrderBy(bindingFilmsSeries, listOfFilmsAndSeries)
+            copyListOfFilmsAndSeries = dialogOrderBy(bindingFilmsSeries, copyListOfFilmsAndSeries)
         }
+
+        searchingFilmsSeries()
 
         // Inflate the layout for this fragment
         return bindingFilmsSeries.root
@@ -102,5 +105,22 @@ class FilmsSeriesFragment : Fragment() {
 
         findNavController().navigate(R.id.action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment, filmsSeriesData)
         Toast.makeText(context, "Item", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun searchingFilmsSeries() {
+        bindingFilmsSeries.searchViewSeriesAndFilms.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    val filteredList = copyListOfFilmsAndSeries.filter { it.name.lowercase().contains(newText) }
+                    filmsSeriesAdapter.filterByName(filteredList)
+                }
+                return false
+            }
+        })
     }
 }

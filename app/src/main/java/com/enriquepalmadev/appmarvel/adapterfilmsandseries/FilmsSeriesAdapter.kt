@@ -32,7 +32,13 @@ class FilmsSeriesAdapter(private val listener: (FilmsSeriesDataclass) -> Unit): 
     fun refreshList(filmsSeriesList: ArrayList<FilmsSeriesDataclass>): ArrayList<FilmsSeriesDataclass>{
         this.filmsSeriesList.clear()
         this.filmsSeriesList.addAll(filmsSeriesList)
-        notifyDataSetChanged() // This method refresh the list in the screen
+        notifyDataSetChanged() // This method refresh the list in the screen because we are notifying the changes
         return filmsSeriesList
+    }
+
+    fun filterByName(filmsSeries: List<FilmsSeriesDataclass>){
+        this.filmsSeriesList.clear()
+        this.filmsSeriesList.addAll(filmsSeries)
+        notifyDataSetChanged()
     }
 }
