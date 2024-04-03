@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
 
-class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
+class FilmsSeriesAdapter(private val listener: (FilmsSeriesDataclass) -> Unit): RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     private val filmsSeriesList = arrayListOf<FilmsSeriesDataclass>()
 
     // Maybe it will cause an error
@@ -23,6 +23,9 @@ class FilmsSeriesAdapter: RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     override fun onBindViewHolder(holder: FilmsSeriesViewHolder, position: Int) {
         val film_serie :FilmsSeriesDataclass = filmsSeriesList[position]
         holder.bind(film_serie)
+        // Adding the listener to each item
+        // With this implementation we can extract the listener method to another class
+        holder.itemView.setOnClickListener{listener(film_serie)}
     }
 
     // This method filled the list in the RecyclerView
