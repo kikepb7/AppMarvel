@@ -1,11 +1,10 @@
-package com.enriquepalmadev.appmarvel.viewmodel
+package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.appmarvel.model.Comic
-import com.enriquepalmadev.appmarvel.model.ComicProvider
+import com.enriquepalmadev.appmarvel.domain.model.ComicModel
+import com.enriquepalmadev.appmarvel.data.repository.ComicProvider
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class ComicsViewModel : ViewModel() {
@@ -13,7 +12,7 @@ class ComicsViewModel : ViewModel() {
 
     fun getComicsList() {
         viewModelScope.launch {
-            val listComic = ComicProvider.comicsList
+            val listComic = ComicProvider.comicsLists
 
             state.emit(State.ListReceived(listComic))
         }
@@ -30,6 +29,6 @@ class ComicsViewModel : ViewModel() {
 sealed class State {
     data object Loading : State()
     data object Error : State()
-    data class ListReceived(val listComics: List<Comic>) : State()
+    data class ListReceived(val listComicModels: List<ComicModel>) : State()
     data class NavigateToDetail(val comicId: Long): State()
 }

@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view.utils
+package com.enriquepalmadev.appmarvel.ui.view.utils
 
 import android.widget.Button
 import android.widget.ImageView

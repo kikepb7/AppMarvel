@@ -1,9 +1,9 @@
-package com.enriquepalmadev.appmarvel.viewmodel
+package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.appmarvel.model.Comic
-import com.enriquepalmadev.appmarvel.model.ComicProvider
+import com.enriquepalmadev.appmarvel.domain.model.ComicModel
+import com.enriquepalmadev.appmarvel.data.repository.ComicProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -12,7 +12,7 @@ class ComicDetailViewModel : ViewModel() {
 
     fun getComicDetail(comicId: Long) {
         viewModelScope.launch {
-            val comic = ComicProvider.comicsList.find {comic ->
+            val comic = ComicProvider.comicsLists.find { comic ->
                 comic.id.toInt() == comicId.toInt()
             }
 
@@ -25,5 +25,5 @@ class ComicDetailViewModel : ViewModel() {
 sealed class DetailState {
     data object Loading : DetailState()
     data object Error : DetailState()
-    data class ComicDetail(val comic: Comic) : DetailState()
+    data class ComicDetail(val comicModel: ComicModel) : DetailState()
 }

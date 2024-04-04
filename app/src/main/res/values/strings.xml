@@ -24,4 +24,5 @@
 
     <!-- Back button -->
     <string name="back_button">Back button</string>
+    <string name="marvel_comics_logo">Marvel Comics Logo</string>
 </resources>

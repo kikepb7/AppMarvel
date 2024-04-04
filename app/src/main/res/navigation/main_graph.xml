@@ -8,7 +8,7 @@
     <!-- HOME FRAGMENT -->
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.HomeFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -25,7 +25,7 @@
     <!-- COMICS FRAGMENT -->
     <fragment
         android:id="@+id/comicsFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.ComicsFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.ComicsFragment"
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" >
         <action
@@ -41,21 +41,21 @@
     <!-- COMIC DETAIL FRAGMENT -->
     <fragment
         android:id="@+id/comicDetail"
-        android:name="com.enriquepalmadev.appmarvel.view.ComicDetailFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.ComicDetailFragment"
         android:label="fragment_comic_detail"
         tools:layout="@layout/fragment_comic_detail" />
 
     <!-- FILMS AND SERIES FRAGMENT -->
     <fragment
         android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.FilmsSeriesFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_films_series" />
 
     <!-- CHARACTER FRAGMENT -->
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.enriquepalmadev.appmarvel.view.CharactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view
+package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
-import com.enriquepalmadev.appmarvel.model.Comic
-import com.enriquepalmadev.appmarvel.view.utils.loadImage
-import com.enriquepalmadev.appmarvel.viewmodel.ComicDetailViewModel
-import com.enriquepalmadev.appmarvel.viewmodel.DetailState
+import com.enriquepalmadev.appmarvel.domain.model.ComicModel
+import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
+import com.enriquepalmadev.appmarvel.ui.viewmodel.ComicDetailViewModel
+import com.enriquepalmadev.appmarvel.ui.viewmodel.DetailState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -49,9 +49,9 @@ class ComicDetailFragment : Fragment() {
         viewModel.state.onEach { state ->
             when (state) {
                 is DetailState.ComicDetail -> {
-                    delay(500)
+                    delay(500) // TODO --> eliminar cuando llamemos al servicio
                     hideLoader()
-                    showComicDetail(state.comic)
+                    showComicDetail(state.comicModel)
                 }
 
                 DetailState.Error -> {
@@ -76,13 +76,20 @@ class ComicDetailFragment : Fragment() {
 
 
     // Comic
-    private fun showComicDetail(comic: Comic) {
+    private fun showComicDetail(comicModel: ComicModel) {
         binding.apply {
-            ivComic.loadImage(comic.image)
-            comicId.text = comic.id.toString()
-            tvTitle.text = comic.title
-            tvDescription.text = comic.description
-            tvPrice.text = comic.price.toString()
+            ivComic.loadImage(comicModel.image)
+            comicId.text = comicModel.id.toString()
+            tvTitle.text = comicModel.title
+            tvDescription.text = comicModel.description
+            tvPrice.text = comicModel.price.toString()
+        }
+    }
+
+    // Favorite button
+    fun clickFavorite() {
+        binding.btnFavorite.setOnClickListener {
+            it.setPressed(true)
         }
     }
 }

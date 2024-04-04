@@ -1,14 +1,14 @@
-package com.enriquepalmadev.appmarvel.view.adapter
+package com.enriquepalmadev.appmarvel.ui.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.model.Comic
+import com.enriquepalmadev.appmarvel.domain.model.ComicModel
 
 class ComicsAdapter(
-    private val comicsList:List<Comic>,
-    private val onClickListener: (Comic) -> Unit
+    private val comicsList:List<ComicModel>,
+    private val onClickListener: (ComicModel) -> Unit
 ) : RecyclerView.Adapter<ComicsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicsViewHolder {
@@ -28,5 +28,4 @@ class ComicsAdapter(
     override fun getItemCount(): Int {
         return comicsList.size
     }
-
 }
