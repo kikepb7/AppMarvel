@@ -14,7 +14,7 @@
 
         <android.widget.SearchView
             android:id="@+id/searchView_seriesAndFilms"
-            style="@style/searchview"
+            style="@style/searchview_films_series"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
