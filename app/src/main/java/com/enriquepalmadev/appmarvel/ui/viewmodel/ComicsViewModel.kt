@@ -13,8 +13,9 @@ class ComicsViewModel : ViewModel() {
     fun getComicsList() {
         viewModelScope.launch {
             val listComic = ComicProvider.comicsLists
+            val favoriteComic = ComicProvider.comicsLists
 
-            state.emit(State.ListReceived(listComic))
+            state.emit(State.ListReceived(listComic, favoriteComic))
         }
     }
 
@@ -29,6 +30,6 @@ class ComicsViewModel : ViewModel() {
 sealed class State {
     data object Loading : State()
     data object Error : State()
-    data class ListReceived(val listComicModels: List<ComicModel>) : State()
+    data class ListReceived(val listComicModels: List<ComicModel>, val listFavoriteComics: List<ComicModel>) : State()
     data class NavigateToDetail(val comicId: Long): State()
 }

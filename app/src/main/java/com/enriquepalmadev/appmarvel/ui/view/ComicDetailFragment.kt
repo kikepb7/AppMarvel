@@ -49,7 +49,7 @@ class ComicDetailFragment : Fragment() {
         viewModel.state.onEach { state ->
             when (state) {
                 is DetailState.ComicDetail -> {
-                    delay(500) // TODO --> eliminar cuando llamemos al servicio
+                    // delay(500)  TODO --> eliminar cuando llamemos al servicio
                     hideLoader()
                     showComicDetail(state.comicModel)
                 }
@@ -88,8 +88,6 @@ class ComicDetailFragment : Fragment() {
 
     // Favorite button
     fun clickFavorite() {
-        binding.btnFavorite.setOnClickListener {
-            it.setPressed(true)
-        }
+
     }
 }

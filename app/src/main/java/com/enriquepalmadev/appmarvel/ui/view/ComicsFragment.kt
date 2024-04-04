@@ -79,6 +79,14 @@ class ComicsFragment : Fragment() {
                 viewModel.onItemSelected(comic.id)
             }
         }
+
+        binding.rvFavoriteComics.apply {
+            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+
+            adapter = ComicsAdapter(list) { comic ->
+                viewModel.onItemSelected(comic.id)
+            }
+        }
     }
 
     // Filter Chips
