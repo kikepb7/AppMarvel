@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/itemDetailsFilmsSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.view.ItemDetailsFilmsSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.ItemDetailFilmSerieFragment"
         android:label="item_details_films_series_fragment"
         tools:layout="@layout/item_details_films_series" />
 

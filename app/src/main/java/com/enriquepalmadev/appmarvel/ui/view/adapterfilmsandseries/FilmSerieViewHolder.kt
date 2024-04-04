@@ -4,15 +4,15 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.data.FilmsSeriesDataclass
+import com.enriquepalmadev.appmarvel.domain.model.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 
-class FilmsSeriesViewHolder(private val binding: ItemFilmsSeriesBinding): RecyclerView.ViewHolder(binding.root) {
+class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): RecyclerView.ViewHolder(binding.root) {
     // Binding to access to view objects on item_films_series.xml
     val favFilmsSeries :ArrayList<Int> = ArrayList<Int>()
 
-    fun bind(film_serie: FilmsSeriesDataclass){
+    fun bind(film_serie: FilmSerieModel){
         binding.titleFilmsSeries.text = film_serie.name
         binding.imageFilmsSeries.loadImage(film_serie.cover)
 

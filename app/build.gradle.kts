@@ -54,6 +54,8 @@ dependencies {
     val kaptVersion = "4.9.0"
     val coilVersion = "2.6.0"
     val jsonVersion = "2.10.1"
+    val retrofitVersion = "2.9.0"
+    val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
@@ -87,6 +89,13 @@ dependencies {
 
     /* JSON */
     implementation("com.google.code.gson:gson:$jsonVersion")
+
+    /* RETROFIT */
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+    /* CORRUTINAS */
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.enriquepalmadev.appmarvel.R
 
-class AspectRatioImageFilmsAndSeries  @JvmOverloads constructor(
+class AspectRatioImageFilmSerie  @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
