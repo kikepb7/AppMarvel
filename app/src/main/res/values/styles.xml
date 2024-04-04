@@ -10,4 +10,33 @@
         <item name="android:width">200dp</item>
         <item name="android:height">50dp</item>
     </style>
+
+    <style name="txt_search_fragment_films_series" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginStart">@dimen/margin_5dp</item>
+        <item name="android:hint">@string/search</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="activity_main_fragment_container_view" parent="@style/Base.Theme.AppMarvel">
+        <item name="defaultNavHost">true</item>
+        <item name="android:background">@color/black</item>
+        <item name="navGraph">@navigation/main_graph</item>
+    </style>
+
+    <style name="item_superhero_txt" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:padding">@dimen/txt_item_superhero_paddin_8dp</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="btn_search_fragment_films_series" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginEnd">@dimen/margin_5dp</item>
+        <item name="android:text">@string/search</item>
+    </style>
+
+    <style name="img_item_superhero" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
 </resources>
