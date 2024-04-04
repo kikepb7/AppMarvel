@@ -1,5 +1,6 @@
 package com.enriquepalmadev.appmarvel.adapterfilmsandseries
 
+import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
@@ -10,7 +11,6 @@ import com.enriquepalmadev.appmarvel.view.utilsfilmsseries.loadImage
 
 class FilmsSeriesViewHolder(private val binding: ItemFilmsSeriesBinding): RecyclerView.ViewHolder(binding.root) {
     // Binding to access to view objects on item_films_series.xml
-
     val favFilmsSeries :ArrayList<Int> = ArrayList<Int>()
 
     fun bind(film_serie: FilmsSeriesDataclass){
