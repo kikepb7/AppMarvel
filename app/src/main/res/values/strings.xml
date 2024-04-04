@@ -2,5 +2,18 @@
     <string name="app_name">AppMarvel</string>
     <string name="button_comics">Comics</string>
     <string name="button_characters">Personajes</string>
-    <string name="button_films_and_series">Series</string>
+    <string name="button_films_and_series">Películas y series</string>
+
+    <!-- Mensajes (tipo Toast) -->
+    <string name="toast_buttonComics">Botón comics</string>
+    <string name="toast_buttonCharacters">Botón personajes</string>
+    <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
+
+    <!-- Fragments' placeholder text -->
+    <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
+    <string name="comics_view">VISTA DE COMICS</string>
+    <string name="characters_view">VISTA DE PERSONAJES</string>
+
+    <!-- Films and series' fragment's placeholder text -->
+    <string name="search">Buscar…</string>
 </resources>

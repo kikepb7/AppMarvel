@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    tools:context=".view.HomeFragment">
+
+    <com.enriquepalmadev.appmarvel.view.components.MarvelButton
+        android:id="@+id/buttonComics"
+        style="@style/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_marvel_button_244dp"
+        app:buttonText="@string/button_comics"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.enriquepalmadev.appmarvel.view.components.MarvelButton
+        android:id="@+id/buttonCharacters"
+        style="@style/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_between_marvel_buttons_44dp"
+        app:buttonText="@string/button_characters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonComics" />
+
+    <com.enriquepalmadev.appmarvel.view.components.MarvelButton
+        android:id="@+id/buttonFilmsAndSeries"
+        style="@style/buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_between_marvel_buttons_44dp"
+        app:buttonText="@string/button_films_and_series"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCharacters" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
