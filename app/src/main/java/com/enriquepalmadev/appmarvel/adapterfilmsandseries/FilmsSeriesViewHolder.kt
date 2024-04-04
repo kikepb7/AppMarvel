@@ -14,7 +14,7 @@ class FilmsSeriesViewHolder(private val binding: ItemFilmsSeriesBinding): Recycl
     val favFilmsSeries :ArrayList<Int> = ArrayList<Int>()
 
     fun bind(film_serie: FilmsSeriesDataclass){
-        binding.textFilmsSeries.text = film_serie.name
+        binding.titleFilmsSeries.text = film_serie.name
         binding.imageFilmsSeries.loadImage(film_serie.cover)
 
         binding.btnFav.setOnClickListener(View.OnClickListener {

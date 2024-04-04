@@ -2,17 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/background_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".view.FilmsSeriesFragment">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp">
-
 
         <android.widget.SearchView
             android:id="@+id/searchView_seriesAndFilms"
@@ -33,15 +31,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_films_series"
+            style="@style/rv_film_serie"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="5dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView_seriesAndFilms"
-            app:spanCount="2" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView_seriesAndFilms" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
