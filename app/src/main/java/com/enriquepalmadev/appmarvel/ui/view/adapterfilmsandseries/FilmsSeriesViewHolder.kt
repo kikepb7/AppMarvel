@@ -1,12 +1,11 @@
-package com.enriquepalmadev.appmarvel.adapterfilmsandseries
+package com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries
 
-import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
-import com.enriquepalmadev.appmarvel.view.utilsfilmsseries.loadImage
+import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 
 class FilmsSeriesViewHolder(private val binding: ItemFilmsSeriesBinding): RecyclerView.ViewHolder(binding.root) {

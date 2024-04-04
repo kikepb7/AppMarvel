@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view.utilsfilmsseries
+package com.enriquepalmadev.appmarvel.ui.view.utils
 
 import android.content.Context
 import android.view.LayoutInflater

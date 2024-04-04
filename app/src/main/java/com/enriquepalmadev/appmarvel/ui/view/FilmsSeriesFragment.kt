@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view
+package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.adapterfilmsandseries.FilmsSeriesAdapter
+import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmsSeriesAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
-import com.enriquepalmadev.appmarvel.view.utilsfilmsseries.getJsonFromAssets
+import com.enriquepalmadev.appmarvel.ui.view.utils.getJsonFromAssets
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 class FilmsSeriesFragment : Fragment() {
-    private lateinit var filmsSeriesAdapter :FilmsSeriesAdapter
+    private lateinit var filmsSeriesAdapter : FilmsSeriesAdapter
     private lateinit var bindingFilmsSeries: FragmentFilmsSeriesBinding
     private var copyListOfFilmsAndSeries: ArrayList<FilmsSeriesDataclass> = ArrayList()
     override fun onCreateView(

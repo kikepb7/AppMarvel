@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.adapterfilmsandseries
+package com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
