@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
+import com.enriquepalmadev.appmarvel.data.FilmsSeriesDataclass
 
 class FilmsSeriesAdapter(private val listener: (FilmsSeriesDataclass) -> Unit): RecyclerView.Adapter<FilmsSeriesViewHolder>() {
     private val filmsSeriesList = arrayListOf<FilmsSeriesDataclass>()
@@ -21,7 +21,7 @@ class FilmsSeriesAdapter(private val listener: (FilmsSeriesDataclass) -> Unit): 
 
     // This method paint for each item (position) the ViewHolder (a "wrapper" of a view)
     override fun onBindViewHolder(holder: FilmsSeriesViewHolder, position: Int) {
-        val film_serie :FilmsSeriesDataclass = filmsSeriesList[position]
+        val film_serie : FilmsSeriesDataclass = filmsSeriesList[position]
         holder.bind(film_serie)
         // Adding the listener to each item
         // With this implementation we can extract the listener method to another class

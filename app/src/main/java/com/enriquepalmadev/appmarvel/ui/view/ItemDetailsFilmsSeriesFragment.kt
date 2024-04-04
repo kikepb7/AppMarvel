@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.enriquepalmadev.appmarvel.databinding.ItemDetailsFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
+import com.enriquepalmadev.appmarvel.data.FilmsSeriesDataclass
 import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 class ItemDetailsFilmsSeriesFragment : Fragment() {

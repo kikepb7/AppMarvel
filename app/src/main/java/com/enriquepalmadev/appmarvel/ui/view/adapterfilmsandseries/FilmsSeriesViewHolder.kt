@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
+import com.enriquepalmadev.appmarvel.data.FilmsSeriesDataclass
 import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 

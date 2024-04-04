@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmsSeriesAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.model.FilmsSeriesDataclass
+import com.enriquepalmadev.appmarvel.data.FilmsSeriesDataclass
 import com.enriquepalmadev.appmarvel.ui.view.utils.getJsonFromAssets
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar

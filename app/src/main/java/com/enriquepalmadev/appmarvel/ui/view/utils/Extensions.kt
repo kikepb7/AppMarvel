@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
@@ -40,4 +42,10 @@ fun ImageView.loadImage(image: String) {
 // we can use it more than one time
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachRoot)
+
+fun Button.navigateTo(action: Int) {
+    setOnClickListener {
+        findNavController().navigate(action)
+    }
+}
 

@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.model
+package com.enriquepalmadev.appmarvel.data
 
 import java.io.Serializable
 
