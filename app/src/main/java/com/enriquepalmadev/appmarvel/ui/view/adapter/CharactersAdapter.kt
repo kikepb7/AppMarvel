@@ -11,8 +11,6 @@ class CharactersAdapter(
     private val listener: (Character) -> Unit
 ) : RecyclerView.Adapter<CharactersViewHolder>() {
 
-    //private var characterList = arrayListOf<Character>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         val binding = ItemSuperheroBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CharactersViewHolder(binding)

@@ -1,11 +1,10 @@
 package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.enriquepalmadev.appmarvel.domain.model.CharacterProvider
+import androidx.fragment.app.Fragment
 import com.enriquepalmadev.appmarvel.databinding.FragmentItemDetailsCharactersBinding
 import com.enriquepalmadev.appmarvel.domain.model.Character
 import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage

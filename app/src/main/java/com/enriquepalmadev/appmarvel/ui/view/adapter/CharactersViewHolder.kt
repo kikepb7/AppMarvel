@@ -1,6 +1,5 @@
 package com.enriquepalmadev.appmarvel.ui.view.adapter
 
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
@@ -21,44 +20,19 @@ class CharactersViewHolder(private val binding: ItemSuperheroBinding) : ViewHold
             listener.invoke(character)
         }
 
+        var currentImage = R.drawable.ic_border_favorite_24dp
         //To put on favourites or not ->
         binding.ivFavourites.setOnClickListener{
-            if(binding.ivFavourites.contentDescription == "on"){
+            if(currentImage == R.drawable.ic_full_favorite_24dp){
                 binding.ivFavourites.setImageResource(R.drawable.ic_border_favorite_24dp)
-                binding.ivFavourites.contentDescription = "off"
-
+                currentImage = R.drawable.ic_border_favorite_24dp
                 //More code in process
-            }else if (binding.ivFavourites.contentDescription == "off"){
+            }else{
                 binding.ivFavourites.setImageResource(R.drawable.ic_full_favorite_24dp)
-                binding.ivFavourites.contentDescription = "on"
-
+                currentImage = R.drawable.ic_full_favorite_24dp
                 //More code in process
             }
         }
 
     }
-
-
-    /*fun render(
-        character: Character,
-        onClickListener: (Character) -> Unit
-    ){
-
-        binding.imageButton.loadImage(character.image)
-
-        /*binding.imageButton.load(character.image) {
-            crossfade(true)
-            size(800, 800)
-            scale(Scale.FILL)
-            placeholder(R.drawable.cargando)
-        }*/
-
-        binding.tvTexto.text = character.nombre
-
-        itemView.setOnClickListener{
-            onClickListener(character)
-        }
-    }*/
-
-
 }

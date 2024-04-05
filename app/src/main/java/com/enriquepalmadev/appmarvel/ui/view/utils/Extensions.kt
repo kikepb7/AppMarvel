@@ -2,8 +2,6 @@ package com.enriquepalmadev.appmarvel.ui.view.utils
 
 import android.content.Context
 import android.widget.ImageView
-import coil.load
-import coil.size.Scale
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R

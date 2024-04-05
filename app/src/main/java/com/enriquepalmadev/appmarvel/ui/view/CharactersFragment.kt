@@ -1,26 +1,20 @@
 package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentCharactersBinding
-import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
 import com.enriquepalmadev.appmarvel.domain.model.Character
-import com.enriquepalmadev.appmarvel.domain.model.CharacterProvider
 import com.enriquepalmadev.appmarvel.ui.view.adapter.CharactersAdapter
-import com.enriquepalmadev.appmarvel.ui.view.utils.getJsonFromAssets
 import com.enriquepalmadev.appmarvel.ui.viewmodel.CharactersViewModel
 import com.enriquepalmadev.appmarvel.ui.viewmodel.CharactersViewModel.State
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -28,7 +22,6 @@ import kotlinx.coroutines.flow.onEach
 class CharactersFragment : Fragment() {
     private lateinit var binding: FragmentCharactersBinding
     private lateinit var charactersAdapter: CharactersAdapter
-    private var copyListCharacters : ArrayList<Character> = ArrayList()
     private val viewModel : CharactersViewModel by viewModels()
 
     override fun onCreateView(
@@ -37,20 +30,9 @@ class CharactersFragment : Fragment() {
         binding = FragmentCharactersBinding.inflate(inflater)
         val view = binding.root
 
-        /*charactersAdapter = CharactersAdapter(::navigateToCharacterDetail)
-        binding.rvCharacters.adapter = charactersAdapter//Setting the Adapter in the RecyclerView*/
-
-        //copyListCharacters = charactersAdapter.refreshList(getListFromView()) as ArrayList<Character>
-
         return view
     }
 
-    //Reach the list from viewModel
-    private fun getListFromView(): ArrayList<Character>{
-        var lista = viewModel.getCharacterList()
-        return ArrayList(lista)
-
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -84,9 +66,6 @@ class CharactersFragment : Fragment() {
     }
 
     private fun navigateToCharacterDetail(character: Character){
-        /*binding.apply {
-            rvCharacters.findNavController().navigate(R.id.action_charactersFragment_to_characterDetail)
-        }*/
         val characterData = Bundle().apply {
             putSerializable("objectCharacter", character)
         }
