@@ -3,18 +3,19 @@ package com.enriquepalmadev.appmarvel.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.domain.model.ComicModel
-import com.enriquepalmadev.appmarvel.data.repository.ComicProvider
+import com.enriquepalmadev.appmarvel.domain.usecase.FetchComicDetailUseCase
+import com.enriquepalmadev.appmarvel.domain.usecase.FetchComicUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class ComicDetailViewModel : ViewModel() {
+
+    private val fetchComicDetailUseCase = FetchComicDetailUseCase()
     val state = MutableStateFlow<DetailState>(DetailState.Loading)
 
-    fun getComicDetail(comicId: Long) {
+    fun getComicDetail(comicId: String) {
         viewModelScope.launch {
-            val comic = ComicProvider.comicsLists.find { comic ->
-                comic.id.toInt() == comicId.toInt()
-            }
+            val comic = fetchComicDetailUseCase.fetchComicDetail(comicId)
 
             comic?.let { state.emit(DetailState.ComicDetail(it)) }
         }

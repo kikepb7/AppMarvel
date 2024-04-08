@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
 import com.enriquepalmadev.appmarvel.domain.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 import com.enriquepalmadev.appmarvel.ui.viewmodel.ComicDetailViewModel
 import com.enriquepalmadev.appmarvel.ui.viewmodel.DetailState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -22,7 +22,8 @@ class ComicDetailFragment : Fragment() {
         const val KEY_ID = "id"
     }
 
-    private val comicId by lazy { arguments?.getLong(KEY_ID) }
+    private var isFavorite = false
+    private val comicId by lazy { arguments?.getString(KEY_ID) }
     private lateinit var binding: FragmentComicDetailBinding
     private val viewModel: ComicDetailViewModel by viewModels()
 
@@ -79,15 +80,30 @@ class ComicDetailFragment : Fragment() {
     private fun showComicDetail(comicModel: ComicModel) {
         binding.apply {
             ivComic.loadImage(comicModel.image)
-            comicId.text = comicModel.id.toString()
+            comicId.text = comicModel.id
             tvTitle.text = comicModel.title
             tvDescription.text = comicModel.description
-            tvPrice.text = comicModel.price.toString()
+            tvPrice.text = comicModel.price
+        }
+
+        binding.btnFavorite.setOnClickListener {
+            isFavorite = !isFavorite
+            updateFavoriteIcon()
+
+
         }
     }
 
     // Favorite button
-    fun clickFavorite() {
+    private fun updateFavoriteIcon() {
+        val icon =
+            if (isFavorite) {
+                R.drawable.ic_solid_heart
+            } else {
+                R.drawable.ic_line_heart
+            }
 
+        binding.btnFavorite.setImageResource(icon)
     }
+
 }

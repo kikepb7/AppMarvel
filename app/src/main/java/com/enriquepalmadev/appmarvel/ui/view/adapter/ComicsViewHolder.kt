@@ -8,7 +8,7 @@ import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 class ComicsViewHolder(view: View) : ViewHolder(view) {
 
-    val binding = ItemComicsBinding.bind(view)
+    private val binding = ItemComicsBinding.bind(view)
 
     fun render(
         comicModel: ComicModel,

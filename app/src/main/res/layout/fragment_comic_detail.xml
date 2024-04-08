@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="512dp"/>
+            app:layout_constraintGuide_begin="530dp"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -140,15 +140,16 @@
 
             <ImageView
                 android:id="@+id/btnFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="244dp"
                 android:elevation="10dp"
-                android:src="@drawable/ic_favorite_icon"
+                android:src="@drawable/ic_line_heart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white"
+                android:contentDescription="@string/favorite_button" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

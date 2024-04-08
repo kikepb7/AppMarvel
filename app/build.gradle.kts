@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -53,6 +54,8 @@ dependencies {
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
+    val roomVersion = "2.6.1"
+    val retrofitVersion = "2.10.0"
 
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
@@ -77,6 +80,14 @@ dependencies {
 
     /* COIL */
     implementation("io.coil-kt:coil:$coilVersion")
+
+    /* ROOM */
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    /* RETROFIT */
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

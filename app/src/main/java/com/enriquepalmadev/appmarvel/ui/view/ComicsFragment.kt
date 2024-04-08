@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.onEach
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
     private val viewModel: ComicsViewModel by viewModels()
+    private val favoriteComics = mutableListOf<ComicModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,9 +62,9 @@ class ComicsFragment : Fragment() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun navigateToComicDetail(comicId: Long) {
+    private fun navigateToComicDetail(comicId: String) {
         val bundle = Bundle().apply {
-            putLong(KEY_ID, comicId)
+            putString(KEY_ID, comicId)
 //              putSerializable("comic", comic)
         }
         binding.apply {
@@ -83,11 +84,24 @@ class ComicsFragment : Fragment() {
         binding.rvFavoriteComics.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 
-            adapter = ComicsAdapter(list) { comic ->
+            adapter = ComicsAdapter(favoriteComics) { comic ->
                 viewModel.onItemSelected(comic.id)
             }
         }
     }
+
+    // Add comic into favorite comics list
+    private fun favoriteComic(comic: ComicModel) {
+        favoriteComics.add(comic)
+        binding.rvFavoriteComics.adapter?.notifyItemInserted(favoriteComics.size - 1)
+    }
+
+    // Remove a comic from favorite comics list
+    private fun removeFavoriteComic(position: Int) {
+        favoriteComics.removeAt(position)
+        binding.rvFavoriteComics.adapter?.notifyItemRemoved(position)
+    }
+
 
     // Filter Chips
     private fun initChips() {
@@ -104,6 +118,21 @@ class ComicsFragment : Fragment() {
                 }
             }
             binding.chipGroupFilter.addView(chip)
+        }
+    }
+
+    // Favorite Comics List
+    private fun addToFavorites(comic: ComicModel) {
+        favoriteComics.add(comic)
+    }
+
+    private fun removeFromFavorites(comicId: String) {
+        val index = favoriteComics.indexOfFirst {
+            it.id == comicId
+        }
+
+        if (index != -1) {
+            favoriteComics.removeAt(index)
         }
     }
 }

@@ -1,14 +1,15 @@
 package com.enriquepalmadev.appmarvel.data.repository
 
+import com.enriquepalmadev.appmarvel.data.model.ComicModelDto
+import com.enriquepalmadev.appmarvel.data.utils.dtoToComicListModel
 import com.enriquepalmadev.appmarvel.domain.model.ComicModel
+import com.enriquepalmadev.appmarvel.domain.ComicRepository
 
-class ComicProvider {
+class ComicRepositoryImpl : ComicRepository {
 
-    // As a Java static class. We can access to them without create an instance
-    companion object {
-
-        val comicsLists = listOf(
-            ComicModel(
+    override suspend fun fetchComicList(): List<ComicModel> {
+        return listOf(
+            ComicModelDto(
                 1,
                 "Spider-man: Shadow of the Green Goblin (2024) #1",
                 "April 03, 2024",
@@ -18,7 +19,7 @@ class ComicProvider {
                 9.99,
                 "https://cdn.marvel.com/u/prod/marvel/i/mg/f/e0/6601d3046216f/detail.jpg"
             ),
-            ComicModel(
+            ComicModelDto(
                 2,
                 "Deadpool (2024), #1",
                 "April 03, 2024",
@@ -28,7 +29,7 @@ class ComicProvider {
                 12.99,
                 "https://cdn.marvel.com/u/prod/marvel/i/mg/8/03/6601d3468731f/detail.jpg"
             ),
-            ComicModel(
+            ComicModelDto(
                 3,
                 "Vengeance of the Moon Knight (2024) #4",
                 "April 03, 2024",
@@ -38,7 +39,7 @@ class ComicProvider {
                 9.99,
                 "https://cdn.marvel.com/u/prod/marvel/i/mg/6/40/6601d32692dce/detail.jpg"
             ),
-            ComicModel(
+            ComicModelDto(
                 4,
                 "Marvel Super Heroes Secret Wars Facsimile Edition (2024) #4",
                 "April 03, 2024",
@@ -48,7 +49,7 @@ class ComicProvider {
                 9.99,
                 "https://cdn.marvel.com/u/prod/marvel/i/mg/2/a0/6601d33db5601/detail.jpg"
             ),
-            ComicModel(
+            ComicModelDto(
                 5,
                 "X-Men (2021) #33",
                 "April 03, 2024",
@@ -58,7 +59,7 @@ class ComicProvider {
                 9.99,
                 "https://cdn.marvel.com/u/prod/marvel/i/mg/f/60/6601d3283c010/detail.jpg"
             ),
-            ComicModel(
+            ComicModelDto(
                 6,
                 "Alien: Black, White & Blood (2024) #3",
                 "April 03, 2024",
@@ -67,8 +68,13 @@ class ComicProvider {
                 "THE STAR-STUDDED KILLFEST CONTINUES! In \"Utopia,\" Collin Kelly, Jackson Lanzing and Michael Dowling take you through the collapse of a civilization that believed it could overcome the worst of human nature to live in permanent peace. But in the war against the Xenomorphs overtaking their home, the citizens of the ship Forward find themselves breaking every principle… Then, in \"Gear in the Machine,\" Cody Ziglar goes guts-deep into the core of human evil, while in \"Lucky,\" Steve Foxe flips the viewpoint in a way that will tug at the heartstrings of even the most seasoned Alien fan. An unmissable piece of the universe-spanning franchise!",
                 9.99,
                 "https://cdn.marvel.com/u/prod/marvel/i/mg/8/d0/6601d35ab70cf/detail.jpg"
-            ),
-
             )
+        ).dtoToComicListModel()
+    }
+
+    override suspend fun fetchComicDetail(comicId : String): ComicModel? {
+        return fetchComicList().find { comic ->
+            comic.id == comicId
+        }
     }
 }
