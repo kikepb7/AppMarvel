@@ -12,7 +12,7 @@ interface CharacterDao {
     suspend fun  getAllCharacters():List<CharacterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(quotes:List<CharacterEntity>)
+    suspend fun insertAll(charactersList: List<CharacterEntity>)
 
     @Query("delete from characters_table")
     suspend fun deleteAllCharactersFromLocal()
