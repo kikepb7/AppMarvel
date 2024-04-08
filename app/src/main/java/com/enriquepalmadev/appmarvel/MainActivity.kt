@@ -1,13 +1,10 @@
 package com.enriquepalmadev.appmarvel
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.enriquepalmadev.appmarvel.databinding.ActivityMainBinding
-import com.enriquepalmadev.appmarvel.view.CharactersFragment
-import com.enriquepalmadev.appmarvel.view.ComicsFragment
-import com.enriquepalmadev.appmarvel.view.FilmsSeriesFragment
+import com.enriquepalmadev.appmarvel.view.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,16 +14,13 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.buttonComics.setOnClickListener { replaceFragment(ComicsFragment()) }
-        binding.buttonCharacters.setOnClickListener { replaceFragment(CharactersFragment()) }
-        binding.buttonFilmsAndSeries.setOnClickListener { replaceFragment(FilmsSeriesFragment()) }
+        replaceFragment(HomeFragment())
     }
 
-    fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
-            .replace(binding.frameLayout.id, fragment)
-            .addToBackStack(null)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .add(binding.frameLayout.id, fragment)
             .commit()
     }
+
 }
