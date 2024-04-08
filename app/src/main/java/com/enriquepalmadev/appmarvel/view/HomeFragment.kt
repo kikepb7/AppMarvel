@@ -22,24 +22,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonComics.setOnClickListener { replaceFragment(ComicsFragment()) }
-        binding.buttonCharacters.setOnClickListener { replaceFragment(CharactersFragment()) }
-        binding.buttonFilmsAndSeries.setOnClickListener { replaceFragment(FilmsSeriesFragment()) }
+        binding.buttonComics.setOnClickListener { replaceFragment(ComicsFragment::class.java) }
+        binding.buttonCharacters.setOnClickListener { replaceFragment(CharactersFragment::class.java) }
+        binding.buttonFilmsAndSeries.setOnClickListener { replaceFragment(FilmsSeriesFragment::class.java) }
     }
 
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding.buttonComics.setOnClickListener { replaceFragment(ComicsFragment()) }
-        binding.buttonCharacters.setOnClickListener { replaceFragment(CharactersFragment()) }
-        binding.buttonFilmsAndSeries.setOnClickListener { replaceFragment(FilmsSeriesFragment()) }
-    }*/
-
-    fun replaceFragment(fragment: Fragment){
-        parentFragmentManager.beginTransaction()
+    fun replaceFragment(fragmentClass: Class<out Fragment>){
+        val fragment = fragmentClass.newInstance()
+        childFragmentManager.beginTransaction()
             .replace(binding.frameLayout.id, fragment)
-            .addToBackStack(null)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
