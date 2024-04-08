@@ -4,8 +4,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.model.FilmSerieModel
-import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
+import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
 
 
 class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): RecyclerView.ViewHolder(binding.root) {

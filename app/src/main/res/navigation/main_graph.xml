@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.view.FilmsSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.view.FilmSerieFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_films_series">
         <action

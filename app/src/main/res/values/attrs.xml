@@ -6,7 +6,7 @@
         <attr name="buttonText" format="string"/>
     </declare-styleable>
 
-    <!-- Style of the images on FilmsSeriesFragment -->
+    <!-- Style of the images on FilmSerieFragment -->
     <declare-styleable name="AspectRatioImageFilmsAndSeries">
         <attr name="ratio" format="float"/>
     </declare-styleable>

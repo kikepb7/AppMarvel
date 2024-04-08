@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.domain.model
+package com.enriquepalmadev.appmarvel.domain.models
 
 import java.io.Serializable
 

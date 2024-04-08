@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
-import com.enriquepalmadev.appmarvel.ui.view.utils.navigateTo
+import com.enriquepalmadev.appmarvel.ui.view.extensions.navigateTo
 
 class HomeFragment : Fragment() {
 

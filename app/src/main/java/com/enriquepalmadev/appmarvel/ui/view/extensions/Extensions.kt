@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.ui.view.utils
+package com.enriquepalmadev.appmarvel.ui.view.extensions
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,13 +11,14 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enriquepalmadev.appmarvel.R
+import com.google.android.material.snackbar.Snackbar
 import java.io.InputStream
 import java.nio.charset.Charset
 
 // Util file to get data of JSON
-fun getJsonFromAssets(context: Context, file: String): String? {
+fun Context.getJsonFromAssets(file: String): String {
     var json = ""
-    val stream: InputStream = context.assets.open(file)
+    val stream: InputStream = this.assets.open(file)
     val size: Int = stream.available()
     val buffer = ByteArray(size)
     stream.read(buffer)
@@ -47,5 +48,10 @@ fun Button.navigateTo(action: Int) {
     setOnClickListener {
         findNavController().navigate(action)
     }
+}
+
+// Snackbar function
+fun showSnackbar(view: View, msg: String){
+    Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
 }
 

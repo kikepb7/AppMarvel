@@ -55,6 +55,8 @@ dependencies {
     val coilVersion = "2.6.0"
     val jsonVersion = "2.10.1"
     val retrofitVersion = "2.9.0"
+    val okHttp3Version = "4.12.0"
+    val okHttp3LoggingInterceptorVersion = "4.9.0"
     val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
