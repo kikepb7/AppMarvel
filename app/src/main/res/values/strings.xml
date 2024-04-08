@@ -14,6 +14,10 @@
     <string name="comics_view">VISTA DE COMICS</string>
     <string name="characters_view">VISTA DE PERSONAJES</string>
 
+    <!-- Characters' fragment's buttons text -->
+    <string name="search_button">Buscar</string>
+    <string name="filter_button">Filtrar</string>
+
     <!-- Films and series' fragment's placeholder text -->
     <string name="search">Buscar…</string>
     <!-- TODO: Remove or change this placeholder text -->

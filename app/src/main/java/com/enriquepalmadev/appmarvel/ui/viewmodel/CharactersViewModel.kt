@@ -9,7 +9,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 
-class CharactersViewModel: ViewModel() {
+class CharactersViewModel: ViewModel(
+    //private val getQuoteUseCase: GetQuoteUseCase,
+    //private val getRandomQuoteUseCase: GetRandomQuoteUseCase
+) {
     private val _state = MutableSharedFlow<State>()
     val state = _state.asSharedFlow()
 
@@ -23,6 +26,16 @@ class CharactersViewModel: ViewModel() {
         }
         return listCharacter
     }
+
+    //Coger los datos del
+    /*fun getCharacterListQuote(){
+        viewModelScope.launch {
+            val listCharacter = getRandomQuoteUseCase()
+
+            _state.emit(State.ListReceived(listCharacter))
+        }
+        return listCharacter
+    }*/
 
     fun onItemSelected(character: Character){
         viewModelScope.launch {

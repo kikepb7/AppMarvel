@@ -20,6 +20,8 @@ class CharactersViewHolder(private val binding: ItemSuperheroBinding) : ViewHold
             listener.invoke(character)
         }
 
+
+        //Favourites function
         var currentImage = R.drawable.ic_border_favorite_24dp
         //To put on favourites or not ->
         binding.ivFavourites.setOnClickListener{
@@ -33,6 +35,5 @@ class CharactersViewHolder(private val binding: ItemSuperheroBinding) : ViewHold
                 //More code in process
             }
         }
-
     }
 }

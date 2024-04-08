@@ -1,9 +1,14 @@
 package com.enriquepalmadev.appmarvel.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,7 +34,6 @@ class CharactersFragment : Fragment() {
     ): View? {
         binding = FragmentCharactersBinding.inflate(inflater)
         val view = binding.root
-
         return view
     }
 
@@ -41,6 +45,29 @@ class CharactersFragment : Fragment() {
 
         //Call the viewModel to bring us the list of characters
         viewModel.getCharacterList()
+
+        //Filter function
+        binding.btFiltros.setOnClickListener {
+            Log.d("BOTON FILTRAR", "Ha sido pulsado.")
+            showFiltersMenu(binding.btFiltros)
+        }
+
+        //Search Function
+        binding.svBuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            //When the customer submit the text
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("BOTON BARRA BUSCAR", "Enviado")
+                return false
+            }
+
+            //When the text have been changed
+            override fun onQueryTextChange(newText: String?): Boolean {
+                var searchText = newText?:""
+                Log.d("BOTON BARRA BUSCAR", searchText)
+                return true
+            }
+
+        })
     }
 
     private fun initObserver(){
@@ -88,4 +115,26 @@ class CharactersFragment : Fragment() {
         }
     }
 
+    private fun showFiltersMenu(anchorView: Button){
+
+        val popupMenu = PopupMenu(context, anchorView)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.filters_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.ordenAlfabetico ->{
+
+                    Log.d("BOTON FILTER", "opcion orden alfabetico")
+                    true
+                }
+                R.id.favoritos ->{
+                    Log.d("BOTON FILTER", "opcion favoritos")
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
 }
