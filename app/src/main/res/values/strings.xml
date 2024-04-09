@@ -26,4 +26,7 @@
     <string name="back_button">Back button</string>
     <string name="marvel_comics_logo">Marvel Comics Logo</string>
     <string name="favorite_button">Favorite button</string>
+    <string name="title_icon">Title icon</string>
+    <string name="all_comics_title">TODOS LOS COMICS</string>
+    <string name="favorite_comics_title">COMICS FAVORITOS</string>
 </resources>

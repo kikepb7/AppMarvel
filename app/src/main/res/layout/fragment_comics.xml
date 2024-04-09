@@ -5,7 +5,7 @@
     android:id="@+id/comicsViewContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.ComicsFragment">
+    tools:context=".ui.featureComics.view.ComicsFragment">
 
     <ImageView
         android:id="@+id/logoScreen"
@@ -37,7 +37,8 @@
         app:layout_constraintTop_toBottomOf="@+id/chipGroupFilter"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ironman"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:contentDescription="@string/title_icon" />
 
 
     <TextView
@@ -45,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="TODOS LOS COMICS"
+        android:text="@string/all_comics_title"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogoAllComics"
@@ -71,14 +72,15 @@
         app:layout_constraintTop_toBottomOf="@+id/rvComics"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_solid_heart"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:contentDescription="@string/title_icon" />
 
     <TextView
         android:id="@+id/tvFavoriteComics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="COMICS FAVORITOS"
+        android:text="@string/favorite_comics_title"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogoFavoriteComics"
