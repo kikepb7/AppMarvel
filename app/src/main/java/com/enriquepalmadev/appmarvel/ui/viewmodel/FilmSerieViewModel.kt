@@ -2,12 +2,15 @@ package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.usecase.IGetListOfAllSeriesUseCase
+import com.enriquepalmadev.appmarvel.domain.usecase.impl.GetListOfAllSeriesUseCaseImpl
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.ui.view.extensions.getJsonFromAssets
 import com.enriquepalmadev.appmarvel.ui.view.extensions.showSnackbar
@@ -21,6 +24,7 @@ class FilmSerieViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Loading)
     val uiState : StateFlow<FilmSerieUIState> = _uiState
+    private val iGetListOfAllSeriesUseCaseImpl = GetListOfAllSeriesUseCaseImpl()
 
     private var listOfFilmsAndSeries: ArrayList<FilmSerieModel> = ArrayList()
 
@@ -30,12 +34,16 @@ class FilmSerieViewModel : ViewModel() {
         }
     }
 
+    suspend fun testingAPIGetAllSeries(){
+        val testList = iGetListOfAllSeriesUseCaseImpl.getListOfAllSeries()
+        Log.d("testList:::", testList.toString())
+    }
+
     // Obtaining an ArrayList from a JSON file
     fun getListFromJson(context: Context): ArrayList<FilmSerieModel>{
-        val json: String? = context.getJsonFromAssets("movies.json")
+        val json: String = context.getJsonFromAssets("movies.json")
         val filmsAndSeriesList = Gson().fromJson(json, Array<FilmSerieModel>::class.java).toList()
         listOfFilmsAndSeries =  ArrayList(filmsAndSeriesList.sortedByDescending { it.year})
-
         viewModelScope.launch {
             _uiState.emit(FilmSerieUIState.ListReceived(ArrayList(listOfFilmsAndSeries)))
         } // Pasar estados de error

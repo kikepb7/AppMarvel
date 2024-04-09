@@ -4,7 +4,7 @@ data class MarvelFilmSerieItemDto(
     val characters: MarvelCharactersDto,
     val comics: MarvelComicsDto,
     val creators: MarvelCreatorsDto,
-    val description: Any,
+    val description: String,
     val endYear: Int,
     val events: MarvelEventsDto,
     val id: Int,

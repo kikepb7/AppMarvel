@@ -51,12 +51,14 @@ dependencies {
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
     val glideVersion = "4.16.0"
-    val kaptVersion = "4.9.0"
+    val kaptVersion = "4.16.0"
     val coilVersion = "2.6.0"
     val jsonVersion = "2.10.1"
-    val retrofitVersion = "2.9.0"
-    val okHttp3Version = "4.12.0"
-    val okHttp3LoggingInterceptorVersion = "4.9.0"
+    val retrofitVersion = "2.11.0"
+    val okHttp3Version = "4.11.0"
+    val okHttp3LoggingInterceptorVersion = "4.12.0"
+    val mapStructVersion = "1.4.2"
+    val mapStructProcessorVersion = "1.4.2"
     val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
@@ -96,10 +98,20 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
+    /* OKHTTP3
+    implementation("com.squareup.okhttp3:okhttp3:$okHttp3Version")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okHttp3LoggingInterceptorVersion")
+    */
+
     /* CORRUTINAS */
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
+    /* MAPSTRUCT */
+    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+
 }

@@ -16,8 +16,11 @@ import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.appmarvel.ui.viewmodel.FilmSerieViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class FilmSerieFragment : Fragment(), View.OnClickListener, SearchView.OnQueryTextListener {
 
@@ -39,6 +42,10 @@ class FilmSerieFragment : Fragment(), View.OnClickListener, SearchView.OnQueryTe
         fsAdapter = FilmSerieAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
         settingListeners()
         initObserver()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            fsViewModel.testingAPIGetAllSeries()
+        }
     }
 
     private fun initObserver(){
