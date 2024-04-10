@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.enriquepalmadev.appmarvel.databinding.ItemDetailsFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.models.FilmSerie
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
 
 class ItemDetailFilmSerieFragment : Fragment() {
     private lateinit var bindingItemDetailsFilmsSeries: ItemDetailsFilmsSeriesBinding
-    private var filmSerieModel: FilmSerieModel? = null
+    private var filmSerie: FilmSerie? = null
     // private val itemdetailViewModel: ItemDetailFilmSerieViewModel by viewModels()
 
     override fun onCreateView(
@@ -41,7 +41,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                     // ProgressBar Visible
 
                 }
-                is ItemDetailUIState.ListReceived -> {
+                is ItemDetailUIState.ListReceivedInLocal -> {
                     // initRecyclerView(fsAdapter, fsBinding.rvFilmsSeries)
                     // initRecyclerView(State, List)
                     // ProgressBar Gone
@@ -54,16 +54,18 @@ class ItemDetailFilmSerieFragment : Fragment() {
 
     private fun retrieveFilmOrSerie(){
         val filmsSeriesData: Bundle? = arguments
-        filmSerieModel = filmsSeriesData?.getSerializable("objectFilmOrSerie") as FilmSerieModel?
-        // This function is deprecated but the other function that is available can be used only from API level 33
+        filmSerie = filmsSeriesData?.getSerializable("objectFilmOrSerie") as FilmSerie?
+        // This function is deprecated but the other function that is available can be used only from RetrofitBuilder level 33
     }
 
     private fun renderUi(){
-        bindingItemDetailsFilmsSeries.detailFimsSeriesName.text = filmSerieModel?.name
-        filmSerieModel?.cover?.let { myCover ->
-            bindingItemDetailsFilmsSeries.detailImageFilmsSeries.loadImage(myCover)
+        bindingItemDetailsFilmsSeries.detailFimsSeriesName.text = filmSerie?.title
+
+        val completeImagePath = "${filmSerie?.thumbnailPath}.${filmSerie?.thumbnailExt}"
+        filmSerie?.thumbnailPath?.let {
+            bindingItemDetailsFilmsSeries.detailImageFilmsSeries.loadImage(completeImagePath)
         }
-        bindingItemDetailsFilmsSeries.detailFimsSeriesDescription.text = filmSerieModel?.description
+        bindingItemDetailsFilmsSeries.detailFimsSeriesDescription.text = filmSerie?.description
     }
 
     // CAMBIAR ESTADO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

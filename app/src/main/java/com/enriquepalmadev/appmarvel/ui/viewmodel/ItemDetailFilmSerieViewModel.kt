@@ -15,7 +15,7 @@ class ItemDetailFilmSerieViewModel : ViewModel() {
     private fun retrieveFilmOrSerie(){
         val filmsSeriesData: Bundle? = arguments
         filmSerieModel = filmsSeriesData?.getSerializable("objectFilmOrSerie") as FilmSerieModel?
-        // This function is deprecated but the other function that is available can be used only from API level 33
+        // This function is deprecated but the other function that is available can be used only from RetrofitBuilder level 33
     }
     */
 }

@@ -13,16 +13,13 @@ import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.models.FilmSerie
 import com.enriquepalmadev.appmarvel.ui.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.appmarvel.ui.viewmodel.FilmSerieViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
-class FilmSerieFragment : Fragment(), View.OnClickListener, SearchView.OnQueryTextListener {
+class FilmSerieFragment : Fragment() {
 
     private val fsViewModel: FilmSerieViewModel by viewModels()
     private lateinit var fsAdapter : FilmSerieAdapter
@@ -32,75 +29,78 @@ class FilmSerieFragment : Fragment(), View.OnClickListener, SearchView.OnQueryTe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fsBinding = FragmentFilmsSeriesBinding.inflate(inflater)
+        fsBinding = FragmentFilmsSeriesBinding.inflate(inflater, container, false)
         return fsBinding.root // Inflate the layout for this fragment
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fsAdapter = FilmSerieAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
-        settingListeners()
+        sendingListenerToAdapterItems()
+        btnOrderByOnClick()
+        svOnQueryTextChange()
         initObserver()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            fsViewModel.testingAPIGetAllSeries()
-        }
     }
 
     private fun initObserver(){
         fsViewModel.uiState.onEach { uiState ->
             when(uiState){
                 is FilmSerieUIState.Error -> {
-                    Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Error: ${uiState.msg}", Toast.LENGTH_LONG).show()
                     // ProgressBar Gone
                 }
                 FilmSerieUIState.Loading -> {
-                    context?.let { fsViewModel.getListFromJson(it) }
+                    fsViewModel.getAllSeriesListFromAPI()
                     // ProgressBar Show
                 }
-                is FilmSerieUIState.ListReceived -> {
-                    fsViewModel.initRecyclerView(fsAdapter, fsBinding.rvFilmsSeries, uiState.arrayList) // With uiState, I can access to the list that returns (and emit) the state
+                is FilmSerieUIState.ListRecievedFromAPI -> {
+                    context?.let { fsViewModel.getAllSeriesListToLocalFromAPI() }
+                    // ProgressBar Gone
+                }
+
+                is FilmSerieUIState.ListReceivedInLocal -> {
+                    // With uiState, I can access to the list that returns (and emit) the state
+                    fsViewModel.initRecyclerView(fsAdapter, fsBinding.rvFilmsSeries, uiState.arrayList)
                     // ProgressBar Gone
                 }
                 is FilmSerieUIState.RecyclerViewSetted -> {
-                    //fsViewModel.updateItems(uiState.adapter,)
                     Toast.makeText(context, "RecyclerViewSetted...", Toast.LENGTH_LONG).show()
+                    // ProgressBar Gone
                 }
                 is FilmSerieUIState.ItemClicked -> {
                     findNavController().navigate(R.id.action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment, uiState.filmSerieData)
                     fsViewModel.done()
+                    // ProgressBar Gone
                 }
-                is FilmSerieUIState.OrderingList -> fsViewModel.orderListBy(uiState.arrayList, uiState.itemSelected, uiState.context)
+                is FilmSerieUIState.OrderingList -> {
+                    fsViewModel.orderListBy(uiState.arrayList, uiState.itemSelected, uiState.context, fsBinding)
+                    // ProgressBar Gone
+                }
             }
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    // Esta no se si va aquí
-    private fun onFilmSerieClicked(filmOrSerie: FilmSerieModel){
+    private fun sendingListenerToAdapterItems() {
+        fsAdapter = FilmSerieAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
+    }
+
+    private fun onFilmSerieClicked(filmOrSerie: FilmSerie){
         fsViewModel.transferToDataDetail(filmOrSerie)
     }
 
-    private fun settingListeners(){
-        fsBinding.btnOrderby.setOnClickListener(this)
-        fsBinding.searchViewSeriesAndFilms.setOnQueryTextListener(this)
+    private fun btnOrderByOnClick(){
+        fsBinding.btnOrderby.setOnClickListener { context?.let { fsViewModel.showDialogOrderBy(it) } }
     }
 
-    override fun onClick(view: View?) {
-        when(view){
-            fsBinding.btnOrderby -> {
-                context?.let { fsViewModel.showDialogOrderBy(fsBinding, it) }
+    private fun svOnQueryTextChange(){
+        fsBinding.searchViewSeriesAndFilms.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                fsViewModel.filteringByName(fsAdapter, newText)
+                return false
             }
-        }
-    }
-
-    override fun onQueryTextSubmit(query: String?) = false
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        newText?.let {
-            fsViewModel.filteringByName(fsAdapter, newText)
-        }
-        return false
+        })
     }
 }

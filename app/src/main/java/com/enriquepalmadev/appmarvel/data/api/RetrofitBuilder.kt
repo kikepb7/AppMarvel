@@ -4,7 +4,7 @@ import com.enriquepalmadev.appmarvel.data.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object API {
+object RetrofitBuilder {
 
     val retrofitService: IMarvelFilmSerie by lazy {
         getRetrofit().create(IMarvelFilmSerie::class.java)
