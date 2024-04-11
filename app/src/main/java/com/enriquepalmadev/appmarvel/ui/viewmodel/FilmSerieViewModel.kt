@@ -4,16 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerie
+import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.usecase.impl.GetListOfAllSeriesUseCaseImpl
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.ui.view.extensions.showSnackbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class FilmSerieViewModel : ViewModel() {
@@ -22,29 +22,32 @@ class FilmSerieViewModel : ViewModel() {
     val uiState : StateFlow<FilmSerieUIState> = _uiState
     private val iGetListOfAllSeriesUseCaseImpl = GetListOfAllSeriesUseCaseImpl()
 
-    private var allSeriesList: ArrayList<FilmSerie> = ArrayList()
+    private var allSeriesList: ArrayList<FilmSerieModel> = ArrayList()
 
     fun done(){
         viewModelScope.launch {
-            _uiState.emit(FilmSerieUIState.ListReceivedInLocal(allSeriesList))
+            _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(allSeriesList))
         }
     }
 
     fun getAllSeriesListFromAPI(){
         viewModelScope.launch {
-            allSeriesList = iGetListOfAllSeriesUseCaseImpl.getListOfAllSeries()
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListRecievedFromAPI(ArrayList(allSeriesList)))
-            }
+            iGetListOfAllSeriesUseCaseImpl.getListOfAllSeries()
+                .onStart { _uiState.emit(FilmSerieUIState.Loading)}
+                .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
+                .collect {
+                    allSeriesList = it
+                    _uiState.emit(FilmSerieUIState.ListReceivedFromAPI(it))
+                }
         }
     }
 
-    fun getAllSeriesListToLocalFromAPI(): ArrayList<FilmSerie>{
+    fun getAllSeriesListToLocalFromAPI(): ArrayList<FilmSerieModel>{
         try {
             val filmsAndSeriesList = allSeriesList
-            allSeriesList =  ArrayList(filmsAndSeriesList.sortedByDescending { it.id})
+            allSeriesList =  ArrayList(filmsAndSeriesList.sortedByDescending { it.startYear})
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListReceivedInLocal(ArrayList(allSeriesList)))
+                _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(ArrayList(allSeriesList)))
             }
         } catch (e: Exception){
             viewModelScope.launch {
@@ -54,25 +57,10 @@ class FilmSerieViewModel : ViewModel() {
         return allSeriesList;
     }
 
-    fun initRecyclerView(fsAdapter: FilmSerieAdapter, recyclerView: RecyclerView, arrayList: ArrayList<FilmSerie>){
-        try {
-            recyclerView.adapter = fsAdapter // Setting the Adapter in the RecyclerView
-            fsAdapter.updateList(arrayList) // Updated the list in the Adapter and, in consequence, in the RecyclerView
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.RecyclerViewSetted(fsAdapter))
-            }
-        } catch (e: Exception){
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(e.message.toString()))
-            }
-        }
-    }
-
-    // Esta va aquí - BIEN
-    fun transferToDataDetail(filmOrSerie: FilmSerie){
+    fun transferToDataDetail(filmOrSerie: FilmSerieModel){
         try {
             val filmsSeriesData = Bundle().apply {
-                putSerializable("objectFilmOrSerie", filmOrSerie)
+                putInt("idSerie", filmOrSerie.id)
             }
             viewModelScope.launch {
                 _uiState.emit(FilmSerieUIState.ItemClicked(filmsSeriesData))
@@ -84,56 +72,23 @@ class FilmSerieViewModel : ViewModel() {
         }
     }
 
-    // Dialog to select the items order
-    fun showDialogOrderBy(context: Context) {
-        try {
-            var selectedItemIndex :Int = 0
-            val arrayItemsOrderBy = arrayOf(
-                context.getString(R.string.orderby_year),
-                context.getString(R.string.orderby_alphabet),
-                context.getString(R.string.orderby_fav_first),
-                context.getString(R.string.orderby_fav_only)
-            )
-            var selectedItem = arrayItemsOrderBy[selectedItemIndex]
-
-            MaterialAlertDialogBuilder(context)
-                .setTitle(context.getString(R.string.dialog_title))
-                .setSingleChoiceItems(arrayItemsOrderBy, selectedItemIndex) {dialog, which ->
-                    selectedItemIndex = which
-                    selectedItem = arrayItemsOrderBy[which]
-                }
-                .setPositiveButton(context.getString(R.string.dialog_ok)){dialog, which ->
-                    viewModelScope.launch {
-                        _uiState.emit(FilmSerieUIState.OrderingList(allSeriesList, selectedItem, context))
-                    }
-                }
-                .setNegativeButton(context.getString(R.string.dialog_cancel)){dialog, which ->
-                }
-                .show()
-        } catch (e: Exception){
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(e.message.toString()))
-            }
-        }
-    }
-
     // Function to order the items of the RecyclerView
-    fun orderListBy(arrayList: ArrayList<FilmSerie>, selectedItem: String, context: Context, binding: FragmentFilmsSeriesBinding) {
+    fun orderListBy(selectedItem: String, context: Context, binding: FragmentFilmsSeriesBinding) {
         try {
             when(selectedItem){
                 context.getString(R.string.orderby_year)-> {
-                    allSeriesList = ArrayList(arrayList.sortedByDescending { it.id })
+                    allSeriesList = ArrayList(allSeriesList.sortedByDescending { it.startYear })
                     showSnackbar(binding.root, context.getString(R.string.msg_orderby)+" "+selectedItem)
                 }
                 context.getString(R.string.orderby_alphabet)-> {
-                    allSeriesList = ArrayList(arrayList.sortedBy { it.title })
+                    allSeriesList = ArrayList(allSeriesList.sortedBy { it.title })
                     showSnackbar(binding.root, context.getString(R.string.msg_orderby)+" "+selectedItem)
                 }
                 // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
                 // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
             }
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListReceivedInLocal(allSeriesList))
+                _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(allSeriesList))
             }
         } catch (e: Exception){
             viewModelScope.launch {
@@ -147,7 +102,7 @@ class FilmSerieViewModel : ViewModel() {
             val arraylist = allSeriesList.filter { it.title.lowercase().contains(newText) }
             filmSerieAdapter.filterByName(arraylist)
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListReceivedInLocal(ArrayList(arraylist)))
+                _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(ArrayList(arraylist)))
             }
         } catch (e: Exception){
             viewModelScope.launch {
@@ -158,11 +113,9 @@ class FilmSerieViewModel : ViewModel() {
 }
 
 sealed class FilmSerieUIState {
-    data class Error (val msg: String) : FilmSerieUIState()
+    data class Error(val msg: String) : FilmSerieUIState()
     data object Loading : FilmSerieUIState()
-    data class ListRecievedFromAPI(val arrayList: ArrayList<FilmSerie>) : FilmSerieUIState()
-    data class ListReceivedInLocal(val arrayList: ArrayList<FilmSerie>) : FilmSerieUIState()
-    data class RecyclerViewSetted (val adapter: FilmSerieAdapter) : FilmSerieUIState()
-    data class ItemClicked (val filmSerieData: Bundle) : FilmSerieUIState()
-    data class OrderingList (val arrayList: ArrayList<FilmSerie>, val itemSelected: String, val context: Context) : FilmSerieUIState()
+    data class ListReceivedFromAPI(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
+    data class ListReceivedInViewModel(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
+    data class ItemClicked(val filmSerieData: Bundle) : FilmSerieUIState()
 }

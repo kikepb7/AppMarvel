@@ -7,7 +7,23 @@
     <dimen name="txt_item_superhero_paddin_8dp">16sp</dimen>
     <dimen name="img_item_superhero_height_146dp">146dp</dimen>
     <dimen name="img_comics_256dp">256dp</dimen>
-    <dimen name="margin_5dp">5dp</dimen>
     <dimen name="margin_top_marvel_button_244dp">244dp</dimen>
     <dimen name="margin_between_marvel_buttons_44dp">44dp</dimen>
+    <dimen name="layout_height_image_details_series_250dp">250dp</dimen>
+
+    <!-- General on "Films and Series"-->
+    <dimen name="margin_5dp">5dp</dimen>
+
+    <!-- fragment_films_series.xml-->
+    <dimen name="layout_width_searchview_230dp">230dp</dimen>
+
+    <!-- item_films_series.xml -->
+    <dimen name="title_text_size_15sp">15sp</dimen>
+    <dimen name="title_padding_3dp">3dp</dimen>
+
+    <!-- item_details_films_series.xml-->
+    <dimen name="spacing_extra_description_detail_2dp">2dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="text_size_description_detail_18sp">18sp</dimen>
+    <dimen name="text_size_detail_serie_name_20sp">20sp</dimen>
 </resources>

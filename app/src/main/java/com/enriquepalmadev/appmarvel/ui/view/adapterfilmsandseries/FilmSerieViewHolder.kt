@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerie
 import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
 
@@ -15,21 +14,21 @@ class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): Recycler
     val favFilmsSeries :ArrayList<Int> = ArrayList()
 
 
-    fun bind(filmSerie: FilmSerie){
-        val completeImagePath = "${filmSerie.thumbnailPath}.${filmSerie.thumbnailExt}"
+    fun bind(filmSerieModel: FilmSerieModel){
+        val completeImagePath = "${filmSerieModel.thumbnailPath}.${filmSerieModel.thumbnailExt}"
 
-        binding.titleFilmsSeries.text = filmSerie.title
+        binding.titleFilmsSeries.text = filmSerieModel.title
         binding.imageFilmsSeries.loadImage(completeImagePath)
 
         binding.btnFav.setOnClickListener(View.OnClickListener {
             if(binding.btnFav.contentDescription=="on"){
                 binding.btnFav.setImageResource(R.drawable.ic_border_favorite_24dp)
                 binding.btnFav.contentDescription = "off"
-                favFilmsSeries.remove(filmSerie.id)
+                favFilmsSeries.remove(filmSerieModel.id)
             } else if(binding.btnFav.contentDescription=="off") {
                 binding.btnFav.setImageResource(R.drawable.ic_full_favorite_24dp)
                 binding.btnFav.contentDescription = "on"
-                favFilmsSeries.add(filmSerie.id)
+                favFilmsSeries.add(filmSerieModel.id)
             }
         })
     }

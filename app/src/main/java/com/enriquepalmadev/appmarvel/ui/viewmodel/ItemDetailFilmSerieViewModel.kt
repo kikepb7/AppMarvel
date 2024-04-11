@@ -1,28 +1,36 @@
 package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.usecase.impl.GetSerieByIdUseCaseImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 
 class ItemDetailFilmSerieViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow<ItemDetailUIState>(ItemDetailUIState.Loading)
-    val uiState: StateFlow<ItemDetailUIState> = _uiState
+    private val _uiDetailState = MutableStateFlow<ItemDetailUIState>(ItemDetailUIState.Loading)
+    val uiDetailState: StateFlow<ItemDetailUIState> = _uiDetailState
+    private val iGetSerieById = GetSerieByIdUseCaseImpl()
 
-    /*
-    private var filmSerieModel: FilmSerieModel? = null
-
-    private fun retrieveFilmOrSerie(){
-        val filmsSeriesData: Bundle? = arguments
-        filmSerieModel = filmsSeriesData?.getSerializable("objectFilmOrSerie") as FilmSerieModel?
-        // This function is deprecated but the other function that is available can be used only from RetrofitBuilder level 33
+    fun getSerieById(id: Int){
+        viewModelScope.launch {
+            iGetSerieById.getSerieById(id)
+                .onStart { ItemDetailUIState.Loading }
+                .catch { ItemDetailUIState.Error(it.toString()) }
+                .collect{
+                    _uiDetailState.emit(ItemDetailUIState.IdReceived(it))
+                }
+        }
     }
-    */
+
 }
 
 sealed class ItemDetailUIState {
-    object Loading : ItemDetailUIState()
-    data class ItemReceived(val arrayList: ArrayList<FilmSerieModel>) : ItemDetailUIState()
+    data object Loading : ItemDetailUIState()
+    data class IdReceived(val serie: FilmSerieModel) : ItemDetailUIState()
     data class Error (val msg: String) : ItemDetailUIState()
-    //data class ShowDetail(): FilmSerieUIState()
+    //data class Showing Detail(): FilmSerieUIState()
 }

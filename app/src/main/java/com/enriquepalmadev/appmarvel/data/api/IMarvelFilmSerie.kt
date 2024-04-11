@@ -5,6 +5,7 @@ import com.enriquepalmadev.appmarvel.data.api.dtos.ObjectResponseDto
 import com.enriquepalmadev.appmarvel.data.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface IMarvelFilmSerie {
@@ -15,5 +16,13 @@ interface IMarvelFilmSerie {
         @Query("apikey")apikey: String = Constants.API_KEY,
         @Query("hash")hash: String = Constants.hash(),
         @Query("limit")limit: Int = Constants.LIMIT
+    ): Response <ObjectResponseDto>
+
+    @GET("series/{id}")
+    suspend fun getSerieById(
+        @Path("id")id: Int,
+        @Query("ts")ts: String = Constants.TIMESTAMP,
+        @Query("apikey")apikey: String = Constants.API_KEY,
+        @Query("hash")hash: String = Constants.hash()
     ): Response <ObjectResponseDto>
 }

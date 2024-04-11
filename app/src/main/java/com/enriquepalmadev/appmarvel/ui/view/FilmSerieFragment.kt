@@ -13,9 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerie
+import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.appmarvel.ui.viewmodel.FilmSerieViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -46,6 +47,7 @@ class FilmSerieFragment : Fragment() {
         fsViewModel.uiState.onEach { uiState ->
             when(uiState){
                 is FilmSerieUIState.Error -> {
+                    // With uiState, I can access to the list that returns (and emits) the state
                     Toast.makeText(context, "Error: ${uiState.msg}", Toast.LENGTH_LONG).show()
                     // ProgressBar Gone
                 }
@@ -53,27 +55,19 @@ class FilmSerieFragment : Fragment() {
                     fsViewModel.getAllSeriesListFromAPI()
                     // ProgressBar Show
                 }
-                is FilmSerieUIState.ListRecievedFromAPI -> {
+                is FilmSerieUIState.ListReceivedFromAPI -> {
                     context?.let { fsViewModel.getAllSeriesListToLocalFromAPI() }
                     // ProgressBar Gone
                 }
 
-                is FilmSerieUIState.ListReceivedInLocal -> {
-                    // With uiState, I can access to the list that returns (and emit) the state
-                    fsViewModel.initRecyclerView(fsAdapter, fsBinding.rvFilmsSeries, uiState.arrayList)
+                is FilmSerieUIState.ListReceivedInViewModel -> {
+                    initRecyclerView(uiState.arrayList)
                     // ProgressBar Gone
                 }
-                is FilmSerieUIState.RecyclerViewSetted -> {
-                    Toast.makeText(context, "RecyclerViewSetted...", Toast.LENGTH_LONG).show()
-                    // ProgressBar Gone
-                }
+
                 is FilmSerieUIState.ItemClicked -> {
                     findNavController().navigate(R.id.action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment, uiState.filmSerieData)
                     fsViewModel.done()
-                    // ProgressBar Gone
-                }
-                is FilmSerieUIState.OrderingList -> {
-                    fsViewModel.orderListBy(uiState.arrayList, uiState.itemSelected, uiState.context, fsBinding)
                     // ProgressBar Gone
                 }
             }
@@ -85,12 +79,45 @@ class FilmSerieFragment : Fragment() {
         fsAdapter = FilmSerieAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
     }
 
-    private fun onFilmSerieClicked(filmOrSerie: FilmSerie){
+    private fun initRecyclerView(arrayList: ArrayList<FilmSerieModel>){
+        fsBinding.rvFilmsSeries.adapter = fsAdapter // Setting the Adapter in the RecyclerView
+        fsAdapter.updateList(arrayList) // Updated the list in the Adapter and, in consequence, in the RecyclerView
+    }
+
+    private fun onFilmSerieClicked(filmOrSerie: FilmSerieModel){
         fsViewModel.transferToDataDetail(filmOrSerie)
     }
 
     private fun btnOrderByOnClick(){
-        fsBinding.btnOrderby.setOnClickListener { context?.let { fsViewModel.showDialogOrderBy(it) } }
+        fsBinding.btnOrderby.setOnClickListener { showDialogOrderBy() }
+    }
+
+    // Dialog to select the items order
+    private fun showDialogOrderBy() {
+
+        var selectedItemIndex :Int = 0
+        val arrayItemsOrderBy = arrayOf(
+            getString(R.string.orderby_year),
+            getString(R.string.orderby_alphabet),
+            getString(R.string.orderby_fav_first),
+            getString(R.string.orderby_fav_only)
+        )
+        var selectedItem = arrayItemsOrderBy[selectedItemIndex]
+
+        context?.let {
+            MaterialAlertDialogBuilder(it)
+                .setTitle(getString(R.string.dialog_title))
+                .setSingleChoiceItems(arrayItemsOrderBy, selectedItemIndex) {dialog, which ->
+                    selectedItemIndex = which
+                    selectedItem = arrayItemsOrderBy[which]
+                }
+                .setPositiveButton(getString(R.string.dialog_ok)){dialog, which ->
+                    fsViewModel.orderListBy(selectedItem, requireContext(), fsBinding)
+                }
+                .setNegativeButton(getString(R.string.dialog_cancel)){dialog, which ->
+                }
+                .show()
+        }
     }
 
     private fun svOnQueryTextChange(){

@@ -10,12 +10,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="@dimen/margin_5dp">
 
         <android.widget.SearchView
             android:id="@+id/searchView_seriesAndFilms"
             style="@style/searchview_films_series"
-            android:layout_width="230dp"
+            android:layout_width="@dimen/layout_width_searchview_230dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,8 +32,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_films_series"
             style="@style/rv_film_serie"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

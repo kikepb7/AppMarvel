@@ -8,8 +8,8 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,49 +21,49 @@
 
             <ImageView
                 android:id="@+id/detailImageFilmsSeries"
-                android:layout_width="0dp"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
+                style="@style/detail_film_serie_image"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="@dimen/layout_height_image_details_series_250dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic"/>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dimen_0dp"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/dark_red"
                 app:layout_constraintBottom_toBottomOf="@id/detailImageFilmsSeries"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
                     android:id="@+id/detailFimsSeriesName"
+                    style="@style/detail_film_serie_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:gravity="center"
                     tools:text="Name"/>
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/detailFimsSeriesDescription"
-                android:layout_width="0dp"
+                style="@style/detail_film_serie_description"
+                android:layout_width="@dimen/dimen_0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:layout_marginEnd="16sp"
-                android:layout_marginTop="16sp"
-                android:layout_marginBottom="16sp"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:lineSpacingExtra="2dp"
                 tools:text="@tools:sample/lorem/random"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detailImageFilmsSeries" />
+                app:layout_constraintTop_toBottomOf="@id/detailImageFilmsSeries"/>
+
+            <TextView
+                android:id="@+id/detailFimsSeriesStarYear"
+                style="@style/detail_film_serie_description"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                tools:text="@tools:sample/lorem/random"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailFimsSeriesDescription"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
