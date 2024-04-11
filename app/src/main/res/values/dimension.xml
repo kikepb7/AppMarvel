@@ -10,4 +10,48 @@
     <dimen name="margin_5dp">5dp</dimen>
     <dimen name="margin_top_marvel_button_244dp">244dp</dimen>
     <dimen name="margin_between_marvel_buttons_44dp">44dp</dimen>
+
+    <!-- COMIC VIEW -->
+
+    <!-- LOGO IMAGE -->
+    <dimen name="logo_width">128dp</dimen>
+    <dimen name="logo_height">96dp</dimen>
+    <dimen name="logo_margin">16dp</dimen>
+
+    <!-- ICON -->
+    <dimen name="icon_width">30dp</dimen>
+    <dimen name="icon_height">30dp</dimen>
+    <dimen name="icon_margin_start">16dp</dimen>
+    <dimen name="icon_margin_top">32dp</dimen>
+
+    <!-- TITLE -->
+    <dimen name="text_margin_start">16dp</dimen>
+
+    <!-- RECYCLER VIEW -->
+    <dimen name="recycler_margin_top">16dp</dimen>
+
+
+    <!-- COMIC DETAIL VIEW -->
+
+    <!-- SHAPEABLE IMAGE -->
+    <dimen name="shapeable_elevation">8dp</dimen>
+    <dimen name="elevation">10dp</dimen>
+    <dimen name="shapeable_image_height">300dp</dimen>
+
+    <!-- SHAPEABLE TITLE AND DESCRIPTION -->
+    <dimen name="shapeable_title_description_margin_top">16dp</dimen>
+    <dimen name="shapeable_title_description_horizontal_margin">32dp</dimen>
+    <dimen name="shapeable_max_width">300dp</dimen>
+
+    <!-- SCROLL -->
+    <dimen name="scroll_height">180dp</dimen>
+
+    <!-- PAGES -->
+    <dimen name="pages_margin">16dp</dimen>
+
+    <!-- FAVORITE -->
+    <dimen name="favorite_width_height">32dp</dimen>
+    <dimen name="favorite_margin">16dp</dimen>
+
+
 </resources>

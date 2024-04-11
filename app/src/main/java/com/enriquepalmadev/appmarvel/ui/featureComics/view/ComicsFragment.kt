@@ -49,10 +49,11 @@ class ComicsFragment : Fragment() {
 
     private fun initObserver() {
         viewModel.state.onEach { state ->
-            when(state) {
-                State.Error -> { showErrorMessage()}
+            when (state) {
+                State.Error -> { showErrorMessage() }
                 is State.ListReceived -> state.listComicModels?.let {
-                    initRecyclerView(it) }
+                    initRecyclerView(it)
+                }
                 State.Loading -> {}
                 is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
             }
@@ -102,17 +103,24 @@ class ComicsFragment : Fragment() {
     private fun initChips() {
         val chipItems = listOf("Spiderman", "Ironman", "Favoritos")
 
-        for (item in chipItems) {
+        chipItems.map {
             val chip = Chip(requireContext())
-            chip.text = item
-            chip.isClickable = true
-            chip.isCheckable = true
-            chip.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    Toast.makeText(requireContext(), "Seleccionado ${chip.text}", Toast.LENGTH_SHORT).show()
+
+            chip.apply {
+                text = it
+                chip.isClickable = true
+                chip.isCheckable = true
+                chip.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Seleccionado ${chip.text}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
+                binding.chipGroupFilter.addView(chip)
             }
-            binding.chipGroupFilter.addView(chip)
         }
     }
 }

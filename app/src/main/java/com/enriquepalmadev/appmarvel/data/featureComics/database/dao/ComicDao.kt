@@ -22,9 +22,9 @@ interface ComicDao {
     suspend fun deleteComics()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToFavorites(comicId: Int)
+    suspend fun addToFavorites(comic: ComicEntity)
 
     @Delete
-    suspend fun removeFromFavorites(comic: ComicEntity)
+    suspend fun removeFromFavorites(comicId: Int)
 
 }

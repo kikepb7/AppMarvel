@@ -20,12 +20,12 @@ class ComicsAdapter(
     }
 
     override fun onBindViewHolder(holder: ComicsViewHolder, position: Int) {
-        val item = comicsList[position]
-
-        holder.render(item, onClickListener)
+        holder.render(comicsList[position], onClickListener)
     }
 
     override fun getItemCount(): Int {
         return comicsList.size
     }
+
+    // override fun getItemCount() = comicsList.size
 }

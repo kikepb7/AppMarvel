@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
 import com.enriquepalmadev.appmarvel.domain.featureComics.usecase.FetchComicDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -13,7 +12,6 @@ import kotlinx.coroutines.launch
 class ComicDetailViewModel : ViewModel() {
 
     private val fetchComicDetailUseCase = FetchComicDetailUseCase()
-    private val favoriteState = MutableStateFlow(false)
     val state = MutableStateFlow<DetailState>(DetailState.Loading)
 
     fun getComicDetail(comicId: Int) {
@@ -23,14 +21,6 @@ class ComicDetailViewModel : ViewModel() {
                 .catch { state.emit(DetailState.Error) }
                 .collect {state.emit(DetailState.ComicDetail(it)) }
         }
-    }
-
-    fun favoriteState() {
-        favoriteState.value = !favoriteState.value
-    }
-
-    fun getFavoriteState(): StateFlow<Boolean> {
-        return favoriteState
     }
 }
 

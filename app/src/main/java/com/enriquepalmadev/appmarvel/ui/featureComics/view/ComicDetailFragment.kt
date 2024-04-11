@@ -19,10 +19,7 @@ import kotlinx.coroutines.flow.onEach
 
 class ComicDetailFragment : Fragment() {
 
-    companion object {
-        const val KEY_ID = "id"
-    }
-
+    companion object { const val KEY_ID = "id" }
     private var isFavorite = false
     private val comicId by lazy { arguments?.getInt(KEY_ID) }
     private lateinit var binding: FragmentComicDetailBinding
@@ -51,30 +48,22 @@ class ComicDetailFragment : Fragment() {
         viewModel.state.onEach { state ->
             when (state) {
                 is DetailState.ComicDetail -> {
-                    hideLoader()
+                    manageLoader(false)
                     state.comicModel?.let { showComicDetail(it) }
                 }
-
-                DetailState.Error -> {
-                    hideLoader()
-                }
-
-                DetailState.Loading -> showLoader()
+                DetailState.Error -> { manageLoader(false) }
+                DetailState.Loading -> manageLoader(true)
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     // Progress Bar
-    private fun hideLoader() {
-        binding.detailProgressBar.visibility = View.GONE
+    private fun manageLoader(show: Boolean) {
+        if (show) binding.detailProgressBar.visibility = View.VISIBLE
+        else binding.detailProgressBar.visibility = View.GONE
     }
 
-    private fun showLoader() {
-        binding.detailProgressBar.visibility = View.VISIBLE
-    }
-
-
-    // Comic
+    // Comic Detail
     private fun showComicDetail(comicModel: ComicModel) {
         binding.apply {
             ivComic.loadImage(comicModel.thumbnail)
@@ -90,22 +79,13 @@ class ComicDetailFragment : Fragment() {
             btnBack.setOnClickListener {
                 findNavController().navigate(R.id.comicsFragment)
             }
-
-            btnFavorite.setOnClickListener {
-                updateFavoriteIcon()
-                viewModel.favoriteState()
-            }
         }
     }
 
     // Favorite button
     private fun updateFavoriteIcon() {
-        val icon =
-            if (isFavorite) {
-                R.drawable.ic_solid_heart
-            } else {
-                R.drawable.ic_line_heart
-            }
-        binding.btnFavorite.setImageResource(icon)
+        binding.btnFavorite.setImageResource(
+            if (isFavorite) R.drawable.ic_solid_heart else R.drawable.ic_line_heart
+        )
     }
 }

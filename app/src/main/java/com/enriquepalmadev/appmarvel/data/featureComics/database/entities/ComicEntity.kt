@@ -31,7 +31,7 @@ fun List<ComicEntity>.toDomainModel() : List<ComicModel> {
             title = it.title,
             description = it.description,
             pageCount = it.pageCount,
-            thumbnail = it.thumbnail,
+            thumbnail = it.thumbnail
         )
     }
 }

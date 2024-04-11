@@ -14,14 +14,12 @@ class ComicsViewHolder(view: View) : ViewHolder(view) {
         comicModel: ComicModel,
         onClickListener: (ComicModel) -> Unit
     ) {
-        binding.ibImageComic.loadImage(comicModel.thumbnail)
-
-        //binding.tvComicID.text = comicModel.id.toString()
-        binding.tvComicTitle.text = comicModel.title
-        //binding.tvPrice.text = comicModel.price.toString()
-
-        binding.ibImageComic.setOnClickListener {
-            onClickListener(comicModel)
+        binding.apply {
+            ibImageComic.loadImage(comicModel.thumbnail)
+            binding.tvComicTitle.text = comicModel.title
+            binding.ibImageComic.setOnClickListener {
+                onClickListener(comicModel)
+            }
         }
     }
 }
