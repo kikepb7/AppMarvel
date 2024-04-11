@@ -16,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentCharactersBinding
-import com.enriquepalmadev.appmarvel.domain.model.Character
+import com.enriquepalmadev.appmarvel.domain.model.CharacterModel
 import com.enriquepalmadev.appmarvel.ui.view.adapter.CharactersAdapter
 import com.enriquepalmadev.appmarvel.ui.viewmodel.CharactersViewModel
 import com.enriquepalmadev.appmarvel.ui.viewmodel.CharactersViewModel.State
@@ -76,7 +76,9 @@ class CharactersFragment : Fragment() {
                 State.Error -> hideLoader()
                 is State.ListReceived -> {
                     hideLoader()
-                    initRecyclerView(state.listCharacters)
+                    state.listCharacters?.let {
+                        initRecyclerView(it)
+                    }
                 }
                 State.Loading -> showLoader()
                 is State.NavigateToDetail -> navigateToCharacterDetail(state.character)
@@ -92,7 +94,7 @@ class CharactersFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    private fun navigateToCharacterDetail(character: Character){
+    private fun navigateToCharacterDetail(character: CharacterModel){
         val characterData = Bundle().apply {
             putSerializable("objectCharacter", character)
         }
@@ -101,7 +103,7 @@ class CharactersFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(list : List<Character>){
+    private fun initRecyclerView(list: List<CharacterModel>){
 
         binding.rvCharacters.apply {
             val manager = LinearLayoutManager(this.context)

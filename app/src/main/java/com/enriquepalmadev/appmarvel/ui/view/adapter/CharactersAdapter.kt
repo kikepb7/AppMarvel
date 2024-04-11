@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
-import  com.enriquepalmadev.appmarvel.domain.model.Character
+import com.enriquepalmadev.appmarvel.domain.model.CharacterModel
 
 class CharactersAdapter(
-    private val characterList: List<Character>,
-    private val listener: (Character) -> Unit
+    private val characterList: List<CharacterModel>,
+    private val listener: (CharacterModel) -> Unit
 ) : RecyclerView.Adapter<CharactersViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
@@ -20,7 +20,7 @@ class CharactersAdapter(
 
     //This method paint for each item the viewHolder
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
-        val character: Character = characterList[position]
+        val character: CharacterModel = characterList[position]
         holder.bind(character, listener)
 
     }

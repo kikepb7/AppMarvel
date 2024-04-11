@@ -8,7 +8,7 @@ import com.enriquepalmadev.appmarvel.data.database.entities.CharacterEntity
 
 @Dao
 interface CharacterDao {
-    @Query("select * from characters_table order by nombre desc")
+    @Query("select * from characters_table order by name desc")
     suspend fun  getAllCharacters():List<CharacterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -3,7 +3,7 @@ package com.enriquepalmadev.appmarvel.ui.view.adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
-import com.enriquepalmadev.appmarvel.domain.model.Character
+import com.enriquepalmadev.appmarvel.domain.model.CharacterModel
 import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 
@@ -11,9 +11,9 @@ class CharactersViewHolder(private val binding: ItemSuperheroBinding) : ViewHold
 {
     val favCharacters : ArrayList<Int> = ArrayList<Int>()
 
-    fun bind(character: Character, listener: (Character) -> Unit){
-        binding.imageButton.loadImage(character.image)
-        binding.tvTexto.text = character.nombre
+    fun bind(character: CharacterModel, listener: (CharacterModel) -> Unit){
+        binding.imageButton.loadImage(character.thumbnailDTO)
+        binding.tvTexto.text = character.name
 
         //Go to character detail
         binding.imageButton.setOnClickListener {
