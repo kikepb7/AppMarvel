@@ -16,7 +16,7 @@
 
     <!-- Characters' fragment's buttons text -->
     <string name="search_button">Buscar</string>
-    <string name="filter_button">Filtrar</string>
+    <string name="filter_button">Ordenar por</string>
 
     <!-- Films and series' fragment's placeholder text -->
     <string name="search">Buscar…</string>

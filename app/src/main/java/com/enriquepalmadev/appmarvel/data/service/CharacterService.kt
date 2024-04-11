@@ -19,11 +19,4 @@ interface CharacterService {
         @Query("ts") ts: String,
         @Query("characterId") characterId: Int? = null
     ): CharacterResponseDTO<ResultDTO>
-
-
-
-    /*
-    @GET
-    fun getAllCharactersV2(@Url url: String): Response<CharacterResponseDTO>
-    */
 }

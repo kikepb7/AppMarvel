@@ -9,8 +9,6 @@ import com.enriquepalmadev.appmarvel.ui.view.utils.loadImage
 
 class CharactersViewHolder(private val binding: ItemSuperheroBinding) : ViewHolder(binding.root)
 {
-    val favCharacters : ArrayList<Int> = ArrayList<Int>()
-
     fun bind(character: CharacterModel, listener: (CharacterModel) -> Unit){
         binding.imageButton.loadImage(character.thumbnailDTO)
         binding.tvTexto.text = character.name

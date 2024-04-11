@@ -56,15 +56,22 @@ class CharactersFragment : Fragment() {
         binding.svBuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             //When the customer submit the text
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("BOTON BARRA BUSCAR", "Enviado")
-                return false
+                var text = query?:""
+                Log.d("BOTON BARRA BUSCAR", text)
+                //limpio la lista
+                viewModel.getCharacterFiltList(text)
+
+                return true
             }
 
             //When the text have been changed
             override fun onQueryTextChange(newText: String?): Boolean {
                 var searchText = newText?:""
                 Log.d("BOTON BARRA BUSCAR", searchText)
-                return true
+                if(searchText == ""){
+                    viewModel.getCharacterList()
+                }
+                return false
             }
 
         })
@@ -127,11 +134,13 @@ class CharactersFragment : Fragment() {
             when(menuItem.itemId){
                 R.id.ordenAlfabetico ->{
 
-                    Log.d("BOTON FILTER", "opcion orden alfabetico")
+                    Log.d("BOTON FILTER", "opcion ordenar por name")
+                    viewModel.getCharacterListOrderByName()
                     true
                 }
                 R.id.favoritos ->{
                     Log.d("BOTON FILTER", "opcion favoritos")
+                    //viewModel Filtrar por favoritos.
                     true
                 }
                 else -> false

@@ -23,6 +23,33 @@ class CharactersViewModel: ViewModel() {
         }
     }
 
+    fun getCharacterFiltList(filt: String){
+        var listCharacter: List<CharacterModel>?
+        viewModelScope.launch {
+            listCharacter = fetchCharacterUseCase.fetchCharacterFilterList(filt)
+
+            _state.emit(State.ListReceived(listCharacter))
+        }
+    }
+
+    fun getCharacterListOrderByName(){
+        var listCharacter: List<CharacterModel>?
+        viewModelScope.launch {
+            listCharacter = fetchCharacterUseCase.fetchCharacterListOrderName()
+
+            _state.emit(State.ListReceived(listCharacter))
+        }
+    }
+
+    fun getCharacterListOrderByFavourites(){
+        var listCharacter: List<CharacterModel>?
+        viewModelScope.launch {
+            listCharacter = fetchCharacterUseCase.fetchCharacterListOrderFavourites()
+
+            _state.emit(State.ListReceived(listCharacter))
+        }
+    }
+
     fun onItemSelected(character: CharacterModel){
         viewModelScope.launch {
             _state.emit(State.NavigateToDetail(character))

@@ -11,7 +11,7 @@ class CharacterRemoteDataSource: CharacterDataSource {
     private val retrofit = Retrofit.retrofitConection()
 
     override suspend fun fetchCharactersFromApi(): CharacterResponseDTO<ResultDTO>{
-        return retrofit.getAllCharacters(hash = Constants.HASH, ts = Constants.TS, limit = 20)
+        return retrofit.getAllCharacters(hash = Constants.HASH, ts = Constants.TS, limit = 100)
     }
 
     override suspend fun fetchCharacterDetailFromApi(characterId: Int): CharacterResponseDTO<ResultDTO>{
