@@ -70,6 +70,8 @@ class CharactersFragment : Fragment() {
                 Log.d("BOTON BARRA BUSCAR", searchText)
                 if(searchText == ""){
                     viewModel.getCharacterList()
+                }else{
+                    viewModel.getCharacterFiltList(searchText)
                 }
                 return false
             }
