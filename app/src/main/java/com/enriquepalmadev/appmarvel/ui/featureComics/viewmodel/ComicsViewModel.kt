@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
 import com.enriquepalmadev.appmarvel.domain.featureComics.usecase.FetchComicUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class ComicsViewModel : ViewModel() {
@@ -13,9 +15,10 @@ class ComicsViewModel : ViewModel() {
 
     fun getComicsList() {
         viewModelScope.launch {
-            val listComic = fetchComicListUseCase.fetchComicList()
-
-            state.emit(State.ListReceived(listComic))
+            fetchComicListUseCase.fetchComicList()
+                .onStart { state.emit(State.Loading) }
+                .catch { state.emit(State.Error) }
+                .collect { state.emit(State.ListReceived(it)) }
         }
     }
 

@@ -21,4 +21,5 @@ interface ComicService {
         @Query("hash") hash: String,
         @Query("ts") ts: String
     ): ResponseMarvelDto<ResultDto>
+
 }

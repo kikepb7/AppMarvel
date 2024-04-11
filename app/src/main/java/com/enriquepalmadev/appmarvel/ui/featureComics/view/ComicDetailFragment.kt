@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
@@ -51,16 +52,14 @@ class ComicDetailFragment : Fragment() {
             when (state) {
                 is DetailState.ComicDetail -> {
                     hideLoader()
-                    showComicDetail(state.comicModel)
+                    state.comicModel?.let { showComicDetail(it) }
                 }
 
                 DetailState.Error -> {
                     hideLoader()
                 }
 
-                DetailState.Loading -> {
-                    showLoader()
-                }
+                DetailState.Loading -> showLoader()
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -82,14 +81,20 @@ class ComicDetailFragment : Fragment() {
             comicPages.text = comicModel.pageCount.toString()
             tvTitle.text = comicModel.title
             tvDescription.text = comicModel.description
-            //tvPrice.text = comicModel.price
-        }
 
-        binding.btnFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-            updateFavoriteIcon()
+            btnFavorite.setOnClickListener {
+                isFavorite = !isFavorite
+                updateFavoriteIcon()
+            }
 
+            btnBack.setOnClickListener {
+                findNavController().navigate(R.id.comicsFragment)
+            }
 
+            btnFavorite.setOnClickListener {
+                updateFavoriteIcon()
+                viewModel.favoriteState()
+            }
         }
     }
 
@@ -101,8 +106,6 @@ class ComicDetailFragment : Fragment() {
             } else {
                 R.drawable.ic_line_heart
             }
-
         binding.btnFavorite.setImageResource(icon)
     }
-
 }

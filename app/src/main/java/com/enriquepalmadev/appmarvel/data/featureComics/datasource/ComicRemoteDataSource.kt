@@ -11,7 +11,7 @@ class ComicRemoteDataSource : ComicDataSource {
     private val retrofit = Retrofit.retrofitConection()
 
     override suspend fun fetchComicsFromApi(): ResponseMarvelDto<ResultDto> {
-        return retrofit.getComics(hash = Constants.HASH, ts = Constants.TS, limit = 20)
+        return retrofit.getComics(hash = Constants.HASH, ts = Constants.TS, limit = 100)
     }
 
     override suspend fun fetchComicDetailFromApi(comicId: Int): ResponseMarvelDto<ResultDto> {

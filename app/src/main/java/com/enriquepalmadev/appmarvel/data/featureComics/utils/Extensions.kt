@@ -16,14 +16,5 @@ fun ResultDto.dtoToComicModel() : ComicModel {
         description = description,
         pageCount = pageCount ?: -1,
         thumbnail = "${thumbnail?.path}.${thumbnail?.extension}"
-
-        /*id = id.toString(),
-        title = title,
-        published = published,
-        writer = writer,
-        penciler = penciler,
-        description = description,
-        price = price.toString(),
-        image = image*/
     )
 }

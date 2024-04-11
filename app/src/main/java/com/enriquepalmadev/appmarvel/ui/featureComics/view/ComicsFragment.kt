@@ -18,13 +18,13 @@ import com.enriquepalmadev.appmarvel.ui.featureComics.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.ui.featureComics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.ui.featureComics.viewmodel.State
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
     private val viewModel: ComicsViewModel by viewModels()
-    private val favoriteComics = mutableListOf<ComicModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,10 +50,9 @@ class ComicsFragment : Fragment() {
     private fun initObserver() {
         viewModel.state.onEach { state ->
             when(state) {
-                State.Error -> {
-
-                }
-                is State.ListReceived -> state.listComicModels?.let { initRecyclerView(it) }//initRecyclerView(state.listComicModels)
+                State.Error -> { showErrorMessage()}
+                is State.ListReceived -> state.listComicModels?.let {
+                    initRecyclerView(it) }
                 State.Loading -> {}
                 is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
             }
@@ -61,16 +60,17 @@ class ComicsFragment : Fragment() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    // Navigate to detail through the comic ID
     private fun navigateToComicDetail(comicId: Int) {
         val bundle = Bundle().apply {
             putInt(KEY_ID, comicId)
-//              putSerializable("comic", comic)
         }
         binding.apply {
             rvComics.findNavController().navigate(R.id.action_comicsFragment_to_comicDetail, bundle)
         }
     }
 
+    //
     private fun initRecyclerView(list: List<ComicModel>) {
         binding.rvComics.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -83,24 +83,20 @@ class ComicsFragment : Fragment() {
         binding.rvFavoriteComics.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 
-            adapter = ComicsAdapter(favoriteComics) { comic ->
+            adapter = ComicsAdapter(list) { comic ->
                 viewModel.onItemSelected(comic.id)
             }
         }
     }
 
-    // Add comic into favorite comics list
-    private fun favoriteComic(comic: ComicModel) {
-        favoriteComics.add(comic)
-        binding.rvFavoriteComics.adapter?.notifyItemInserted(favoriteComics.size - 1)
+    // Error message
+    private fun showErrorMessage() {
+        Snackbar.make(
+            binding.comicsViewContainer,
+            "Ha ocurrido un error",
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
-
-    // Remove a comic from favorite comics list
-    private fun removeFavoriteComic(position: Int) {
-        favoriteComics.removeAt(position)
-        binding.rvFavoriteComics.adapter?.notifyItemRemoved(position)
-    }
-
 
     // Filter Chips
     private fun initChips() {
