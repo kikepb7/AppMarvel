@@ -1,7 +1,6 @@
 package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import android.content.Context
-import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.R
@@ -48,11 +47,8 @@ class FilmSerieViewModel : ViewModel() {
 
     fun transferToDataDetail(filmOrSerie: FilmSerieModel){
         try {
-            val filmsSeriesData = Bundle().apply {
-                putInt("idSerie", filmOrSerie.id)
-            }
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ItemClicked(filmsSeriesData))
+                _uiState.emit(FilmSerieUIState.ItemClicked(filmOrSerie.id))
             }
         } catch (e: Exception){
             viewModelScope.launch {
@@ -110,5 +106,5 @@ sealed class FilmSerieUIState {
     data class Error(val msg: String) : FilmSerieUIState()
     data object Loading : FilmSerieUIState()
     data class ListReceived(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
-    data class ItemClicked(val filmSerieData: Bundle) : FilmSerieUIState()
+    data class ItemClicked(val idSerie: Int) : FilmSerieUIState()
 }

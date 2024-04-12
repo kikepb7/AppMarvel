@@ -41,6 +41,8 @@ class FilmSerieFragment : Fragment() {
         btnOrderByOnClick()
         svOnQueryTextChange()
         initObserver()
+
+        fsViewModel.getAllSeriesListFromAPI()
     }
 
     private fun initObserver(){
@@ -52,7 +54,7 @@ class FilmSerieFragment : Fragment() {
                     // ProgressBar Gone
                 }
                 FilmSerieUIState.Loading -> {
-                    fsViewModel.getAllSeriesListFromAPI()
+                    // fsViewModel.getAllSeriesListFromAPI()
                     // ProgressBar Show
                 }
                 is FilmSerieUIState.ListReceived -> {
@@ -61,7 +63,8 @@ class FilmSerieFragment : Fragment() {
                 }
 
                 is FilmSerieUIState.ItemClicked -> {
-                    findNavController().navigate(R.id.action_filmsAndSeriesFragment_to_itemDetailsFilmsSeriesFragment, uiState.filmSerieData)
+                    val action = FilmSerieFragmentDirections.actionFilmsAndSeriesFragmentToItemDetailsFilmsSeriesFragment(uiState.idSerie)
+                    findNavController().navigate(action)
                     fsViewModel.done()
                     // ProgressBar Gone
                 }

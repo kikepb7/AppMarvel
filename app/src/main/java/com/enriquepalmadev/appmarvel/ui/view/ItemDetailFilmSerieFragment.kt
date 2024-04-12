@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.enriquepalmadev.appmarvel.databinding.ItemDetailsFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
@@ -21,6 +22,8 @@ class ItemDetailFilmSerieFragment : Fragment() {
     private var serieModel: FilmSerieModel? = null
     private var idSerie : Int? = null
     private val idViewModel: ItemDetailFilmSerieViewModel by viewModels()
+
+    private val args: ItemDetailFilmSerieFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,8 +62,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
 
 
     private fun retrieveFilmOrSerie(){
-        val filmsSeriesData: Bundle? = arguments
-        idSerie = filmsSeriesData?.getInt("idSerie")
+        idSerie = args.idSerie
         idSerie?.let { idViewModel.getSerieById(it) }
     }
 

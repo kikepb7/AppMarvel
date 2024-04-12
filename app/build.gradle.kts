@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -55,8 +56,6 @@ dependencies {
     val coilVersion = "2.6.0"
     val jsonVersion = "2.10.1"
     val retrofitVersion = "2.11.0"
-    val okHttp3Version = "4.11.0"
-    val okHttp3LoggingInterceptorVersion = "4.12.0"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
     val coroutinesVersion = "1.7.3"
@@ -97,11 +96,6 @@ dependencies {
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-
-    /* OKHTTP3
-    implementation("com.squareup.okhttp3:okhttp3:$okHttp3Version")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okHttp3LoggingInterceptorVersion")
-    */
 
     /* CORRUTINAS */
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
