@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.enriquepalmadev.appmarvel.databinding.ItemDetailsFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
 import com.enriquepalmadev.appmarvel.ui.viewmodel.ItemDetailFilmSerieViewModel
 import com.enriquepalmadev.appmarvel.ui.viewmodel.ItemDetailUIState

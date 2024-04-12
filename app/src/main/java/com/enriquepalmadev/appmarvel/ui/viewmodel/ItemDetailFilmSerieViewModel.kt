@@ -2,8 +2,8 @@ package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
-import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchSerieByIdUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchSerieByIdUseCaseImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

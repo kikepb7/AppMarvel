@@ -1,10 +1,9 @@
 package com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
 
 
@@ -20,7 +19,7 @@ class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): Recycler
         binding.titleFilmsSeries.text = filmSerieModel.title
         binding.imageFilmsSeries.loadImage(completeImagePath)
 
-        binding.btnFav.setOnClickListener(View.OnClickListener {
+        binding.btnFav.setOnClickListener {
             if(binding.btnFav.contentDescription=="on"){
                 binding.btnFav.setImageResource(R.drawable.ic_border_favorite_24dp)
                 binding.btnFav.contentDescription = "off"
@@ -30,6 +29,6 @@ class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): Recycler
                 binding.btnFav.contentDescription = "on"
                 favFilmsSeries.add(filmSerieModel.id)
             }
-        })
+        }
     }
 }

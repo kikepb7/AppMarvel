@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 
 class FilmSerieAdapter(private val listener: (FilmSerieModel) -> Unit): RecyclerView.Adapter<FilmSerieViewHolder>() {
 

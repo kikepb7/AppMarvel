@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
-import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListFilterByNameUseCaseImpl
-import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListOfAllSeriesUseCaseImpl
-import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListOfSeriesOrderByAlphabetUseCaseImpl
-import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListOfSeriesOrderByStartYearUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
+import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListFilterByNameUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListOfAllSeriesUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListOfSeriesOrderByAlphabetUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListOfSeriesOrderByStartYearUseCaseImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
