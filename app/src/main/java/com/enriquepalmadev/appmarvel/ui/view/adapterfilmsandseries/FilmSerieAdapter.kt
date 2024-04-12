@@ -27,17 +27,11 @@ class FilmSerieAdapter(private val listener: (FilmSerieModel) -> Unit): Recycler
         holder.itemView.setOnClickListener{listener(filmSerieModel)}
     }
 
-    fun updateList(filmsSeriesList: ArrayList<FilmSerieModel>):Unit {
+    fun updateList(filmsSeriesList: ArrayList<FilmSerieModel>) {
         // This method updated the list in the Adapter
+        // This method is used too to filter with the SearchView
         this.fsList.clear()
         this.fsList.addAll(filmsSeriesList)
-    }
-
-    fun filterByName(filmsSeries: List<FilmSerieModel>){
-        // This method is used to filter with the SearchView
-        this.fsList.clear()
-        this.fsList.addAll(filmsSeries)
-        //notifyDataSetChanged()
     }
 
 }

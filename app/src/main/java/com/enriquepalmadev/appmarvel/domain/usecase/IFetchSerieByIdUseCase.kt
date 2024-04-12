@@ -3,7 +3,7 @@ package com.enriquepalmadev.appmarvel.domain.usecase
 import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
 import kotlinx.coroutines.flow.Flow
 
-interface IGetListOfAllSeriesUseCase {
+interface IFetchSerieByIdUseCase {
 
-    suspend fun getListOfAllSeries() : Flow<ArrayList<FilmSerieModel>>
+    suspend fun getSerieById(id: Int) : Flow<FilmSerieModel>
 }

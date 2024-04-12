@@ -55,12 +55,7 @@ class FilmSerieFragment : Fragment() {
                     fsViewModel.getAllSeriesListFromAPI()
                     // ProgressBar Show
                 }
-                is FilmSerieUIState.ListReceivedFromAPI -> {
-                    context?.let { fsViewModel.getAllSeriesListToLocalFromAPI() }
-                    // ProgressBar Gone
-                }
-
-                is FilmSerieUIState.ListReceivedInViewModel -> {
+                is FilmSerieUIState.ListReceived -> {
                     initRecyclerView(uiState.arrayList)
                     // ProgressBar Gone
                 }
@@ -112,7 +107,7 @@ class FilmSerieFragment : Fragment() {
                     selectedItem = arrayItemsOrderBy[which]
                 }
                 .setPositiveButton(getString(R.string.dialog_ok)){dialog, which ->
-                    fsViewModel.orderListBy(selectedItem, requireContext(), fsBinding)
+                    fsViewModel.orderListBy(selectedItem, requireContext())
                 }
                 .setNegativeButton(getString(R.string.dialog_cancel)){dialog, which ->
                 }
@@ -125,7 +120,7 @@ class FilmSerieFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean = false
 
             override fun onQueryTextChange(newText: String): Boolean {
-                fsViewModel.filteringByName(fsAdapter, newText)
+                fsViewModel.filteringByName(newText)
                 return false
             }
         })

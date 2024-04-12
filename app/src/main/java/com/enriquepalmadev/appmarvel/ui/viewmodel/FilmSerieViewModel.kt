@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.models.FilmSerieModel
-import com.enriquepalmadev.appmarvel.domain.usecase.impl.GetListOfAllSeriesUseCaseImpl
-import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
-import com.enriquepalmadev.appmarvel.ui.view.extensions.showSnackbar
+import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListFilterByNameUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListOfAllSeriesUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListOfSeriesOrderByAlphabetUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.usecase.impl.FetchListOfSeriesOrderByStartYearUseCaseImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -20,41 +20,30 @@ class FilmSerieViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Loading)
     val uiState : StateFlow<FilmSerieUIState> = _uiState
-    private val iGetListOfAllSeriesUseCaseImpl = GetListOfAllSeriesUseCaseImpl()
+
+    private val iFetchListOfAllSeriesUseCaseImpl = FetchListOfAllSeriesUseCaseImpl()
+    private val iFetchListOfSeriesOrderByStartYearUseCaseImpl = FetchListOfSeriesOrderByStartYearUseCaseImpl()
+    private val iFetchListOfSeriesOrderByAlphabetUseCaseImpl = FetchListOfSeriesOrderByAlphabetUseCaseImpl()
+    private val iFetchListFilterByNameUseCaseImpl = FetchListFilterByNameUseCaseImpl()
 
     private var allSeriesList: ArrayList<FilmSerieModel> = ArrayList()
 
     fun done(){
         viewModelScope.launch {
-            _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(allSeriesList))
+            _uiState.emit(FilmSerieUIState.ListReceived(allSeriesList))
         }
     }
 
     fun getAllSeriesListFromAPI(){
         viewModelScope.launch {
-            iGetListOfAllSeriesUseCaseImpl.getListOfAllSeries()
+            iFetchListOfAllSeriesUseCaseImpl.getListOfAllSeries()
                 .onStart { _uiState.emit(FilmSerieUIState.Loading)}
                 .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
                 .collect {
                     allSeriesList = it
-                    _uiState.emit(FilmSerieUIState.ListReceivedFromAPI(it))
+                    _uiState.emit(FilmSerieUIState.ListReceived(it))
                 }
         }
-    }
-
-    fun getAllSeriesListToLocalFromAPI(): ArrayList<FilmSerieModel>{
-        try {
-            val filmsAndSeriesList = allSeriesList
-            allSeriesList =  ArrayList(filmsAndSeriesList.sortedByDescending { it.startYear})
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(ArrayList(allSeriesList)))
-            }
-        } catch (e: Exception){
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(e.message.toString()))
-            }
-        }
-        return allSeriesList;
     }
 
     fun transferToDataDetail(filmOrSerie: FilmSerieModel){
@@ -73,41 +62,46 @@ class FilmSerieViewModel : ViewModel() {
     }
 
     // Function to order the items of the RecyclerView
-    fun orderListBy(selectedItem: String, context: Context, binding: FragmentFilmsSeriesBinding) {
-        try {
-            when(selectedItem){
-                context.getString(R.string.orderby_year)-> {
-                    allSeriesList = ArrayList(allSeriesList.sortedByDescending { it.startYear })
-                    showSnackbar(binding.root, context.getString(R.string.msg_orderby)+" "+selectedItem)
+    fun orderListBy(selectedItem: String, context: Context) {
+        when(selectedItem) {
+            context.getString(R.string.orderby_year) -> {
+                viewModelScope.launch {
+                    iFetchListOfSeriesOrderByStartYearUseCaseImpl
+                        .getListOfSeriesOrderByStartYear(allSeriesList)
+                        .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                        .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
+                        .collect {
+                            allSeriesList = it
+                            _uiState.emit(FilmSerieUIState.ListReceived(it))
+                        }
                 }
-                context.getString(R.string.orderby_alphabet)-> {
-                    allSeriesList = ArrayList(allSeriesList.sortedBy { it.title })
-                    showSnackbar(binding.root, context.getString(R.string.msg_orderby)+" "+selectedItem)
+            }
+
+            context.getString(R.string.orderby_alphabet) -> {
+                viewModelScope.launch {
+                    iFetchListOfSeriesOrderByAlphabetUseCaseImpl
+                        .getListOfSeriesOrderByAlphabet(allSeriesList)
+                        .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                        .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
+                        .collect {
+                            allSeriesList = it
+                            _uiState.emit(FilmSerieUIState.ListReceived(it))
+                        }
                 }
-                // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
-                // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
             }
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(allSeriesList))
-            }
-        } catch (e: Exception){
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(e.message.toString()))
-            }
+            // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
+            // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
         }
     }
 
-    fun filteringByName(filmSerieAdapter: FilmSerieAdapter, newText: String){
-        try {
-            val arraylist = allSeriesList.filter { it.title.lowercase().contains(newText) }
-            filmSerieAdapter.filterByName(arraylist)
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ListReceivedInViewModel(ArrayList(arraylist)))
-            }
-        } catch (e: Exception){
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(e.message.toString()))
-            }
+    fun filteringByName(newText: String){
+        viewModelScope.launch {
+            iFetchListFilterByNameUseCaseImpl.getListFilterByName(newText, allSeriesList)
+                .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
+                .collect{
+                    _uiState.emit(FilmSerieUIState.ListReceived(it))
+                }
         }
     }
 }
@@ -115,7 +109,6 @@ class FilmSerieViewModel : ViewModel() {
 sealed class FilmSerieUIState {
     data class Error(val msg: String) : FilmSerieUIState()
     data object Loading : FilmSerieUIState()
-    data class ListReceivedFromAPI(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
-    data class ListReceivedInViewModel(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
+    data class ListReceived(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
     data class ItemClicked(val filmSerieData: Bundle) : FilmSerieUIState()
 }
