@@ -1,11 +1,11 @@
-package com.enriquepalmadev.appmarvel.domain.series.usecase.impl
+package com.enriquepalmadev.appmarvel.domain.series.usecase
 
 import com.enriquepalmadev.appmarvel.data.series.repository.FilmSerieRepositoryImpl
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FetchSerieByIdUseCaseImpl {
+class FetchSerieByIdUseCase {
 
     private val filmSerieRepository = FilmSerieRepositoryImpl()
 

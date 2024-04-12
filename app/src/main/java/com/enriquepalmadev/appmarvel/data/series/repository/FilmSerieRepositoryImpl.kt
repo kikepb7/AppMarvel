@@ -5,8 +5,6 @@ import com.enriquepalmadev.appmarvel.data.series.api.RetrofitBuilder
 import com.enriquepalmadev.appmarvel.domain.series.mapper.IFilmSerieMapper
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.series.repository.IFilmSerieRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.mapstruct.factory.Mappers
 
 class FilmSerieRepositoryImpl: IFilmSerieRepository {
@@ -16,7 +14,6 @@ class FilmSerieRepositoryImpl: IFilmSerieRepository {
     override suspend fun getListOfAllSeries(): ArrayList<FilmSerieModel> {
         val series: ArrayList<FilmSerieModel> = ArrayList()
 
-        withContext(Dispatchers.IO) {
             val response = RetrofitBuilder.retrofitService.getListOfAllSeries()
             val result = response.body()?.data?.results
 
@@ -31,14 +28,12 @@ class FilmSerieRepositoryImpl: IFilmSerieRepository {
                     Log.d("APIError:::", "error en el UseCase GetListOfAllSeries IMPL")
                 }
             }
-        }
         return ArrayList(series.sortedByDescending { it.startYear })
     }
 
     override suspend fun getSerieById(id: Int): FilmSerieModel {
         lateinit var serie: FilmSerieModel
 
-        withContext(Dispatchers.IO){
             val response = RetrofitBuilder.retrofitService.getSerieById(id)
             val result = response.body()?.data?.results
 
@@ -47,7 +42,6 @@ class FilmSerieRepositoryImpl: IFilmSerieRepository {
                     serie = mapper.marvelFilmSerieItemDtoToFilmSerieModel(result.first())
                 }
             }
-        }
         return serie
     }
 

@@ -3,7 +3,7 @@ package com.enriquepalmadev.appmarvel.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
-import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchSerieByIdUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchSerieByIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -13,11 +13,11 @@ import kotlinx.coroutines.launch
 class ItemDetailFilmSerieViewModel : ViewModel() {
     private val _uiDetailState = MutableStateFlow<ItemDetailUIState>(ItemDetailUIState.Loading)
     val uiDetailState: StateFlow<ItemDetailUIState> = _uiDetailState
-    private val iGetSerieById = FetchSerieByIdUseCaseImpl()
+    private val iGetSerieByIdUseCase = FetchSerieByIdUseCase()
 
     fun getSerieById(id: Int){
         viewModelScope.launch {
-            iGetSerieById.getSerieById(id)
+            iGetSerieByIdUseCase.getSerieById(id)
                 .onStart { ItemDetailUIState.Loading }
                 .catch { ItemDetailUIState.Error(it.toString()) }
                 .collect{

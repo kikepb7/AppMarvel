@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
-import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListFilterByNameUseCaseImpl
-import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListOfAllSeriesUseCaseImpl
-import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListOfSeriesOrderByAlphabetUseCaseImpl
-import com.enriquepalmadev.appmarvel.domain.series.usecase.impl.FetchListOfSeriesOrderByStartYearUseCaseImpl
+import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchListFilterByNameUseCase
+import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchListOfAllSeriesUseCase
+import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase
+import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchListOfSeriesOrderByStartYearUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -20,10 +20,10 @@ class FilmSerieViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Loading)
     val uiState : StateFlow<FilmSerieUIState> = _uiState
 
-    private val iFetchListOfAllSeriesUseCaseImpl = FetchListOfAllSeriesUseCaseImpl()
-    private val iFetchListOfSeriesOrderByStartYearUseCaseImpl = FetchListOfSeriesOrderByStartYearUseCaseImpl()
-    private val iFetchListOfSeriesOrderByAlphabetUseCaseImpl = FetchListOfSeriesOrderByAlphabetUseCaseImpl()
-    private val iFetchListFilterByNameUseCaseImpl = FetchListFilterByNameUseCaseImpl()
+    private val iFetchListOfAllSeriesUseCase = FetchListOfAllSeriesUseCase()
+    private val iFetchListOfSeriesOrderByStartYearUseCase = FetchListOfSeriesOrderByStartYearUseCase()
+    private val iFetchListOfSeriesOrderByAlphabetUseCase = FetchListOfSeriesOrderByAlphabetUseCase()
+    private val iFetchListFilterByNameUseCase = FetchListFilterByNameUseCase()
 
     private var allSeriesList: ArrayList<FilmSerieModel> = ArrayList()
 
@@ -35,7 +35,7 @@ class FilmSerieViewModel : ViewModel() {
 
     fun getAllSeriesListFromAPI(){
         viewModelScope.launch {
-            iFetchListOfAllSeriesUseCaseImpl.getListOfAllSeries()
+            iFetchListOfAllSeriesUseCase.getListOfAllSeries()
                 .onStart { _uiState.emit(FilmSerieUIState.Loading)}
                 .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
                 .collect {
@@ -62,7 +62,7 @@ class FilmSerieViewModel : ViewModel() {
         when(selectedItem) {
             context.getString(R.string.orderby_year) -> {
                 viewModelScope.launch {
-                    iFetchListOfSeriesOrderByStartYearUseCaseImpl
+                    iFetchListOfSeriesOrderByStartYearUseCase
                         .getListOfSeriesOrderByStartYear(allSeriesList)
                         .onStart { _uiState.emit(FilmSerieUIState.Loading) }
                         .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
@@ -75,7 +75,7 @@ class FilmSerieViewModel : ViewModel() {
 
             context.getString(R.string.orderby_alphabet) -> {
                 viewModelScope.launch {
-                    iFetchListOfSeriesOrderByAlphabetUseCaseImpl
+                    iFetchListOfSeriesOrderByAlphabetUseCase
                         .getListOfSeriesOrderByAlphabet(allSeriesList)
                         .onStart { _uiState.emit(FilmSerieUIState.Loading) }
                         .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
@@ -92,7 +92,7 @@ class FilmSerieViewModel : ViewModel() {
 
     fun filteringByName(newText: String){
         viewModelScope.launch {
-            iFetchListFilterByNameUseCaseImpl.getListFilterByName(newText, allSeriesList)
+            iFetchListFilterByNameUseCase.getListFilterByName(newText, allSeriesList)
                 .onStart { _uiState.emit(FilmSerieUIState.Loading) }
                 .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
                 .collect{

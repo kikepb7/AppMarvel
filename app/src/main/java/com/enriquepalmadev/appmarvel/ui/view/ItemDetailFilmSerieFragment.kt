@@ -67,7 +67,6 @@ class ItemDetailFilmSerieFragment : Fragment() {
     }
 
     private fun renderUi(){
-
         val completeImagePath = "${serieModel?.thumbnailPath}.${serieModel?.thumbnailExt}"
 
         bindingItemDetailsFilmsSeries.apply {
