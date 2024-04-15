@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- General -->
+    <!-- GENERAL -->
+    <!-- White background -->
     <style name="background_white" parent="@style/Base.Theme.AppMarvel">
         <item name="android:background">@color/white</item>
     </style>
-    <!--Finished-->
+
+    <!-- Loading view -->
+    <style name="loading_view" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:background">@drawable/loading_icon</item>
+        <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/m_of_marvel</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">64sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--FINISHED-->
 
     <!-- activity_main.xml -->
     <style name="activity_main_fragment_container_view" parent="@style/Base.Theme.AppMarvel">

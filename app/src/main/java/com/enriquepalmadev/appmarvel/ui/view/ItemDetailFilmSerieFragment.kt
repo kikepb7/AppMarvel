@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -38,28 +39,32 @@ class ItemDetailFilmSerieFragment : Fragment() {
         initObserver()
     }
 
-
     private fun initObserver(){
         idViewModel.uiDetailState.onEach { uiState ->
             when(uiState){
                 is ItemDetailUIState.Error -> {
                     Toast.makeText(context, "Error: ${uiState.msg}", Toast.LENGTH_LONG).show()
-                    // ProgressBar Gone
+                    bindingItemDetailsFilmsSeries.apply {
+                        loading.isVisible = false
+                    }
                 }
                 ItemDetailUIState.Loading -> {
                     retrieveFilmOrSerie()
-                    // ProgressBar Visible
+                    bindingItemDetailsFilmsSeries.apply {
+                        loading.isVisible = true
+                    }
                 }
                 is ItemDetailUIState.IdReceived -> {
                     serieModel = uiState.serie
                     renderUi()
-                    // ProgressBar Gone
+                    bindingItemDetailsFilmsSeries.apply {
+                        loading.isVisible = false
+                    }
                 }
             }
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
-
 
     private fun retrieveFilmOrSerie(){
         idSerie = args.idSerie

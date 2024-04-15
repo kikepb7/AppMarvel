@@ -4,7 +4,7 @@
     <string name="button_characters">Personajes</string>
     <string name="button_films_and_series">Películas y series</string>
 
-    <!-- Mensajes (tipo Toast) -->
+    <!-- Messages (like Toast) -->
     <string name="toast_buttonComics">Botón comics</string>
     <string name="toast_buttonCharacters">Botón personajes</string>
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
@@ -32,4 +32,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_canceled">Canceled</string>
+
+    <!-- Loading_view.xml's text -->
+    <string name="m_of_marvel">M</string>
 </resources>

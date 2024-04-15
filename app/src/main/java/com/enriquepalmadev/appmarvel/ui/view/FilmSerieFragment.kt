@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -51,22 +52,29 @@ class FilmSerieFragment : Fragment() {
                 is FilmSerieUIState.Error -> {
                     // With uiState, I can access to the list that returns (and emits) the state
                     Toast.makeText(context, "Error: ${uiState.msg}", Toast.LENGTH_LONG).show()
-                    // ProgressBar Gone
+                    fsBinding.apply {
+                        loading.isVisible = false
+                    }
                 }
                 FilmSerieUIState.Loading -> {
-                    // fsViewModel.getAllSeriesListFromAPI()
-                    // ProgressBar Show
+                    fsBinding.apply {
+                        loading.isVisible = true
+                    }
                 }
                 is FilmSerieUIState.ListReceived -> {
                     initRecyclerView(uiState.arrayList)
-                    // ProgressBar Gone
+                    fsBinding.apply {
+                        loading.isVisible = false
+                    }
                 }
 
                 is FilmSerieUIState.ItemClicked -> {
                     val action = FilmSerieFragmentDirections.actionFilmsAndSeriesFragmentToItemDetailsFilmsSeriesFragment(uiState.idSerie)
                     findNavController().navigate(action)
                     fsViewModel.done()
-                    // ProgressBar Gone
+                    fsBinding.apply {
+                        loading.isVisible = false
+                    }
                 }
             }
         }

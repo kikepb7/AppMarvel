@@ -58,6 +58,7 @@ dependencies {
     val retrofitVersion = "2.11.0"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
+    val facebookVersion = "0.5.0"
     val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
@@ -103,6 +104,9 @@ dependencies {
     /* MAPSTRUCT */
     implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
     kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
+
+    /* FACEBOOK */
+    implementation("com.facebook.shimmer:shimmer:$facebookVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
