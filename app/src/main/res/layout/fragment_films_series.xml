@@ -17,9 +17,9 @@
             style="@style/searchview_films_series"
             android:layout_width="@dimen/layout_width_searchview_230dp"
             android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_orderby"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_films_series"
@@ -39,19 +39,59 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView_seriesAndFilms" />
 
+        <!--Loading view-->
         <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:shimmer_auto_start="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_auto_start="true">
 
             <TextView
                 android:id="@+id/loading"
                 style="@style/loading_view" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <!--Error view-->
+        <ImageView
+            android:id="@+id/imgError"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/groot_error"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtErrorCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingHorizontal="30dp"
+            android:layout_marginTop="30dp"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgError"
+            tools:text="Error 000" />
+
+        <TextView
+            android:id="@+id/txtErrorMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtErrorCode"
+            tools:text="Error msg here!" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

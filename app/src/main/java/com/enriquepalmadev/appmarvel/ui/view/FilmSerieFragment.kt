@@ -12,6 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.series.api.utils.Constants
+import com.enriquepalmadev.appmarvel.data.series.api.utils.GenericException
+import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
@@ -50,44 +53,118 @@ class FilmSerieFragment : Fragment() {
         fsViewModel.uiState.onEach { uiState ->
             when(uiState){
                 is FilmSerieUIState.Error -> {
-                    // With uiState, I can access to the list that returns (and emits) the state
-                    Toast.makeText(context, "Error: ${uiState.msg}", Toast.LENGTH_LONG).show()
-                    fsBinding.apply {
-                        loading.isVisible = false
+                    when(uiState.error){
+                        is GenericException -> {
+                            setErrorView(uiState.error.code.toString(), uiState.error.msg)
+                            showErrorView(true)
+                            showAuthorizedErrorView(false)
+                        }
+                        UnauthorizedError -> {
+                            setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
+                            showErrorView(false)
+                            showAuthorizedErrorView(true)
+                        }
                     }
+                    // With uiState, I can access to the list that returns (and emits) the state
+                    showLoading(false)
+                }
+                is FilmSerieUIState.SimpleError -> {
+                    Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
+                    showLoading(false)
+                    showErrorView(false)
+                    showAuthorizedErrorView(false)
                 }
                 FilmSerieUIState.Loading -> {
-                    fsBinding.apply {
-                        loading.isVisible = true
-                    }
+                    showLoading(true)
+                    showErrorView(false)
+                    showAuthorizedErrorView(false)
                 }
                 is FilmSerieUIState.ListReceived -> {
-                    initRecyclerView(uiState.arrayList)
-                    fsBinding.apply {
-                        loading.isVisible = false
-                    }
+                    initRecyclerView(uiState.list)
+                    showLoading(false)
+                    showErrorView(false)
+                    showAuthorizedErrorView(false)
                 }
 
                 is FilmSerieUIState.ItemClicked -> {
                     val action = FilmSerieFragmentDirections.actionFilmsAndSeriesFragmentToItemDetailsFilmsSeriesFragment(uiState.idSerie)
                     findNavController().navigate(action)
                     fsViewModel.done()
-                    fsBinding.apply {
-                        loading.isVisible = false
-                    }
+                    showLoading(false)
+                    showErrorView(false)
+                    showAuthorizedErrorView(false)
                 }
             }
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun showLoading(visible: Boolean){
+        fsBinding.apply {
+            loading.isVisible = visible
+        }
+    }
+    private fun setErrorView(code: String, msg: String) {
+        fsBinding.apply {
+            txtErrorCode.text = code
+            txtErrorMsg.text = msg
+        }
+    }
+
+    private fun showErrorView(visible: Boolean){
+        fsBinding.apply {
+
+            if(visible){
+                imgError.isVisible = true
+                txtErrorCode.isVisible = true
+                txtErrorMsg.isVisible = true
+
+                searchViewSeriesAndFilms.isVisible = false
+                btnOrderby.isVisible = false
+
+            } else {
+                imgError.isVisible = false
+                txtErrorCode.isVisible = false
+                txtErrorMsg.isVisible = false
+
+                searchViewSeriesAndFilms.isVisible = true
+                btnOrderby.isVisible = true
+            }
+
+        }
+    }
+
+    private fun showAuthorizedErrorView(visible: Boolean){
+        fsBinding.apply {
+            imgError.setImageResource(R.drawable.thanos_unauthorized)
+
+            if(visible){
+                imgError.isVisible = true
+                txtErrorCode.isVisible = true
+                txtErrorMsg.isVisible = true
+
+                searchViewSeriesAndFilms.isVisible = false
+                btnOrderby.isVisible = false
+
+            } else {
+                imgError.isVisible = false
+                txtErrorCode.isVisible = false
+                txtErrorMsg.isVisible = false
+
+                searchViewSeriesAndFilms.isVisible = true
+                btnOrderby.isVisible = true
+            }
+
+        }
+    }
+
     private fun sendingListenerToAdapterItems() {
         fsAdapter = FilmSerieAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
     }
 
-    private fun initRecyclerView(arrayList: ArrayList<FilmSerieModel>){
+    private fun initRecyclerView(list: List<FilmSerieModel>){
         fsBinding.rvFilmsSeries.adapter = fsAdapter // Setting the Adapter in the RecyclerView
-        fsAdapter.updateList(arrayList) // Updated the list in the Adapter and, in consequence, in the RecyclerView
+        fsAdapter.updateList(list) // Updated the list in the Adapter and, in consequence, in the RecyclerView
     }
 
     private fun onFilmSerieClicked(filmOrSerie: FilmSerieModel){

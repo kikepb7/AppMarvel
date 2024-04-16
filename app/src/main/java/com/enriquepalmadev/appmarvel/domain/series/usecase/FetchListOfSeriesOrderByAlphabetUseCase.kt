@@ -9,7 +9,7 @@ class FetchListOfSeriesOrderByAlphabetUseCase {
 
     private val filmSerieRepository = FilmSerieRepositoryImpl()
 
-    suspend fun getListOfSeriesOrderByAlphabet(series: ArrayList<FilmSerieModel>): Flow<ArrayList<FilmSerieModel>> {
+    suspend fun getListOfSeriesOrderByAlphabet(series: List<FilmSerieModel>): Flow<List<FilmSerieModel>> {
         return flow { emit(filmSerieRepository.orderListByAlphabet(series)) }
     }
 }

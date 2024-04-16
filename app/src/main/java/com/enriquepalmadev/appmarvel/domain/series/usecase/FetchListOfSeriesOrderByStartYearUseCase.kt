@@ -9,7 +9,7 @@ class FetchListOfSeriesOrderByStartYearUseCase {
 
     private val filmSerieRepository = FilmSerieRepositoryImpl()
 
-    suspend fun getListOfSeriesOrderByStartYear(series: ArrayList<FilmSerieModel>): Flow<ArrayList<FilmSerieModel>> {
+    suspend fun getListOfSeriesOrderByStartYear(series: List<FilmSerieModel>): Flow<List<FilmSerieModel>> {
         return flow { emit(filmSerieRepository.orderListByStartYear(series)) }
     }
 }

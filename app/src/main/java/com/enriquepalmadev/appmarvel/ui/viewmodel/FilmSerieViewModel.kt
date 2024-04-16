@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.series.api.utils.Failure
+import com.enriquepalmadev.appmarvel.data.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchListFilterByNameUseCase
 import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchListOfAllSeriesUseCase
@@ -25,23 +27,50 @@ class FilmSerieViewModel : ViewModel() {
     private val iFetchListOfSeriesOrderByAlphabetUseCase = FetchListOfSeriesOrderByAlphabetUseCase()
     private val iFetchListFilterByNameUseCase = FetchListFilterByNameUseCase()
 
-    private var allSeriesList: ArrayList<FilmSerieModel> = ArrayList()
+    private var allSeriesList: List<FilmSerieModel>? = listOf()
+
+    private fun customFilterList(series: List<FilmSerieModel>) : List<FilmSerieModel>{
+        return series.filter {
+            !it.description.isNullOrEmpty()
+        } .sortedByDescending {  it.startYear }
+    }
 
     fun done(){
         viewModelScope.launch {
-            _uiState.emit(FilmSerieUIState.ListReceived(allSeriesList))
+            allSeriesList?.let { FilmSerieUIState.ListReceived(it) }?.let { _uiState.emit(it) }
         }
     }
 
     fun getAllSeriesListFromAPI(){
-        viewModelScope.launch {
-            iFetchListOfAllSeriesUseCase.getListOfAllSeries()
-                .onStart { _uiState.emit(FilmSerieUIState.Loading)}
-                .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
-                .collect {
-                    allSeriesList = it
-                    _uiState.emit(FilmSerieUIState.ListReceived(it))
-                }
+        if (allSeriesList?.isEmpty() == true){
+            viewModelScope.launch {
+                iFetchListOfAllSeriesUseCase.getListOfAllSeries()
+                    .onStart { _uiState.emit(FilmSerieUIState.Loading)}
+                    .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
+                    .collect { responseEither ->
+
+                        when(responseEither){
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                            }
+                            is ResponseEither.Success -> {
+                                if(responseEither.r?.isEmpty() == true){
+                                    _uiState.emit(FilmSerieUIState.SimpleError("Error here!"))
+                                } else {
+                                    allSeriesList = responseEither.r?.let { customFilterList(it) }
+                                    responseEither.r?.let { serieModelList ->
+                                        FilmSerieUIState.ListReceived(
+                                            customFilterList(serieModelList)
+                                        )
+                                    }?.let {_uiState.emit(it) }
+                                }
+                            }
+                        }
+
+                    }
+            }
+        } else {
+            done()
         }
     }
 
@@ -52,7 +81,7 @@ class FilmSerieViewModel : ViewModel() {
             }
         } catch (e: Exception){
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(e.message.toString()))
+                _uiState.emit(FilmSerieUIState.SimpleError("Error here!"))
             }
         }
     }
@@ -62,27 +91,31 @@ class FilmSerieViewModel : ViewModel() {
         when(selectedItem) {
             context.getString(R.string.orderby_year) -> {
                 viewModelScope.launch {
-                    iFetchListOfSeriesOrderByStartYearUseCase
-                        .getListOfSeriesOrderByStartYear(allSeriesList)
-                        .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                        .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
-                        .collect {
-                            allSeriesList = it
-                            _uiState.emit(FilmSerieUIState.ListReceived(it))
-                        }
+                    allSeriesList?.let {
+                        iFetchListOfSeriesOrderByStartYearUseCase
+                            .getListOfSeriesOrderByStartYear(it)
+                            .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                            .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
+                            .collect {
+                                allSeriesList = it
+                                _uiState.emit(FilmSerieUIState.ListReceived(it))
+                            }
+                    }
                 }
             }
 
             context.getString(R.string.orderby_alphabet) -> {
                 viewModelScope.launch {
-                    iFetchListOfSeriesOrderByAlphabetUseCase
-                        .getListOfSeriesOrderByAlphabet(allSeriesList)
-                        .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                        .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
-                        .collect {
-                            allSeriesList = it
-                            _uiState.emit(FilmSerieUIState.ListReceived(it))
-                        }
+                    allSeriesList?.let {
+                        iFetchListOfSeriesOrderByAlphabetUseCase
+                            .getListOfSeriesOrderByAlphabet(it)
+                            .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                            .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
+                            .collect {
+                                allSeriesList = it
+                                _uiState.emit(FilmSerieUIState.ListReceived(it))
+                            }
+                    }
                 }
             }
             // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
@@ -92,19 +125,22 @@ class FilmSerieViewModel : ViewModel() {
 
     fun filteringByName(newText: String){
         viewModelScope.launch {
-            iFetchListFilterByNameUseCase.getListFilterByName(newText, allSeriesList)
-                .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                .catch { _uiState.emit(FilmSerieUIState.Error(it.toString())) }
-                .collect{
-                    _uiState.emit(FilmSerieUIState.ListReceived(it))
-                }
+            allSeriesList?.let {
+                iFetchListFilterByNameUseCase.getListFilterByName(newText, it)
+                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                    .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
+                    .collect{
+                        _uiState.emit(FilmSerieUIState.ListReceived(it))
+                    }
+            }
         }
     }
 }
 
 sealed class FilmSerieUIState {
-    data class Error(val msg: String) : FilmSerieUIState()
+    data class Error(val error: Failure) : FilmSerieUIState()
+    data class SimpleError(val msgError: String):FilmSerieUIState()
     data object Loading : FilmSerieUIState()
-    data class ListReceived(val arrayList: ArrayList<FilmSerieModel>) : FilmSerieUIState()
+    data class ListReceived(val list: List<FilmSerieModel>) : FilmSerieUIState()
     data class ItemClicked(val idSerie: Int) : FilmSerieUIState()
 }

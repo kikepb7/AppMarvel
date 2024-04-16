@@ -59,7 +59,11 @@ dependencies {
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
     val facebookVersion = "0.5.0"
+    val arrowVersion = "1.1.2"
     val coroutinesVersion = "1.7.3"
+    val mockitoJUnitVersion = "4.8.0"
+    val mockitoInlineVersion = "4.7.0"
+    val kotestVersion = "1.2.5"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
@@ -107,6 +111,17 @@ dependencies {
 
     /* FACEBOOK */
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
+
+    /* ARROW (TO EITHER) */
+    implementation ("io.arrow-kt:arrow-core:$arrowVersion")
+    testImplementation(kotlin("test"))
+
+    /* MOCKITO */
+    testImplementation("org.mockito:mockito-junit-jupiter:$mockitoJUnitVersion")
+    testImplementation("org.mockito:mockito-inline:$mockitoInlineVersion")
+
+    /* KOTEST */
+    testImplementation("io.kotest.extensions:kotest-assertions-arrow:$kotestVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

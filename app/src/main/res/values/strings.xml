@@ -28,11 +28,15 @@
     <string name="orderby_fav_first">by Favourites first</string>
     <string name="orderby_fav_only">by Favourites only</string>
     <string name="msg_orderby">Ordering</string>
-    <string name="dialog_title">Order films and series...</string>
+    <string name="dialog_title">Order films and series…</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_canceled">Canceled</string>
 
     <!-- Loading_view.xml's text -->
     <string name="m_of_marvel">M</string>
+
+    <!-- Unauthorized error (401) -->
+    <string name="title_401">Unauthorized</string>
+    <string name="msg_401">Go out!</string>
 </resources>

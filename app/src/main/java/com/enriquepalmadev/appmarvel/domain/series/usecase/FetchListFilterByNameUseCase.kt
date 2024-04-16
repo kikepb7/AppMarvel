@@ -11,8 +11,8 @@ class FetchListFilterByNameUseCase {
 
     suspend fun getListFilterByName(
         newText: String,
-        series: ArrayList<FilmSerieModel>
-    ): Flow<ArrayList<FilmSerieModel>> {
+        series: List<FilmSerieModel>
+    ): Flow<List<FilmSerieModel>> {
         return flow { emit(filmSerieRepository.filterByName(newText, series)) }
     }
 }
