@@ -9,8 +9,6 @@ import com.enriquepalmadev.appmarvel.data.featureComics.dto.Unauthorized
 import com.enriquepalmadev.appmarvel.data.featureComics.utils.dtoToComicListModel
 import com.enriquepalmadev.appmarvel.domain.featureComics.ComicRepository
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
-import retrofit2.HttpException
-import java.io.IOException
 
 class ComicRepositoryImpl : ComicRepository {
 
@@ -24,20 +22,25 @@ class ComicRepositoryImpl : ComicRepository {
                 Either.Success(data = request.body()?.data?.results?.dtoToComicListModel())
             } else {
                 if (request.code() == 400) {
-                 Either.Failure(BadRequest)
+                    Either.Failure(BadRequest)
                 } else if (request.code() == 401) {
                     Either.Failure(Unauthorized)
                 }
-                Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
+                Either.Failure(
+                    ApiError(
+                        code = request.code(),
+                        message = request.errorBody().toString()
+                    )
+                )
             }
-        /*} catch (e: IOException) {
-            Either.Failure(ApiError(code = 0, message = "Connection Error"))
-        } catch (e: HttpException) {
-            when (e.code()) {
-                400 -> Either.Failure(ApiError(code = 400, message = "Bad request"))
-                401 -> Either.Failure(ApiError(code = 401, message = "Unauthorized"))
-                else -> Either.Failure(ApiError(code = e.code(), message = "Server error"))
-            }*/
+            /*} catch (e: IOException) {
+                Either.Failure(ApiError(code = 0, message = "Connection Error"))
+            } catch (e: HttpException) {
+                when (e.code()) {
+                    400 -> Either.Failure(ApiError(code = 400, message = "Bad request"))
+                    401 -> Either.Failure(ApiError(code = 401, message = "Unauthorized"))
+                    else -> Either.Failure(ApiError(code = e.code(), message = "Server error"))
+                }*/
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
@@ -55,6 +58,15 @@ class ComicRepositoryImpl : ComicRepository {
             }
         } catch (e: Exception) {
             throw Exception("${e.printStackTrace()}")
+        }
+    }
+
+    override suspend fun fetchComicsFilteredByName(text: String): List<ComicModel>? {
+        val request =
+            remoteDataSource.fetchComicsFromApi().body()?.data?.results?.dtoToComicListModel()
+
+        return request?.filter { comic ->
+            comic.title.lowercase().contains(text.lowercase())
         }
     }
 }

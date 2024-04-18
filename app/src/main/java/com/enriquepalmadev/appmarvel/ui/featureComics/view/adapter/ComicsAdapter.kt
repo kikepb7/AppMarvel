@@ -7,7 +7,7 @@ import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
 
 class ComicsAdapter(
-    private val comicsList:List<ComicModel>,
+    private var comicsList: List<ComicModel>,
     private val onClickListener: (ComicModel) -> Unit
 ) : RecyclerView.Adapter<ComicsViewHolder>() {
 

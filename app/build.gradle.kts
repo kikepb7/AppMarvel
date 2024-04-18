@@ -57,6 +57,7 @@ dependencies {
     val espressoVersion = "3.5.1"
     val roomVersion = "2.6.1"
     val retrofitVersion = "2.10.0"
+    val interceptorVersion = "4.12.0"
 
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
@@ -90,6 +91,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
+    /* INTERCEPTOR */
+    implementation("com.squareup.okhttp3:logging-interceptor:$interceptorVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

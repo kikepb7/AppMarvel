@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +18,6 @@ import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.featureComics.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.ui.featureComics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.ui.featureComics.viewmodel.State
-import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -45,7 +44,20 @@ class ComicsFragment : Fragment() {
         // Call the viewModel to bring us the list of comics
         viewModel.getComicsList()
 
-        initChips()
+        //initChips()
+
+        filterComics()
+    }
+
+    private fun filterComics() {
+        binding.svFilter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean = false
+
+            override fun onQueryTextChange(text: String): Boolean {
+                viewModel.filterByName(text)
+                return false
+            }
+        })
     }
 
     private fun initObserver() {
@@ -57,6 +69,7 @@ class ComicsFragment : Fragment() {
                             manageErrorApi()
                             showErrorMessage(code = state.error.code, message = state.error.message)
                         }
+
                         BadRequest -> {} // TODO() --> Error 400, hacerlo diferente
                         Unauthorized -> {} // TODO --> Error 401, hacerlo diferente
                     }
@@ -122,9 +135,10 @@ class ComicsFragment : Fragment() {
         }
     }
 
-    // Filter Chips
+    /*// Filter Chips
     private fun initChips() {
         val chipItems = listOf("Spider-man", "Ironman", "Hulk")
+        var lastCheckedChip : Chip? = null
 
         chipItems.map {
             val chip = Chip(requireContext())
@@ -135,15 +149,35 @@ class ComicsFragment : Fragment() {
                 chip.isCheckable = true
                 chip.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Seleccionado ${chip.text}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        lastCheckedChip?.isClickable = true
+                        lastCheckedChip = this
+                        binding.svFilter.children.forEach { view ->
+                            if (view != this) {
+                                (view as Chip).isClickable = false
+                            }
+                        }
+                        filterComicsBySelectedChips()
+                    } else {
+                        binding.svFilter.children.forEach { view ->
+                            (view as Chip).isClickable = true
+                        }
+                        filterComicsBySelectedChips()
                     }
                 }
-                binding.chipGroupFilter.addView(chip)
+                binding.svFilter.addView(chip)
             }
         }
     }
+
+    private fun filterComicsBySelectedChips() {
+        val selectedChips = binding.svFilter.checkedChipIds.joinToString(",") { id ->
+            binding.svFilter.findViewById<Chip>(id).text.toString()
+        }
+
+        if (selectedChips.isNotEmpty()) {
+            viewModel.filterByName(selectedChips)
+        } else {
+            viewModel.getComicsList()
+        }
+    }*/
 }

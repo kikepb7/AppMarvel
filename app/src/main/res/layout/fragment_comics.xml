@@ -44,7 +44,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.chip.ChipGroup
+    <android.widget.SearchView
+        android:id="@+id/svFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoScreen"
+        />
+
+    <!--<com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +61,7 @@
         android:layout_marginBottom="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoScreen" />
+        app:layout_constraintTop_toBottomOf="@+id/logoScreen" />-->
 
 
     <ImageView
@@ -64,7 +73,7 @@
         android:contentDescription="@string/title_icon"
         android:src="@drawable/ironman"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroupFilter"
+        app:layout_constraintTop_toBottomOf="@+id/svFilter"
         app:tint="@color/white" />
 
 

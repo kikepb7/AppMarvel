@@ -7,6 +7,7 @@ import com.enriquepalmadev.appmarvel.data.featureComics.dto.Either
 import com.enriquepalmadev.appmarvel.data.featureComics.dto.Failure
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
 import com.enriquepalmadev.appmarvel.domain.featureComics.usecase.FetchComicUseCase
+import com.enriquepalmadev.appmarvel.domain.featureComics.usecase.FetchComicsFilteredByNameUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class ComicsViewModel : ViewModel() {
     private val fetchComicListUseCase = FetchComicUseCase()
+    private val fetchComicsFilteredByNameUseCase = FetchComicsFilteredByNameUseCase()
     val state = MutableSharedFlow<State>() // TODO --> Cambiar a State
 
     fun getComicsList() {
@@ -21,12 +23,20 @@ class ComicsViewModel : ViewModel() {
             fetchComicListUseCase.fetchComicList()
                 .onStart { state.emit(State.Loading) }
                 .catch { e ->
-                    state.emit(State.Error(ApiError(code = 0, message = e.message ?: "Unknown error")))
+                    state.emit(
+                        State.Error(
+                            ApiError(
+                                code = 0,
+                                message = e.message ?: "Unknown error"
+                            )
+                        )
+                    )
                 }
                 .collect { result ->
                     when (result) {
                         is Either.Failure ->
                             state.emit(State.Error(error = result.error))
+
                         is Either.Success -> {
                             if (!result.data.isNullOrEmpty()) {
                                 val filteredList = result.data.filter { comic ->
@@ -47,6 +57,24 @@ class ComicsViewModel : ViewModel() {
     fun onItemSelected(id: Int) {
         viewModelScope.launch {
             state.emit(State.NavigateToDetail(id))
+        }
+    }
+
+    fun filterByName(text: String) {
+        viewModelScope.launch {
+            fetchComicsFilteredByNameUseCase.fetchComicsFilteredByName(text)
+                .onStart { state.emit(State.Loading) }
+                .catch {
+                    state.emit(
+                        State.Error(
+                            ApiError(
+                                code = 0,
+                                message = it.message ?: "Unknown error"
+                            )
+                        )
+                    )
+                }
+                .collect { state.emit(State.ListReceived(it)) }
         }
     }
 }
