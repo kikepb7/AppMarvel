@@ -4,6 +4,7 @@
     <dimen name="corner_radius_20dp">20dp</dimen>
     <dimen name="dimen_0dp">0dp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_32sp">32sp</dimen>
     <dimen name="txt_item_superhero_paddin_8dp">16sp</dimen>
     <dimen name="img_item_superhero_height_146dp">146dp</dimen>
     <dimen name="img_comics_256dp">256dp</dimen>
@@ -17,6 +18,8 @@
     <dimen name="logo_width">128dp</dimen>
     <dimen name="logo_height">96dp</dimen>
     <dimen name="logo_margin">16dp</dimen>
+    <dimen name="logo_error_width">128dp</dimen>
+    <dimen name="logo_error_height">128dp</dimen>
 
     <!-- ICON -->
     <dimen name="icon_width">30dp</dimen>

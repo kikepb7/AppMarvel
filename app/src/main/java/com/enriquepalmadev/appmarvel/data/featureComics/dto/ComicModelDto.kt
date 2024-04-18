@@ -1,6 +1,6 @@
-package com.enriquepalmadev.appmarvel.data.featureComics.model
+package com.enriquepalmadev.appmarvel.data.featureComics.dto
 
-data class ResponseMarvelDto<T> (
+data class ResponseMarvelDto (
     //val code: Int? = null,
     val data: DataDto? = null,
     //val etag: String? = null
@@ -10,40 +10,40 @@ data class DataDto(
     val count: Int? = null,
     val limit: Int? = null,
     val offset: Int? = null,
-    val results: List<ResultDto>? = null,
+    val results: List<ComicDto>? = null,
     val total: Int? = null
 )
 
-data class ResultDto(
+data class ComicDto(
     val description: String? = null,
     val id: Int? = null,
     val pageCount: Int? = null,
     val thumbnail: ThumnailDto? = null,
     val title: String? = null,
-    //val characters: Characters,
-    //val collectedIssues: List<Any>,
-    //val collections: List<Any>,
-    //val creators: Creators? = null,
-    //val dates: List<Date>? = null
-    //val diamondCode: String,
-    //val digitalId: Int,
-    //val ean: String,
-    //val events: Events,
-    //val format: String,
-    //val images: List<Any>,
-    //val isbn: String,
-    //val issn: String,
-    //val issueNumber: Int,
-    //val modified: String,
+    val characters: Characters,
+    val collectedIssues: List<Any>,
+    val collections: List<Any>,
+    val creators: Creators? = null,
+    val dates: List<Date>? = null,
+    val diamondCode: String,
+    val digitalId: Int,
+    val ean: String,
+    val events: Events,
+    val format: String,
+    val images: List<Any>,
+    val isbn: String,
+    val issn: String,
+    val issueNumber: Int,
+    val modified: String,
     //val prices: List<Price>? = null,
-    //val resourceURI: String,
-    //val series: Series,
-    //val stories: Stories,
-    //val textObjects: List<Any>,
-    //val upc: String,
-    //val urls: List<Url>,
-    //val variantDescription: String,
-    //val variants: List<Variant>
+    val resourceURI: String,
+    val series: Series,
+    val stories: Stories,
+    val textObjects: List<Any>,
+    val upc: String,
+    val urls: List<Url>,
+    val variantDescription: String,
+    val variants: List<Variant>
 )
 
 data class ThumnailDto(
@@ -51,7 +51,6 @@ data class ThumnailDto(
     val path: String
 )
 
-/*
 data class Characters(
     val available: Int,
     val collectionURI: String,
@@ -116,16 +115,3 @@ data class Variant(
     val name: String,
     val resourceURI: String
 )
-
-data class ComicModelDto(
-    val id: Long,
-    val title: String,
-    val published: String,
-    val writer: String,
-    val penciler: String,
-    // val coverArtist: String,
-    val description: String,
-    val price: Double,
-    val image: String
-): Serializable
- */

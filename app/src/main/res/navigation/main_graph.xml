@@ -30,12 +30,14 @@
         tools:layout="@layout/fragment_comics" >
         <action
             android:id="@+id/action_comicsFragment_to_comicDetail"
-            app:destination="@+id/comicDetail" >
-
-            <argument
-                android:name="comicId"
-                app:argType="long" />
-        </action>
+            app:destination="@+id/comicDetail"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 
     <!-- COMIC DETAIL FRAGMENT -->
@@ -43,7 +45,11 @@
         android:id="@+id/comicDetail"
         android:name="com.enriquepalmadev.appmarvel.ui.featureComics.view.ComicDetailFragment"
         android:label="fragment_comic_detail"
-        tools:layout="@layout/fragment_comic_detail" />
+        tools:layout="@layout/fragment_comic_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
     <!-- FILMS AND SERIES FRAGMENT -->
     <fragment

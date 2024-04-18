@@ -10,10 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.featureComics.dto.ApiError
+import com.enriquepalmadev.appmarvel.data.featureComics.dto.BadRequest
+import com.enriquepalmadev.appmarvel.data.featureComics.dto.Unauthorized
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
 import com.enriquepalmadev.appmarvel.domain.featureComics.model.ComicModel
-import com.enriquepalmadev.appmarvel.ui.featureComics.view.ComicDetailFragment.Companion.KEY_ID
 import com.enriquepalmadev.appmarvel.ui.featureComics.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.ui.featureComics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.ui.featureComics.viewmodel.State
@@ -50,28 +51,36 @@ class ComicsFragment : Fragment() {
     private fun initObserver() {
         viewModel.state.onEach { state ->
             when (state) {
-                State.Error -> { showErrorMessage() }
+                is State.Error -> {
+                    when (state.error) {
+                        is ApiError -> {
+                            manageErrorApi()
+                            showErrorMessage(code = state.error.code, message = state.error.message)
+                        }
+                        BadRequest -> {} // TODO() --> Error 400, hacerlo diferente
+                        Unauthorized -> {} // TODO --> Error 401, hacerlo diferente
+                    }
+                }
+
                 is State.ListReceived -> state.listComicModels?.let {
                     initRecyclerView(it)
                 }
+
                 State.Loading -> {}
                 is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
+                //State.EmptyList -> {}
             }
-        }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    // Navigate to detail through the comic ID
+    // Navigate to detail through the comic ID with safeArgs
     private fun navigateToComicDetail(comicId: Int) {
-        val bundle = Bundle().apply {
-            putInt(KEY_ID, comicId)
-        }
+        val action = ComicsFragmentDirections.actionComicsFragmentToComicDetail(id = comicId)
         binding.apply {
-            rvComics.findNavController().navigate(R.id.action_comicsFragment_to_comicDetail, bundle)
+            rvComics.findNavController().navigate(action)
         }
     }
 
-    //
     private fun initRecyclerView(list: List<ComicModel>) {
         binding.rvComics.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
@@ -91,17 +100,31 @@ class ComicsFragment : Fragment() {
     }
 
     // Error message
-    private fun showErrorMessage() {
+    private fun showErrorMessage(code: Int, message: String) {
         Snackbar.make(
             binding.comicsViewContainer,
-            "Ha ocurrido un error",
+            "Código de error: $code \n$message",
             Snackbar.LENGTH_SHORT
         ).show()
     }
 
+    // Manage errors on fragment
+    private fun manageErrorApi() {
+        binding.apply {
+            ivError.visibility = View.VISIBLE
+            tvError.visibility = View.VISIBLE
+            rvComics.visibility = View.GONE
+            rvFavoriteComics.visibility = View.GONE
+            tvComicList.visibility = View.GONE
+            tvFavoriteComics.visibility = View.GONE
+            ivLogoAllComics.visibility = View.GONE
+            ivLogoFavoriteComics.visibility = View.GONE
+        }
+    }
+
     // Filter Chips
     private fun initChips() {
-        val chipItems = listOf("Spiderman", "Ironman", "Favoritos")
+        val chipItems = listOf("Spider-man", "Ironman", "Hulk")
 
         chipItems.map {
             val chip = Chip(requireContext())

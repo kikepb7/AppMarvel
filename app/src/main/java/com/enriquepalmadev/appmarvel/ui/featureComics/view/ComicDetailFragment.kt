@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class ComicDetailFragment : Fragment() {
-
     companion object { const val KEY_ID = "id" }
     private var isFavorite = false
     private val comicId by lazy { arguments?.getInt(KEY_ID) }

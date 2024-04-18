@@ -8,6 +8,32 @@
     tools:context=".ui.featureComics.view.ComicsFragment">
 
     <ImageView
+        android:id="@+id/ivError"
+        android:layout_width="@dimen/logo_error_width"
+        android:layout_height="@dimen/logo_error_height"
+        android:contentDescription="@string/logo_error"
+        android:src="@drawable/unauthorized_error_logo"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/error_fragment_text"
+        android:textSize="@dimen/text_size_32sp"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:textColor="@color/dark_red"
+        android:layout_marginTop="@dimen/logo_margin"
+        app:layout_constraintTop_toBottomOf="@+id/ivError"
+        app:layout_constraintEnd_toEndOf="@+id/ivError"
+        app:layout_constraintStart_toStartOf="@+id/ivError" />
+
+    <ImageView
         android:id="@+id/logoScreen"
         android:layout_width="@dimen/logo_width"
         android:layout_height="@dimen/logo_height"
@@ -27,6 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoScreen" />
+
 
     <ImageView
         android:id="@+id/ivLogoAllComics"

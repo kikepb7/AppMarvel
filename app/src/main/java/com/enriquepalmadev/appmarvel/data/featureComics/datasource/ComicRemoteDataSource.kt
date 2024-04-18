@@ -1,20 +1,19 @@
 package com.enriquepalmadev.appmarvel.data.featureComics.datasource
 
-import com.enriquepalmadev.appmarvel.data.featureComics.ComicDataSource
 import com.enriquepalmadev.appmarvel.data.featureComics.Retrofit
-import com.enriquepalmadev.appmarvel.data.featureComics.model.ResponseMarvelDto
-import com.enriquepalmadev.appmarvel.data.featureComics.model.ResultDto
+import com.enriquepalmadev.appmarvel.data.featureComics.dto.ResponseMarvelDto
 import com.enriquepalmadev.appmarvel.data.featureComics.utils.Constants
+import retrofit2.Response
 
-class ComicRemoteDataSource : ComicDataSource {
+class ComicRemoteDataSource {
 
-    private val retrofit = Retrofit.retrofitConection()
+    private val retrofit = Retrofit.retrofitService
 
-    override suspend fun fetchComicsFromApi(): ResponseMarvelDto<ResultDto> {
+    suspend fun fetchComicsFromApi(): Response<ResponseMarvelDto> {
         return retrofit.getComics(hash = Constants.HASH, ts = Constants.TS, limit = 100)
     }
 
-    override suspend fun fetchComicDetailFromApi(comicId: Int): ResponseMarvelDto<ResultDto> {
+    suspend fun fetchComicDetailFromApi(comicId: Int): Response<ResponseMarvelDto> {
         return retrofit.getComicById(comicId = comicId, hash = Constants.HASH, ts = Constants.TS)
     }
 }

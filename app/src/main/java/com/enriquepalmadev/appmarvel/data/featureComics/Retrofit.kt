@@ -11,15 +11,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Retrofit {
     private val httpClient = OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor()).build()
+    val retrofitService : ComicService by lazy {
+        retrofitConection().create(ComicService::class.java)
+    }
 
-    fun retrofitConection(): ComicService =
+    private fun retrofitConection(): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
-            .build().create(ComicService::class.java)
+            .build()
 }
 
+// para logcat (loggin interceptor)
 class ApiKeyInterceptor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
