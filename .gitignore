@@ -14,3 +14,4 @@
 .cxx
 local.properties
 .idea/
+#/app/src/main/java/com/enriquepalmadev/appmarvel/data/feature/comics/utils/Constants.kt
