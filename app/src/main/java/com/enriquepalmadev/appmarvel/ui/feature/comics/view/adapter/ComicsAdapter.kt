@@ -28,4 +28,9 @@ class ComicsAdapter(
     }
 
     // override fun getItemCount() = comicsList.size
+
+    fun updateComics(comicUpdated : List<ComicModel>) {
+        comicsList = comicUpdated
+        notifyDataSetChanged()
+    }
 }

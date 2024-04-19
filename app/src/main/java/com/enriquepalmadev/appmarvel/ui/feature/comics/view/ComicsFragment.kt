@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.ApiError
-import com.enriquepalmadev.appmarvel.data.feature.comics.dto.BadRequest
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
@@ -46,18 +47,7 @@ class ComicsFragment : Fragment() {
 
         //initChips()
 
-        filterComics()
-    }
-
-    private fun filterComics() {
-        binding.svFilter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean = false
-
-            override fun onQueryTextChange(text: String): Boolean {
-                viewModel.filterByName(text)
-                return false
-            }
-        })
+        filterComicListener()
     }
 
     private fun initObserver() {
@@ -66,24 +56,33 @@ class ComicsFragment : Fragment() {
                 is State.Error -> {
                     when (state.error) {
                         is ApiError -> {
+                            returnToHome()
                             manageErrorApi()
                             showErrorMessage(code = state.error.code, message = state.error.message)
                         }
-
-                        BadRequest -> {} // TODO() --> Error 400, hacerlo diferente
-                        Unauthorized -> {} // TODO --> Error 401, hacerlo diferente
+                        Unauthorized -> {}
                     }
                 }
 
-                is State.ListReceived -> state.listComicModels?.let {
-                    initRecyclerView(it)
+                is State.ListReceived -> {
+                    returnToHome()
+                    state.listComicModels?.let {
+                        initRecyclerView(it)
+                    }
                 }
 
                 State.Loading -> {}
                 is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
                 //State.EmptyList -> {}
+                is State.FilteredListByName -> state.filteredComicList?.let { initRecyclerView(it) }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun returnToHome() {
+        binding.ibBack.setOnClickListener {
+            findNavController().navigate(R.id.homeFragment)
+        }
     }
 
     // Navigate to detail through the comic ID with safeArgs
@@ -95,12 +94,17 @@ class ComicsFragment : Fragment() {
     }
 
     private fun initRecyclerView(list: List<ComicModel>) {
-        binding.rvComics.apply {
-            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        if (binding.rvComics.adapter == null) {
+            binding.rvComics.apply {
+                layoutManager =
+                    LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 
-            adapter = ComicsAdapter(list) { comic ->
-                viewModel.onItemSelected(comic.id)
+                adapter = ComicsAdapter(list) { comic ->
+                    viewModel.onItemSelected(comic.id)
+                }
             }
+        } else {
+            (binding.rvComics.adapter as ComicsAdapter).updateComics(list)
         }
 
         binding.rvFavoriteComics.apply {
@@ -110,6 +114,18 @@ class ComicsFragment : Fragment() {
                 viewModel.onItemSelected(comic.id)
             }
         }
+    }
+
+    private fun filterComicListener() {
+        binding.svFilter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean = false
+
+            override fun onQueryTextChange(text: String): Boolean {
+                viewModel.filterByName(text)
+
+                return false
+            }
+        })
     }
 
     // Error message

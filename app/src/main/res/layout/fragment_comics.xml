@@ -5,7 +5,20 @@
     android:id="@+id/comicsViewContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.feature.comics.view.ComicsFragment">
+    tools:context=".ui.feature.comics.view.ComicsFragment" >
+
+    <ImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_arrow"
+        android:layout_marginStart="@dimen/logo_margin"
+        android:layout_marginTop="@dimen/logo_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/black"
+        android:contentDescription="@string/back_button" />
+
 
     <ImageView
         android:id="@+id/ivError"
@@ -48,10 +61,11 @@
         android:id="@+id/svFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_searchview_background"
+        android:theme="@style/txt_search_fragment_comic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoScreen"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/logoScreen" />
 
     <!--<com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupFilter"
@@ -62,7 +76,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoScreen" />-->
-
 
     <ImageView
         android:id="@+id/ivLogoAllComics"
