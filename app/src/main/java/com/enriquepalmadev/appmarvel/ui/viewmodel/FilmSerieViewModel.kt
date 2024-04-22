@@ -46,9 +46,8 @@ class FilmSerieViewModel : ViewModel() {
             viewModelScope.launch {
                 iFetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.emit(FilmSerieUIState.Loading)}
-                    .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
+                    .catch { _uiState.emit(FilmSerieUIState.SimpleError(it.message.toString())) }
                     .collect { responseEither ->
-
                         when(responseEither){
                             is ResponseEither.Failure -> {
                                 _uiState.emit(FilmSerieUIState.Error(responseEither.l))
@@ -66,7 +65,6 @@ class FilmSerieViewModel : ViewModel() {
                                 }
                             }
                         }
-
                     }
             }
         } else {

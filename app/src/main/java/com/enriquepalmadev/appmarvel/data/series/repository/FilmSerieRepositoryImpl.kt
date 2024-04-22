@@ -1,7 +1,5 @@
 package com.enriquepalmadev.appmarvel.data.series.repository
 
-import android.net.Network
-import android.net.http.UrlRequest.Status
 import android.util.Log
 import com.enriquepalmadev.appmarvel.data.series.api.RetrofitBuilder
 import com.enriquepalmadev.appmarvel.data.series.api.utils.Constants
@@ -28,8 +26,8 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                     ?.map { marvelFilmSerieItemDto ->
                         mapper.marvelFilmSerieItemDtoToFilmSerieModel(marvelFilmSerieItemDto)
                     })
-
             } else {
+
                 if(response.code()==Constants.ERROR_401){
                     ResponseEither.Failure(l = UnauthorizedError)
                 } else {

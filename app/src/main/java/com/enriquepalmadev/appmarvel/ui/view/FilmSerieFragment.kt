@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.data.series.api.utils.Constants
 import com.enriquepalmadev.appmarvel.data.series.api.utils.GenericException
 import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
@@ -56,34 +55,33 @@ class FilmSerieFragment : Fragment() {
                     when(uiState.error){
                         is GenericException -> {
                             setErrorView(uiState.error.code.toString(), uiState.error.msg)
-                            showErrorView(true)
-                            showAuthorizedErrorView(false)
+                            //showAuthorizedErrorView(false)
+                            showErrorView(true, R.drawable.groot_error)
                         }
                         UnauthorizedError -> {
                             setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
-                            showErrorView(false)
-                            showAuthorizedErrorView(true)
+                            showErrorView(true, R.drawable.thanos_unauthorized)
+                            //showAuthorizedErrorView(true)
                         }
                     }
-                    // With uiState, I can access to the list that returns (and emits) the state
                     showLoading(false)
                 }
                 is FilmSerieUIState.SimpleError -> {
                     Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
                     showLoading(false)
-                    showErrorView(false)
-                    showAuthorizedErrorView(false)
+                    showErrorView(false, null)
+                    //showAuthorizedErrorView(false)
                 }
                 FilmSerieUIState.Loading -> {
                     showLoading(true)
-                    showErrorView(false)
-                    showAuthorizedErrorView(false)
+                    showErrorView(false, null)
+                    //showAuthorizedErrorView(false)
                 }
                 is FilmSerieUIState.ListReceived -> {
                     initRecyclerView(uiState.list)
                     showLoading(false)
-                    showErrorView(false)
-                    showAuthorizedErrorView(false)
+                    showErrorView(false, null)
+                    //showAuthorizedErrorView(false)
                 }
 
                 is FilmSerieUIState.ItemClicked -> {
@@ -91,8 +89,8 @@ class FilmSerieFragment : Fragment() {
                     findNavController().navigate(action)
                     fsViewModel.done()
                     showLoading(false)
-                    showErrorView(false)
-                    showAuthorizedErrorView(false)
+                    showErrorView(false, null)
+                    //showAuthorizedErrorView(false)
                 }
             }
         }
@@ -111,32 +109,11 @@ class FilmSerieFragment : Fragment() {
         }
     }
 
-    private fun showErrorView(visible: Boolean){
+    private fun showErrorView(visible: Boolean, image: Int?){
         fsBinding.apply {
-
-            if(visible){
-                imgError.isVisible = true
-                txtErrorCode.isVisible = true
-                txtErrorMsg.isVisible = true
-
-                searchViewSeriesAndFilms.isVisible = false
-                btnOrderby.isVisible = false
-
-            } else {
-                imgError.isVisible = false
-                txtErrorCode.isVisible = false
-                txtErrorMsg.isVisible = false
-
-                searchViewSeriesAndFilms.isVisible = true
-                btnOrderby.isVisible = true
+            if (image != null) {
+                imgError.setImageResource(image)
             }
-
-        }
-    }
-
-    private fun showAuthorizedErrorView(visible: Boolean){
-        fsBinding.apply {
-            imgError.setImageResource(R.drawable.thanos_unauthorized)
 
             if(visible){
                 imgError.isVisible = true
