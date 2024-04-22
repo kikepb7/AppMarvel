@@ -2,6 +2,8 @@ package com.enriquepalmadev.appmarvel.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.appmarvel.data.series.api.utils.Failure
+import com.enriquepalmadev.appmarvel.data.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.series.usecase.FetchSerieByIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,9 +21,16 @@ class ItemDetailFilmSerieViewModel : ViewModel() {
         viewModelScope.launch {
             iGetSerieByIdUseCase.getSerieById(id)
                 .onStart { ItemDetailUIState.Loading }
-                .catch { ItemDetailUIState.Error(it.toString()) }
-                .collect{
-                    _uiDetailState.emit(ItemDetailUIState.IdReceived(it))
+                .catch { ItemDetailUIState.Exception(it.toString()) }
+                .collect{responseEither ->
+                    when(responseEither){
+                        is ResponseEither.Failure -> {
+                            _uiDetailState.emit(ItemDetailUIState.Error(responseEither.l))
+                        }
+                        is ResponseEither.Success -> {
+                            _uiDetailState.emit(ItemDetailUIState.IdReceived(responseEither.r))
+                        }
+                    }
                 }
         }
     }
@@ -31,5 +40,6 @@ class ItemDetailFilmSerieViewModel : ViewModel() {
 sealed class ItemDetailUIState {
     data object Loading : ItemDetailUIState()
     data class IdReceived(val serie: FilmSerieModel) : ItemDetailUIState()
-    data class Error (val msg: String) : ItemDetailUIState()
+    data class Error (val error: Failure) : ItemDetailUIState()
+    data class Exception(val msgError: String) : ItemDetailUIState()
 }

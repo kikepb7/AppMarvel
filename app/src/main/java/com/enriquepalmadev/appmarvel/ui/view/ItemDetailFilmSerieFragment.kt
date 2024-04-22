@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.series.api.utils.AnotherError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
 import com.enriquepalmadev.appmarvel.databinding.ItemDetailsFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
@@ -43,27 +46,80 @@ class ItemDetailFilmSerieFragment : Fragment() {
         idViewModel.uiDetailState.onEach { uiState ->
             when(uiState){
                 is ItemDetailUIState.Error -> {
-                    Toast.makeText(context, "Error: ${uiState.msg}", Toast.LENGTH_LONG).show()
-                    bindingItemDetailsFilmsSeries.apply {
-                        loading.isVisible = false
+                    when(uiState.error){
+                        is AnotherError -> {
+                            setErrorView(uiState.error.code.toString(), uiState.error.msg)
+                            showErrorView(true, R.drawable.groot_error)
+                        }
+                        UnauthorizedError -> {
+                            setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
+                            showErrorView(true, R.drawable.thanos_unauthorized)
+                        }
                     }
+                    showLoading(false)
+                }
+                is ItemDetailUIState.Exception-> {
+                    Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
+                    showLoading(false)
+                    showErrorView(false, null)
                 }
                 ItemDetailUIState.Loading -> {
                     retrieveFilmOrSerie()
-                    bindingItemDetailsFilmsSeries.apply {
-                        loading.isVisible = true
-                    }
+                    showLoading(true)
+                    showErrorView(false, null)
                 }
                 is ItemDetailUIState.IdReceived -> {
                     serieModel = uiState.serie
                     renderUi()
-                    bindingItemDetailsFilmsSeries.apply {
-                        loading.isVisible = false
-                    }
+                    showLoading(false)
+                    showErrorView(false, null)
                 }
             }
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun showLoading(visible: Boolean){
+        bindingItemDetailsFilmsSeries.apply {
+            loading.isVisible = visible
+        }
+    }
+
+    private fun setErrorView(code: String, msg: String) {
+        bindingItemDetailsFilmsSeries.apply {
+            txtErrorCode.text = code
+            txtErrorMsg.text = msg
+        }
+    }
+
+    private fun showErrorView(visible: Boolean, image: Int?){
+        bindingItemDetailsFilmsSeries.apply {
+            if (image != null) {
+                imgError.setImageResource(image)
+            }
+
+            if(visible){
+                imgError.isVisible = true
+                txtErrorCode.isVisible = true
+                txtErrorMsg.isVisible = true
+
+                detailImageFilmsSeries.isVisible = false
+                detailFimsSeriesName.isVisible = false
+                detailFimsSeriesDescription.isVisible = false
+                detailFimsSeriesStarYear.isVisible = false
+
+            } else {
+                imgError.isVisible = false
+                txtErrorCode.isVisible = false
+                txtErrorMsg.isVisible = false
+
+                detailImageFilmsSeries.isVisible = true
+                detailFimsSeriesName.isVisible = true
+                detailFimsSeriesDescription.isVisible = true
+                detailFimsSeriesStarYear.isVisible = true
+            }
+
+        }
     }
 
     private fun retrieveFilmOrSerie(){

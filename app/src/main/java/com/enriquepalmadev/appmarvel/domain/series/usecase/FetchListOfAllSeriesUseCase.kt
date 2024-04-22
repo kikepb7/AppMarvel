@@ -2,7 +2,6 @@ package com.enriquepalmadev.appmarvel.domain.series.usecase
 
 import com.enriquepalmadev.appmarvel.data.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.series.api.utils.ResponseEither
-import com.enriquepalmadev.appmarvel.data.series.api.utils.GenericException
 import com.enriquepalmadev.appmarvel.data.series.repository.FilmSerieRepositoryImpl
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import kotlinx.coroutines.flow.Flow

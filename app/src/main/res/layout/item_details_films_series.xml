@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--Loading view-->
     <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +21,45 @@
             style="@style/loading_view" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <!--Error view-->
+    <ImageView
+        android:id="@+id/imgError"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/groot_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtErrorCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgError"
+        tools:text="Error 000" />
+
+    <TextView
+        android:id="@+id/txtErrorMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_size_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtErrorCode"
+        tools:text="Error msg here!" />
 
     <ScrollView
         android:layout_width="@dimen/dimen_0dp"

@@ -46,7 +46,7 @@ class FilmSerieViewModel : ViewModel() {
             viewModelScope.launch {
                 iFetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.emit(FilmSerieUIState.Loading)}
-                    .catch { _uiState.emit(FilmSerieUIState.SimpleError(it.message.toString())) }
+                    .catch { _uiState.emit(FilmSerieUIState.Exception(it.message.toString())) }
                     .collect { responseEither ->
                         when(responseEither){
                             is ResponseEither.Failure -> {
@@ -54,7 +54,7 @@ class FilmSerieViewModel : ViewModel() {
                             }
                             is ResponseEither.Success -> {
                                 if(responseEither.r?.isEmpty() == true){
-                                    _uiState.emit(FilmSerieUIState.SimpleError("Error here!"))
+                                    _uiState.emit(FilmSerieUIState.Exception("Error here!"))
                                 } else {
                                     allSeriesList = responseEither.r?.let { customFilterList(it) }
                                     responseEither.r?.let { serieModelList ->
@@ -79,7 +79,7 @@ class FilmSerieViewModel : ViewModel() {
             }
         } catch (e: Exception){
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.SimpleError("Error here!"))
+                _uiState.emit(FilmSerieUIState.Exception("Error here!"))
             }
         }
     }
@@ -93,10 +93,17 @@ class FilmSerieViewModel : ViewModel() {
                         iFetchListOfSeriesOrderByStartYearUseCase
                             .getListOfSeriesOrderByStartYear(it)
                             .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                            .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
-                            .collect {
-                                allSeriesList = it
-                                _uiState.emit(FilmSerieUIState.ListReceived(it))
+                            .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                            .collect {responseEither ->
+                                when(responseEither){
+                                    is ResponseEither.Failure -> {
+                                        _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                                    }
+                                    is ResponseEither.Success -> {
+                                        allSeriesList = responseEither.r
+                                        _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                                    }
+                                }
                             }
                     }
                 }
@@ -108,10 +115,17 @@ class FilmSerieViewModel : ViewModel() {
                         iFetchListOfSeriesOrderByAlphabetUseCase
                             .getListOfSeriesOrderByAlphabet(it)
                             .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                            .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
-                            .collect {
-                                allSeriesList = it
-                                _uiState.emit(FilmSerieUIState.ListReceived(it))
+                            .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                            .collect {responseEither ->
+                                when(responseEither){
+                                    is ResponseEither.Failure -> {
+                                        _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                                    }
+                                    is ResponseEither.Success -> {
+                                        allSeriesList = responseEither.r
+                                        _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                                    }
+                                }
                             }
                     }
                 }
@@ -126,9 +140,16 @@ class FilmSerieViewModel : ViewModel() {
             allSeriesList?.let {
                 iFetchListFilterByNameUseCase.getListFilterByName(newText, it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.SimpleError("Error here!")) }
-                    .collect{
-                        _uiState.emit(FilmSerieUIState.ListReceived(it))
+                    .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                    .collect{responseEither ->
+                        when(responseEither){
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                            }
+                            is ResponseEither.Success -> {
+                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                            }
+                        }
                     }
             }
         }
@@ -137,7 +158,7 @@ class FilmSerieViewModel : ViewModel() {
 
 sealed class FilmSerieUIState {
     data class Error(val error: Failure) : FilmSerieUIState()
-    data class SimpleError(val msgError: String):FilmSerieUIState()
+    data class Exception(val msgError: String):FilmSerieUIState()
     data object Loading : FilmSerieUIState()
     data class ListReceived(val list: List<FilmSerieModel>) : FilmSerieUIState()
     data class ItemClicked(val idSerie: Int) : FilmSerieUIState()

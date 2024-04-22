@@ -5,7 +5,7 @@ import com.enriquepalmadev.appmarvel.data.series.api.RetrofitBuilder
 import com.enriquepalmadev.appmarvel.data.series.api.utils.Constants
 import com.enriquepalmadev.appmarvel.data.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.series.api.utils.ResponseEither
-import com.enriquepalmadev.appmarvel.data.series.api.utils.GenericException
+import com.enriquepalmadev.appmarvel.data.series.api.utils.AnotherError
 import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
 import com.enriquepalmadev.appmarvel.domain.series.mapper.IFilmSerieMapper
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
@@ -31,7 +31,7 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                 if(response.code()==Constants.ERROR_401){
                     ResponseEither.Failure(l = UnauthorizedError)
                 } else {
-                    ResponseEither.Failure(l = GenericException(response.code(), response.errorBody().toString()))
+                    ResponseEither.Failure(l = AnotherError(response.code(), response.errorBody().toString()))
                 }
             }
 
@@ -40,38 +40,50 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
         }
     }
 
-    override suspend fun getSerieById(id: Int): FilmSerieModel {
-        lateinit var serie: FilmSerieModel
+    override suspend fun getSerieById(id: Int): ResponseEither<Failure, FilmSerieModel> {
 
-        try {
-            val response = RetrofitBuilder.retrofitService.getSerieById(id)
+        val response = RetrofitBuilder.retrofitService.getSerieById(id)
+
+        return try {
             val result = response.body()?.data?.results
 
             if (response.isSuccessful) {
                 if (result != null) {
-                    serie = mapper.marvelFilmSerieItemDtoToFilmSerieModel(result.first())
+                    ResponseEither.Success(r = mapper.marvelFilmSerieItemDtoToFilmSerieModel(result.first()))
+                } else {
+                    ResponseEither.Failure(l = AnotherError(response.code(), response.errorBody().toString()))
                 }
+            } else {
+                ResponseEither.Failure(l=AnotherError(response.code(), response.errorBody().toString()))
             }
-            return serie
-
         } catch (e: Exception) {
             Log.d("Error:::", "in getSerieById() at FilmSerieRepositoryImpl")
             throw e
         }
     }
 
-    override suspend fun orderListByStartYear(series: List<FilmSerieModel>): List<FilmSerieModel> {
-        try {
-            return ArrayList(series.sortedByDescending { it.startYear })
+    override suspend fun orderListByStartYear(series: List<FilmSerieModel>): ResponseEither<Failure, List<FilmSerieModel>> {
+         return try {
+             if(series.isNotEmpty()){
+                 ResponseEither.Success(r = series.sortedByDescending { it.startYear })
+             } else {
+                 ResponseEither.Failure(l = AnotherError(0, "Empty list"))
+             }
+
         } catch (e: Exception) {
             Log.d("Error:::", "in orderListByStartYear() at FilmSerieRepositoryImpl")
             throw e
         }
     }
 
-    override suspend fun orderListByAlphabet(series: List<FilmSerieModel>): List<FilmSerieModel> {
-        try {
-            return series.sortedBy { it.title }
+    override suspend fun orderListByAlphabet(series: List<FilmSerieModel>): ResponseEither<Failure, List<FilmSerieModel>> {
+        return try {
+            if(series.isNotEmpty()){
+                ResponseEither.Success(r = series.sortedBy { it.title })
+            } else {
+                ResponseEither.Failure(l = AnotherError(0, "Empty list"))
+            }
+
         } catch (e: Exception) {
             Log.d("Error:::", "in orderListByAlphabet() at FilmSerieRepositoryImpl")
             throw e
@@ -81,9 +93,14 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
     override suspend fun filterByName(
         newText: String,
         series: List<FilmSerieModel>
-    ): List<FilmSerieModel> {
-        try {
-            return series.filter { it.title.lowercase().contains(newText.lowercase()) }
+    ): ResponseEither<Failure, List<FilmSerieModel>> {
+        return try {
+            if(series.isNotEmpty()){
+                ResponseEither.Success(r = series.filter { it.title.lowercase().contains(newText.lowercase()) })
+            } else {
+                ResponseEither.Failure(l = AnotherError(0, "Empty list"))
+            }
+
         } catch (e: Exception) {
             Log.d("Error:::", "in filterByName() at FilmSerieRepositoryImpl")
             throw e

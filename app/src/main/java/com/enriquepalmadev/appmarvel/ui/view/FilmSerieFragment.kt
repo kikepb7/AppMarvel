@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.data.series.api.utils.GenericException
+import com.enriquepalmadev.appmarvel.data.series.api.utils.AnotherError
 import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
@@ -53,35 +53,30 @@ class FilmSerieFragment : Fragment() {
             when(uiState){
                 is FilmSerieUIState.Error -> {
                     when(uiState.error){
-                        is GenericException -> {
+                        is AnotherError -> {
                             setErrorView(uiState.error.code.toString(), uiState.error.msg)
-                            //showAuthorizedErrorView(false)
                             showErrorView(true, R.drawable.groot_error)
                         }
                         UnauthorizedError -> {
                             setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
                             showErrorView(true, R.drawable.thanos_unauthorized)
-                            //showAuthorizedErrorView(true)
                         }
                     }
                     showLoading(false)
                 }
-                is FilmSerieUIState.SimpleError -> {
+                is FilmSerieUIState.Exception -> {
                     Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
                     showLoading(false)
                     showErrorView(false, null)
-                    //showAuthorizedErrorView(false)
                 }
                 FilmSerieUIState.Loading -> {
                     showLoading(true)
                     showErrorView(false, null)
-                    //showAuthorizedErrorView(false)
                 }
                 is FilmSerieUIState.ListReceived -> {
                     initRecyclerView(uiState.list)
                     showLoading(false)
                     showErrorView(false, null)
-                    //showAuthorizedErrorView(false)
                 }
 
                 is FilmSerieUIState.ItemClicked -> {
@@ -90,7 +85,6 @@ class FilmSerieFragment : Fragment() {
                     fsViewModel.done()
                     showLoading(false)
                     showErrorView(false, null)
-                    //showAuthorizedErrorView(false)
                 }
             }
         }
