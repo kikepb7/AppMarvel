@@ -11,17 +11,11 @@ interface IMarvelFilmSerie {
 
     @GET("series")
     suspend fun getListOfAllSeries(
-        @Query("ts")ts: String = Constants.TIMESTAMP,
-        @Query("apikey")apikey: String = Constants.API_KEY,
-        @Query("hash")hash: String = Constants.hash(),
         @Query("limit")limit: Int = Constants.LIMIT
     ): Response <ObjectResponseDto>
 
     @GET("series/{id}")
     suspend fun getSerieById(
-        @Path("id")id: Int,
-        @Query("ts")ts: String = Constants.TIMESTAMP,
-        @Query("apikey")apikey: String = Constants.API_KEY,
-        @Query("hash")hash: String = Constants.hash()
+        @Path("id")id: Int
     ): Response <ObjectResponseDto>
 }
