@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.view.ItemDetailsCharactersFragment"
+    tools:context=".ui.feature.character.view.ItemDetailsCharactersFragment"
     android:background="@color/white">
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,14 +20,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <ImageView
                 android:id="@+id/ivItemDetailCharacter"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
                 android:scaleType="centerInside"
+                android:background="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+            <com.enriquepalmadev.appmarvel.ui.feature.character.view.components.MarvelButton
+                android:id="@+id/backButton"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                style="@style/buttons"
+                app:buttonText="back"
+                app:layout_constraintTop_toTopOf="@+id/ivItemDetailCharacter"
+                app:layout_constraintStart_toStartOf="@+id/ivItemDetailCharacter"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="0dp"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -41,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:gravity="center"
                     tools:text="Name"/>
 
@@ -56,13 +69,24 @@
                 android:layout_marginTop="16sp"
                 android:layout_marginBottom="16sp"
                 android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="2dp"
+                android:background="@color/black"
                 tools:text="@tools:sample/lorem/random"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivItemDetailCharacter"/>
+            <ProgressBar
+                android:id="@+id/progressBarDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
