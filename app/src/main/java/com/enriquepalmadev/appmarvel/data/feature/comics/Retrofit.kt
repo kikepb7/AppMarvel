@@ -1,6 +1,5 @@
 package com.enriquepalmadev.appmarvel.data.feature.comics
 
-import com.enriquepalmadev.appmarvel.data.feature.comics.service.ComicService
 import com.enriquepalmadev.appmarvel.data.feature.comics.utils.Constants.Companion.API_KEY
 import com.enriquepalmadev.appmarvel.data.feature.comics.utils.Constants.Companion.BASE_URL
 import okhttp3.Interceptor
@@ -20,11 +19,8 @@ object Retrofit {
         addInterceptor(loggingInterceptor)
         addInterceptor(NetworkErrorInterceptor())
     }.build()
-    val retrofitService: ComicService by lazy {
-        retrofitConnection().create(ComicService::class.java)
-    }
 
-    private fun retrofitConnection(): Retrofit =
+    fun retrofitConnection(): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(httpClient)
