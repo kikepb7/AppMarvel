@@ -28,6 +28,7 @@
     <dimen name="icon_margin_top">32dp</dimen>
 
     <!-- TITLE -->
+    <dimen name="text_size_24sp">24sp</dimen>
     <dimen name="text_margin_start">16dp</dimen>
 
     <!-- RECYCLER VIEW -->

@@ -4,6 +4,7 @@ import com.enriquepalmadev.appmarvel.data.feature.comics.datasource.ComicRemoteD
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.ApiError
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Either
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Failure
+import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
 import com.enriquepalmadev.appmarvel.data.feature.comics.utils.dtoToComicListModel
 import com.enriquepalmadev.appmarvel.domain.feature.comics.ComicRepository
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
@@ -21,32 +22,35 @@ class ComicRepositoryImpl : ComicRepository {
                 Either.Success(data = request.body()?.data?.results?.dtoToComicListModel())
             } else {
                 if (request.code() == 401) {
-                    // Unauthorized error --> Error Screen
-                    Either.Failure(ApiError(code = request.code(), message = "Unauthorized"))
+                    Either.Failure(error = Unauthorized)
                 } else {
-                    // Generic error
-                    Either.Failure(ApiError(code = request.code(), message = "Request failed"))
+                    Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
                 }
             }
         } catch (e: IOException) {
-            Either.Failure(ApiError(code = request.code(), message = "Network error: ${e.message}"))
+            Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
         } catch (e: Exception) {
-            e.printStackTrace()
-            throw e
+            Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
         }
     }
 
-    override suspend fun fetchComicDetail(comicId: Int): ComicModel? {
-        try {
-            val request = remoteDataSource.fetchComicDetailFromApi(comicId)
+    override suspend fun fetchComicDetail(comicId: Int): Either<Failure, ComicModel?> {
+        val request = remoteDataSource.fetchComicDetailFromApi(comicId)
 
-            if (request.isSuccessful) {
-                return request.body()?.data?.results?.dtoToComicListModel()?.getOrNull(0)
+        return try {
+            if (request.isSuccessful && request.body() != null) {
+                Either.Success(data = request.body()?.data?.results?.dtoToComicListModel()?.getOrNull(0))
             } else {
-                throw Exception("Error: ${request.errorBody()} - Code: ${request.code()}")
+                if (request.code() == 401) {
+                    Either.Failure(error = Unauthorized)
+                } else {
+                    Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
+                }
             }
+        } catch (e: IOException) {
+            Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
         } catch (e: Exception) {
-            throw Exception("${e.printStackTrace()}")
+            Either.Failure(ApiError(code = request.code(), message = request.errorBody().toString()))
         }
     }
 }

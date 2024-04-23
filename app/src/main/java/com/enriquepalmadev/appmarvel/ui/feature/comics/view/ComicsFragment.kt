@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.ApiError
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
@@ -45,8 +46,6 @@ class ComicsFragment : Fragment() {
         // Call the viewModel to bring us the list of comics
         viewModel.getComicsList()
 
-        //initChips()
-
         filterComicListener()
     }
 
@@ -56,25 +55,38 @@ class ComicsFragment : Fragment() {
                 is State.Error -> {
                     when (state.error) {
                         is ApiError -> {
-                            returnToHome()
-                            manageErrorApi()
+                            manageErrorApi(code = state.error.code.toString())
                             showErrorMessage(code = state.error.code, message = state.error.message)
                         }
-                        Unauthorized -> {}
+                        Unauthorized -> manageErrorApi(code = "401")
                     }
+                    returnToHome()
+                    manageLoadingView(false)
+                }
+
+                is State.Exception -> {
+                    manageErrorApi(code = state.message)
+                    returnToHome()
+                    manageLoadingView(false)
                 }
 
                 is State.ListReceived -> {
+                    manageLoadingView(false)
                     returnToHome()
                     state.listComicModels?.let {
                         initRecyclerView(it)
                     }
                 }
 
-                State.Loading -> {}
-                is State.NavigateToDetail -> navigateToComicDetail(state.comicId)
-                //State.EmptyList -> {}
-                is State.FilteredListByName -> state.filteredComicList?.let { initRecyclerView(it) }
+                State.Loading -> {
+                    manageLoadingView(true)
+                }
+                is State.NavigateToDetail -> navigateToComicDetail(comicId = state.comicId)
+
+                is State.FilteredListByName -> {
+                    manageLoadingView(false)
+                    state.filteredComicList?.let { initRecyclerView(it) }
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -93,27 +105,31 @@ class ComicsFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(list: List<ComicModel>) {
-        if (binding.rvComics.adapter == null) {
-            binding.rvComics.apply {
-                layoutManager =
-                    LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-
-                adapter = ComicsAdapter(list) { comic ->
-                    viewModel.onItemSelected(comic.id)
-                }
-            }
-        } else {
-            (binding.rvComics.adapter as ComicsAdapter).updateComics(list)
-        }
-
-        binding.rvFavoriteComics.apply {
-            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+    // RecyclerView configuration
+    private fun setupRecyclerView(recyclerView: RecyclerView, list: List<ComicModel>) {
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 
             adapter = ComicsAdapter(list) { comic ->
                 viewModel.onItemSelected(comic.id)
             }
         }
+    }
+
+    // Update RecyclerView
+    private fun updateRecyclerView(recyclerView: RecyclerView, list: List<ComicModel>) {
+        (recyclerView.adapter as? ComicsAdapter)?.updateComics(list)
+    }
+
+    // Initialize both RecyclerViews
+    private fun initRecyclerView(list: List<ComicModel>) {
+        if (binding.rvComics.adapter == null) {
+            setupRecyclerView(binding.rvComics, list)
+        } else {
+            updateRecyclerView(binding.rvComics, list = list)
+        }
+        setupRecyclerView(binding.rvFavoriteComics, list)
     }
 
     private fun filterComicListener() {
@@ -138,10 +154,11 @@ class ComicsFragment : Fragment() {
     }
 
     // Manage errors on fragment
-    private fun manageErrorApi() {
+    private fun manageErrorApi(code: String) {
         binding.apply {
             ivError.visibility = View.VISIBLE
-            tvError.visibility = View.VISIBLE
+            tvErrorCode.visibility = View.VISIBLE
+            tvErrorCode.text = "Error ${code}"
             rvComics.visibility = View.GONE
             rvFavoriteComics.visibility = View.GONE
             tvComicList.visibility = View.GONE
@@ -151,49 +168,25 @@ class ComicsFragment : Fragment() {
         }
     }
 
-    /*// Filter Chips
-    private fun initChips() {
-        val chipItems = listOf("Spider-man", "Ironman", "Hulk")
-        var lastCheckedChip : Chip? = null
-
-        chipItems.map {
-            val chip = Chip(requireContext())
-
-            chip.apply {
-                text = it
-                chip.isClickable = true
-                chip.isCheckable = true
-                chip.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        lastCheckedChip?.isClickable = true
-                        lastCheckedChip = this
-                        binding.svFilter.children.forEach { view ->
-                            if (view != this) {
-                                (view as Chip).isClickable = false
-                            }
-                        }
-                        filterComicsBySelectedChips()
-                    } else {
-                        binding.svFilter.children.forEach { view ->
-                            (view as Chip).isClickable = true
-                        }
-                        filterComicsBySelectedChips()
-                    }
-                }
-                binding.svFilter.addView(chip)
+    // Manage Loading State view
+    private fun manageLoadingView(show: Boolean) {
+        if (show) {
+            binding.apply {
+                listProgressBar.visibility = View.VISIBLE
+                tvComicList.visibility = View.GONE
+                tvFavoriteComics.visibility = View.GONE
+                ivLogoAllComics.visibility = View.GONE
+                ivLogoFavoriteComics.visibility = View.GONE
+            }
+        }
+        else {
+            binding.apply {
+                listProgressBar.visibility = View.GONE
+                tvComicList.visibility = View.VISIBLE
+                tvFavoriteComics.visibility = View.VISIBLE
+                ivLogoAllComics.visibility = View.VISIBLE
+                ivLogoFavoriteComics.visibility = View.VISIBLE
             }
         }
     }
-
-    private fun filterComicsBySelectedChips() {
-        val selectedChips = binding.svFilter.checkedChipIds.joinToString(",") { id ->
-            binding.svFilter.findViewById<Chip>(id).text.toString()
-        }
-
-        if (selectedChips.isNotEmpty()) {
-            viewModel.filterByName(selectedChips)
-        } else {
-            viewModel.getComicsList()
-        }
-    }*/
 }

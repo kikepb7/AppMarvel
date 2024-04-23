@@ -5,19 +5,19 @@
     android:id="@+id/comicsViewContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.feature.comics.view.ComicsFragment" >
+    tools:context=".ui.feature.comics.view.ComicsFragment">
 
     <ImageButton
         android:id="@+id/ibBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/back_arrow"
         android:layout_marginStart="@dimen/logo_margin"
         android:layout_marginTop="@dimen/logo_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/black"
-        android:contentDescription="@string/back_button" />
+        android:contentDescription="@string/back_button"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -33,18 +33,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvError"
+        android:id="@+id/tvErrorCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/error_fragment_text"
-        android:textSize="@dimen/text_size_32sp"
-        android:visibility="gone"
-        android:textStyle="bold"
-        android:textColor="@color/dark_red"
         android:layout_marginTop="@dimen/logo_margin"
-        app:layout_constraintTop_toBottomOf="@+id/ivError"
+        android:textAlignment="center"
+        android:textColor="@color/dark_red"
+        android:textSize="@dimen/text_size_16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/ivError"
-        app:layout_constraintStart_toStartOf="@+id/ivError" />
+        app:layout_constraintStart_toStartOf="@+id/ivError"
+        app:layout_constraintTop_toBottomOf="@+id/ivError" />
 
     <ImageView
         android:id="@+id/logoScreen"
@@ -67,16 +67,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoScreen" />
 
-    <!--<com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoScreen" />-->
-
     <ImageView
         android:id="@+id/ivLogoAllComics"
         android:layout_width="@dimen/icon_width"
@@ -96,7 +86,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_margin_start"
         android:text="@string/all_comics_title"
-        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogoAllComics"
         app:layout_constraintStart_toEndOf="@+id/ivLogoAllComics"
@@ -111,6 +102,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvComicList" />
+
+    <ProgressBar
+        android:id="@+id/listProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/dark_red"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/ivLogoFavoriteComics"
@@ -130,7 +133,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_margin_start"
         android:text="@string/favorite_comics_title"
-        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogoFavoriteComics"
         app:layout_constraintStart_toEndOf="@+id/ivLogoFavoriteComics"

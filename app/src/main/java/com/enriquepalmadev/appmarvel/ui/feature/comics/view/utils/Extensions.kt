@@ -14,7 +14,7 @@ fun ImageView.loadImage(image: String) {
             RequestOptions()
                 .error(R.drawable.error_404)
         )
-        //.placeholder(R.drawable.progress_animation) TODO --> Adapt loader
+        //.placeholder(R.drawable.progress_animation) // TODO --> Adapt loader
         .into(this)
 }
 

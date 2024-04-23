@@ -9,16 +9,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.feature.comics.dto.ApiError
+import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.loadImage
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.ComicDetailViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.DetailState
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class ComicDetailFragment : Fragment() {
-    companion object { const val KEY_ID = "id" }
+    companion object {
+        const val KEY_ID = "id"
+    }
     private var isFavorite = false
     private val comicId by lazy { arguments?.getInt(KEY_ID) }
     private lateinit var binding: FragmentComicDetailBinding
@@ -46,11 +51,28 @@ class ComicDetailFragment : Fragment() {
     private fun initObserver() {
         viewModel.state.onEach { state ->
             when (state) {
+                is DetailState.Error -> {
+                    when (state.error) {
+                        is ApiError -> {
+                            showErrorMessage(code = state.error.code, message = state.error.message)
+                            manageErrorApi(code = state.error.code.toString())
+                        }
+
+                        Unauthorized -> manageErrorApi(code = "401")
+                    }
+                    manageLoader(false)
+                }
+
+                is DetailState.Exception -> {
+                    manageErrorApi(state.message)
+                    manageLoader(false)
+                }
+
                 is DetailState.ComicDetail -> {
                     manageLoader(false)
                     state.comicModel?.let { showComicDetail(it) }
                 }
-                DetailState.Error -> { manageLoader(false) }
+
                 DetailState.Loading -> manageLoader(true)
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -87,4 +109,20 @@ class ComicDetailFragment : Fragment() {
             if (isFavorite) R.drawable.ic_solid_heart else R.drawable.ic_line_heart
         )
     }
-}
+
+    private fun showErrorMessage(code: Int, message: String) {
+        Snackbar.make(
+            binding.comicDetail,
+            "Código de error: $code \n$message",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun manageErrorApi(code: String) {
+        binding.apply {
+            ivError.visibility = View.VISIBLE
+            tvErrorCode.visibility = View.VISIBLE
+            tvErrorCode.text = "Error ${code}"
+        }
+    }
+ }
