@@ -11,8 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.data.series.api.utils.AnotherError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.CustomError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.EmptyError
 import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.UnknownHostError
 import com.enriquepalmadev.appmarvel.databinding.ItemDetailsFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.view.extensions.loadImage
@@ -47,13 +49,23 @@ class ItemDetailFilmSerieFragment : Fragment() {
             when(uiState){
                 is ItemDetailUIState.Error -> {
                     when(uiState.error){
-                        is AnotherError -> {
+                        is CustomError -> {
                             setErrorView(uiState.error.code.toString(), uiState.error.msg)
                             showErrorView(true, R.drawable.groot_error)
                         }
                         UnauthorizedError -> {
                             setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
                             showErrorView(true, R.drawable.thanos_unauthorized)
+                        }
+
+                        EmptyError -> {
+                            setErrorView("This is empty", "Sorry, there's nothing to show :(")
+                            showErrorView(true, R.drawable.deadpool_no_connection)
+                        }
+
+                        UnknownHostError -> {
+                            setErrorView("Do you have internet?", "It's probably the failure :)")
+                            showErrorView(true, R.drawable.captain_empty)
                         }
                     }
                     showLoading(false)
@@ -65,8 +77,8 @@ class ItemDetailFilmSerieFragment : Fragment() {
                 }
                 ItemDetailUIState.Loading -> {
                     retrieveFilmOrSerie()
-                    showLoading(true)
                     showErrorView(false, null)
+                    showLoading(true)
                 }
                 is ItemDetailUIState.IdReceived -> {
                     serieModel = uiState.serie
@@ -82,6 +94,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
     private fun showLoading(visible: Boolean){
         bindingItemDetailsFilmsSeries.apply {
             loading.isVisible = visible
+            // detailFimsSeriesName.isVisible =!visible
         }
     }
 

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -54,6 +55,7 @@ dependencies {
     val retrofitVersion = "2.11.0"
     val loggingInterceptorVersion = "4.12.0"
     val mapStructVersion = "1.4.2"
+    val mapStructProcessorVersion = "1.4.2"
     val facebookVersion = "0.5.0"
     val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
@@ -96,6 +98,7 @@ dependencies {
 
     /* MAPSTRUCT */
     implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     /* FACEBOOK */
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")

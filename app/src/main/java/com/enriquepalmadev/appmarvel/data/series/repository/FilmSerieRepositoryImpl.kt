@@ -1,11 +1,13 @@
 package com.enriquepalmadev.appmarvel.data.series.repository
 
 import com.enriquepalmadev.appmarvel.data.series.api.RetrofitBuilder
-import com.enriquepalmadev.appmarvel.data.series.api.utils.AnotherError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.CustomError
 import com.enriquepalmadev.appmarvel.data.series.api.utils.Constants
+import com.enriquepalmadev.appmarvel.data.series.api.utils.EmptyError
 import com.enriquepalmadev.appmarvel.data.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.UnknownHostError
 import com.enriquepalmadev.appmarvel.domain.series.mapper.IFilmSerieMapper
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.series.repository.IFilmSerieRepository
@@ -30,7 +32,7 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                     ResponseEither.Failure(l = UnauthorizedError)
                 } else {
                     ResponseEither.Failure(
-                        l = AnotherError(
+                        l = CustomError(
                             response.code(),
                             response.errorBody().toString()
                         )
@@ -38,9 +40,9 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                 }
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = UnknownHostError)
         } catch (e: Exception) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
         }
     }
 
@@ -54,7 +56,7 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                     ResponseEither.Success(r = mapper.marvelFilmSerieItemDtoToFilmSerieModel(result.first()))
                 } else {
                     ResponseEither.Failure(
-                        l = AnotherError(
+                        l = CustomError(
                             response.code(),
                             response.errorBody().toString()
                         )
@@ -62,16 +64,16 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                 }
             } else {
                 ResponseEither.Failure(
-                    l = AnotherError(
+                    l = CustomError(
                         response.code(),
                         response.errorBody().toString()
                     )
                 )
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = UnknownHostError)
         } catch (e: Exception) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
         }
     }
 
@@ -80,11 +82,11 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
             if (series.isNotEmpty()) {
                 ResponseEither.Success(r = series.sortedByDescending { it.startYear })
             } else {
-                ResponseEither.Failure(l = AnotherError(0, "Empty list"))
+                ResponseEither.Failure(l = EmptyError)
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
         }
     }
 
@@ -93,11 +95,11 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
             if (series.isNotEmpty()) {
                 ResponseEither.Success(r = series.sortedBy { it.title })
             } else {
-                ResponseEither.Failure(l = AnotherError(0, "Empty list"))
+                ResponseEither.Failure(l = EmptyError)
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
         }
     }
 
@@ -111,11 +113,11 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
                     it.title.lowercase().contains(newText.lowercase())
                 })
             } else {
-                ResponseEither.Failure(l = AnotherError(0, "Empty list"))
+                ResponseEither.Failure(l = EmptyError)
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = AnotherError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
         }
     }
 }

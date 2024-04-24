@@ -12,8 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
-import com.enriquepalmadev.appmarvel.data.series.api.utils.AnotherError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.CustomError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.EmptyError
 import com.enriquepalmadev.appmarvel.data.series.api.utils.UnauthorizedError
+import com.enriquepalmadev.appmarvel.data.series.api.utils.UnknownHostError
 import com.enriquepalmadev.appmarvel.ui.view.adapterfilmsandseries.FilmSerieAdapter
 import com.enriquepalmadev.appmarvel.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.series.models.FilmSerieModel
@@ -52,8 +54,9 @@ class FilmSerieFragment : Fragment() {
         fsViewModel.uiState.onEach { uiState ->
             when(uiState){
                 is FilmSerieUIState.Error -> {
+                    showLoading(false)
                     when(uiState.error){
-                        is AnotherError -> {
+                        is CustomError -> {
                             setErrorView(uiState.error.code.toString(), uiState.error.msg)
                             showErrorView(true, R.drawable.groot_error)
                         }
@@ -61,8 +64,17 @@ class FilmSerieFragment : Fragment() {
                             setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
                             showErrorView(true, R.drawable.thanos_unauthorized)
                         }
+
+                        EmptyError -> {
+                            setErrorView("This is empty", "Sorry, there's nothing to show :(")
+                            showErrorView(true, R.drawable.deadpool_no_connection)
+                        }
+
+                        UnknownHostError -> {
+                            setErrorView("Do you have internet?", "It's probably the failure :)")
+                            showErrorView(true, R.drawable.captain_empty)
+                        }
                     }
-                    showLoading(false)
                 }
                 is FilmSerieUIState.Exception -> {
                     Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
@@ -70,8 +82,8 @@ class FilmSerieFragment : Fragment() {
                     showErrorView(false, null)
                 }
                 FilmSerieUIState.Loading -> {
-                    showLoading(true)
                     showErrorView(false, null)
+                    showLoading(true)
                 }
                 is FilmSerieUIState.ListReceived -> {
                     initRecyclerView(uiState.list)
@@ -86,6 +98,7 @@ class FilmSerieFragment : Fragment() {
                     showLoading(false)
                     showErrorView(false, null)
                 }
+
             }
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
@@ -94,6 +107,8 @@ class FilmSerieFragment : Fragment() {
     private fun showLoading(visible: Boolean){
         fsBinding.apply {
             loading.isVisible = visible
+            searchViewSeriesAndFilms.isVisible = !visible
+            btnOrderby.isVisible = !visible
         }
     }
     private fun setErrorView(code: String, msg: String) {
