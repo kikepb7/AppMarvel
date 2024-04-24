@@ -52,6 +52,7 @@ dependencies {
     val glideVersion = "4.16.0"
     val coilVersion = "2.6.0"
     val retrofitVersion = "2.11.0"
+    val loggingInterceptorVersion = "4.12.0"
     val mapStructVersion = "1.4.2"
     val facebookVersion = "0.5.0"
     val coroutinesVersion = "1.7.3"
@@ -86,6 +87,9 @@ dependencies {
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+    /* LOGGING INTERCEPTOR */
+    implementation("com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion")
 
     /* CORRUTINAS */
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
