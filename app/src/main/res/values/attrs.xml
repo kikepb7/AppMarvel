@@ -7,7 +7,7 @@
     </declare-styleable>
 
     <!-- Style of the images on FilmSerieFragment -->
-    <declare-styleable name="AspectRatioImageFilmsAndSeries">
+    <declare-styleable name="AspectRatioImageFilmSerie">
         <attr name="ratio" format="float"/>
     </declare-styleable>
 </resources>
