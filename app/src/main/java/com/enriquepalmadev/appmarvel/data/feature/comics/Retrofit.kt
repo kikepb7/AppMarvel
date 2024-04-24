@@ -2,6 +2,8 @@ package com.enriquepalmadev.appmarvel.data.feature.comics
 
 import com.enriquepalmadev.appmarvel.data.feature.comics.utils.Constants.Companion.API_KEY
 import com.enriquepalmadev.appmarvel.data.feature.comics.utils.Constants.Companion.BASE_URL
+import com.enriquepalmadev.appmarvel.data.feature.comics.utils.Constants.Companion.HASH
+import com.enriquepalmadev.appmarvel.data.feature.comics.utils.Constants.Companion.TS
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -33,6 +35,8 @@ class ApiKeyInterceptor : Interceptor {
         val request = chain.request()
         val url = request.url.newBuilder()
             .addQueryParameter("apikey", API_KEY)
+            .addQueryParameter("hash", HASH)
+            .addQueryParameter("ts", TS)
             .build()
         val newRequest = request.newBuilder()
             .url(url)

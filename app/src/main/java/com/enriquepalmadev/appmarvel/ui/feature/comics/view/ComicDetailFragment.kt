@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.ApiError
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
+import com.enriquepalmadev.appmarvel.data.feature.comics.dto.UnknownHostError
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.loadImage
@@ -58,6 +59,7 @@ class ComicDetailFragment : Fragment() {
                             manageErrorApi(code = state.error.code.toString())
                         }
 
+                        UnknownHostError -> manageErrorApi(code = "400")
                         Unauthorized -> manageErrorApi(code = "401")
                     }
                     manageLoader(false)

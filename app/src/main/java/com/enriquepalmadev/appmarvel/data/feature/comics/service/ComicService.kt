@@ -10,15 +10,11 @@ interface ComicService {
 
     @GET("comics")
     suspend fun getComics(
-        @Query("hash") hash: String,
-        @Query("ts") ts: String,
         @Query("limit") limit: Int? = null
     ): Response<ResponseMarvelDto>
 
     @GET("comics/{comicId}")
     suspend fun getComicById(
         @Path("comicId") comicId: Int? = null,
-        @Query("hash") hash: String,
-        @Query("ts") ts: String
     ): Response<ResponseMarvelDto>
 }

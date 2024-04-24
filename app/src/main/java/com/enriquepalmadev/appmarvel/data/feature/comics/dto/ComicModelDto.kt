@@ -20,15 +20,15 @@ data class ComicDto(
     val pageCount: Int? = null,
     val thumbnail: ThumnailDto? = null,
     val title: String? = null,
-    val characters: Characters,
+    val characters: CharactersDto,
     val collectedIssues: List<Any>,
     val collections: List<Any>,
-    val creators: Creators? = null,
-    val dates: List<Date>? = null,
+    val creators: CreatorsDto? = null,
+    val dates: List<DateDto>? = null,
     val diamondCode: String,
     val digitalId: Int,
     val ean: String,
-    val events: Events,
+    val events: EventsDto,
     val format: String,
     val images: List<Any>,
     val isbn: String,
@@ -37,13 +37,13 @@ data class ComicDto(
     val modified: String,
     //val prices: List<Price>? = null,
     val resourceURI: String,
-    val series: Series,
+    val series: SeriesDto,
     val stories: Stories,
     val textObjects: List<Any>,
     val upc: String,
-    val urls: List<Url>,
+    val urls: List<UrlDto>,
     val variantDescription: String,
-    val variants: List<Variant>
+    val variants: List<VariantDto>
 )
 
 data class ThumnailDto(
@@ -51,50 +51,50 @@ data class ThumnailDto(
     val path: String
 )
 
-data class Characters(
+data class CharactersDto(
     val available: Int,
     val collectionURI: String,
     val items: List<Any>,
     val returned: Int
 )
 
-data class Creators(
+data class CreatorsDto(
     val available: Int,
     val collectionURI: String,
-    val items: List<Item>,
+    val items: List<ItemDto>,
     val returned: Int
 )
 
-data class Date(
+data class DateDto(
     val date: String,
     val type: String
 )
 
-data class Events(
+data class EventsDto(
     val available: Int,
     val collectionURI: String,
     val items: List<Any>,
     val returned: Int
 )
 
-data class Item(
+data class ItemDto(
     val name: String,
     val resourceURI: String,
     val role: String
 )
 
-data class ItemX(
+data class ItemXDto(
     val name: String,
     val resourceURI: String,
     val type: String
 )
 
-data class Price(
+data class PriceDto(
     val price: Int,
     val type: String
 )
 
-data class Series(
+data class SeriesDto(
     val name: String,
     val resourceURI: String
 )
@@ -102,16 +102,16 @@ data class Series(
 data class Stories(
     val available: Int,
     val collectionURI: String,
-    val items: List<ItemX>,
+    val items: List<ItemXDto>,
     val returned: Int
 )
 
-data class Url(
+data class UrlDto(
     val type: String,
     val url: String
 )
 
-data class Variant(
+data class VariantDto(
     val name: String,
     val resourceURI: String
 )

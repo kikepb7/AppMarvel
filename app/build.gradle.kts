@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-kapt")
 }
 
 android {
@@ -55,7 +54,6 @@ dependencies {
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
-    val roomVersion = "2.6.1"
     val retrofitVersion = "2.10.0"
     val interceptorVersion = "4.12.0"
 
@@ -82,10 +80,6 @@ dependencies {
 
     /* COIL */
     implementation("io.coil-kt:coil:$coilVersion")
-
-    /* ROOM */
-    implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

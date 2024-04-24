@@ -57,5 +57,13 @@
     <dimen name="favorite_width_height">32dp</dimen>
     <dimen name="favorite_margin">16dp</dimen>
 
+    <!-- back_arrow.xml -->
+    <dimen name="arrow_widt">25dp</dimen>
+    <dimen name="arrow_height">25dp</dimen>
+
+    <!-- custom_searchview_background.xml -->
+    <dimen name="searchview_radius">20dp</dimen>
+    <dimen name="searchview_width">1dp</dimen>
+
 
 </resources>

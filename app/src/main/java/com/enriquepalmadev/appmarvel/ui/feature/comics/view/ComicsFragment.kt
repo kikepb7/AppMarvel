@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.ApiError
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
+import com.enriquepalmadev.appmarvel.data.feature.comics.dto.UnknownHostError
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.adapter.ComicsAdapter
@@ -58,6 +59,7 @@ class ComicsFragment : Fragment() {
                             manageErrorApi(code = state.error.code.toString())
                             showErrorMessage(code = state.error.code, message = state.error.message)
                         }
+                        UnknownHostError -> manageErrorApi(code = "400")
                         Unauthorized -> manageErrorApi(code = "401")
                     }
                     returnToHome()
