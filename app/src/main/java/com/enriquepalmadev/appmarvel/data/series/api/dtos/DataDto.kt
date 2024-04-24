@@ -1,6 +1,6 @@
 package com.enriquepalmadev.appmarvel.data.series.api.dtos
 
-data class Data(
+data class DataDto(
     val count: Int,
     val limit: Int,
     val offset: Int,
