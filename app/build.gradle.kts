@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-    implementation("com.android.car.ui:car-ui-lib:2.6.0")
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.11.0"
     val constraintLayoutVersion = "2.1.4"
@@ -52,18 +51,12 @@ dependencies {
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
     val glideVersion = "4.16.0"
-    val kaptVersion = "4.16.0"
     val coilVersion = "2.6.0"
-    val jsonVersion = "2.10.1"
     val retrofitVersion = "2.11.0"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
     val facebookVersion = "0.5.0"
-    val arrowVersion = "1.1.2"
     val coroutinesVersion = "1.7.3"
-    val mockitoJUnitVersion = "4.8.0"
-    val mockitoInlineVersion = "4.7.0"
-    val kotestVersion = "1.2.5"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
@@ -89,14 +82,8 @@ dependencies {
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
-    /* KAPT */
-    kapt("com.github.bumptech.glide:compiler:$kaptVersion")
-
     /* COIL */
     implementation("io.coil-kt:coil:$coilVersion")
-
-    /* JSON */
-    implementation("com.google.code.gson:gson:$jsonVersion")
 
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -111,17 +98,6 @@ dependencies {
 
     /* FACEBOOK */
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
-
-    /* ARROW (TO EITHER) */
-    implementation ("io.arrow-kt:arrow-core:$arrowVersion")
-    testImplementation(kotlin("test"))
-
-    /* MOCKITO */
-    testImplementation("org.mockito:mockito-junit-jupiter:$mockitoJUnitVersion")
-    testImplementation("org.mockito:mockito-inline:$mockitoInlineVersion")
-
-    /* KOTEST */
-    testImplementation("io.kotest.extensions:kotest-assertions-arrow:$kotestVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
