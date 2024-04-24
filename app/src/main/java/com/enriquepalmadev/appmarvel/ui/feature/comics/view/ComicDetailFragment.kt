@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -82,8 +84,9 @@ class ComicDetailFragment : Fragment() {
 
     // Progress Bar
     private fun manageLoader(show: Boolean) {
-        if (show) binding.detailProgressBar.visibility = View.VISIBLE
-        else binding.detailProgressBar.visibility = View.GONE
+        binding.detailProgressBar.apply {
+            if (show) isVisible else isGone
+        }
     }
 
     // Comic Detail
@@ -122,8 +125,8 @@ class ComicDetailFragment : Fragment() {
 
     private fun manageErrorApi(code: String) {
         binding.apply {
-            ivError.visibility = View.VISIBLE
-            tvErrorCode.visibility = View.VISIBLE
+            ivError.isVisible
+            tvErrorCode.isVisible
             tvErrorCode.text = "Error ${code}"
         }
     }

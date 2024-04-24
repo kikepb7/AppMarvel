@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +26,7 @@ import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.State
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.navigateTo
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
@@ -97,6 +100,7 @@ class ComicsFragment : Fragment() {
         binding.ibBack.setOnClickListener {
             findNavController().navigate(R.id.homeFragment)
         }
+        //binding.ibBack.navigateTo(R.id.homeFragment)
     }
 
     // Navigate to detail through the comic ID with safeArgs
@@ -158,15 +162,15 @@ class ComicsFragment : Fragment() {
     // Manage errors on fragment
     private fun manageErrorApi(code: String) {
         binding.apply {
-            ivError.visibility = View.VISIBLE
-            tvErrorCode.visibility = View.VISIBLE
+            ivError.isVisible
+            tvErrorCode.isVisible
             tvErrorCode.text = "Error ${code}"
-            rvComics.visibility = View.GONE
-            rvFavoriteComics.visibility = View.GONE
-            tvComicList.visibility = View.GONE
-            tvFavoriteComics.visibility = View.GONE
-            ivLogoAllComics.visibility = View.GONE
-            ivLogoFavoriteComics.visibility = View.GONE
+            rvComics.isGone
+            rvFavoriteComics.isGone
+            tvComicList.isGone
+            tvFavoriteComics.isGone
+            ivLogoAllComics.isGone
+            ivLogoFavoriteComics.isGone
         }
     }
 
@@ -174,20 +178,20 @@ class ComicsFragment : Fragment() {
     private fun manageLoadingView(show: Boolean) {
         if (show) {
             binding.apply {
-                listProgressBar.visibility = View.VISIBLE
-                tvComicList.visibility = View.GONE
-                tvFavoriteComics.visibility = View.GONE
-                ivLogoAllComics.visibility = View.GONE
-                ivLogoFavoriteComics.visibility = View.GONE
+                listProgressBar.isVisible
+                tvComicList.isGone
+                tvFavoriteComics.isGone
+                ivLogoAllComics.isGone
+                ivLogoFavoriteComics.isGone
             }
         }
         else {
             binding.apply {
-                listProgressBar.visibility = View.GONE
-                tvComicList.visibility = View.VISIBLE
-                tvFavoriteComics.visibility = View.VISIBLE
-                ivLogoAllComics.visibility = View.VISIBLE
-                ivLogoFavoriteComics.visibility = View.VISIBLE
+                listProgressBar.isGone
+                tvComicList.isVisible
+                tvFavoriteComics.isVisible
+                ivLogoAllComics.isVisible
+                ivLogoFavoriteComics.isVisible
             }
         }
     }

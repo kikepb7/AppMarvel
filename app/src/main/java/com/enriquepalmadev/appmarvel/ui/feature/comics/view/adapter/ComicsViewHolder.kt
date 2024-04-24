@@ -16,8 +16,8 @@ class ComicsViewHolder(view: View) : ViewHolder(view) {
     ) {
         binding.apply {
             ibImageComic.loadImage(comicModel.thumbnail)
-            binding.tvComicTitle.text = comicModel.title
-            binding.ibImageComic.setOnClickListener {
+            tvComicTitle.text = comicModel.title
+            ibImageComic.setOnClickListener {
                 onClickListener(comicModel)
             }
         }
