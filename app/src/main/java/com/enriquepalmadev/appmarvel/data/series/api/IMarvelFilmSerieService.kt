@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface IMarvelFilmSerie {
+interface IMarvelFilmSerieService {
 
     @GET("series")
     suspend fun getListOfAllSeries(

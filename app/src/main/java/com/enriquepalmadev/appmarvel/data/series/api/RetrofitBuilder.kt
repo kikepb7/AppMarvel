@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
 
-    val retrofitService: IMarvelFilmSerie by lazy {
-        getRetrofit().create(IMarvelFilmSerie::class.java)
+    val retrofitService: IMarvelFilmSerieService by lazy {
+        getRetrofit().create(IMarvelFilmSerieService::class.java)
     }
 
     private fun getRetrofit(): Retrofit {
