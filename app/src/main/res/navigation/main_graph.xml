@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.view.FilmSerieFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.series.view.FilmSerieFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_films_series">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.view.HomeFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.series.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/itemDetailsFilmsSeriesFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.view.ItemDetailFilmSerieFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.series.view.ItemDetailFilmSerieFragment"
         android:label="item_details_films_series_fragment"
         tools:layout="@layout/item_details_films_series" >
         <argument

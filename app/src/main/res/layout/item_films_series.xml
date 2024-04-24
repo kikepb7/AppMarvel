@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <com.enriquepalmadev.appmarvel.ui.view.components.AspectRatioImageFilmSerie
+        <com.enriquepalmadev.appmarvel.ui.feature.series.view.components.AspectRatioImageFilmSerie
             android:id="@+id/imageFilmsSeries"
             style="@style/item_film_serie_image"
             android:layout_width="match_parent"
