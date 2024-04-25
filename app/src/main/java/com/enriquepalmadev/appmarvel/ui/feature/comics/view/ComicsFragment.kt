@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.R
@@ -20,6 +19,7 @@ import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.gone
+import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.navigateTo
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.visible
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.State
@@ -101,9 +101,7 @@ class ComicsFragment : Fragment() {
     }
 
     private fun returnToHome() {
-        binding.ibBack.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
-        }
+        binding.ibBack.navigateTo(R.id.homeFragment)
     }
 
     // Navigate to detail through the comic ID with safeArgs

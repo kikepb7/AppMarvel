@@ -3,7 +3,9 @@
     <dimen name="height_70dp">70dp</dimen>
     <dimen name="corner_radius_20dp">20dp</dimen>
     <dimen name="dimen_0dp">0dp</dimen>
+    <dimen name="text_size_14sp">14sp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_32sp">32sp</dimen>
     <dimen name="txt_item_superhero_paddin_8dp">16sp</dimen>
     <dimen name="img_item_superhero_height_146dp">146dp</dimen>
@@ -28,6 +30,7 @@
     <dimen name="icon_margin_top">32dp</dimen>
 
     <!-- TITLE -->
+    <dimen name="text_size_22sp">22sp</dimen>
     <dimen name="text_size_24sp">24sp</dimen>
     <dimen name="text_margin_start">16dp</dimen>
 
@@ -60,10 +63,25 @@
     <!-- back_arrow.xml -->
     <dimen name="arrow_widt">25dp</dimen>
     <dimen name="arrow_height">25dp</dimen>
+    <dimen name="padding_start">8dp</dimen>
+    <dimen name="padding_end">8dp</dimen>
 
     <!-- custom_searchview_background.xml -->
     <dimen name="searchview_radius">20dp</dimen>
     <dimen name="searchview_width">1dp</dimen>
+
+    <dimen name="toolbar_title">18sp</dimen>
+
+    <!-- ivComic -->
+    <dimen name="ivComic_height">512dp</dimen>
+
+
+    <!-- GuideLine -->
+    <dimen name="guideline_height">1dp</dimen>
+    <dimen name="guideline_begin">580dp</dimen>
+
+    <dimen name="text_margin_end">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 
 </resources>

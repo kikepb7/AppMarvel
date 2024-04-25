@@ -32,80 +32,70 @@
                 android:layout_gravity="start"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/back_button"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:src="@drawable/back_arrow"
                 android:visibility="visible"
-                app:tint="@color/black" />
+                style="@style/back_imageButton" />
 
             <TextView
                 android:id="@+id/toolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                style="@style/toolbar_title"/>
         </androidx.appcompat.widget.Toolbar>
 
         <ProgressBar
             android:id="@+id/detailProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/dark_red"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/bottomCard"
             app:layout_constraintEnd_toEndOf="@+id/ivComic"
             app:layout_constraintStart_toStartOf="@+id/ivComic"
             app:layout_constraintTop_toTopOf="@+id/ivComic"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            style="@style/progress_bar"/>
 
         <ImageView
             android:id="@+id/ivError"
-            android:layout_width="@dimen/logo_error_width"
-            android:layout_height="@dimen/logo_error_height"
             android:contentDescription="@string/logo_error"
-            android:src="@drawable/comic_detail_error"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/bottomCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivComic"
-            tools:visibility="visible"/>
+            tools:visibility="visible"
+            style="@style/error_imageView_detail"/>
 
         <TextView
             android:id="@+id/tvErrorCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/logo_margin"
             android:textAlignment="center"
-            android:textColor="@color/dark_red"
-            android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/ivError"
             app:layout_constraintStart_toStartOf="@+id/ivError"
             app:layout_constraintTop_toBottomOf="@+id/ivError"
-            tools:visibility="visible"/>
+            tools:visibility="visible"
+            style="@style/error_textView"/>
 
         <ImageView
             android:id="@+id/ivComic"
             android:layout_width="match_parent"
-            android:layout_height="512dp"
             android:contentDescription="@string/comic_image_description"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/guideLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailToolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/detailToolbar"
+            style="@style/comic_imageView"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLine"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="580dp" />
+            style="@style/guideline"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,79 +108,56 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/sivInfoComic"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/shapeable_image_height"
-                android:background="@color/dark_red"
-                android:elevation="@dimen/shapeable_elevation"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:shapeAppearanceOverlay="@style/RoundedShapeableImageView" />
+                app:shapeAppearanceOverlay="@style/RoundedShapeableImageView"
+                style="@style/shapeable_imageView"/>
 
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/shapeable_title_description_horizontal_margin"
-                android:layout_marginTop="@dimen/shapeable_title_description_margin_top"
-                android:layout_marginEnd="@dimen/shapeable_title_description_horizontal_margin"
-                android:elevation="@dimen/elevation"
-                android:maxWidth="@dimen/shapeable_max_width"
-                android:textColor="@color/white"
-                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/sivInfoComic"
-                app:layout_constraintTop_toTopOf="@+id/sivInfoComic" />
+                app:layout_constraintTop_toTopOf="@+id/sivInfoComic"
+                style="@style/title_text_view"/>
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/scroll_height"
-                android:elevation="@dimen/elevation"
                 app:layout_constraintBottom_toBottomOf="@+id/sivInfoComic"
                 app:layout_constraintStart_toStartOf="@+id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                style="@style/scroll">
 
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/shapeable_title_description_horizontal_margin"
-                    android:elevation="@dimen/elevation"
                     android:fontFamily="sans-serif"
-                    android:maxWidth="@dimen/shapeable_max_width"
                     android:scrollbars="vertical"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_goneMarginEnd="16dp" />
+                    style="@style/description_text_view"/>
             </ScrollView>
 
             <TextView
                 android:id="@+id/comicPages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/pages_margin"
-                android:layout_marginEnd="@dimen/pages_margin"
-                android:layout_marginBottom="@dimen/pages_margin"
-                android:elevation="@dimen/elevation"
-                android:textColor="@color/white"
-                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/pages_text_view"/>
 
             <ImageView
                 android:id="@+id/btnFavorite"
-                android:layout_width="@dimen/favorite_width_height"
-                android:layout_height="@dimen/favorite_width_height"
-                android:layout_marginTop="@dimen/favorite_margin"
-                android:layout_marginEnd="@dimen/favorite_margin"
                 android:contentDescription="@string/favorite_button"
-                android:elevation="10dp"
                 android:src="@drawable/ic_line_heart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                style="@style/favorite_button"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

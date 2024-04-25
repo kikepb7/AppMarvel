@@ -9,23 +9,18 @@
 
     <ImageButton
         android:id="@+id/ibBack"
+        style="@style/back_arrow_imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/logo_margin"
-        android:layout_marginTop="@dimen/logo_margin"
-        android:backgroundTint="@color/black"
         android:contentDescription="@string/back_button"
         android:src="@drawable/back_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/ivError"
-        android:layout_width="@dimen/logo_error_width"
-        android:layout_height="@dimen/logo_error_height"
+        style="@style/error_imageView"
         android:contentDescription="@string/logo_error"
-        android:src="@drawable/unauthorized_error_logo"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,12 +29,10 @@
 
     <TextView
         android:id="@+id/tvErrorCode"
+        style="@style/error_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/logo_margin"
         android:textAlignment="center"
-        android:textColor="@color/dark_red"
-        android:textSize="@dimen/text_size_16sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/ivError"
@@ -48,11 +41,8 @@
 
     <ImageView
         android:id="@+id/logoScreen"
-        android:layout_width="@dimen/logo_width"
-        android:layout_height="@dimen/logo_height"
-        android:layout_margin="@dimen/logo_margin"
+        style="@style/logo_imageView"
         android:contentDescription="@string/marvel_comics_logo"
-        android:src="@drawable/marvel_comics_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,26 +59,19 @@
 
     <ImageView
         android:id="@+id/ivLogoAllComics"
-        android:layout_width="@dimen/icon_width"
-        android:layout_height="@dimen/icon_height"
-        android:layout_marginStart="@dimen/icon_margin_start"
-        android:layout_marginTop="@dimen/icon_margin_top"
+        style="@style/logo_all_comics_imageView"
         android:contentDescription="@string/title_icon"
-        android:src="@drawable/ironman"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svFilter"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toBottomOf="@+id/svFilter" />
 
 
     <TextView
         android:id="@+id/tvComicList"
+        style="@style/title_comics_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_margin_start"
         android:text="@string/all_comics_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_24sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogoAllComics"
@@ -97,9 +80,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComics"
+        style="@style/all_comics_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/recycler_margin_top"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,9 +91,9 @@
 
     <ProgressBar
         android:id="@+id/listProgressBar"
+        style="@style/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/dark_red"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,25 +103,18 @@
 
     <ImageView
         android:id="@+id/ivLogoFavoriteComics"
-        android:layout_width="@dimen/icon_width"
-        android:layout_height="@dimen/icon_height"
-        android:layout_marginStart="@dimen/icon_margin_start"
-        android:layout_marginTop="@dimen/icon_margin_top"
+        style="@style/logo_favorite_comics_imageView"
         android:contentDescription="@string/title_icon"
-        android:src="@drawable/ic_solid_heart"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvComics"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toBottomOf="@+id/rvComics" />
 
     <TextView
         android:id="@+id/tvFavoriteComics"
+        style="@style/title_comics_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_margin_start"
         android:text="@string/favorite_comics_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_24sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogoFavoriteComics"
@@ -147,9 +123,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavoriteComics"
+        style="@style/all_comics_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/recycler_margin_top"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
