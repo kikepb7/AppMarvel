@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -57,23 +56,15 @@ class CharactersFragment : Fragment() {
         binding.svBuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             //When the customer submit the text
             override fun onQueryTextSubmit(query: String?): Boolean {
-                var text = query?:""
-                Log.d("BOTON BARRA BUSCAR", text)
-                //limpio la lista
-                viewModel.getCharacterFiltList(text)
-
+                Log.d("BOTON BARRA BUSCAR", query.orEmpty())
+                viewModel.getCharacterFiltList(query.orEmpty())
                 return true
             }
 
             //When the text have been changed
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d("BOTON BARRA BUSCAR", newText.orEmpty())
-                //Delegar al viewmodel, logica en el viewmodel
-                if(newText.orEmpty() == ""){
-                    viewModel.getCharacterList()
-                }else{
-                    viewModel.getCharacterFiltList(newText.orEmpty())
-                }
+                viewModel.getCharacterFiltList(newText.orEmpty())
                 return false
             }
 
@@ -92,6 +83,7 @@ class CharactersFragment : Fragment() {
                 is State.ListReceived -> {
                     hideError()
                     hideLoader()
+                    //Funcion a lista recibida.
                     state.listCharacters?.let {
                         initRecyclerView(it)
                     }
@@ -100,7 +92,7 @@ class CharactersFragment : Fragment() {
                     hideError()
                     showLoader()
                 }
-                is State.NavigateToDetail -> navigateToCharacterDetail(state.character.id)
+                is State.NavigateToDetail -> navigateToCharacterDetail(state.characterId)
                 else -> {}
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)

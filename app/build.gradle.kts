@@ -46,6 +46,7 @@ dependencies {
     val hiltVersion = "2.44"
     val room = "2.6.1"
     val retrofit = "2.9.0"
+    val viewModel = "2.7.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -64,8 +65,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     /* VIEWMODEL */
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModel")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModel")
     implementation("androidx.activity:activity-ktx:1.8.2")
 
     /* GLIDE */

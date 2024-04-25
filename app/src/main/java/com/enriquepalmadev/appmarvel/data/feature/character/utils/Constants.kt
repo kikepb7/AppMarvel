@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.data.feature.character.utilsData
+package com.enriquepalmadev.appmarvel.data.feature.character.utils
 
 class Constants {
     companion object {

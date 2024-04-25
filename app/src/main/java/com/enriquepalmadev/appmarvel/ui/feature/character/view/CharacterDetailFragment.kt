@@ -18,10 +18,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 
-class ItemDetailsCharactersFragment : Fragment() {
+class CharacterDetailFragment : Fragment() {
     private lateinit var  binding: FragmentItemDetailsCharactersBinding
     private val viewModel: CharactersDetailViewModel by viewModels()
-    private val args: ItemDetailsCharactersFragmentArgs by navArgs()
+    private val args: CharacterDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +35,11 @@ class ItemDetailsCharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initObserver()
-        args.let {
-            viewModel.getCharacterDetail(it.id)
-        }
+        viewModel.getCharacterDetail(args.id)
+
         binding.backButton.setOnClickListener {
             findNavController().navigate(
-                ItemDetailsCharactersFragmentDirections.actionItemDetailsCharactersFragmentToCharactersFragment()
+                CharacterDetailFragmentDirections.actionItemDetailsCharactersFragmentToCharactersFragment()
             )
         }
     }
@@ -49,13 +48,20 @@ class ItemDetailsCharactersFragment : Fragment() {
         viewModel.state.onEach{ state ->
             when(state){
                 is DetailState.CharacterDetail -> {
+                    hideError()
                     hideLoader()
                     state.character?.let {
                         showCharacterDetail(it)
                     }
                 }
-                is DetailState.Error -> {hideLoader()}
-                DetailState.Loading -> {showLoader()}
+                is DetailState.Error -> {
+                    hideLoader()
+                    showError(state.error)
+                }
+                is DetailState.Loading -> {
+                    hideError()
+                    showLoader()
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -66,6 +72,14 @@ class ItemDetailsCharactersFragment : Fragment() {
             ivItemDetailCharacter.loadImage(characterModel.thumbnailDTO)
             tvDescripcion.text = characterModel?.description
         }
+    }
+    private fun showError(error: String){
+        binding.errorText.text = error
+        binding.errorText.visibility = View.VISIBLE
+    }
+
+    private fun hideError(){
+        binding.errorText.visibility = View.GONE
     }
 
     private fun hideLoader(){

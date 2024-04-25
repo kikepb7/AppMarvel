@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.data.feature.character.utilsData
+package com.enriquepalmadev.appmarvel.data.feature.character.utils.extensions
 
 import com.enriquepalmadev.appmarvel.data.feature.character.dto.ResultDTO
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel

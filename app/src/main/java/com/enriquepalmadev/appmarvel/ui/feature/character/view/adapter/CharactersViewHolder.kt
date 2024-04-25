@@ -7,15 +7,22 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterMod
 import com.enriquepalmadev.appmarvel.ui.feature.character.view.utils.loadImage
 
 
-class CharactersViewHolder(private val binding: ItemSuperheroBinding) : ViewHolder(binding.root)
+class CharactersViewHolder(
+    private val binding: ItemSuperheroBinding,
+    private val adapter: CharactersAdapter
+) : ViewHolder(binding.root)
 {
-    fun bind(character: CharacterModel, listener: (CharacterModel) -> Unit){
-        binding.imageButton.loadImage(character.thumbnailDTO)
-        binding.tvTexto.text = character.name
+    //fun bind(character: CharacterModel, listener: (CharacterModel) -> Unit){
+    fun bind(characterId: Int, listener: (Int) -> Unit){
+        val character = adapter.getCharacterById(characterId)
+        character?.let{
+            binding.imageButton.loadImage(it.thumbnailDTO)
+            binding.tvTexto.text = it.name
+        }
 
         //Go to character detail
         binding.imageButton.setOnClickListener {
-            listener.invoke(character)
+            listener.invoke(characterId)
         }
 
 

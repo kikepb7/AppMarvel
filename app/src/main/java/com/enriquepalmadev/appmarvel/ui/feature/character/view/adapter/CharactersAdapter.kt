@@ -7,21 +7,32 @@ import com.enriquepalmadev.appmarvel.databinding.ItemSuperheroBinding
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 
 class CharactersAdapter(
-    private val characterList: List<CharacterModel>,
-    private val listener: (CharacterModel) -> Unit
+    private var characterList: List<CharacterModel>,
+    private val listener: (Int) -> Unit
 ) : RecyclerView.Adapter<CharactersViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         val binding = ItemSuperheroBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CharactersViewHolder(binding)
+        return CharactersViewHolder(binding, this)
     }
 
     override fun getItemCount(): Int = characterList.size
 
+
     //This method paint for each item the viewHolder
+    /*
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
         val character: CharacterModel = characterList[position]
         holder.bind(character, listener)
 
+    }
+     */
+    override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
+        val character = characterList[position]
+        holder.bind(character.id, listener)
+    }
+
+    fun getCharacterById(characterId: Int): CharacterModel? {
+        return characterList.find { it.id == characterId }
     }
 }

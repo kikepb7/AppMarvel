@@ -2,7 +2,7 @@ package com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.appmarvel.data.feature.character.utilsData.Either
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.Either
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.GetCharacterDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +19,31 @@ class CharactersDetailViewModel : ViewModel() {
 
     fun getCharacterDetail(characterId : Int){
         //If the character detail is found, a new state is emitted to the MutableStateFlow
+        /*viewModelScope.launch {
+            if(true){
+                _state.emit(DetailState.Error("Error al averiguar el ID. Lugar: ViewModel"))
+            }else{
+                getCharacterDetailUseCase.getCharacterDetail(characterId)
+                    .onStart { _state.emit(DetailState.Loading) }
+                    .catch { _state.emit(DetailState.Error("Error en el hilo al recoger el ID del Personaje")) }
+                    .collect{either ->
+                        when(either){
+                            is Either.Error -> _state.emit(DetailState.Error(either.error))
+                            is Either.Success -> _state.emit(DetailState.CharacterDetail(either.data))
+
+                        }
+                    }
+            }
+        }
+         */
+
         viewModelScope.launch {
             getCharacterDetailUseCase.getCharacterDetail(characterId)
                 .onStart { _state.emit(DetailState.Loading) }
                 .catch { _state.emit(DetailState.Error("Error en el hilo al recoger el ID del Personaje")) }
                 .collect{either ->
                     when(either){
-                        is Either.Error -> _state.emit(DetailState.Error("Error en la consulta al coger de la API."))
+                        is Either.Error -> _state.emit(DetailState.Error(either.error))
                         is Either.Success -> _state.emit(DetailState.CharacterDetail(either.data))
 
                     }

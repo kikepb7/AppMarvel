@@ -1,8 +1,7 @@
-package com.enriquepalmadev.appmarvel.data.feature.character
+package com.enriquepalmadev.appmarvel.data.feature.character.datasource
 
-import com.enriquepalmadev.appmarvel.data.feature.character.service.CharacterService
-import com.enriquepalmadev.appmarvel.data.feature.character.utilsData.Constants.Companion.API_KEY
-import com.enriquepalmadev.appmarvel.data.feature.character.utilsData.Constants.Companion.BASE_URL
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.Constants.Companion.API_KEY
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.Constants.Companion.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
