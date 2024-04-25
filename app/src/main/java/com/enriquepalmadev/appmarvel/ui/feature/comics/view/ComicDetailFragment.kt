@@ -1,11 +1,12 @@
 package com.enriquepalmadev.appmarvel.ui.feature.comics.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +28,7 @@ class ComicDetailFragment : Fragment() {
     companion object {
         const val KEY_ID = "id"
     }
+
     private var isFavorite = false
     private val comicId by lazy { arguments?.getInt(KEY_ID) }
     private lateinit var binding: FragmentComicDetailBinding
@@ -85,7 +87,7 @@ class ComicDetailFragment : Fragment() {
     // Progress Bar
     private fun manageLoader(show: Boolean) {
         binding.detailProgressBar.apply {
-            if (show) isVisible else isGone
+            if (show) VISIBLE else GONE
         }
     }
 
@@ -125,9 +127,9 @@ class ComicDetailFragment : Fragment() {
 
     private fun manageErrorApi(code: String) {
         binding.apply {
-            ivError.isVisible
-            tvErrorCode.isVisible
-            tvErrorCode.text = "Error ${code}"
+            ivError.visibility = VISIBLE
+            tvErrorCode.visibility = VISIBLE
+            tvErrorCode.text = getString(R.string.error_code, code)
         }
     }
- }
+}

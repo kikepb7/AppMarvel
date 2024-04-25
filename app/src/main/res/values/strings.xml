@@ -29,4 +29,5 @@
     <string name="all_comics_title">TODOS LOS COMICS</string>
     <string name="favorite_comics_title">COMICS FAVORITOS</string>
     <string name="error_fragment_text">Unauthorized access</string>
+    <string name="error_code">Error %1$s</string>
 </resources>

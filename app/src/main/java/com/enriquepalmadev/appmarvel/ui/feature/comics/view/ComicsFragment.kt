@@ -3,10 +3,10 @@ package com.enriquepalmadev.appmarvel.ui.feature.comics.view
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -23,10 +23,8 @@ import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.adapter.ComicsAdapter
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.State
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.navigateTo
 
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
@@ -59,24 +57,27 @@ class ComicsFragment : Fragment() {
                 is State.Error -> {
                     when (state.error) {
                         is ApiError -> {
-                            manageErrorApi(code = state.error.code.toString())
-                            showErrorMessage(code = state.error.code, message = state.error.message)
+                            manageErrorState(code = state.error.code.toString())
                         }
-                        UnknownHostError -> manageErrorApi(code = "400")
-                        Unauthorized -> manageErrorApi(code = "401")
+
+                        UnknownHostError -> manageErrorState(code = "400")
+                        Unauthorized -> manageErrorState(code = "401")
                     }
                     returnToHome()
-                    manageLoadingView(false)
+                    manageLoadingState(show = false)
+                    manageComicList(false)
                 }
 
                 is State.Exception -> {
-                    manageErrorApi(code = state.message)
+                    manageErrorState(code = state.message)
                     returnToHome()
-                    manageLoadingView(false)
+                    manageLoadingState(false)
+                    manageComicList(false)
                 }
 
                 is State.ListReceived -> {
-                    manageLoadingView(false)
+                    manageLoadingState(false)
+                    manageComicList(true)
                     returnToHome()
                     state.listComicModels?.let {
                         initRecyclerView(it)
@@ -84,12 +85,15 @@ class ComicsFragment : Fragment() {
                 }
 
                 State.Loading -> {
-                    manageLoadingView(true)
+                    manageLoadingState(show = true)
+                    manageComicList(false)
                 }
+
                 is State.NavigateToDetail -> navigateToComicDetail(comicId = state.comicId)
 
                 is State.FilteredListByName -> {
-                    manageLoadingView(false)
+                    manageLoadingState(false)
+                    manageComicList(true)
                     state.filteredComicList?.let { initRecyclerView(it) }
                 }
             }
@@ -100,7 +104,6 @@ class ComicsFragment : Fragment() {
         binding.ibBack.setOnClickListener {
             findNavController().navigate(R.id.homeFragment)
         }
-        //binding.ibBack.navigateTo(R.id.homeFragment)
     }
 
     // Navigate to detail through the comic ID with safeArgs
@@ -118,7 +121,7 @@ class ComicsFragment : Fragment() {
                 LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 
             adapter = ComicsAdapter(list) { comic ->
-                viewModel.onItemSelected(comic.id)
+                viewModel.onItemSelected(comic)
             }
         }
     }
@@ -150,49 +153,37 @@ class ComicsFragment : Fragment() {
         })
     }
 
-    // Error message
-    private fun showErrorMessage(code: Int, message: String) {
-        Snackbar.make(
-            binding.comicsViewContainer,
-            "Código de error: $code \n$message",
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    // Manage errors on fragment
-    private fun manageErrorApi(code: String) {
+    private fun manageLoadingState(show: Boolean) {
         binding.apply {
-            ivError.isVisible
-            tvErrorCode.isVisible
-            tvErrorCode.text = "Error ${code}"
-            rvComics.isGone
-            rvFavoriteComics.isGone
-            tvComicList.isGone
-            tvFavoriteComics.isGone
-            ivLogoAllComics.isGone
-            ivLogoFavoriteComics.isGone
+            if (show) listProgressBar.visibility = VISIBLE else listProgressBar.visibility = GONE
         }
     }
 
-    // Manage Loading State view
-    private fun manageLoadingView(show: Boolean) {
-        if (show) {
-            binding.apply {
-                listProgressBar.isVisible
-                tvComicList.isGone
-                tvFavoriteComics.isGone
-                ivLogoAllComics.isGone
-                ivLogoFavoriteComics.isGone
+    private fun manageComicList(show: Boolean) {
+        binding.apply {
+            if (show) {
+                rvComics.visibility = VISIBLE
+                rvFavoriteComics.visibility = VISIBLE
+                tvComicList.visibility = VISIBLE
+                ivLogoAllComics.visibility = VISIBLE
+                tvFavoriteComics.visibility = VISIBLE
+                ivLogoFavoriteComics.visibility = VISIBLE
+            } else {
+                rvComics.visibility = GONE
+                rvFavoriteComics.visibility = GONE
+                tvComicList.visibility = GONE
+                ivLogoAllComics.visibility = GONE
+                tvFavoriteComics.visibility = GONE
+                ivLogoFavoriteComics.visibility = GONE
             }
         }
-        else {
-            binding.apply {
-                listProgressBar.isGone
-                tvComicList.isVisible
-                tvFavoriteComics.isVisible
-                ivLogoAllComics.isVisible
-                ivLogoFavoriteComics.isVisible
-            }
+    }
+
+    private fun manageErrorState(code: String) {
+        binding.apply {
+            ivError.visibility = VISIBLE
+            tvErrorCode.visibility = VISIBLE
+            tvErrorCode.text = getString(R.string.error_code, code)
         }
     }
 }

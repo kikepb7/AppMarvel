@@ -8,7 +8,7 @@ import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 
 class ComicsAdapter(
     private var comicsList: List<ComicModel>,
-    private val onClickListener: (ComicModel) -> Unit
+    private val onClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<ComicsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicsViewHolder {

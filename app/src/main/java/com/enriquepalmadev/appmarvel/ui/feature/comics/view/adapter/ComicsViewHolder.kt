@@ -11,15 +11,17 @@ class ComicsViewHolder(view: View) : ViewHolder(view) {
     private val binding = ItemComicsBinding.bind(view)
 
     fun render(
-        comicModel: ComicModel,
-        onClickListener: (ComicModel) -> Unit
+        comic: ComicModel,
+        onClickListener: (Int) -> Unit
     ) {
         binding.apply {
-            ibImageComic.loadImage(comicModel.thumbnail)
-            tvComicTitle.text = comicModel.title
-            ibImageComic.setOnClickListener {
-                onClickListener(comicModel)
+            ibImageComic.apply {
+                loadImage(comic.thumbnail)
+                setOnClickListener {
+                    onClickListener.invoke(comic.id)
+                }
             }
+            tvComicTitle.text = comic.title
         }
     }
 }
