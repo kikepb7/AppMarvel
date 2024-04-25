@@ -3,8 +3,6 @@ package com.enriquepalmadev.appmarvel.ui.feature.comics.view
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -21,6 +19,8 @@ import com.enriquepalmadev.appmarvel.data.feature.comics.dto.UnknownHostError
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicsBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.adapter.ComicsAdapter
+import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.gone
+import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.visible
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.State
 import kotlinx.coroutines.flow.launchIn
@@ -155,34 +155,34 @@ class ComicsFragment : Fragment() {
 
     private fun manageLoadingState(show: Boolean) {
         binding.apply {
-            if (show) listProgressBar.visibility = VISIBLE else listProgressBar.visibility = GONE
+            if (show) listProgressBar.visible() else listProgressBar.gone()
         }
     }
 
     private fun manageComicList(show: Boolean) {
         binding.apply {
             if (show) {
-                rvComics.visibility = VISIBLE
-                rvFavoriteComics.visibility = VISIBLE
-                tvComicList.visibility = VISIBLE
-                ivLogoAllComics.visibility = VISIBLE
-                tvFavoriteComics.visibility = VISIBLE
-                ivLogoFavoriteComics.visibility = VISIBLE
+                rvComics.visible()
+                rvFavoriteComics.visible()
+                tvComicList.visible()
+                ivLogoAllComics.visible()
+                tvFavoriteComics.visible()
+                ivLogoFavoriteComics.visible()
             } else {
-                rvComics.visibility = GONE
-                rvFavoriteComics.visibility = GONE
-                tvComicList.visibility = GONE
-                ivLogoAllComics.visibility = GONE
-                tvFavoriteComics.visibility = GONE
-                ivLogoFavoriteComics.visibility = GONE
+                rvComics.gone()
+                rvFavoriteComics.gone()
+                tvComicList.gone()
+                ivLogoAllComics.gone()
+                tvFavoriteComics.gone()
+                ivLogoFavoriteComics.gone()
             }
         }
     }
 
     private fun manageErrorState(code: String) {
         binding.apply {
-            ivError.visibility = VISIBLE
-            tvErrorCode.visibility = VISIBLE
+            ivError.visible()
+            tvErrorCode.visible()
             tvErrorCode.text = getString(R.string.error_code, code)
         }
     }

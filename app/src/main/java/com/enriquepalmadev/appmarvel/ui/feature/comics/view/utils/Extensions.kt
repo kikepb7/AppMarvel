@@ -1,5 +1,9 @@
 package com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils
 
+import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
@@ -22,4 +26,16 @@ fun Button.navigateTo(action: Int) {
     setOnClickListener {
         findNavController().navigate(action)
     }
+}
+
+fun View.visible() {
+    this.visibility = VISIBLE
+}
+
+fun View.gone() {
+    this.visibility = GONE
+}
+
+fun View.invisible() {
+    this.visibility = INVISIBLE
 }

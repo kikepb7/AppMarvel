@@ -1,11 +1,8 @@
 package com.enriquepalmadev.appmarvel.ui.feature.comics.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +14,9 @@ import com.enriquepalmadev.appmarvel.data.feature.comics.dto.Unauthorized
 import com.enriquepalmadev.appmarvel.data.feature.comics.dto.UnknownHostError
 import com.enriquepalmadev.appmarvel.databinding.FragmentComicDetailBinding
 import com.enriquepalmadev.appmarvel.domain.feature.comics.model.ComicModel
+import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.gone
 import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.loadImage
+import com.enriquepalmadev.appmarvel.ui.feature.comics.view.utils.visible
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.ComicDetailViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.comics.viewmodel.DetailState
 import com.google.android.material.snackbar.Snackbar
@@ -87,7 +86,7 @@ class ComicDetailFragment : Fragment() {
     // Progress Bar
     private fun manageLoader(show: Boolean) {
         binding.detailProgressBar.apply {
-            if (show) VISIBLE else GONE
+            if (show) visible() else gone()
         }
     }
 
@@ -127,8 +126,8 @@ class ComicDetailFragment : Fragment() {
 
     private fun manageErrorApi(code: String) {
         binding.apply {
-            ivError.visibility = VISIBLE
-            tvErrorCode.visibility = VISIBLE
+            ivError.visible()
+            tvErrorCode.visible()
             tvErrorCode.text = getString(R.string.error_code, code)
         }
     }
