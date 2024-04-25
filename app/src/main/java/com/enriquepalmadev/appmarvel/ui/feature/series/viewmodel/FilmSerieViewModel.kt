@@ -68,10 +68,10 @@ class FilmSerieViewModel : ViewModel() {
         }
     }
 
-    fun transferToDataDetail(filmOrSerie: FilmSerieModel){
+    fun transferToDataDetail(id: Int){
         try {
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ItemClicked(filmOrSerie.id))
+                _uiState.emit(FilmSerieUIState.ItemClicked(id))
             }
         } catch (e: Exception){
             viewModelScope.launch {
@@ -79,6 +79,19 @@ class FilmSerieViewModel : ViewModel() {
             }
         }
     }
+
+    /* TODO() This function is thought to the database persist
+    fun favSerie(id: Int, favState: String) {
+        when (favState){
+            "on" -> {
+                TODO() // Add film to fav list
+            }
+            "off" -> {
+                TODO() // Remove film to fav list
+            }
+        }
+    }
+     */
 
     fun orderListByStartYear(){
         viewModelScope.launch {
@@ -143,6 +156,7 @@ class FilmSerieViewModel : ViewModel() {
             }
         }
     }
+
 }
 
 sealed class FilmSerieUIState {

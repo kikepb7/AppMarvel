@@ -2,11 +2,12 @@ package com.enriquepalmadev.appmarvel.ui.feature.series.view.adapterfilmsandseri
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.appmarvel.databinding.ItemFilmsSeriesBinding
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 
-class FilmSerieAdapter(private val listener: (FilmSerieModel) -> Unit): RecyclerView.Adapter<FilmSerieViewHolder>() {
+class FilmSerieAdapter(private val itemListener: (Int) -> Unit, private val favListener: (Int, String, ImageView) -> Unit): RecyclerView.Adapter<FilmSerieViewHolder>() {
 
     private val fsList = arrayListOf<FilmSerieModel>()
 
@@ -21,10 +22,9 @@ class FilmSerieAdapter(private val listener: (FilmSerieModel) -> Unit): Recycler
     override fun onBindViewHolder(holder: FilmSerieViewHolder, position: Int) {
         // This method paint for each item (position) the ViewHolder (a "wrapper" of a view)
         val filmSerieModel : FilmSerieModel = fsList[position]
-        holder.bind(filmSerieModel)
         // Adding the listener to each item
         // With this implementation we can extract the listener method to another class
-        holder.itemView.setOnClickListener{listener(filmSerieModel)}
+        holder.bind(filmSerieModel, itemListener, favListener)
     }
 
     fun updateList(filmsSeriesList: List<FilmSerieModel>) {

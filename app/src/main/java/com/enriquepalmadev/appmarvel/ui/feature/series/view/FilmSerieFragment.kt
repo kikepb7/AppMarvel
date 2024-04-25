@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -146,7 +147,7 @@ class FilmSerieFragment : Fragment() {
     }
 
     private fun sendingListenerToAdapterItems() {
-        fsAdapter = FilmSerieAdapter(::onFilmSerieClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
+        fsAdapter = FilmSerieAdapter(::onFilmSerieClicked, ::onFavIconClicked) //"::" -> This expression is used when we have a function that returns a Unit (void in Java)
     }
 
     private fun initRecyclerView(list: List<FilmSerieModel>){
@@ -154,8 +155,21 @@ class FilmSerieFragment : Fragment() {
         fsAdapter.updateList(list) // Updated the list in the Adapter and, in consequence, in the RecyclerView
     }
 
-    private fun onFilmSerieClicked(filmOrSerie: FilmSerieModel){
-        fsViewModel.transferToDataDetail(filmOrSerie)
+    private fun onFilmSerieClicked(id: Int){
+        fsViewModel.transferToDataDetail(id)
+    }
+
+    private fun onFavIconClicked(id: Int, favState: String, favBtn: ImageView){
+        // fsViewModel.favSerie(id, favState) TODO() Function to the database persist
+        favBtn.apply {
+            if (contentDescription == "on"){
+                setImageResource(R.drawable.ic_border_favorite_24dp)
+                contentDescription = "off"
+            } else if (contentDescription == "off"){
+                setImageResource(R.drawable.ic_full_favorite_24dp)
+                contentDescription = "on"
+            }
+        }
     }
 
     private fun btnOrderByOnClick(){
