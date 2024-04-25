@@ -59,12 +59,12 @@ class ItemDetailFilmSerieFragment : Fragment() {
                         }
 
                         EmptyError -> {
-                            setErrorView("This is empty", "Sorry, there's nothing to show :(")
+                            setErrorView(getString(R.string.title_empty_error), getString(R.string.msg_empty_error))
                             showErrorView(true, R.drawable.deadpool_no_connection)
                         }
 
                         UnknownHostError -> {
-                            setErrorView("Do you have internet?", "It's probably the failure :)")
+                            setErrorView(getString(R.string.title_unknown_host_error), getString(R.string.msg_unknown_host_error))
                             showErrorView(true, R.drawable.captain_empty)
                         }
                     }

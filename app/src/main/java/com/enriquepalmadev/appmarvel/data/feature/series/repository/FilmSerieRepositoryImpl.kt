@@ -1,80 +1,44 @@
 package com.enriquepalmadev.appmarvel.data.feature.series.repository
 
-import com.enriquepalmadev.appmarvel.data.feature.series.api.RetrofitBuilder
+import com.enriquepalmadev.appmarvel.data.feature.series.api.datasource.ISerieDataSource
+import com.enriquepalmadev.appmarvel.data.feature.series.api.datasource.SerieRemoteDataSource
+import com.enriquepalmadev.appmarvel.data.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CustomError
-import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Constants
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.EmptyError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEither
-import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.UnauthorizedError
-import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.UnknownHostError
 import com.enriquepalmadev.appmarvel.domain.feature.series.mapper.IFilmSerieMapper
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.feature.series.repository.IFilmSerieRepository
 import org.mapstruct.factory.Mappers
-import java.net.UnknownHostException
 
 class FilmSerieRepositoryImpl : IFilmSerieRepository {
 
     private val mapper: IFilmSerieMapper = Mappers.getMapper(IFilmSerieMapper::class.java)
+    private val serieRemoteDataSource: ISerieDataSource = SerieRemoteDataSource()
 
     override suspend fun getListOfAllSeries(): ResponseEither<Failure, List<FilmSerieModel>?> {
-        return try {
-            val response = RetrofitBuilder.retrofitService.getListOfAllSeries()
-            if (response.isSuccessful) {
-                ResponseEither.Success(r = response.body()?.data?.results
-                    ?.map { marvelFilmSerieItemDto ->
-                        mapper.marvelFilmSerieItemDtoToFilmSerieModel(marvelFilmSerieItemDto)
-                    })
-            } else {
+        return when(val responseEither = serieRemoteDataSource.getListOfAllSeries()){
+            is ResponseEither.Failure -> ResponseEither.Failure(l = responseEither.l)
+            is ResponseEither.Success -> ResponseEither.Success(r = responseEither.r?.data?.results?.let { handlerSuccessGetAllSeries(it) })
+        }
+    }
 
-                if (response.code() == Constants.ERROR_401) {
-                    ResponseEither.Failure(l = UnauthorizedError)
-                } else {
-                    ResponseEither.Failure(
-                        l = CustomError(
-                            response.code(),
-                            response.errorBody().toString()
-                        )
-                    )
-                }
-            }
-        } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = UnknownHostError)
-        } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+    private fun handlerSuccessGetAllSeries(list: List<MarvelFilmSerieItemDto>): List<FilmSerieModel> {
+        return list.map { marvelFilmSerieItemDto ->
+            mapper.marvelFilmSerieItemDtoToFilmSerieModel(marvelFilmSerieItemDto)
         }
     }
 
     override suspend fun getSerieById(id: Int): ResponseEither<Failure, FilmSerieModel> {
-        return try {
-            val response = RetrofitBuilder.retrofitService.getSerieById(id)
-            val result = response.body()?.data?.results
-
-            if (response.isSuccessful) {
-                if (result != null) {
-                    ResponseEither.Success(r = mapper.marvelFilmSerieItemDtoToFilmSerieModel(result.first()))
-                } else {
-                    ResponseEither.Failure(
-                        l = CustomError(
-                            response.code(),
-                            response.errorBody().toString()
-                        )
-                    )
-                }
-            } else {
-                ResponseEither.Failure(
-                    l = CustomError(
-                        response.code(),
-                        response.errorBody().toString()
-                    )
-                )
-            }
-        } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = UnknownHostError)
-        } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+        return when(val responseEither = serieRemoteDataSource.getSerieById(id)){
+            is ResponseEither.Failure -> ResponseEither.Failure(l = responseEither.l)
+            is ResponseEither.Success -> ResponseEither.Success(r = handlerSuccessGetSerie(responseEither.r))
         }
+    }
+
+    private fun handlerSuccessGetSerie(serie: MarvelFilmSerieItemDto): FilmSerieModel {
+        return mapper.marvelFilmSerieItemDtoToFilmSerieModel(serie)
     }
 
     override suspend fun orderListByStartYear(series: List<FilmSerieModel>): ResponseEither<Failure, List<FilmSerieModel>> {

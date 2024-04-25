@@ -1,7 +1,6 @@
 package com.enriquepalmadev.appmarvel.data.feature.series.api
 
 import com.enriquepalmadev.appmarvel.data.feature.series.api.service.CustomInterceptor
-import com.enriquepalmadev.appmarvel.data.feature.series.api.service.IMarvelFilmSerieService
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,15 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
 
-    val retrofitService: IMarvelFilmSerieService by lazy {
-        getRetrofit().create(IMarvelFilmSerieService::class.java)
-    }
-
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    private fun getRetrofit(): Retrofit {
+    fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

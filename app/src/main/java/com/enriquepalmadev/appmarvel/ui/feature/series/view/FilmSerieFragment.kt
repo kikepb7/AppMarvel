@@ -1,5 +1,6 @@
 package com.enriquepalmadev.appmarvel.ui.feature.series.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -66,12 +67,12 @@ class FilmSerieFragment : Fragment() {
                         }
 
                         EmptyError -> {
-                            setErrorView("This is empty", "Sorry, there's nothing to show :(")
+                            setErrorView(getString(R.string.title_empty_error), getString(R.string.msg_empty_error))
                             showErrorView(true, R.drawable.deadpool_no_connection)
                         }
 
                         UnknownHostError -> {
-                            setErrorView("Do you have internet?", "It's probably the failure :)")
+                            setErrorView(getString(R.string.title_unknown_host_error), getString(R.string.msg_unknown_host_error))
                             showErrorView(true, R.drawable.captain_empty)
                         }
                     }
@@ -181,11 +182,21 @@ class FilmSerieFragment : Fragment() {
                     selectedItem = arrayItemsOrderBy[which]
                 }
                 .setPositiveButton(getString(R.string.dialog_ok)){dialog, which ->
-                    fsViewModel.orderListBy(selectedItem, requireContext())
+                    orderListBy(selectedItem, requireContext())
                 }
                 .setNegativeButton(getString(R.string.dialog_cancel)){dialog, which ->
                 }
                 .show()
+        }
+    }
+
+    // Function to order the items of the RecyclerView
+    private fun orderListBy(selectedItem: String, context: Context) {
+        when(selectedItem) {
+            context.getString(R.string.orderby_year) -> fsViewModel.orderListByStartYear()
+            context.getString(R.string.orderby_alphabet) -> fsViewModel.orderListByAlphabet()
+            // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
+            // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
         }
     }
 

@@ -12,7 +12,7 @@ interface IMarvelFilmSerieService {
     @GET("series")
     suspend fun getListOfAllSeries(
         @Query("limit")limit: Int = Constants.LIMIT
-    ): Response <ObjectResponseDto>
+    ): Response<ObjectResponseDto>
 
     @GET("series/{id}")
     suspend fun getSerieById(

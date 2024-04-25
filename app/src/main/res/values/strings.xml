@@ -39,4 +39,12 @@
     <!-- Unauthorized error (401) -->
     <string name="title_401">Unauthorized</string>
     <string name="msg_401">Go out!</string>
+
+    <!-- EmptyError -->
+    <string name="title_empty_error">This is empty</string>
+    <string name="msg_empty_error">Sorry, there\'s nothing to show :(</string>
+
+    <!-- UnknownHostError -->
+    <string name="title_unknown_host_error">Do you have internet?</string>
+    <string name="msg_unknown_host_error">It\'s probably the failure :)</string>
 </resources>

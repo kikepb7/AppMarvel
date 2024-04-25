@@ -1,9 +1,7 @@
 package com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
@@ -57,11 +55,9 @@ class FilmSerieViewModel : ViewModel() {
                                     _uiState.emit(FilmSerieUIState.Exception("Error here!"))
                                 } else {
                                     allSeriesList = responseEither.r?.let { customFilterList(it) }
-                                    responseEither.r?.let { serieModelList ->
-                                        FilmSerieUIState.ListReceived(
-                                            customFilterList(serieModelList)
-                                        )
-                                    }?.let {_uiState.emit(it) }
+                                    allSeriesList?.let {
+                                        FilmSerieUIState.ListReceived(it)
+                                    }?.let { _uiState.emit(it) }
                                 }
                             }
                         }
@@ -84,54 +80,47 @@ class FilmSerieViewModel : ViewModel() {
         }
     }
 
-    // Function to order the items of the RecyclerView
-    fun orderListBy(selectedItem: String, context: Context) {
-        when(selectedItem) {
-            context.getString(R.string.orderby_year) -> {
-                viewModelScope.launch {
-                    allSeriesList?.let {
-                        iFetchListOfSeriesOrderByStartYearUseCase
-                            .getListOfSeriesOrderByStartYear(it)
-                            .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                            .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
-                            .collect {responseEither ->
-                                when(responseEither){
-                                    is ResponseEither.Failure -> {
-                                        _uiState.emit(FilmSerieUIState.Error(responseEither.l))
-                                    }
-                                    is ResponseEither.Success -> {
-                                        allSeriesList = responseEither.r
-                                        _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
-                                    }
-                                }
+    fun orderListByStartYear(){
+        viewModelScope.launch {
+            allSeriesList?.let {
+                iFetchListOfSeriesOrderByStartYearUseCase
+                    .getListOfSeriesOrderByStartYear(it)
+                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                    .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                    .collect {responseEither ->
+                        when(responseEither){
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
                             }
+                            is ResponseEither.Success -> {
+                                allSeriesList = responseEither.r
+                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                            }
+                        }
                     }
-                }
             }
+        }
+    }
 
-            context.getString(R.string.orderby_alphabet) -> {
-                viewModelScope.launch {
-                    allSeriesList?.let {
-                        iFetchListOfSeriesOrderByAlphabetUseCase
-                            .getListOfSeriesOrderByAlphabet(it)
-                            .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                            .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
-                            .collect {responseEither ->
-                                when(responseEither){
-                                    is ResponseEither.Failure -> {
-                                        _uiState.emit(FilmSerieUIState.Error(responseEither.l))
-                                    }
-                                    is ResponseEither.Success -> {
-                                        allSeriesList = responseEither.r
-                                        _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
-                                    }
-                                }
+    fun orderListByAlphabet(){
+        viewModelScope.launch {
+            allSeriesList?.let {
+                iFetchListOfSeriesOrderByAlphabetUseCase
+                    .getListOfSeriesOrderByAlphabet(it)
+                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
+                    .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                    .collect {responseEither ->
+                        when(responseEither){
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
                             }
+                            is ResponseEither.Success -> {
+                                allSeriesList = responseEither.r
+                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                            }
+                        }
                     }
-                }
             }
-            // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
-            // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
         }
     }
 
