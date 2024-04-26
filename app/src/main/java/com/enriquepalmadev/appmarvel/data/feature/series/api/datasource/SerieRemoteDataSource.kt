@@ -29,7 +29,7 @@ class SerieRemoteDataSource : ISerieDataSource {
                 } else {
                     ResponseEither.Failure(
                         l = CustomError(
-                            response.code(),
+                            response.code().toString(),
                             response.errorBody().toString()
                         )
                     )
@@ -38,7 +38,7 @@ class SerieRemoteDataSource : ISerieDataSource {
         } catch (e: UnknownHostException) {
             ResponseEither.Failure(l = UnknownHostError)
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(e.toString(), e.message.toString()))
         }
     }
 
@@ -53,7 +53,7 @@ class SerieRemoteDataSource : ISerieDataSource {
                 } else {
                     ResponseEither.Failure(
                         l = CustomError(
-                            response.code(),
+                            response.code().toString(),
                             response.errorBody().toString()
                         )
                     )
@@ -61,7 +61,7 @@ class SerieRemoteDataSource : ISerieDataSource {
             } else {
                 ResponseEither.Failure(
                     l = CustomError(
-                        response.code(),
+                        response.code().toString(),
                         response.errorBody().toString()
                     )
                 )
@@ -69,7 +69,7 @@ class SerieRemoteDataSource : ISerieDataSource {
         } catch (e: UnknownHostException) {
             ResponseEither.Failure(l = UnknownHostError)
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(e.toString(), e.message.toString()))
         }
     }
 }

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CoroutineError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CustomError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.EmptyError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.UnauthorizedError
@@ -50,7 +50,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                 is ItemDetailUIState.Error -> {
                     when(uiState.error){
                         is CustomError -> {
-                            setErrorView(uiState.error.code.toString(), uiState.error.msg)
+                            setErrorView(uiState.error.code, uiState.error.msg)
                             showErrorView(true, R.drawable.groot_error)
                         }
                         UnauthorizedError -> {
@@ -67,13 +67,13 @@ class ItemDetailFilmSerieFragment : Fragment() {
                             setErrorView(getString(R.string.title_unknown_host_error), getString(R.string.msg_unknown_host_error))
                             showErrorView(true, R.drawable.captain_empty)
                         }
+
+                        is CoroutineError -> {
+                            setErrorView(getString(R.string.title_coroutine_error), getString(R.string.msg_coroutine_error))
+                            showErrorView(true, R.drawable.groot_error)
+                        }
                     }
                     showLoading(false)
-                }
-                is ItemDetailUIState.Exception-> {
-                    Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
-                    showLoading(false)
-                    showErrorView(false, null)
                 }
                 ItemDetailUIState.Loading -> {
                     retrieveFilmOrSerie()

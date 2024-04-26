@@ -47,4 +47,8 @@
     <!-- UnknownHostError -->
     <string name="title_unknown_host_error">Do you have internet?</string>
     <string name="msg_unknown_host_error">It\'s probably the failure :)</string>
+
+    <!-- CoroutineError -->
+    <string name="title_coroutine_error">We\'ve found and error</string>
+    <string name="msg_coroutine_error">Please, go back :)</string>
 </resources>

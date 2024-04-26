@@ -2,6 +2,7 @@ package com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CoroutineError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
@@ -44,7 +45,7 @@ class FilmSerieViewModel : ViewModel() {
             viewModelScope.launch {
                 iFetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.emit(FilmSerieUIState.Loading)}
-                    .catch { _uiState.emit(FilmSerieUIState.Exception(it.message.toString())) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(CoroutineError)) }
                     .collect { responseEither ->
                         when(responseEither){
                             is ResponseEither.Failure -> {
@@ -52,7 +53,7 @@ class FilmSerieViewModel : ViewModel() {
                             }
                             is ResponseEither.Success -> {
                                 if(responseEither.r?.isEmpty() == true){
-                                    _uiState.emit(FilmSerieUIState.Exception("Error here!"))
+                                    _uiState.emit(FilmSerieUIState.Error(CoroutineError))
                                 } else {
                                     allSeriesList = responseEither.r?.let { customFilterList(it) }
                                     allSeriesList?.let {
@@ -75,7 +76,7 @@ class FilmSerieViewModel : ViewModel() {
             }
         } catch (e: Exception){
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Exception("Error here!"))
+                _uiState.emit(FilmSerieUIState.Error(CoroutineError))
             }
         }
     }
@@ -99,7 +100,7 @@ class FilmSerieViewModel : ViewModel() {
                 iFetchListOfSeriesOrderByStartYearUseCase
                     .getListOfSeriesOrderByStartYear(it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(CoroutineError)) }
                     .collect {responseEither ->
                         when(responseEither){
                             is ResponseEither.Failure -> {
@@ -121,7 +122,7 @@ class FilmSerieViewModel : ViewModel() {
                 iFetchListOfSeriesOrderByAlphabetUseCase
                     .getListOfSeriesOrderByAlphabet(it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(CoroutineError)) }
                     .collect {responseEither ->
                         when(responseEither){
                             is ResponseEither.Failure -> {
@@ -142,7 +143,7 @@ class FilmSerieViewModel : ViewModel() {
             allSeriesList?.let {
                 iFetchListFilterByNameUseCase.getListFilterByName(newText, it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Exception("Error here!")) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(CoroutineError)) }
                     .collect{responseEither ->
                         when(responseEither){
                             is ResponseEither.Failure -> {
@@ -161,7 +162,6 @@ class FilmSerieViewModel : ViewModel() {
 
 sealed class FilmSerieUIState {
     data class Error(val error: Failure) : FilmSerieUIState()
-    data class Exception(val msgError: String): FilmSerieUIState()
     data object Loading : FilmSerieUIState()
     data class ListReceived(val list: List<FilmSerieModel>) : FilmSerieUIState()
     data class ItemClicked(val idSerie: Int) : FilmSerieUIState()

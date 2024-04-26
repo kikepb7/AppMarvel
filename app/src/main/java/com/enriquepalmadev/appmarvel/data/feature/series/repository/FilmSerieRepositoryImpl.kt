@@ -50,7 +50,7 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(e.toString(), e.message.toString()))
         }
     }
 
@@ -63,7 +63,7 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(e.toString(), e.message.toString()))
         }
     }
 
@@ -81,7 +81,7 @@ class FilmSerieRepositoryImpl : IFilmSerieRepository {
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomError(0, e.message.toString()))
+            ResponseEither.Failure(l = CustomError(e.toString(), e.message.toString()))
         }
     }
 }

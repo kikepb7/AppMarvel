@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CoroutineError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CustomError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.EmptyError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.UnauthorizedError
@@ -59,7 +59,7 @@ class FilmSerieFragment : Fragment() {
                     showLoading(false)
                     when(uiState.error){
                         is CustomError -> {
-                            setErrorView(uiState.error.code.toString(), uiState.error.msg)
+                            setErrorView(uiState.error.code, uiState.error.msg)
                             showErrorView(true, R.drawable.groot_error)
                         }
                         UnauthorizedError -> {
@@ -76,12 +76,12 @@ class FilmSerieFragment : Fragment() {
                             setErrorView(getString(R.string.title_unknown_host_error), getString(R.string.msg_unknown_host_error))
                             showErrorView(true, R.drawable.captain_empty)
                         }
+
+                        CoroutineError -> {
+                            setErrorView(getString(R.string.title_coroutine_error), getString(R.string.msg_coroutine_error))
+                            showErrorView(true, R.drawable.groot_error)
+                        }
                     }
-                }
-                is FilmSerieUIState.Exception -> {
-                    Toast.makeText(context, uiState.msgError, Toast.LENGTH_LONG).show()
-                    showLoading(false)
-                    showErrorView(false, null)
                 }
                 FilmSerieUIState.Loading -> {
                     showErrorView(false, null)
