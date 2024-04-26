@@ -30,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/back_button"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:visibility="visible"
                 style="@style/back_imageButton" />
 
@@ -138,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:scrollbars="vertical"
+                    android:maxWidth="@dimen/shapeable_max_width"
                     style="@style/description_text_view"/>
             </ScrollView>
 

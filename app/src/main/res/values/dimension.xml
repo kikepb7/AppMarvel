@@ -48,7 +48,7 @@
     <!-- SHAPEABLE TITLE AND DESCRIPTION -->
     <dimen name="shapeable_title_description_margin_top">16dp</dimen>
     <dimen name="shapeable_title_description_horizontal_margin">32dp</dimen>
-    <dimen name="shapeable_max_width">300dp</dimen>
+    <dimen name="shapeable_max_width">320dp</dimen>
 
     <!-- SCROLL -->
     <dimen name="scroll_height">180dp</dimen>

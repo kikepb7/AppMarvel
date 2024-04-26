@@ -45,12 +45,10 @@ dependencies {
     val materialVersion = "1.11.0"
     val constraintLayoutVersion = "2.1.4"
     val legacySupportVersion = "1.0.0"
-    val liveDataVersion = "2.7.0"
     val fragmentVersion = "1.6.2"
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
     val glideVersion = "4.16.0"
-    val coilVersion = "2.6.0"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
@@ -61,9 +59,6 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
-
-    /* LIVE DATA */
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$liveDataVersion")
 
     /* FRAGMENT */
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
@@ -77,9 +72,6 @@ dependencies {
 
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
-
-    /* COIL */
-    implementation("io.coil-kt:coil:$coilVersion")
 
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

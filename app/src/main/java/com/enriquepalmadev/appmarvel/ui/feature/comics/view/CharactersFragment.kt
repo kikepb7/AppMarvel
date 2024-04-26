@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.transform.CircleCropTransformation
-import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentCharactersBinding
 
 class CharactersFragment : Fragment() {
@@ -41,11 +38,6 @@ class CharactersFragment : Fragment() {
             .into(binding.ivEjemplo)*/
 
         //Coil
-        binding.ivEjemplo.load("https://static.wikia.nocookie.net/disney/images/f/fa/Captain-America-AOU-Render.png/revision/latest?cb=20180420015558&path-prefix=es") {
-            crossfade(true)
-            placeholder(R.drawable.cargando)
-            transformations(CircleCropTransformation())
-        }
 
 
         return view

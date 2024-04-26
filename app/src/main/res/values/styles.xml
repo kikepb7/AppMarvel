@@ -47,7 +47,6 @@
         <item name="android:layout_marginStart">@dimen/margin_5dp</item>
         <item name="android:hint">@string/search</item>
         <item name="android:inputType">text</item>
-        <item name="android:queryBackground">@android:color/transparent</item>
     </style>
 
     <!-- Back Arrow ImageButton -->
@@ -55,6 +54,8 @@
         <item name="android:layout_marginStart">@dimen/logo_margin</item>
         <item name="android:layout_marginTop">@dimen/logo_margin</item>
         <item name="android:backgroundTint">@color/black</item>
+        <item name="android:src">@drawable/back_arrow</item>
+        <item name="android:contentDescription">@string/back_button</item>
     </style>
 
     <!-- Error ImageView -->
@@ -77,6 +78,7 @@
         <item name="android:layout_height">@dimen/logo_height</item>
         <item name="android:layout_margin">@dimen/logo_margin</item>
         <item name="android:src">@drawable/marvel_comics_logo</item>
+        <item name="android:contentDescription">@string/marvel_comics_logo</item>
     </style>
 
     <!-- Logo All Comics ImageView -->
@@ -87,6 +89,7 @@
         <item name="android:layout_marginTop">@dimen/icon_margin_top</item>
         <item name="tint">@color/white</item>
         <item name="android:src">@drawable/ironman</item>
+        <item name="android:contentDescription">@string/title_icon</item>
     </style>
 
     <!-- Logo Favorite Comics ImageView -->
@@ -97,6 +100,7 @@
         <item name="android:layout_marginTop">@dimen/icon_margin_top</item>
         <item name="tint">@color/white</item>
         <item name="android:src">@drawable/ic_solid_heart</item>
+        <item name="android:contentDescription">@string/title_icon</item>
     </style>
 
     <!-- Title All Comics TextView -->
@@ -104,7 +108,17 @@
         <item name="android:layout_marginStart">@dimen/text_margin_start</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_24sp</item>
+        <item name="android:text">@string/all_comics_title</item>
     </style>
+
+    <!-- Title All Comics TextView -->
+    <style name="title_favorite_comics_textView">
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_24sp</item>
+        <item name="android:text">@string/favorite_comics_title</item>
+    </style>
+
 
     <!-- Recycler All Comics -->
     <style name="all_comics_recycler">
@@ -149,6 +163,7 @@
         <item name="android:layout_width">@dimen/logo_error_width</item>
         <item name="android:layout_height">@dimen/logo_error_height</item>
         <item name="android:src">@drawable/comic_detail_error</item>
+        <item name="android:contentDescription">@string/logo_error</item>
     </style>
 
     <!-- Comic ImageView -->
@@ -190,7 +205,6 @@
     <style name="description_text_view">
         <item name="android:layout_marginStart">@dimen/shapeable_title_description_horizontal_margin</item>
         <item name="elevation">@dimen/elevation</item>
-        <item name="maxWidth">@dimen/shapeable_max_width</item>
         <item name="android:textSize">@dimen/text_size_14sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="layout_goneMarginEnd">@dimen/text_margin_end</item>
