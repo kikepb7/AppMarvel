@@ -47,6 +47,7 @@ dependencies {
     val room = "2.6.1"
     val retrofit = "2.9.0"
     val viewModel = "2.7.0"
+    val httpLogging = "4.9.1"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -86,6 +87,9 @@ dependencies {
     /* Retrofit */
     implementation("com.squareup.retrofit2:retrofit:$retrofit")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit")
+
+    /* HttpLogging */
+    implementation("com.squareup.okhttp3:logging-interceptor:$httpLogging")
 
 
     testImplementation("junit:junit:4.13.2")

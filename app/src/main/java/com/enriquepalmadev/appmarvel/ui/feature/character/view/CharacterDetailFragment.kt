@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError
 import com.enriquepalmadev.appmarvel.databinding.FragmentItemDetailsCharactersBinding
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 import com.enriquepalmadev.appmarvel.ui.feature.character.view.utils.loadImage
@@ -56,6 +57,11 @@ class CharacterDetailFragment : Fragment() {
                     hideError()
                     showLoader()
                 }
+
+                is DetailState.CharacterError -> {
+                    hideLoader()
+                    showErrorCharacterError(state.error)
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -69,6 +75,11 @@ class CharacterDetailFragment : Fragment() {
     }
     private fun showError(error: String){
         binding.errorText.text = error
+        binding.errorText.visibility = View.VISIBLE
+    }
+
+    private fun showErrorCharacterError(characterError: CharacterError){
+        binding.errorText.text = characterError.toString()
         binding.errorText.visibility = View.VISIBLE
     }
 

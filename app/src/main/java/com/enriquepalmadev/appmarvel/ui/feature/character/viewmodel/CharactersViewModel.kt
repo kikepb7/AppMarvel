@@ -2,6 +2,7 @@ package com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError
 import com.enriquepalmadev.appmarvel.data.feature.character.utils.Either
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.FiltListGetCharacterUseCase
@@ -26,28 +27,18 @@ class CharactersViewModel: ViewModel() {
     fun getCharacterList(){
         viewModelScope.launch {
             //Para probar lo de los Errores
-            /*
-            if(true){
-                _state.emit(State.Error("Error al coger la lista. LUGAR: ViewModel")) // Simulate error
-            }else{
-                getCharacterUseCase.getCharacterList()
-                    .onStart { _state.emit(State.Loading) }
-                    .catch { print("Error en el Flow") }
-                    .collect{characterList ->
-                        when(characterList){
-                            is Either.Error -> _state.emit(State.Error(characterList.error))//Emitir estado de error
-                            is Either.Success -> _state.emit(State.ListReceived(characterList.data))
-                        }
-                    }
-            }
-             */
-
             getCharacterUseCase.getCharacterList()
                 .onStart { _state.emit(State.Loading) }
-                .catch { print("Error en el Flow") }
+                .catch {exception ->
+                    val error = when(exception){
+                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
+                        else -> {CharacterError.UnknownHostError}
+                    }
+                    _state.emit(State.CharacterError(error))
+                }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.Error(characterList.error))
+                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))
                         is Either.Success -> _state.emit(State.ListReceived(characterList.data))
                     }
                 }
@@ -58,10 +49,16 @@ class CharactersViewModel: ViewModel() {
         viewModelScope.launch {
             filtListGetCharacterUseCase.getCharacterFilterList(filt)
                 .onStart { _state.emit(State.Loading) }
-                .catch { print("Error en el Flow") }
+                .catch {exception ->
+                    val error = when(exception){
+                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
+                        else -> {CharacterError.UnknownHostError}
+                    }
+                    _state.emit(State.CharacterError(error))
+                }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.Error(characterList.error))//Emitir estado de error
+                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
                         is Either.Success -> _state.emit(State.ListReceived(characterList.data))
                     }
                 }
@@ -72,10 +69,16 @@ class CharactersViewModel: ViewModel() {
         viewModelScope.launch {
             listOrderNameGetCharacterUseCase.getCharacterListOrderByName()
                 .onStart { _state.emit(State.Loading) }
-                .catch { print("Error en el Flow") }
+                .catch {exception ->
+                    val error = when(exception){
+                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
+                        else -> {CharacterError.UnknownHostError}
+                    }
+                    _state.emit(State.CharacterError(error))
+                }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.Error(characterList.error))//Emitir estado de error
+                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
                         is Either.Success -> _state.emit(State.ListReceived(characterList.data))
                     }
                 }
@@ -86,10 +89,16 @@ class CharactersViewModel: ViewModel() {
         viewModelScope.launch {
             listOrderNameFavouritesGetCharacterUseCase.getCharacterListOrderFavourites()
                 .onStart { _state.emit(State.Loading) }
-                .catch { print("Error en el Flow") }
+                .catch {exception ->
+                    val error = when(exception){
+                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
+                        else -> {CharacterError.UnknownHostError}
+                    }
+                    _state.emit(State.CharacterError(error))
+                }//TODO corregir error isntanciarlo aqui CharacterError
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.Error(characterList.error))//Emitir estado de error
+                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
                         is Either.Success -> _state.emit(State.ListReceived(characterList.data))
                     }
                 }
@@ -111,8 +120,8 @@ class CharactersViewModel: ViewModel() {
 
     sealed class State{
         data object Loading : State()
-        data class CharacterError(val error: CharacterError) : State()//TODO Seguir por aqui.
-        data class Error(val error: String) : State()
+        data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError) : State()//TODO Seguir por aqui.
+        data class Error(val error: String) : State()//Quitar/Poner el catch
         data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
         data class NavigateToDetail(val characterId: Int) : State()
     }

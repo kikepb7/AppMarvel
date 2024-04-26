@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.appmarvel.R
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError
 import com.enriquepalmadev.appmarvel.databinding.FragmentCharactersBinding
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 import com.enriquepalmadev.appmarvel.ui.feature.character.view.adapter.CharactersAdapter
@@ -96,6 +97,11 @@ class CharactersFragment : Fragment() {
                 is State.Loading -> {
                     showLoader()
                 }
+                is State.CharacterError -> {
+                    hideLoader()
+                    showErrorCharacterError(state.error)
+
+                }
                 is State.NavigateToDetail -> navigateToCharacterDetail(state.characterId)
                 else -> {}
             }
@@ -104,6 +110,11 @@ class CharactersFragment : Fragment() {
 
     private fun showError(error: String){
         binding.errorText.text = error
+        binding.errorText.visibility = View.VISIBLE
+    }
+
+    private fun showErrorCharacterError(characterError: CharacterError){
+        binding.errorText.text = characterError.toString()
         binding.errorText.visibility = View.VISIBLE
     }
 

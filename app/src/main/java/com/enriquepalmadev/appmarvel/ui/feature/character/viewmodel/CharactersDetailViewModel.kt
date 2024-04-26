@@ -2,6 +2,7 @@ package com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError
 import com.enriquepalmadev.appmarvel.data.feature.character.utils.Either
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.GetCharacterDetailUseCase
@@ -19,33 +20,14 @@ class CharactersDetailViewModel : ViewModel() {
 
     fun getCharacterDetail(characterId : Int){
         //If the character detail is found, a new state is emitted to the MutableStateFlow
-        /*viewModelScope.launch {
-            if(true){
-                _state.emit(DetailState.Error("Error al averiguar el ID. Lugar: ViewModel"))
-            }else{
-                getCharacterDetailUseCase.getCharacterDetail(characterId)
-                    .onStart { _state.emit(DetailState.Loading) }
-                    .catch { _state.emit(DetailState.Error("Error en el hilo al recoger el ID del Personaje")) }
-                    .collect{either ->
-                        when(either){
-                            is Either.Error -> _state.emit(DetailState.Error(either.error))
-                            is Either.Success -> _state.emit(DetailState.CharacterDetail(either.data))
-
-                        }
-                    }
-            }
-        }
-         */
-
         viewModelScope.launch {
             getCharacterDetailUseCase.getCharacterDetail(characterId)
                 .onStart { _state.emit(DetailState.Loading) }
                 .catch { _state.emit(DetailState.Error("Error en el hilo al recoger el ID del Personaje")) }
                 .collect{either ->
                     when(either){
-                        is Either.Error -> _state.emit(DetailState.Error(either.error))
+                        is Either.Error -> _state.emit(DetailState.CharacterError(either.error))
                         is Either.Success -> _state.emit(DetailState.CharacterDetail(either.data))
-
                     }
                 }
         }
@@ -54,6 +36,7 @@ class CharactersDetailViewModel : ViewModel() {
     //This class define the different possible states for CharacterDetails
     sealed class DetailState{
         data object Loading : DetailState()
+        data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError): DetailState()
         data class Error(val error: String) : DetailState()
         data class  CharacterDetail(val character: CharacterModel?) : DetailState()
     }
