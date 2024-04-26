@@ -20,6 +20,7 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterMod
 import com.enriquepalmadev.appmarvel.ui.feature.character.view.adapter.CharactersAdapter
 import com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel.CharactersViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel.CharactersViewModel.State
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -28,13 +29,20 @@ class CharactersFragment : Fragment() {
     private lateinit var binding: FragmentCharactersBinding
     private lateinit var charactersAdapter: CharactersAdapter
     private val viewModel : CharactersViewModel by viewModels()
+    private var stateJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharactersBinding.inflate(inflater)
         val view = binding.root
+        viewModel.getCharacterList()//Forzamos la carga de la lista para garantizar q se carga al crear el fragmento.
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stateJob?.cancel()//Cancelamos la posible tarea que se este ejecutando.
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +56,6 @@ class CharactersFragment : Fragment() {
 
         //Filter function
         binding.btFiltros.setOnClickListener {
-            Log.d("BOTON FILTRAR", "Ha sido pulsado.")
             showFiltersMenu(binding.btFiltros)
         }
 
@@ -56,14 +63,12 @@ class CharactersFragment : Fragment() {
         binding.svBuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             //When the customer submit the text
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("BOTON BARRA BUSCAR", query.orEmpty())
                 viewModel.getCharacterFiltList(query.orEmpty())
                 return true
             }
 
             //When the text have been changed
             override fun onQueryTextChange(newText: String?): Boolean {
-                Log.d("BOTON BARRA BUSCAR", newText.orEmpty())
                 viewModel.getCharacterFiltList(newText.orEmpty())
                 return false
             }
@@ -72,7 +77,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun initObserver(){
-        viewModel.state.onEach{ state ->
+        stateJob = viewModel.state.onEach{ state ->
             when(state){
                 is State.Error -> {
                     hideLoader()
@@ -89,7 +94,6 @@ class CharactersFragment : Fragment() {
                     }
                 }
                 is State.Loading -> {
-                    hideError()
                     showLoader()
                 }
                 is State.NavigateToDetail -> navigateToCharacterDetail(state.characterId)
@@ -148,14 +152,12 @@ class CharactersFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
                 R.id.ordenAlfabetico ->{
-
                     Log.d("BOTON FILTER", "opcion ordenar por name")
                     viewModel.getCharacterListOrderByName()
                     true
                 }
                 R.id.favoritos ->{
                     Log.d("BOTON FILTER", "opcion favoritos")
-                    //viewModel Filtrar por favoritos.
                     true
                 }
                 else -> false

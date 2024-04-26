@@ -47,7 +47,7 @@ class CharactersViewModel: ViewModel() {
                 .catch { print("Error en el Flow") }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.Error(characterList.error))//Emitir estado de error
+                        is Either.Error -> _state.emit(State.Error(characterList.error))
                         is Either.Success -> _state.emit(State.ListReceived(characterList.data))
                     }
                 }
@@ -97,6 +97,12 @@ class CharactersViewModel: ViewModel() {
 
     }
 
+    fun done(){
+        viewModelScope.launch {
+
+        }
+    }
+
     fun onItemSelected(characterId: Int){
         viewModelScope.launch {
             _state.emit(State.NavigateToDetail(characterId))
@@ -105,6 +111,7 @@ class CharactersViewModel: ViewModel() {
 
     sealed class State{
         data object Loading : State()
+        data class CharacterError(val error: CharacterError) : State()//TODO Seguir por aqui.
         data class Error(val error: String) : State()
         data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
         data class NavigateToDetail(val characterId: Int) : State()

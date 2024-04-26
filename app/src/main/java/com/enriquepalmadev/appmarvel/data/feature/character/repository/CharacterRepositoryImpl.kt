@@ -17,42 +17,33 @@ object CharacterRepositoryImpl: CharacterRepository {
         if(cachedCharacterList != null){//Si ya se ha guardado utilizamos la lista guardada en cache.
             return Either.Success(cachedCharacterList)
         }
-        /*
-        if(response.isSuccessful){
-            val characterList = remoteDataSource.getCharactersFromApi().body()?.data?.results?.toCharacterListModel()
-            cachedCharacterList = characterList//Guardamos la lista en la primera llamada.
-            return Either.Success(characterList)//Renombrar por success or failure
-        }else{
-            return Either.Error("Error: La solicitud a la API no fue exitosa")
-        }//Dto to ListModel
-
-         */
-        //Haciendolo sin ayuda de la clase Response
         return try {
-            val characterResponse = remoteDataSource.getCharactersFromApi()
-            val characterList = characterResponse.data?.results?.toCharacterListModel()
-            cachedCharacterList = characterList
-            Either.Success(characterList)
+            when(val characterResponse = remoteDataSource.getCharactersFromApi()){
+                is Either.Success -> {
+                    val characterList = characterResponse.data.data?.results?.toCharacterListModel()
+                    cachedCharacterList = characterList
+                    Either.Success(characterList)
+                }
+                is Either.Error -> {
+                    Either.Error("Error: La solicitud a la API no fue exitosa")
+                }
+            }
         }catch (e: Exception){
             Either.Error("Error: La solicitud a la API no fue exitosa")
         }
     }
 
-    //Verificar
     override suspend fun getCharacterDetail(characterId: Int): Either<String, CharacterModel?> {
-        /*
-        if(response.isSuccessful){
-            val character = remoteDataSource.getCharacterDetailFromApi(characterId).body()?.data?.results?.firstOrNull()?.toCharacterModel()
-            return Either.Success(character)
-        }else{
-            return Either.Error("Error: La solicitud no fue exitosa")
-        }
-
-         */
         return try {
-            val characterResponse = remoteDataSource.getCharacterDetailFromApi(characterId)
-            val characterDetail = characterResponse.data?.results?.firstOrNull()?.toCharacterModel()
-            Either.Success(characterDetail)
+            when(val characterResponse = remoteDataSource.getCharacterDetailFromApi(characterId)){
+                is Either.Success -> {
+                    val characterDetail = characterResponse.data.data?.results?.firstOrNull()?.toCharacterModel()
+                    Either.Success(characterDetail)
+                }
+                is Either.Error -> {
+                    Either.Error("Error: La solicitud a la API no fue exitosa")
+                }
+            }
         }catch (e: Exception){
             Either.Error("Error: La solicitud a la API no fue exitosa")
         }

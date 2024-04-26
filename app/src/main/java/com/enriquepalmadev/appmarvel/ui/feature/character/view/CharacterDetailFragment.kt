@@ -36,12 +36,6 @@ class CharacterDetailFragment : Fragment() {
 
         initObserver()
         viewModel.getCharacterDetail(args.id)
-
-        binding.backButton.setOnClickListener {
-            findNavController().navigate(
-                CharacterDetailFragmentDirections.actionItemDetailsCharactersFragmentToCharactersFragment()
-            )
-        }
     }
 
     private fun initObserver(){

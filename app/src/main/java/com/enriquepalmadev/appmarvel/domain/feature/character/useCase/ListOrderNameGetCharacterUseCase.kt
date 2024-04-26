@@ -17,7 +17,7 @@ class ListOrderNameGetCharacterUseCase {
             when (val response = characterListRepositoryImpl.getCharacterList()){
                 is Either.Error -> {
                     emit(Either.Error(response.error))
-                } //response.error
+                }
                 is Either.Success-> {
                     val filteredList = response.data?.sortedBy {
                         it.name
