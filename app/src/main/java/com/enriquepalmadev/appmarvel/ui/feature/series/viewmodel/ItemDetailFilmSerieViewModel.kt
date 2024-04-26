@@ -2,6 +2,7 @@ package com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CoroutineError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
@@ -21,7 +22,7 @@ class ItemDetailFilmSerieViewModel : ViewModel() {
         viewModelScope.launch {
             iGetSerieByIdUseCase.getSerieById(id)
                 .onStart { ItemDetailUIState.Loading }
-                .catch { ItemDetailUIState.Exception(it.toString()) }
+                .catch { ItemDetailUIState.Error(CoroutineError) }
                 .collect{responseEither ->
                     when(responseEither){
                         is ResponseEither.Failure -> {
@@ -41,5 +42,4 @@ sealed class ItemDetailUIState {
     data object Loading : ItemDetailUIState()
     data class IdReceived(val serie: FilmSerieModel) : ItemDetailUIState()
     data class Error (val error: Failure) : ItemDetailUIState()
-    data class Exception(val msgError: String) : ItemDetailUIState()
 }
