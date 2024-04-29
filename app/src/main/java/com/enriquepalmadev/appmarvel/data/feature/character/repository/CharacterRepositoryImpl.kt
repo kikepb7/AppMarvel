@@ -28,10 +28,15 @@ object CharacterRepositoryImpl: CharacterRepository {
                 characterResponse
             }
         }
-
     }
 
     override suspend fun getCharacterDetail(characterId: Int): Either<CharacterError, CharacterModel?> {
+        val cachedCharacter = cachedCharacterList?.find {
+            it.id == characterId
+        }
+        if(cachedCharacter != null){
+            return Either.Success(cachedCharacter)
+        }
         return when(val characterResponse = remoteDataSource.getCharacterDetailFromApi(characterId)){
             is Either.Success -> {
                 val characterDetail = characterResponse.data.data?.results?.firstOrNull()?.toCharacterModel()

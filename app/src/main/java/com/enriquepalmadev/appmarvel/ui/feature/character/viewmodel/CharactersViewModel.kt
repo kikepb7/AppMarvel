@@ -95,7 +95,7 @@ class CharactersViewModel: ViewModel() {
                         else -> {CharacterError.UnknownHostError}
                     }
                     _state.emit(State.CharacterError(error))
-                }//TODO corregir error isntanciarlo aqui CharacterError
+                }
                 .collect{characterList ->
                     when(characterList){
                         is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
@@ -104,12 +104,6 @@ class CharactersViewModel: ViewModel() {
                 }
         }
 
-    }
-
-    fun done(){
-        viewModelScope.launch {
-
-        }
     }
 
     fun onItemSelected(characterId: Int){
@@ -121,7 +115,6 @@ class CharactersViewModel: ViewModel() {
     sealed class State{
         data object Loading : State()
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError) : State()//TODO Seguir por aqui.
-        data class Error(val error: String) : State()//Quitar/Poner el catch
         data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
         data class NavigateToDetail(val characterId: Int) : State()
     }

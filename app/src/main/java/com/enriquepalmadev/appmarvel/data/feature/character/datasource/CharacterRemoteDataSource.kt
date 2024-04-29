@@ -33,7 +33,6 @@ class CharacterRemoteDataSource: CharacterDataSource {
         }catch (error: Exception){
             Either.Error(CharacterError.ApiError(code = response.code(), message = response.errorBody().toString()))
         }
-        //TODO Tipos de Errores
     }
 
     override suspend fun getCharacterDetailFromApi(characterId: Int): Either<CharacterError, CharacterResponseDTO<ResultDTO>>{

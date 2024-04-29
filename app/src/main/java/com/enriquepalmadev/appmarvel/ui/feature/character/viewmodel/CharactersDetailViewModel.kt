@@ -23,7 +23,13 @@ class CharactersDetailViewModel : ViewModel() {
         viewModelScope.launch {
             getCharacterDetailUseCase.getCharacterDetail(characterId)
                 .onStart { _state.emit(DetailState.Loading) }
-                .catch { _state.emit(DetailState.Error("Error en el hilo al recoger el ID del Personaje")) }
+                .catch {exception ->
+                    val error = when(exception){
+                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
+                        else -> {CharacterError.UnknownHostError}
+                    }
+                    _state.emit(DetailState.CharacterError(error))
+                }
                 .collect{either ->
                     when(either){
                         is Either.Error -> _state.emit(DetailState.CharacterError(either.error))
@@ -37,7 +43,6 @@ class CharactersDetailViewModel : ViewModel() {
     sealed class DetailState{
         data object Loading : DetailState()
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError): DetailState()
-        data class Error(val error: String) : DetailState()
         data class  CharacterDetail(val character: CharacterModel?) : DetailState()
     }
 }

@@ -80,12 +80,6 @@ class CharactersFragment : Fragment() {
     private fun initObserver(){
         stateJob = viewModel.state.onEach{ state ->
             when(state){
-                is State.Error -> {
-                    hideLoader()
-                    //Accedemos a la variable state desde el Either del Viewmodel
-                    //Hacemos metodos para mostrar el Error mediante un texto.
-                    showError(state.error)
-                }
                 is State.ListReceived -> {
                     hideError()
                     hideLoader()
@@ -106,11 +100,6 @@ class CharactersFragment : Fragment() {
                 else -> {}
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun showError(error: String){
-        binding.errorText.text = error
-        binding.errorText.visibility = View.VISIBLE
     }
 
     private fun showErrorCharacterError(characterError: CharacterError){
@@ -163,12 +152,10 @@ class CharactersFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
                 R.id.ordenAlfabetico ->{
-                    Log.d("BOTON FILTER", "opcion ordenar por name")
                     viewModel.getCharacterListOrderByName()
                     true
                 }
                 R.id.favoritos ->{
-                    Log.d("BOTON FILTER", "opcion favoritos")
                     true
                 }
                 else -> false
