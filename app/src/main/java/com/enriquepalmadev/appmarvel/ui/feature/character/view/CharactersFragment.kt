@@ -25,25 +25,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-
+// TODO Diferencia entre State Flow y Shared Flow
 class CharactersFragment : Fragment() {
     private lateinit var binding: FragmentCharactersBinding
     private lateinit var charactersAdapter: CharactersAdapter
     private val viewModel : CharactersViewModel by viewModels()
-    private var stateJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharactersBinding.inflate(inflater)
         val view = binding.root
-        viewModel.getCharacterList()//Forzamos la carga de la lista para garantizar q se carga al crear el fragmento.
         return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stateJob?.cancel()//Cancelamos la posible tarea que se este ejecutando.
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,7 +71,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun initObserver(){
-        stateJob = viewModel.state.onEach{ state ->
+        viewModel.state.onEach{ state ->
             when(state){
                 is State.ListReceived -> {
                     hideError()
@@ -137,7 +130,7 @@ class CharactersFragment : Fragment() {
             layoutManager = manager
 
             charactersAdapter = CharactersAdapter(list){c ->
-                viewModel.onItemSelected(c)
+                navigateToCharacterDetail(c)
             }
             binding.rvCharacters.adapter = charactersAdapter
         }

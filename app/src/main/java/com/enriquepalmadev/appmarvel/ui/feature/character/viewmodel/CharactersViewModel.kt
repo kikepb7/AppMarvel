@@ -106,12 +106,6 @@ class CharactersViewModel: ViewModel() {
 
     }
 
-    fun onItemSelected(characterId: Int){
-        viewModelScope.launch {
-            _state.emit(State.NavigateToDetail(characterId))
-        }
-    }
-
     sealed class State{
         data object Loading : State()
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError) : State()//TODO Seguir por aqui.
