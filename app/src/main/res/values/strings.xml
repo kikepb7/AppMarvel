@@ -9,6 +9,11 @@
     <string name="toast_buttonCharacters">Botón personajes</string>
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
 
+    <!-- Error text -->
+    <string name="unknownError">Un error ha ocurrido</string>
+    <string name="unknownHost">Host desconocido</string>
+
+
     <!-- Fragments' placeholder text -->
     <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
     <string name="comics_view">VISTA DE COMICS</string>

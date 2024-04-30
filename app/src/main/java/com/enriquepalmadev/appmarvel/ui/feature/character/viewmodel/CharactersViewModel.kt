@@ -37,7 +37,7 @@ class CharactersViewModel: ViewModel() {
                     }
                     _state.emit(State.CharacterError(error))
                      */
-                    _state.emit(State.Error("An unexpected error ocurred"))
+                    _state.emit(State.Error)
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -60,7 +60,7 @@ class CharactersViewModel: ViewModel() {
                     }
                     _state.emit(State.CharacterError(error))
                      */
-                    _state.emit(State.Error("An unexpected error ocurred"))
+                    _state.emit(State.Error)
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -83,7 +83,7 @@ class CharactersViewModel: ViewModel() {
                     }
                     _state.emit(State.CharacterError(error))
                      */
-                    _state.emit(State.Error("An unexpected error ocurred"))
+                    _state.emit(State.Error)
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -106,7 +106,7 @@ class CharactersViewModel: ViewModel() {
                     }
                     _state.emit(State.CharacterError(error))
                      */
-                    _state.emit(State.Error("An unexpected error ocurred"))
+                    _state.emit(State.Error)
 
                 }
                 .collect{characterList ->
@@ -124,7 +124,7 @@ class CharactersViewModel: ViewModel() {
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError) : State()//TODO Seguir por aqui.
         data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
         data class NavigateToDetail(val characterId: Int) : State()
-        data class Error(val message: String): State()
+        data object Error: State()
     }
 
 }

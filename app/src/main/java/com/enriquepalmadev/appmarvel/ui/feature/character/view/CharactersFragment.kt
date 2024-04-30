@@ -89,6 +89,11 @@ class CharactersFragment : Fragment() {
                     showErrorCharacterError(state.error)
 
                 }
+                is State.Error -> {
+                    val message = getString(R.string.unknownError)
+                    hideLoader()
+                    showError(message)
+                }
                 is State.NavigateToDetail -> navigateToCharacterDetail(state.characterId)
                 else -> {}
             }
@@ -97,6 +102,11 @@ class CharactersFragment : Fragment() {
 
     private fun showErrorCharacterError(characterError: CharacterError){
         binding.errorText.text = characterError.toString()
+        binding.errorText.visibility = View.VISIBLE
+    }
+
+    private fun showError(error: String){
+        binding.errorText.text = error
         binding.errorText.visibility = View.VISIBLE
     }
 

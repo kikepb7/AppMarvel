@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError
 import com.enriquepalmadev.appmarvel.databinding.FragmentItemDetailsCharactersBinding
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
@@ -60,8 +61,9 @@ class CharacterDetailFragment : Fragment() {
                 }
 
                 is DetailState.Error -> {
+                    val message = getString(R.string.unknownError)
                     hideLoader()
-                    showError(state.message)
+                    showError(message)
                 }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)

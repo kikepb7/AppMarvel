@@ -30,7 +30,7 @@ class CharactersDetailViewModel : ViewModel() {
                     }
                     _state.emit(DetailState.CharacterError(error))
                      */
-                    _state.emit(DetailState.Error("An unexpected error ocurred"))
+                    _state.emit(DetailState.Error)
                 }
                 .collect{either ->
                     when(either){
@@ -47,6 +47,6 @@ class CharactersDetailViewModel : ViewModel() {
         data object Loading : DetailState()
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError): DetailState()
         data class  CharacterDetail(val character: CharacterModel?) : DetailState()
-        data class Error(val message: String): DetailState()
+        data object Error: DetailState()
     }
 }
