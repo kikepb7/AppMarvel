@@ -14,7 +14,7 @@ fun List<ComicDto>.dtoToComicListModel(): List<ComicModel> {
 fun ComicDto.dtoToComicModel(): ComicModel {
     return ComicModel(
         id = id ?: -1,
-        title = title ?: "",
+        title = title.orEmpty(),
         description = description,
         pageCount = pageCount ?: -1,
         thumbnail = "${thumbnail?.path}.${thumbnail?.extension}"

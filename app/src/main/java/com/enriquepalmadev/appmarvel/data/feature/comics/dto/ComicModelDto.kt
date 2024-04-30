@@ -1,9 +1,9 @@
 package com.enriquepalmadev.appmarvel.data.feature.comics.dto
 
 data class ResponseMarvelDto (
-    //val code: Int? = null,
+    val code: Int? = null,
     val data: DataDto? = null,
-    //val etag: String? = null
+    val etag: String? = null
 )
 
 data class DataDto(
@@ -35,7 +35,7 @@ data class ComicDto(
     val issn: String,
     val issueNumber: Int,
     val modified: String,
-    //val prices: List<Price>? = null,
+    val prices: List<PriceDto>? = null,
     val resourceURI: String,
     val series: SeriesDto,
     val stories: Stories,
@@ -90,7 +90,7 @@ data class ItemXDto(
 )
 
 data class PriceDto(
-    val price: Int,
+    val price: Float,
     val type: String
 )
 
