@@ -38,6 +38,7 @@ class CharactersDetailViewModel : ViewModel() {
                         is Either.Success -> _state.emit(DetailState.CharacterDetail(either.data))
                     }
                 }
+
         }
     }
 
