@@ -24,11 +24,13 @@ class CharactersDetailViewModel : ViewModel() {
             getCharacterDetailUseCase.getCharacterDetail(characterId)
                 .onStart { _state.emit(DetailState.Loading) }
                 .catch {exception ->
-                    val error = when(exception){
+                    /*val error = when(exception){
                         is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
                         else -> {CharacterError.UnknownHostError}
                     }
                     _state.emit(DetailState.CharacterError(error))
+                     */
+                    _state.emit(DetailState.Error("An unexpected error ocurred"))
                 }
                 .collect{either ->
                     when(either){
@@ -44,5 +46,6 @@ class CharactersDetailViewModel : ViewModel() {
         data object Loading : DetailState()
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError): DetailState()
         data class  CharacterDetail(val character: CharacterModel?) : DetailState()
+        data class Error(val message: String): DetailState()
     }
 }

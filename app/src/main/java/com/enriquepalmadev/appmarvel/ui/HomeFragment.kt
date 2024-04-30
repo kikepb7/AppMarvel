@@ -16,14 +16,12 @@ class HomeFragment : Fragment() {
 
     // Binding para acceder a los objetos de la vista del activity_main.xml
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        sharedPreferences = requireActivity().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
 
         return binding.root
     }

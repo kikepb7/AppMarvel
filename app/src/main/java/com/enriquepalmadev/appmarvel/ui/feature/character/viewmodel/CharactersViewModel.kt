@@ -30,11 +30,14 @@ class CharactersViewModel: ViewModel() {
             getCharacterUseCase.getCharacterList()
                 .onStart { _state.emit(State.Loading) }
                 .catch {exception ->
+                    /*
                     val error = when(exception){
                         is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
                         else -> {CharacterError.UnknownHostError}
                     }
                     _state.emit(State.CharacterError(error))
+                     */
+                    _state.emit(State.Error("An unexpected error ocurred"))
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -50,11 +53,14 @@ class CharactersViewModel: ViewModel() {
             filtListGetCharacterUseCase.getCharacterFilterList(filt)
                 .onStart { _state.emit(State.Loading) }
                 .catch {exception ->
+                    /*
                     val error = when(exception){
                         is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
                         else -> {CharacterError.UnknownHostError}
                     }
                     _state.emit(State.CharacterError(error))
+                     */
+                    _state.emit(State.Error("An unexpected error ocurred"))
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -70,11 +76,14 @@ class CharactersViewModel: ViewModel() {
             listOrderNameGetCharacterUseCase.getCharacterListOrderByName()
                 .onStart { _state.emit(State.Loading) }
                 .catch {exception ->
+                    /*
                     val error = when(exception){
                         is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
                         else -> {CharacterError.UnknownHostError}
                     }
                     _state.emit(State.CharacterError(error))
+                     */
+                    _state.emit(State.Error("An unexpected error ocurred"))
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -90,11 +99,15 @@ class CharactersViewModel: ViewModel() {
             listOrderNameFavouritesGetCharacterUseCase.getCharacterListOrderFavourites()
                 .onStart { _state.emit(State.Loading) }
                 .catch {exception ->
+                    /*
                     val error = when(exception){
                         is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
                         else -> {CharacterError.UnknownHostError}
                     }
                     _state.emit(State.CharacterError(error))
+                     */
+                    _state.emit(State.Error("An unexpected error ocurred"))
+
                 }
                 .collect{characterList ->
                     when(characterList){
@@ -111,6 +124,7 @@ class CharactersViewModel: ViewModel() {
         data class CharacterError(val error: com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError) : State()//TODO Seguir por aqui.
         data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
         data class NavigateToDetail(val characterId: Int) : State()
+        data class Error(val message: String): State()
     }
 
 }

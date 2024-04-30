@@ -58,6 +58,11 @@ class CharacterDetailFragment : Fragment() {
                     hideLoader()
                     showErrorCharacterError(state.error)
                 }
+
+                is DetailState.Error -> {
+                    hideLoader()
+                    showError(state.message)
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -68,6 +73,11 @@ class CharacterDetailFragment : Fragment() {
             ivItemDetailCharacter.loadImage(characterModel.thumbnailDTO)
             tvDescripcion.text = characterModel?.description
         }
+    }
+
+    private fun showError(error: String){
+        binding.errorText.text = error
+        binding.errorText.visibility = View.VISIBLE
     }
 
     private fun showErrorCharacterError(characterError: CharacterError){

@@ -14,9 +14,9 @@ class CharacterRemoteDataSource: CharacterDataSource {
 
     override suspend fun getCharactersFromApi(): Either<CharacterError, CharacterResponseDTO<ResultDTO>> {
 
-        val response: Response<CharacterResponseDTO<ResultDTO>> = retrofit.getAllCharacters(hash = Constants.HASH, ts = Constants.TS, limit = 100)
-        val body = response.body()
         return try {
+            val response: Response<CharacterResponseDTO<ResultDTO>> = retrofit.getAllCharacters(hash = Constants.HASH, ts = Constants.TS, limit = 100)
+            val body = response.body()
             if(response.isSuccessful && body != null){
                 Either.Success(body)
             }else{
@@ -29,16 +29,17 @@ class CharacterRemoteDataSource: CharacterDataSource {
                 }
             }
         }catch (error: IOException){
-            Either.Error(CharacterError.ApiError(code = response.code(), message = response.errorBody().toString()))
+            Either.Error(CharacterError.ApiError(code = error.hashCode(), message = error.message.toString()))
         }catch (error: Exception){
-            Either.Error(CharacterError.ApiError(code = response.code(), message = response.errorBody().toString()))
+            Either.Error(CharacterError.ApiError(code = error.hashCode(), message = error.message.toString()))
         }
     }
 
     override suspend fun getCharacterDetailFromApi(characterId: Int): Either<CharacterError, CharacterResponseDTO<ResultDTO>>{
-        val response: Response<CharacterResponseDTO<ResultDTO>> = retrofit.getCharacterById(characterId = characterId, hash = Constants.HASH, ts = Constants.TS)
-        val body = response.body()
+
         return try {
+            val response: Response<CharacterResponseDTO<ResultDTO>> = retrofit.getCharacterById(characterId = characterId, hash = Constants.HASH, ts = Constants.TS)
+            val body = response.body()
             if(response.isSuccessful && body != null){
                 Either.Success(body)
             }else{
@@ -51,9 +52,9 @@ class CharacterRemoteDataSource: CharacterDataSource {
                 }
             }
         }catch (error: IOException){
-            Either.Error(CharacterError.ApiError(code = response.code(), message = response.errorBody().toString()))
+            Either.Error(CharacterError.ApiError(code = error.hashCode(), message = error.message.toString()))
         }catch (error: Exception){
-            Either.Error(CharacterError.ApiError(code = response.code(), message = response.errorBody().toString()))
+            Either.Error(CharacterError.ApiError(code = error.hashCode(), message = error.message.toString()))
         }
     }
 }
