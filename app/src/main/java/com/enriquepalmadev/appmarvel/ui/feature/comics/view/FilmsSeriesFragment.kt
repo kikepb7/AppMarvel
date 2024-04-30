@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.view
+package com.enriquepalmadev.appmarvel.ui.feature.comics.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

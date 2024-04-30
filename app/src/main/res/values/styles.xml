@@ -39,4 +39,195 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
+
+    <!-- FRAGMENT_COMIC -->
+
+    <!-- Search Bar Comics -->
+    <style name="txt_search_fragment_comic" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginStart">@dimen/margin_5dp</item>
+        <item name="android:hint">@string/search</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <!-- Back Arrow ImageButton -->
+    <style name="back_arrow_imageButton">
+        <item name="android:layout_marginStart">@dimen/logo_margin</item>
+        <item name="android:layout_marginTop">@dimen/logo_margin</item>
+        <item name="android:backgroundTint">@color/black</item>
+        <item name="android:src">@drawable/back_arrow</item>
+        <item name="android:contentDescription">@string/back_button</item>
+    </style>
+
+    <!-- Error ImageView -->
+    <style name="error_imageView">
+        <item name="android:layout_width">@dimen/logo_error_width</item>
+        <item name="android:layout_height">@dimen/logo_error_height</item>
+        <item name="android:src">@drawable/unauthorized_error_logo</item>
+    </style>
+
+    <!-- Error TextView -->
+    <style name="error_textView">
+        <item name="android:layout_marginTop">@dimen/logo_margin</item>
+        <item name="android:textColor">@color/dark_red</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+    </style>
+
+    <!-- Logo ImageView -->
+    <style name="logo_imageView">
+        <item name="android:layout_width">@dimen/logo_width</item>
+        <item name="android:layout_height">@dimen/logo_height</item>
+        <item name="android:layout_margin">@dimen/logo_margin</item>
+        <item name="android:src">@drawable/marvel_comics_logo</item>
+        <item name="android:contentDescription">@string/marvel_comics_logo</item>
+    </style>
+
+    <!-- Logo All Comics ImageView -->
+    <style name="logo_all_comics_imageView">
+        <item name="android:layout_width">@dimen/icon_width</item>
+        <item name="android:layout_height">@dimen/icon_height</item>
+        <item name="android:layout_marginStart">@dimen/icon_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/icon_margin_top</item>
+        <item name="tint">@color/white</item>
+        <item name="android:src">@drawable/ironman</item>
+        <item name="android:contentDescription">@string/title_icon</item>
+    </style>
+
+    <!-- Logo Favorite Comics ImageView -->
+    <style name="logo_favorite_comics_imageView">
+        <item name="android:layout_width">@dimen/icon_width</item>
+        <item name="android:layout_height">@dimen/icon_height</item>
+        <item name="android:layout_marginStart">@dimen/icon_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/icon_margin_top</item>
+        <item name="tint">@color/white</item>
+        <item name="android:src">@drawable/ic_solid_heart</item>
+        <item name="android:contentDescription">@string/title_icon</item>
+    </style>
+
+    <!-- Title All Comics TextView -->
+    <style name="title_comics_textView">
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_24sp</item>
+        <item name="android:text">@string/all_comics_title</item>
+    </style>
+
+    <!-- Title All Comics TextView -->
+    <style name="title_favorite_comics_textView">
+        <item name="android:layout_marginStart">@dimen/text_margin_start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_24sp</item>
+        <item name="android:text">@string/favorite_comics_title</item>
+    </style>
+
+
+    <!-- Recycler All Comics -->
+    <style name="all_comics_recycler">
+        <item name="android:layout_marginTop">@dimen/recycler_margin_top</item>
+    </style>
+
+    <!-- Progress Bar -->
+    <style name="progress_bar">
+        <item name="android:indeterminateTint">@color/dark_red</item>
+    </style>
+
+
+    <!-- FRAGMENT_COMIC_DETAIL -->
+
+    <!-- Toolbar -->
+
+    <!-- Back Arrow ImageButton -->
+    <style name="back_imageButton">
+        <item name="android:paddingStart">@dimen/padding_start</item>
+        <item name="android:paddingEnd">@dimen/padding_end</item>
+        <item name="android:src">@drawable/back_arrow</item>
+        <item name="tint">@color/black</item>
+    </style>
+
+    <!-- ToolBar Title -->
+    <style name="toolbar_title">
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/toolbar_title</item>
+    </style>
+
+    <!-- ShapeableImageView -->
+    <style name="RoundedShapeableImageView" parent="">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">15%</item>
+        <item name="cornerSizeTopRight">15%</item>
+    </style>
+
+    <!-- Error ImageView -->
+    <style name="error_imageView_detail">
+        <item name="android:layout_width">@dimen/logo_error_width</item>
+        <item name="android:layout_height">@dimen/logo_error_height</item>
+        <item name="android:src">@drawable/comic_detail_error</item>
+        <item name="android:contentDescription">@string/logo_error</item>
+    </style>
+
+    <!-- Comic ImageView -->
+    <style name="comic_imageView">
+        <item name="android:layout_height">@dimen/ivComic_height</item>
+    </style>
+
+    <!-- Guideline -->
+    <style name="guideline">
+        <item name="android:layout_height">@dimen/guideline_height</item>
+        <item name="layout_constraintGuide_begin">@dimen/guideline_begin</item>
+    </style>
+
+    <!-- Shapeable ImageView -->
+    <style name="shapeable_imageView">
+        <item name="android:layout_height">@dimen/shapeable_image_height</item>
+        <item name="android:background">@color/dark_red</item>
+        <item name="android:elevation">@dimen/shapeable_elevation</item>
+    </style>
+
+    <!-- Title textView -->
+    <style name="title_text_view">
+        <item name="android:layout_marginStart">@dimen/shapeable_title_description_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/shapeable_title_description_margin_top</item>
+        <item name="android:layout_marginEnd">@dimen/shapeable_title_description_horizontal_margin</item>
+        <item name="android:elevation">@dimen/elevation</item>
+        <item name="android:maxWidth">@dimen/shapeable_max_width</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_22sp</item>
+    </style>
+
+    <!-- ScrollView -->
+    <style name="scroll">
+        <item name="android:layout_height">@dimen/scroll_height</item>
+        <item name="android:elevation">@dimen/elevation</item>
+    </style>
+
+    <!-- Description textView -->
+    <style name="description_text_view">
+        <item name="android:layout_marginStart">@dimen/shapeable_title_description_horizontal_margin</item>
+        <item name="elevation">@dimen/elevation</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="layout_goneMarginEnd">@dimen/text_margin_end</item>
+    </style>
+
+    <!-- Comic pages -->
+    <style name="pages_text_view">
+        <item name="android:layout_margin">@dimen/text_margin</item>
+        <item name="android:layout_marginEnd">@dimen/text_margin</item>
+        <item name="android:layout_marginBottom">@dimen/text_margin</item>
+        <item name="elevation">@dimen/elevation</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+    </style>
+
+    <!-- Favorite Button -->
+    <style name="favorite_button">
+        <item name="android:layout_width">@dimen/favorite_width_height</item>
+        <item name="android:layout_height">@dimen/favorite_width_height</item>
+        <item name="android:layout_marginTop">@dimen/favorite_margin</item>
+        <item name="android:layout_marginEnd">@dimen/favorite_margin</item>
+        <item name="android:elevation">@dimen/elevation</item>
+        <item name="tint">@color/white</item>
+    </style>
+
 </resources>

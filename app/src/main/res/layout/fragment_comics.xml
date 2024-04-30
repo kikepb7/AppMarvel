@@ -1,36 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/comicsViewContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ComicsFragment">
+    tools:context=".ui.feature.comics.view.ComicsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageButton
+        android:id="@+id/ibBack"
+        style="@style/back_arrow_imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/back_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivError"
+        style="@style/error_imageView"
+        android:contentDescription="@string/logo_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvErrorCode"
+        style="@style/error_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/ivError"
+        app:layout_constraintStart_toStartOf="@+id/ivError"
+        app:layout_constraintTop_toBottomOf="@+id/ivError" />
+
+    <ImageView
+        android:id="@+id/logoScreen"
+        style="@style/logo_imageView"
+        android:contentDescription="@string/marvel_comics_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.SearchView
+        android:id="@+id/svFilter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_searchview_background"
+        android:theme="@style/txt_search_fragment_comic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoScreen" />
 
-        <ImageView
-            android:id="@+id/imgComic"
-            android:layout_width="@dimen/img_comics_256dp"
-            android:layout_height="@dimen/img_comics_256dp"
-            android:layout_marginBottom="@dimen/img_comics_256dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/ivLogoAllComics"
+        style="@style/logo_all_comics_imageView"
+        android:contentDescription="@string/title_icon"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/svFilter" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_comics"
-            android:layout_width="@dimen/dimen_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgComic"
-            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvComicList"
+        style="@style/title_comics_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLogoAllComics"
+        app:layout_constraintStart_toEndOf="@+id/ivLogoAllComics"
+        app:layout_constraintTop_toTopOf="@+id/ivLogoAllComics" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvComics"
+        style="@style/all_comics_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvComicList" />
+
+    <ProgressBar
+        android:id="@+id/listProgressBar"
+        style="@style/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/ivLogoFavoriteComics"
+        style="@style/logo_favorite_comics_imageView"
+        android:contentDescription="@string/title_icon"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvComics" />
+
+    <TextView
+        android:id="@+id/tvFavoriteComics"
+        style="@style/title_favorite_comics_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLogoFavoriteComics"
+        app:layout_constraintStart_toEndOf="@+id/ivLogoFavoriteComics"
+        app:layout_constraintTop_toTopOf="@+id/ivLogoFavoriteComics" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavoriteComics"
+        style="@style/all_comics_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFavoriteComics" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
