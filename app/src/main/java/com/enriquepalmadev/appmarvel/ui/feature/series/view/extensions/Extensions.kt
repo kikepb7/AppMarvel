@@ -18,9 +18,4 @@ fun ImageView.loadImage(image: String) {
         .into(this)
 }
 
-fun Button.navigateTo(action: Int) {
-    setOnClickListener {
-        findNavController().navigate(action)
-    }
-}
 

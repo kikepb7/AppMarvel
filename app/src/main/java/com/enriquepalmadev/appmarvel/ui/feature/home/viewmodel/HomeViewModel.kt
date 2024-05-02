@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel
+package com.enriquepalmadev.appmarvel.ui.feature.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 

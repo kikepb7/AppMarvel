@@ -10,4 +10,11 @@
     <declare-styleable name="AspectRatioImageFilmSerie">
         <attr name="ratio" format="float"/>
     </declare-styleable>
+
+    <declare-styleable name="ComicDetailToolbar">
+        <attr name="toolbarBackgroundColor" format="color" />
+        <attr name="toolbarTextColor" format="color" />
+        <attr name="toolbarTitle" format="string" />
+        <attr name="toolbarNavigationIcon" format="reference"/>
+    </declare-styleable>
 </resources>

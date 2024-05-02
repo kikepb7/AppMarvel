@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppMarvel</string>
+    <string name="app_name">MarvelApp</string>
     <string name="button_comics">Comics</string>
     <string name="button_characters">Personajes</string>
     <string name="button_films_and_series">Películas y series</string>
@@ -51,4 +51,18 @@
     <!-- CoroutineError -->
     <string name="title_coroutine_error">We\'ve found and error</string>
     <string name="msg_coroutine_error">Please, go back :)</string>
+
+    <!-- Comic image description -->
+    <string name="comic_image_description">Comic image</string>
+
+    <!-- Back button -->
+    <string name="back_button">Back button</string>
+    <string name="marvel_comics_logo">Marvel Comics Logo</string>
+    <string name="logo_error">Logo de error</string>
+    <string name="favorite_button">Favorite button</string>
+    <string name="title_icon">Title icon</string>
+    <string name="all_comics_title">TODOS LOS COMICS</string>
+    <string name="favorite_comics_title">COMICS FAVORITOS</string>
+    <string name="error_fragment_text">Unauthorized access</string>
+    <string name="error_code">Error %1$s</string>
 </resources>

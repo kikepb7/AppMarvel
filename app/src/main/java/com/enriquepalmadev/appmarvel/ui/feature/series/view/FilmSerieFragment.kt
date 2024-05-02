@@ -94,7 +94,7 @@ class FilmSerieFragment : Fragment() {
                 }
 
                 is FilmSerieUIState.ItemClicked -> {
-                    val action = FilmSerieFragmentDirections.actionFilmsAndSeriesFragmentToItemDetailsFilmsSeriesFragment(uiState.idSerie)
+                    val action = FilmSerieFragmentDirections.actionFilmSerieFragmentToItemDetailsFilmsSeriesFragment(uiState.idSerie)
                     findNavController().navigate(action)
                     fsViewModel.done()
                     showLoading(false)
