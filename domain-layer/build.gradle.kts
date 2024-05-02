@@ -1,19 +1,14 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
-    namespace = "com.enriquepalmadev.appmarvel"
+    namespace = "com.enriquepalmadev.domain_layer"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.enriquepalmadev.appmarvel"
         minSdk = 29
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,8 +32,13 @@ android {
 }
 
 dependencies {
+    val appCompatVersion = "1.6.1"
+    val materialVersion = "1.11.0"
+    val jUnitVersion = "4.13.2"
 
-    implementation(project(":data-layer"))
-    implementation(project(":domain-layer"))
-    implementation(project(":ui-layer"))
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:$appCompatVersion")
+    implementation("com.google.android.material:material:$materialVersion")
+
+    testImplementation("junit:junit:$jUnitVersion")
 }

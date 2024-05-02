@@ -5,6 +5,15 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="data-layer">
+        <State />
+      </entry>
+      <entry key="domain-layer">
+        <State />
+      </entry>
+      <entry key="ui-layer">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
