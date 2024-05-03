@@ -1,6 +1,5 @@
 package com.enriquepalmadev.appmarvel.core
 
-import com.enriquepalmadev.appmarvel.data.feature.series.api.service.CustomInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 

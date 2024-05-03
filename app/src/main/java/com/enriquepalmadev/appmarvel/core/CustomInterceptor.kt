@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.data.feature.series.api.service
+package com.enriquepalmadev.appmarvel.core
 
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Constants
 import okhttp3.Interceptor
