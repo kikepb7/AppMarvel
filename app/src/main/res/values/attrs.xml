@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Style of buttons on FragmentHome-->
     <declare-styleable name="MarvelButton">
         <attr name="foregroundButton" format="reference"/>
         <attr name="buttonText" format="string"/>
+    </declare-styleable>
+
+    <!-- Style of the images on FilmSerieFragment -->
+    <declare-styleable name="AspectRatioImageFilmSerie">
+        <attr name="ratio" format="float"/>
     </declare-styleable>
 
     <declare-styleable name="ComicDetailToolbar">

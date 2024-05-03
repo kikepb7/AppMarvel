@@ -1,4 +1,4 @@
-package com.enriquepalmadev.appmarvel.ui.feature.comics.view.components
+package com.enriquepalmadev.appmarvel.ui.feature.home.view.components
 
 import android.content.Context
 import android.util.AttributeSet

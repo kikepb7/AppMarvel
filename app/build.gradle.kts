@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -49,11 +50,16 @@ dependencies {
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
     val glideVersion = "4.16.0"
+    val coilVersion = "2.6.0"
+    val retrofitVersion = "2.11.0"
+    val loggingInterceptorVersion = "4.12.0"
+    val mapStructVersion = "1.4.2"
+    val mapStructProcessorVersion = "1.4.2"
+    val facebookVersion = "0.5.0"
+    val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
-    val retrofitVersion = "2.10.0"
-    val interceptorVersion = "4.12.0"
 
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
@@ -73,12 +79,25 @@ dependencies {
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
+    /* COIL */
+    implementation("io.coil-kt:coil:$coilVersion")
+
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-    /* INTERCEPTOR */
-    implementation("com.squareup.okhttp3:logging-interceptor:$interceptorVersion")
+    /* LOGGING INTERCEPTOR */
+    implementation("com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion")
+
+    /* CORRUTINAS */
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
+    /* MAPSTRUCT */
+    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
+
+    /* FACEBOOK */
+    implementation("com.facebook.shimmer:shimmer:$facebookVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
