@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -56,6 +57,7 @@ dependencies {
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
     val facebookVersion = "0.5.0"
+    val daggerHiltVersion = "2.44"
     val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
@@ -99,7 +101,16 @@ dependencies {
     /* FACEBOOK */
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
 
+    /* DAGGER HILT */
+    implementation("com.google.dagger:hilt-android:$daggerHiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
+
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
