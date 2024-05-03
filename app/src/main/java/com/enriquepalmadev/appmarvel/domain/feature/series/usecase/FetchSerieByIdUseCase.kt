@@ -6,11 +6,12 @@ import com.enriquepalmadev.appmarvel.data.feature.series.repository.FilmSerieRep
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class FetchSerieByIdUseCase {
-
-    private val filmSerieRepository = FilmSerieRepositoryImpl()
-
+class FetchSerieByIdUseCase @Inject constructor(
+    private val filmSerieRepository : FilmSerieRepositoryImpl
+){
+    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getSerieById(id: Int): Flow<ResponseEither<Failure, FilmSerieModel>> {
         return flow { emit(filmSerieRepository.getSerieById(id)) }
     }

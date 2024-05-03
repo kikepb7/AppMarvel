@@ -6,11 +6,12 @@ import com.enriquepalmadev.appmarvel.data.feature.series.repository.FilmSerieRep
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class FetchListFilterByNameUseCase {
-
-    private val filmSerieRepository = FilmSerieRepositoryImpl()
-
+class FetchListFilterByNameUseCase @Inject constructor(
+    private val filmSerieRepository : FilmSerieRepositoryImpl
+){
+    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getListFilterByName(
         newText: String,
         series: List<FilmSerieModel>

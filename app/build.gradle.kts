@@ -57,7 +57,7 @@ dependencies {
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
     val facebookVersion = "0.5.0"
-    val daggerHiltVersion = "2.44"
+    val daggerHiltVersion = "2.48"
     val coroutinesVersion = "1.7.3"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"

@@ -5,7 +5,7 @@ import com.enriquepalmadev.appmarvel.data.feature.series.api.dtos.ObjectResponse
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEither
 
-interface ISerieDataSource {
+interface ISerieRemoteDataSource {
 
     suspend fun getListOfAllSeries() : ResponseEither <Failure, ObjectResponseDto?>
     suspend fun getSerieById(id: Int) : ResponseEither <Failure, MarvelFilmSerieItemDto>

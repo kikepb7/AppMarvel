@@ -7,16 +7,21 @@ import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.Failure
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEither
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.feature.series.usecase.FetchSerieByIdUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ItemDetailFilmSerieViewModel : ViewModel() {
+@HiltViewModel
+class ItemDetailFilmSerieViewModel @Inject constructor(
+    private val iGetSerieByIdUseCase : FetchSerieByIdUseCase
+): ViewModel() {
     private val _uiDetailState = MutableStateFlow<ItemDetailUIState>(ItemDetailUIState.Loading)
     val uiDetailState: StateFlow<ItemDetailUIState> = _uiDetailState
-    private val iGetSerieByIdUseCase = FetchSerieByIdUseCase()
+    // private val iGetSerieByIdUseCase = FetchSerieByIdUseCase()
 
     fun getSerieById(id: Int){
         viewModelScope.launch {

@@ -10,21 +10,29 @@ import com.enriquepalmadev.appmarvel.domain.feature.series.usecase.FetchListFilt
 import com.enriquepalmadev.appmarvel.domain.feature.series.usecase.FetchListOfAllSeriesUseCase
 import com.enriquepalmadev.appmarvel.domain.feature.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase
 import com.enriquepalmadev.appmarvel.domain.feature.series.usecase.FetchListOfSeriesOrderByStartYearUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FilmSerieViewModel : ViewModel() {
+@HiltViewModel
+class FilmSerieViewModel @Inject constructor(
+    private val iFetchListOfAllSeriesUseCase : FetchListOfAllSeriesUseCase,
+    private val iFetchListOfSeriesOrderByStartYearUseCase : FetchListOfSeriesOrderByStartYearUseCase,
+    private val iFetchListOfSeriesOrderByAlphabetUseCase : FetchListOfSeriesOrderByAlphabetUseCase,
+    private val iFetchListFilterByNameUseCase : FetchListFilterByNameUseCase
+): ViewModel() {
 
     private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Loading)
     val uiState : StateFlow<FilmSerieUIState> = _uiState
 
-    private val iFetchListOfAllSeriesUseCase = FetchListOfAllSeriesUseCase()
-    private val iFetchListOfSeriesOrderByStartYearUseCase = FetchListOfSeriesOrderByStartYearUseCase()
-    private val iFetchListOfSeriesOrderByAlphabetUseCase = FetchListOfSeriesOrderByAlphabetUseCase()
-    private val iFetchListFilterByNameUseCase = FetchListFilterByNameUseCase()
+    // private val iFetchListOfAllSeriesUseCase = FetchListOfAllSeriesUseCase()
+    // private val iFetchListOfSeriesOrderByStartYearUseCase = FetchListOfSeriesOrderByStartYearUseCase()
+    // private val iFetchListOfSeriesOrderByAlphabetUseCase = FetchListOfSeriesOrderByAlphabetUseCase()
+    // private val iFetchListFilterByNameUseCase = FetchListFilterByNameUseCase()
 
     private var allSeriesList: List<FilmSerieModel>? = listOf()
 

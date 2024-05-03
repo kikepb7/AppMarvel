@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
 import com.enriquepalmadev.appmarvel.ui.feature.home.view.extensions.navigateTo
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     // Binding to access to view objects on activity_main.xml

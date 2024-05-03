@@ -24,9 +24,11 @@ import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel.FilmSerieViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class FilmSerieFragment : Fragment() {
 
     private val fsViewModel: FilmSerieViewModel by viewModels()

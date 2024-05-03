@@ -1,6 +1,5 @@
 package com.enriquepalmadev.appmarvel.data.feature.series.api.datasource
 
-import com.enriquepalmadev.appmarvel.data.feature.series.api.RetrofitBuilder
 import com.enriquepalmadev.appmarvel.data.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.appmarvel.data.feature.series.api.dtos.ObjectResponseDto
 import com.enriquepalmadev.appmarvel.data.feature.series.api.service.IMarvelFilmSerieService
@@ -11,16 +10,21 @@ import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.ResponseEithe
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.UnauthorizedError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.UnknownHostError
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class SerieRemoteDataSource : ISerieDataSource {
+class SerieRemoteRemoteDataSourceImpl @Inject constructor(
+    private val api: IMarvelFilmSerieService
+): ISerieRemoteDataSource {
 
+    /*
     private val retrofitService: IMarvelFilmSerieService by lazy {
         RetrofitBuilder.getRetrofit().create(IMarvelFilmSerieService::class.java)
     }
+     */
 
     override suspend fun getListOfAllSeries(): ResponseEither<Failure, ObjectResponseDto?> {
         return try {
-            val response = retrofitService.getListOfAllSeries()
+            val response = api.getListOfAllSeries()
             if (response.isSuccessful) {
                 ResponseEither.Success(r = response.body())
             } else {
@@ -44,7 +48,7 @@ class SerieRemoteDataSource : ISerieDataSource {
 
     override suspend fun getSerieById(id: Int): ResponseEither<Failure, MarvelFilmSerieItemDto> {
         return try {
-            val response = retrofitService.getSerieById(id)
+            val response = api.getSerieById(id)
             val result = response.body()?.data?.results
 
             if (response.isSuccessful) {

@@ -6,11 +6,12 @@ import com.enriquepalmadev.appmarvel.data.feature.series.repository.FilmSerieRep
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class FetchListOfSeriesOrderByStartYearUseCase {
-
-    private val filmSerieRepository = FilmSerieRepositoryImpl()
-
+class FetchListOfSeriesOrderByStartYearUseCase @Inject constructor(
+    private val filmSerieRepository : FilmSerieRepositoryImpl
+){
+    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getListOfSeriesOrderByStartYear(series: List<FilmSerieModel>): Flow<ResponseEither<Failure, List<FilmSerieModel>>> {
         return flow { emit(filmSerieRepository.orderListByStartYear(series)) }
     }

@@ -20,9 +20,11 @@ import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.ui.feature.series.view.extensions.loadImage
 import com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel.ItemDetailFilmSerieViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.series.viewmodel.ItemDetailUIState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class ItemDetailFilmSerieFragment : Fragment() {
     private lateinit var bindingItemDetailsFilmsSeries: ItemDetailsFilmsSeriesBinding
     private var serieModel: FilmSerieModel? = null

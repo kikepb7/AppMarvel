@@ -1,7 +1,6 @@
 package com.enriquepalmadev.appmarvel.data.feature.series.repository
 
-import com.enriquepalmadev.appmarvel.data.feature.series.api.datasource.ISerieDataSource
-import com.enriquepalmadev.appmarvel.data.feature.series.api.datasource.SerieRemoteDataSource
+import com.enriquepalmadev.appmarvel.data.feature.series.api.datasource.SerieRemoteRemoteDataSourceImpl
 import com.enriquepalmadev.appmarvel.data.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.CustomError
 import com.enriquepalmadev.appmarvel.data.feature.series.api.utils.EmptyError
@@ -11,11 +10,14 @@ import com.enriquepalmadev.appmarvel.domain.feature.series.mapper.IFilmSerieMapp
 import com.enriquepalmadev.appmarvel.domain.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.appmarvel.domain.feature.series.repository.IFilmSerieRepository
 import org.mapstruct.factory.Mappers
+import javax.inject.Inject
 
-class FilmSerieRepositoryImpl : IFilmSerieRepository {
+class FilmSerieRepositoryImpl @Inject constructor(
+    private val serieRemoteDataSource: SerieRemoteRemoteDataSourceImpl
+): IFilmSerieRepository {
 
     private val mapper: IFilmSerieMapper = Mappers.getMapper(IFilmSerieMapper::class.java)
-    private val serieRemoteDataSource: ISerieDataSource = SerieRemoteDataSource()
+    // private val serieRemoteDataSourceImpl: ISerieRemoteDataSource = SerieRemoteRemoteDataSourceImpl()
 
     override suspend fun getListOfAllSeries(): ResponseEither<Failure, List<FilmSerieModel>?> {
         return when(val responseEither = serieRemoteDataSource.getListOfAllSeries()){
