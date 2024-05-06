@@ -62,6 +62,7 @@ dependencies {
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
+    val room = "2.6.1"
 
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
@@ -77,7 +78,7 @@ dependencies {
 
     /* VIEWMODEL */
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModel")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelVersion")
     implementation("androidx.activity:activity-ktx:1.8.2")
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
