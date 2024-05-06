@@ -1,10 +1,14 @@
-package com.enriquepalmadev.data_layer.feature.comics.di
+package com.enriquepalmadev.data_layer.commons.di
 
 import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.comics.repository.ComicRepositoryImpl
 import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
-import com.enriquepalmadev.data_layer.feature.comics.utils.Constants
+import com.enriquepalmadev.data_layer.commons.utils.Constants
+import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteDataSourceImpl
+import com.enriquepalmadev.data_layer.feature.series.api.service.IMarvelFilmSerieService
+import com.enriquepalmadev.data_layer.feature.series.repository.FilmSerieRepositoryImpl
 import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
+import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -86,5 +90,23 @@ object DataModule {
     @Provides
     fun provideComicRepository(comicRemoteDataSource: ComicRemoteDataSource): ComicRepository {
         return ComicRepositoryImpl(comicRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideIMarvelFilmSerieService(retrofit: Retrofit): IMarvelFilmSerieService {
+        return retrofit.create(IMarvelFilmSerieService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSerieRemoteDataSource(serieService: IMarvelFilmSerieService): SerieRemoteDataSourceImpl {
+        return SerieRemoteDataSourceImpl(serieService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSerieRepository(serieRemoteDataSourceImpl: SerieRemoteDataSourceImpl): IFilmSerieRepository {
+        return FilmSerieRepositoryImpl(serieRemoteDataSourceImpl)
     }
 }
