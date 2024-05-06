@@ -55,7 +55,7 @@ dependencies {
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
-    val hiltVersion = "2.51"
+    val hiltVersion = "2.48"
 
     implementation(project(":domain-layer"))
 

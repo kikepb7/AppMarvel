@@ -43,7 +43,7 @@ dependencies {
     val espressoVersion = "3.5.1"
     val retrofitVersion = "2.11.0"
     val interceptorVersion = "4.12.0"
-    val hiltVersion = "2.51"
+    val hiltVersion = "2.48"
 
     implementation(project(":domain-layer"))
 

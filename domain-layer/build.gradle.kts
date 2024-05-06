@@ -39,7 +39,7 @@ dependencies {
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
     val jUnitVersion = "4.13.2"
-    val hiltVersion = "2.51"
+    val hiltVersion = "2.48"
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:$appCompatVersion")

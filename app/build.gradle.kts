@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    val hiltVersion = "2.51"
+    val hiltVersion = "2.48"
 
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")

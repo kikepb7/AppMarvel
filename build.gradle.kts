@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.22" apply false
 
     // HILT
-    id("com.google.dagger.hilt.android") version "2.51" apply false
+    id("com.google.dagger.hilt.android") version "2.48" apply false
 }
 
 buildscript {
@@ -14,7 +14,7 @@ buildscript {
 
     dependencies {
         val nav_version = "2.7.7"
-        val hiltVersion = "2.51"
+        val hiltVersion = "2.48"
 
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
