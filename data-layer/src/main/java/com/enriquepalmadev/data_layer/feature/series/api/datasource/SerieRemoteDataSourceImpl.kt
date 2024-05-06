@@ -1,9 +1,9 @@
 package com.enriquepalmadev.data_layer.feature.series.api.datasource
 
+import com.enriquepalmadev.data_layer.commons.utils.Constants
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.ObjectResponseDto
 import com.enriquepalmadev.data_layer.feature.series.api.service.IMarvelFilmSerieService
-import com.enriquepalmadev.data_layer.feature.series.api.utils.Constants
 import com.enriquepalmadev.data_layer.feature.series.failure.CustomErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnauthorizedErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnknownHostErrorData
