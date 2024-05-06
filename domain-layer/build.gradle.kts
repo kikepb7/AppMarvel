@@ -43,6 +43,8 @@ dependencies {
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
     val jUnitVersion = "4.13.2"
+    val jUnitTestVersion = "1.1.5"
+    val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
@@ -60,4 +62,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }
