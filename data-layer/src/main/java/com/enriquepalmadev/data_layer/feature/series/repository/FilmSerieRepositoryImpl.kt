@@ -5,8 +5,8 @@ import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelFilmSerieIte
 import com.enriquepalmadev.data_layer.feature.series.mapper.IFilmSerieMapper
 import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
-import com.enriquepalmadev.domain_layer.feature.series.utils.FailureDomain
-import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEitherDomain
+import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import org.mapstruct.factory.Mappers
 import javax.inject.Inject
 
@@ -17,10 +17,10 @@ class FilmSerieRepositoryImpl @Inject constructor(
     private val mapper: IFilmSerieMapper = Mappers.getMapper(IFilmSerieMapper::class.java)
     // private val serieRemoteDataSourceImpl: ISerieRemoteDataSource = SerieRemoteRemoteDataSourceImpl()
 
-    override suspend fun getListOfAllSeries(): ResponseEitherDomain<FailureDomain, List<FilmSerieModel>?> {
+    override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, List<FilmSerieModel>?> {
         return when(val responseEither = serieRemoteDataSource.getListOfAllSeries()){
-            is ResponseEitherDomain.Failure -> ResponseEitherDomain.Failure(responseEither.error)
-            is ResponseEitherDomain.Success -> ResponseEitherDomain.Success(responseEither.data?.data?.results?.let { handlerSuccessGetAllSeries(it) })
+            is ResponseEither.Failure -> ResponseEither.Failure(l = responseEither.l)
+            is ResponseEither.Success -> ResponseEither.Success(r = responseEither.r?.data?.results?.let { handlerSuccessGetAllSeries(it) })
         }
     }
 
@@ -30,10 +30,10 @@ class FilmSerieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSerieById(id: Int): ResponseEitherDomain<FailureDomain, FilmSerieModel> {
+    override suspend fun getSerieById(id: Int): ResponseEither<FailureDomain, FilmSerieModel> {
         return when(val responseEither = serieRemoteDataSource.getSerieById(id)){
-            is ResponseEitherDomain.Failure -> ResponseEitherDomain.Failure(responseEither.error)
-            is ResponseEitherDomain.Success -> ResponseEitherDomain.Success(handlerSuccessGetSerie(responseEither.data))
+            is ResponseEither.Failure -> ResponseEither.Failure(l = responseEither.l)
+            is ResponseEither.Success -> ResponseEither.Success(r = handlerSuccessGetSerie(responseEither.r))
         }
     }
 
@@ -41,16 +41,16 @@ class FilmSerieRepositoryImpl @Inject constructor(
         return mapper.marvelFilmSerieItemDtoToFilmSerieModel(serie)
     }
 
-    override suspend fun orderListByStartYear(series: List<FilmSerieModel>): ResponseEitherDomain<FailureDomain, List<FilmSerieModel>> {
+    override suspend fun orderListByStartYear(series: List<FilmSerieModel>): ResponseEither<FailureDomain, List<FilmSerieModel>> {
         return try {
             if (series.isNotEmpty()) {
-                ResponseEitherDomain.Success(series.sortedByDescending { it.startYear })
+                ResponseEither.Success(r = series.sortedByDescending { it.startYear })
             } else {
-                ResponseEitherDomain.Failure(error = FailureDomain.EmptyError)
+                ResponseEither.Failure(l = FailureDomain.EmptyErrorDomain)
             }
 
         } catch (e: Exception) {
-            ResponseEitherDomain.Failure(error = FailureDomain.CustomError(
+            ResponseEither.Failure(l = FailureDomain.CustomErrorDomain(
                 e.toString(),
                 e.message.toString()
             )
@@ -58,16 +58,16 @@ class FilmSerieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun orderListByAlphabet(series: List<FilmSerieModel>): ResponseEitherDomain<FailureDomain, List<FilmSerieModel>> {
+    override suspend fun orderListByAlphabet(series: List<FilmSerieModel>): ResponseEither<FailureDomain, List<FilmSerieModel>> {
         return try {
             if (series.isNotEmpty()) {
-                ResponseEitherDomain.Success(data = series.sortedBy { it.title })
+                ResponseEither.Success(r = series.sortedBy { it.title })
             } else {
-                ResponseEitherDomain.Failure(error = FailureDomain.EmptyError)
+                ResponseEither.Failure(l = FailureDomain.EmptyErrorDomain)
             }
 
         } catch (e: Exception) {
-            ResponseEitherDomain.Failure(error = FailureDomain.CustomError(
+            ResponseEither.Failure(l = FailureDomain.CustomErrorDomain(
                 e.toString(),
                 e.message.toString()
             )
@@ -78,18 +78,18 @@ class FilmSerieRepositoryImpl @Inject constructor(
     override suspend fun filterByName(
         newText: String,
         series: List<FilmSerieModel>
-    ): ResponseEitherDomain<FailureDomain, List<FilmSerieModel>> {
+    ): ResponseEither<FailureDomain, List<FilmSerieModel>> {
         return try {
             if (series.isNotEmpty()) {
-                ResponseEitherDomain.Success(data = series.filter {
+                ResponseEither.Success(r = series.filter {
                     it.title.lowercase().contains(newText.lowercase())
                 })
             } else {
-                ResponseEitherDomain.Failure(error = FailureDomain.EmptyError)
+                ResponseEither.Failure(l = FailureDomain.EmptyErrorDomain)
             }
 
         } catch (e: Exception) {
-            ResponseEitherDomain.Failure(error = FailureDomain.CustomError(
+            ResponseEither.Failure(l = FailureDomain.CustomErrorDomain(
                 e.toString(),
                 e.message.toString()
             )

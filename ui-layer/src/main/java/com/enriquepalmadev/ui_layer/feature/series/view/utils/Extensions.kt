@@ -1,4 +1,4 @@
-package com.enriquepalmadev.ui_layer.feature.series.view.extensions
+package com.enriquepalmadev.ui_layer.feature.series.view.utils
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

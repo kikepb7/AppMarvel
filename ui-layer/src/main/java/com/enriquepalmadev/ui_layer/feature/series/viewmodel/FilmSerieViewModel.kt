@@ -7,8 +7,8 @@ import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListFilterBy
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfAllSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByStartYearUseCase
-import com.enriquepalmadev.domain_layer.feature.series.utils.FailureDomain
-import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEitherDomain
+import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,19 +52,19 @@ class FilmSerieViewModel @Inject constructor(
             viewModelScope.launch {
                 iFetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineError)) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
                     .collect { responseEither ->
                         when (responseEither) {
-                            is ResponseEitherDomain.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.error))
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
                             }
 
-                            is ResponseEitherDomain.Success -> {
-                                if (responseEither.data?.isEmpty() == true) {
-                                    _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineError))
+                            is ResponseEither.Success -> {
+                                if (responseEither.r?.isEmpty() == true) {
+                                    _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain))
                                 } else {
                                     allSeriesList =
-                                        responseEither.data?.let { customFilterList(it) }
+                                        responseEither.r?.let { customFilterList(it) }
                                     allSeriesList?.let {
                                         FilmSerieUIState.ListReceived(it)
                                     }?.let { _uiState.emit(it) }
@@ -85,7 +85,7 @@ class FilmSerieViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineError))
+                _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain))
             }
         }
     }
@@ -109,16 +109,16 @@ class FilmSerieViewModel @Inject constructor(
                 iFetchListOfSeriesOrderByStartYearUseCase
                     .getListOfSeriesOrderByStartYear(it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineError)) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
                     .collect { responseEither ->
                         when (responseEither) {
-                            is ResponseEitherDomain.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.error))
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
                             }
 
-                            is ResponseEitherDomain.Success -> {
-                                allSeriesList = responseEither.data
-                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.data))
+                            is ResponseEither.Success -> {
+                                allSeriesList = responseEither.r
+                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
                             }
                         }
                     }
@@ -132,16 +132,16 @@ class FilmSerieViewModel @Inject constructor(
                 iFetchListOfSeriesOrderByAlphabetUseCase
                     .getListOfSeriesOrderByAlphabet(it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineError)) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
                     .collect { responseEither ->
                         when (responseEither) {
-                            is ResponseEitherDomain.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.error))
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
                             }
 
-                            is ResponseEitherDomain.Success -> {
-                                allSeriesList = responseEither.data
-                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.data))
+                            is ResponseEither.Success -> {
+                                allSeriesList = responseEither.r
+                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
                             }
                         }
                     }
@@ -154,15 +154,15 @@ class FilmSerieViewModel @Inject constructor(
             allSeriesList?.let {
                 iFetchListFilterByNameUseCase.getListFilterByName(newText, it)
                     .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineError)) }
+                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
                     .collect { responseEither ->
                         when (responseEither) {
-                            is ResponseEitherDomain.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.error))
+                            is ResponseEither.Failure -> {
+                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
                             }
 
-                            is ResponseEitherDomain.Success -> {
-                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.data))
+                            is ResponseEither.Success -> {
+                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
                             }
                         }
                     }

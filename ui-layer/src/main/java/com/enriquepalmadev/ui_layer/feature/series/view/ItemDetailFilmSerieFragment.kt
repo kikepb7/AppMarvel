@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
-import com.enriquepalmadev.domain_layer.feature.series.utils.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.ItemDetailsFilmsSeriesBinding
-import com.enriquepalmadev.ui_layer.feature.series.view.extensions.loadImage
+import com.enriquepalmadev.ui_layer.feature.series.view.utils.loadImage
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.ItemDetailFilmSerieViewModel
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.ItemDetailUIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,17 +47,17 @@ class ItemDetailFilmSerieFragment : Fragment() {
             when (uiState) {
                 is ItemDetailUIState.Error -> {
                     when (uiState.error) {
-                        is FailureDomain.CustomError -> {
+                        is FailureDomain.CustomErrorDomain -> {
                             setErrorView(uiState.error.code, uiState.error.msg)
                             showErrorView(true, R.drawable.groot_error)
                         }
 
-                        FailureDomain.UnauthorizedError -> {
+                        FailureDomain.UnauthorizedErrorDomain -> {
                             setErrorView(getString(R.string.title_401), getString(R.string.msg_401))
                             showErrorView(true, R.drawable.thanos_unauthorized)
                         }
 
-                        FailureDomain.EmptyError -> {
+                        FailureDomain.EmptyErrorDomain -> {
                             setErrorView(
                                 getString(R.string.title_empty_error),
                                 getString(R.string.msg_empty_error)
@@ -65,7 +65,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                             showErrorView(true, R.drawable.deadpool_no_connection)
                         }
 
-                        FailureDomain.UnknownHostError -> {
+                        FailureDomain.UnknownHostErrorDomain -> {
                             setErrorView(
                                 getString(R.string.title_unknown_host_error),
                                 getString(R.string.msg_unknown_host_error)
@@ -73,7 +73,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                             showErrorView(true, R.drawable.captain_empty)
                         }
 
-                        is FailureDomain.CoroutineError -> {
+                        is FailureDomain.CoroutineErrorDomain -> {
                             setErrorView(
                                 getString(R.string.title_coroutine_error),
                                 getString(R.string.msg_coroutine_error)

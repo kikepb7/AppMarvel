@@ -24,7 +24,7 @@ object NetworkModule {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    fun getRetrofitClient(): OkHttpClient = OkHttpClient.Builder()
+    private fun getRetrofitClient(): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(CustomInterceptor())
         .addInterceptor(loggingInterceptor)
         .build()

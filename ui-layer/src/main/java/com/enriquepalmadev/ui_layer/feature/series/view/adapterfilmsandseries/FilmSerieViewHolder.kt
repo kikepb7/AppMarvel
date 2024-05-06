@@ -4,7 +4,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.ui_layer.databinding.ItemFilmsSeriesBinding
-import com.enriquepalmadev.ui_layer.feature.series.view.extensions.loadImage
+import com.enriquepalmadev.ui_layer.feature.series.view.utils.loadImage
 
 
 class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): RecyclerView.ViewHolder(binding.root) {
@@ -24,8 +24,8 @@ class FilmSerieViewHolder(private val binding: ItemFilmsSeriesBinding): Recycler
             }
             btnFav.setOnClickListener{favListener.invoke(filmSerieModel.id,
                 it.contentDescription.toString(),
-                btnFav
-            )}
+                btnFav)
+            }
         }
     }
 }
