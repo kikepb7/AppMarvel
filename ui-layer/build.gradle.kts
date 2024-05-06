@@ -29,6 +29,11 @@ android {
         }
     }
 
+    kapt {
+        correctErrorTypes = true
+        generateStubs = true
+    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -55,7 +60,7 @@ dependencies {
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
-    val hiltVersion = "2.48"
+    val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
 
     implementation(project(":domain-layer"))

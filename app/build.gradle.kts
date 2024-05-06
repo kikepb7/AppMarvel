@@ -31,6 +31,10 @@ android {
             )
         }
     }
+    kapt {
+        correctErrorTypes = true
+        generateStubs = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -41,7 +45,8 @@ android {
 }
 
 dependencies {
-    val hiltVersion = "2.48"
+    val hiltVersion = "2.51"
+    val jUnitVersion = "4.13.2"
 
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
@@ -51,4 +56,5 @@ dependencies {
     implementation(project(":domain-layer"))
     implementation(project(":ui-layer"))
 
+    testImplementation("junit:junit:$jUnitVersion")
 }

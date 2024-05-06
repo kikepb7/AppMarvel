@@ -26,6 +26,12 @@ android {
             )
         }
     }
+
+    kapt {
+        correctErrorTypes = true
+        generateStubs = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -45,7 +51,7 @@ dependencies {
     val mapStructProcessorVersion = "1.4.2"
     val retrofitVersion = "2.11.0"
     val interceptorVersion = "4.12.0"
-    val hiltVersion = "2.48"
+    val hiltVersion = "2.51"
 
     implementation(project(":domain-layer"))
 

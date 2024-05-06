@@ -26,6 +26,10 @@ android {
             )
         }
     }
+    kapt {
+        correctErrorTypes = true
+        generateStubs = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -39,7 +43,7 @@ dependencies {
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
     val jUnitVersion = "4.13.2"
-    val hiltVersion = "2.48"
+    val hiltVersion = "2.51"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
 
