@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.appmarvel.R
 import com.enriquepalmadev.appmarvel.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     // Binding para acceder a los objetos de la vista del activity_main.xml

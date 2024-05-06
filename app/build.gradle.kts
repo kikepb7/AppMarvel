@@ -1,8 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -43,7 +45,7 @@ android {
 
 dependencies {
     val navVersion = "2.7.7"
-    val hiltVersion = "2.44"
+    val hiltVersion = "2.50"
     val room = "2.6.1"
     val retrofit = "2.9.0"
     val viewModel = "2.7.0"

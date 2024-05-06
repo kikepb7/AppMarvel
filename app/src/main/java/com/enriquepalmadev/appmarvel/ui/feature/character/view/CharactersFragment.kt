@@ -21,11 +21,14 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterMod
 import com.enriquepalmadev.appmarvel.ui.feature.character.view.adapter.CharactersAdapter
 import com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel.CharactersViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel.CharactersViewModel.State
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 // TODO Diferencia entre State Flow y Shared Flow
+
+@AndroidEntryPoint
 class CharactersFragment : Fragment() {
     private lateinit var binding: FragmentCharactersBinding
     private lateinit var charactersAdapter: CharactersAdapter

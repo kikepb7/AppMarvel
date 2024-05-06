@@ -7,11 +7,13 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterMod
 import com.enriquepalmadev.appmarvel.domain.feature.character.utils.extensions.filterEmptyImageAndDescription
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 
-class GetCharacterUseCase{
+class GetCharacterUseCase @Inject constructor(
+    private val characterListRepository : CharacterRepositoryImpl
+){
 
-    private val characterListRepository= CharacterRepositoryImpl
     suspend fun getCharacterList(): Flow<Either<CharacterError, List<CharacterModel>?>> {
         //Filter to empty description and image
         return flow {
