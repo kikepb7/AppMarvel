@@ -11,7 +11,6 @@ buildscript {
     repositories {
         google()
     }
-
     dependencies {
         val nav_version = "2.7.7"
         val hiltVersion = "2.48"

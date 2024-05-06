@@ -8,24 +8,26 @@
     <!-- HOME FRAGMENT -->
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.enriquepalmadev.ui_layer.feature.comics.view.HomeFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.home.view.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_filmsAndSeriesFragment"
-            app:destination="@id/filmsAndSeriesFragment" />
+            app:destination="@id/filmSerieFragment" />
         <action
             android:id="@+id/action_homeFragment_to_comicsFragment"
             app:destination="@id/comicsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_charactersFragment"
             app:destination="@id/charactersFragment" />
+
     </fragment>
+
 
     <!-- COMICS FRAGMENT -->
     <fragment
         android:id="@+id/comicsFragment"
-        android:name="com.enriquepalmadev.ui_layer.feature.comics.view.ComicsFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.comics.view.ComicsFragment"
         android:label="fragment_comics"
         tools:layout="@layout/fragment_comics" >
         <action
@@ -43,7 +45,7 @@
     <!-- COMIC DETAIL FRAGMENT -->
     <fragment
         android:id="@+id/comicDetail"
-        android:name="com.enriquepalmadev.ui_layer.feature.comics.view.ComicDetailFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.comics.view.ComicDetailFragment"
         android:label="fragment_comic_detail"
         tools:layout="@layout/fragment_comic_detail" >
         <argument
@@ -53,15 +55,32 @@
 
     <!-- FILMS AND SERIES FRAGMENT -->
     <fragment
-        android:id="@+id/filmsAndSeriesFragment"
-        android:name="com.enriquepalmadev.ui_layer.feature.comics.view.FilmsSeriesFragment"
+        android:id="@+id/filmSerieFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.series.view.FilmSerieFragment"
         android:label="fragment_series"
-        tools:layout="@layout/fragment_films_series" />
+        tools:layout="@layout/fragment_films_series" >
+        <action
+            android:id="@+id/action_filmSerieFragment_to_itemDetailsFilmsSeriesFragment"
+            app:destination="@id/itemDetailsFilmsSeriesFragment" />
+    </fragment>
 
     <!-- CHARACTER FRAGMENT -->
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.enriquepalmadev.ui_layer.feature.comics.view.CharactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.comics.view.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" />
+
+    <!-- ITEM DETAILS FILMS AND SERIES FRAGMENT -->
+    <fragment
+        android:id="@+id/itemDetailsFilmsSeriesFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.series.view.ItemDetailFilmSerieFragment"
+        android:label="item_details_films_series_fragment"
+        tools:layout="@layout/item_details_films_series" >
+        <argument
+            android:name="idSerie"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
 </navigation>

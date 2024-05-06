@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="buttons" parent="@style/Base.Theme.AppMarvel">
+    <!-- GENERAL -->
+    <!-- White background -->
+    <style name="background_white" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!-- Loading view -->
+    <style name="loading_view" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:background">@drawable/loading_icon</item>
+        <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/m_of_marvel</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">64sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--FINISHED-->
+
+    <!-- activity_main.xml -->
+    <style name="activity_main_fragment_container_view" parent="@style/Base.Theme.AppMarvel">
+        <item name="defaultNavHost">true</item>
+        <item name="android:background">@color/black</item>
+        <item name="navGraph">@navigation/main_graph</item>
+    </style>
+    <!--Finished-->
+
+    <!-- fragment_home.xml -->
+    <style name="main_buttons" parent="@style/Base.Theme.AppMarvel">
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
@@ -10,29 +40,78 @@
         <item name="android:width">200dp</item>
         <item name="android:height">50dp</item>
     </style>
+    <!--Finished-->
 
-    <style name="txt_search_fragment_films_series" parent="@style/Base.Theme.AppMarvel">
-        <item name="android:layout_marginStart">@dimen/margin_5dp</item>
-        <item name="android:hint">@string/search</item>
+    <!-- fragment_films_series.xml -->
+    <style name="rv_film_serie" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_margin">@dimen/margin_5dp</item>
+        <item name="layoutManager">androidx.recyclerview.widget.GridLayoutManager</item>
+        <item name="spanCount">2</item>
+        <item name="android:paddingBottom">@dimen/margin_5dp</item>
+    </style>
+
+    <style name="orderby_button" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginEnd">@dimen/margin_5dp</item>
+        <item name="android:text">@string/orderby</item>
+    </style>
+
+    <style name="searchview_films_series" parent="@style/Base.Theme.AppMarvel">
         <item name="android:inputType">text</item>
+        <item name="android:layout_marginStart">@dimen/margin_5dp</item>
+        <item name="android:queryHint">@string/search</item>
+    </style>
+    <!--Finished-->
+
+    <!-- item_films_series.xml -->
+    <style name="item_film_serie_image" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="ratio">1.5</item>
     </style>
 
-    <style name="activity_main_fragment_container_view" parent="@style/Base.Theme.AppMarvel">
-        <item name="defaultNavHost">true</item>
-        <item name="android:background">@color/black</item>
-        <item name="navGraph">@navigation/main_graph</item>
+    <style name="item_film_serie_title" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:background">@color/light_red</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/title_text_size_15sp</item>
+        <item name="android:padding">@dimen/title_padding_3dp</item>
     </style>
+
+    <style name="item_film_serie_fav_icon" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginTop">@dimen/margin_5dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_5dp</item>
+        <item name="android:src">@drawable/ic_border_favorite_24dp</item>
+        <item name="android:contentDescription">@string/fav_off</item>
+    </style>
+    <!--Finished-->
+
+    <!-- item_details_films_series.xml -->
+    <style name="detail_film_serie_image" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="detail_film_serie_name" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_detail_serie_name_20sp</item>
+        <item name="android:background">@color/dark_red</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="detail_film_serie_description" parent="@style/Base.Theme.AppMarvel">
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16dp</item>
+        <item name="android:textSize">@dimen/text_size_description_detail_18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">@dimen/spacing_extra_description_detail_2dp</item>
+    </style>
+    <!--Finished-->
 
     <style name="item_superhero_txt" parent="@style/Base.Theme.AppMarvel">
         <item name="android:padding">@dimen/txt_item_superhero_paddin_8dp</item>
         <item name="android:textSize">@dimen/text_size_16sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center</item>
-    </style>
-
-    <style name="btn_search_fragment_films_series" parent="@style/Base.Theme.AppMarvel">
-        <item name="android:layout_marginEnd">@dimen/margin_5dp</item>
-        <item name="android:text">@string/search</item>
     </style>
 
     <style name="img_item_superhero" parent="@style/Base.Theme.AppMarvel">
