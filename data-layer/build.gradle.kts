@@ -41,6 +41,8 @@ dependencies {
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
+    val mapStructVersion = "1.4.2"
+    val mapStructProcessorVersion = "1.4.2"
     val retrofitVersion = "2.11.0"
     val interceptorVersion = "4.12.0"
     val hiltVersion = "2.48"
@@ -50,6 +52,10 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
+
+    /* MAPSTRUCT */
+    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

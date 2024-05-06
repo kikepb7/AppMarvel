@@ -40,10 +40,16 @@ dependencies {
     val materialVersion = "1.12.0"
     val jUnitVersion = "4.13.2"
     val hiltVersion = "2.48"
+    val mapStructVersion = "1.4.2"
+    val mapStructProcessorVersion = "1.4.2"
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
+
+    /* MAPSTRUCT */
+    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")

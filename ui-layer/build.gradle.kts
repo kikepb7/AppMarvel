@@ -56,6 +56,7 @@ dependencies {
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.48"
+    val facebookVersion = "0.5.0"
 
     implementation(project(":domain-layer"))
 
@@ -64,6 +65,9 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
+
+    /* FACEBOOK */
+    implementation("com.facebook.shimmer:shimmer:$facebookVersion")
 
     /* FRAGMENT */
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
