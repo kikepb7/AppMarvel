@@ -7,12 +7,11 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class FetchComicDetailUseCase (
+class FetchComicDetailUseCase @Inject constructor(
     private val comicListRepository: ComicRepository
 ) {
-
-//    private val comicListRepository = ComicRepositoryImpl()
 
     suspend fun fetchComicDetail(comicId: Int): Flow<Either<FailureDomain, ComicModel?>> {
         return flow { emit(comicListRepository.fetchComicDetail(comicId)) }

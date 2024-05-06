@@ -8,11 +8,12 @@ import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
+import javax.inject.Inject
 
 
-class ComicRepositoryImpl : ComicRepository {
-
-    private val remoteDataSource = ComicRemoteDataSource()
+class ComicRepositoryImpl @Inject constructor(
+    private val remoteDataSource: ComicRemoteDataSource
+) : ComicRepository {
 
     override suspend fun fetchComicList(): Either<FailureDomain, List<ComicModel>?> {
 

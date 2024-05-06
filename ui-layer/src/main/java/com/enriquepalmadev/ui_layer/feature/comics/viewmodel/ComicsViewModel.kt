@@ -7,18 +7,21 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.comics.usecase.FetchComicUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ComicsViewModel : ViewModel() {
-
+@HiltViewModel
+class ComicsViewModel @Inject constructor(
+    private val fetchComicListUseCase: FetchComicUseCase
+): ViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
-    private val fetchComicListUseCase = FetchComicUseCase()
     private var comicList: List<ComicModel> = emptyList()
 
     fun getComicsList() {

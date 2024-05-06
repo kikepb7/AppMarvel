@@ -18,9 +18,11 @@ import com.enriquepalmadev.ui_layer.feature.comics.view.utils.visible
 import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.ComicDetailViewModel
 import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.DetailState
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class ComicDetailFragment : Fragment() {
     companion object {
         const val KEY_ID = "id"

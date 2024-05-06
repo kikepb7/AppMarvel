@@ -2,6 +2,10 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+
+    // HILT
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,21 +43,23 @@ android {
 }
 
 dependencies {
+    val ktxVersion = "1.13.1"
     val appCompatVersion = "1.6.1"
-    val materialVersion = "1.11.0"
+    val materialVersion = "1.12.0"
     val constraintLayoutVersion = "2.1.4"
     val legacySupportVersion = "1.0.0"
-    val fragmentVersion = "1.6.2"
+    val fragmentVersion = "1.7.0"
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
     val glideVersion = "4.16.0"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
+    val hiltVersion = "2.51"
 
     implementation(project(":domain-layer"))
 
-    implementation("androidx.core:core-ktx:1.13.0")
+    implementation("androidx.core:core-ktx:$ktxVersion")
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
@@ -71,6 +77,10 @@ dependencies {
 
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
+
+    // HILT
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

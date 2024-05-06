@@ -2,6 +2,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+
+    // HILT
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -37,8 +41,14 @@ android {
 }
 
 dependencies {
+    val hiltVersion = "2.51"
+
+    // HILT
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation(project(":data-layer"))
     implementation(project(":domain-layer"))
     implementation(project(":ui-layer"))
+
 }

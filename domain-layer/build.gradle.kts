@@ -1,6 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+
+    // HILT
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -33,12 +37,17 @@ android {
 
 dependencies {
     val appCompatVersion = "1.6.1"
-    val materialVersion = "1.11.0"
+    val materialVersion = "1.12.0"
     val jUnitVersion = "4.13.2"
+    val hiltVersion = "2.51"
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
+
+    // HILT
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
 }

@@ -1,6 +1,5 @@
 package com.enriquepalmadev.data_layer.feature.comics.datasource
 
-import com.enriquepalmadev.data_layer.feature.comics.Retrofit
 import com.enriquepalmadev.data_layer.feature.comics.dto.ApiError
 import com.enriquepalmadev.data_layer.feature.comics.dto.Failure
 import com.enriquepalmadev.data_layer.feature.comics.dto.ResponseMarvelDto
@@ -9,12 +8,11 @@ import com.enriquepalmadev.data_layer.feature.comics.dto.UnknownHostError
 import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
 import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import java.io.IOException
+import javax.inject.Inject
 
-class ComicRemoteDataSource {
-
-    private val retrofitService: ComicService by lazy {
-        Retrofit.retrofitConnection().create(ComicService::class.java)
-    }
+class ComicRemoteDataSource @Inject constructor(
+    private val retrofitService: ComicService
+) {
 
     suspend fun fetchComicsFromApi(): Either<Failure, ResponseMarvelDto?> {
         val request = retrofitService.getComics(limit = 100)

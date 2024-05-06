@@ -21,9 +21,11 @@ import com.enriquepalmadev.ui_layer.feature.comics.view.utils.navigateTo
 import com.enriquepalmadev.ui_layer.feature.comics.view.utils.visible
 import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.ComicsViewModel
 import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.State
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class ComicsFragment : Fragment() {
     private lateinit var binding: FragmentComicsBinding
     private val viewModel: ComicsViewModel by viewModels()
