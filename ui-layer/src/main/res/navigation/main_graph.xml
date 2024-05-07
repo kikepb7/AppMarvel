@@ -79,7 +79,7 @@
     <!-- CHARACTER FRAGMENT -->
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.feature.character.view.CharactersFragment"
+        android:name="com.enriquepalmadev.ui_layer.feature.character.view.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" >
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemDetailsCharactersFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.feature.character.view.CharacterDetailFragment"
+        android:name="com.enriquepalmadev.ui_layer.feature.character.view.CharacterDetailFragment"
         android:label="fragment_item_details_characters"
         tools:layout="@layout/fragment_item_details_characters" >
         <argument

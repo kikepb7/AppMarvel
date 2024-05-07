@@ -90,7 +90,10 @@ class ComicsFragment : Fragment() {
                     manageComicList(false)
                 }
 
-                is State.NavigateToDetail -> navigateToComicDetail(comicId = state.comicId)
+                is State.NavigateToDetail -> {
+                    navigateToComicDetail(comicId = state.comicId)
+                    viewModel.done()
+                }
 
                 is State.FilteredListByName -> {
                     manageLoadingState(false)

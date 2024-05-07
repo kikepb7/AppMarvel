@@ -4,9 +4,13 @@ import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicRemoteDataS
 import com.enriquepalmadev.data_layer.feature.comics.repository.ComicRepositoryImpl
 import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
 import com.enriquepalmadev.data_layer.commons.utils.Constants
+import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterRemoteDataSource
+import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterService
+import com.enriquepalmadev.data_layer.feature.character.repository.CharacterRepositoryImpl
 import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteDataSourceImpl
 import com.enriquepalmadev.data_layer.feature.series.api.service.IMarvelFilmSerieService
 import com.enriquepalmadev.data_layer.feature.series.repository.FilmSerieRepositoryImpl
+import com.enriquepalmadev.domain_layer.feature.character.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
 import dagger.Module
@@ -74,6 +78,8 @@ object DataModule {
             .build()
     }
 
+    // Comics
+
     @Singleton
     @Provides
     fun provideComicsFromApi(retrofit: Retrofit): ComicService {
@@ -92,6 +98,8 @@ object DataModule {
         return ComicRepositoryImpl(comicRemoteDataSource)
     }
 
+    // Series
+
     @Singleton
     @Provides
     fun provideIMarvelFilmSerieService(retrofit: Retrofit): IMarvelFilmSerieService {
@@ -108,5 +116,24 @@ object DataModule {
     @Provides
     fun provideSerieRepository(serieRemoteDataSourceImpl: SerieRemoteDataSourceImpl): IFilmSerieRepository {
         return FilmSerieRepositoryImpl(serieRemoteDataSourceImpl)
+    }
+
+    // Characters
+    @Singleton
+    @Provides
+    fun provideCharacterService(retrofit: Retrofit) : CharacterService {
+        return retrofit.create(CharacterService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterRemoteDataSource(characterService: CharacterService): CharacterRemoteDataSource {
+        return CharacterRemoteDataSource(characterService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterRepository(characterRemoteDataSourceImpl: CharacterRemoteDataSource): CharacterRepository {
+        return CharacterRepositoryImpl(characterRemoteDataSourceImpl)
     }
 }

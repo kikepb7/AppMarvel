@@ -54,6 +54,10 @@ class ComicsViewModel @Inject constructor(
         }
     }
 
+    suspend fun done(){
+        _state.emit(State.ListReceived(comicList))
+    }
+
     fun onItemSelected(id: Int) {
         viewModelScope.launch {
             _state.emit(State.NavigateToDetail(id))
