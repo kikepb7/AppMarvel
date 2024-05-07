@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -60,6 +61,8 @@ dependencies {
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
     val espressoVersion = "3.5.1"
+    val hiltVersion = "2.51"
+    val room = "2.6.1"
 
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
@@ -75,7 +78,8 @@ dependencies {
 
     /* VIEWMODEL */
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion")
-
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelVersion")
+    implementation("androidx.activity:activity-ktx:1.8.2")
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
@@ -98,6 +102,14 @@ dependencies {
 
     /* FACEBOOK */
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
+
+    /* ROOM */
+    implementation("androidx.room:room-ktx:$room")
+    kapt("androidx.room:room-compiler:$room")
+
+    /* DAGGER HILT */
+    implementation ("com.google.dagger:hilt-android:$hiltVersion")
+    kapt ("com.google.dagger:hilt-compiler:$hiltVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

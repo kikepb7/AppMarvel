@@ -64,13 +64,6 @@
             app:destination="@id/itemDetailsFilmsSeriesFragment" />
     </fragment>
 
-    <!-- CHARACTER FRAGMENT -->
-    <fragment
-        android:id="@+id/charactersFragment"
-        android:name="com.enriquepalmadev.appmarvel.ui.feature.comics.view.CharactersFragment"
-        android:label="fragment_characters"
-        tools:layout="@layout/fragment_characters" />
-
     <!-- ITEM DETAILS FILMS AND SERIES FRAGMENT -->
     <fragment
         android:id="@+id/itemDetailsFilmsSeriesFragment"
@@ -83,4 +76,26 @@
             android:defaultValue="0" />
     </fragment>
 
+    <!-- CHARACTER FRAGMENT -->
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.character.view.CharactersFragment"
+        android:label="fragment_characters"
+        tools:layout="@layout/fragment_characters" >
+        <action
+            android:id="@+id/action_charactersFragment_to_itemDetailsCharactersFragment"
+            app:destination="@id/itemDetailsCharactersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailsCharactersFragment"
+        android:name="com.enriquepalmadev.appmarvel.ui.feature.character.view.CharacterDetailFragment"
+        android:label="fragment_item_details_characters"
+        tools:layout="@layout/fragment_item_details_characters" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_itemDetailsCharactersFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
+    </fragment>
 </navigation>

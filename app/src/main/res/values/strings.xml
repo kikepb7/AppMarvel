@@ -9,10 +9,23 @@
     <string name="toast_buttonCharacters">Botón personajes</string>
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
 
-    <!-- Fragments' text -->
+    <!-- Error text -->
+    <string name="unknownError">Un error ha ocurrido</string>
+    <string name="unknownHost">Host desconocido</string>
+
+
+    <!-- Fragments' placeholder text -->
     <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
     <string name="comics_view">VISTA DE COMICS</string>
     <string name="characters_view">VISTA DE PERSONAJES</string>
+
+    <!-- Characters' fragment's buttons text -->
+    <string name="search_button">Buscar</string>
+    <string name="filter_button">Ordenar por</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <!-- Films and series' fragment's text -->
     <string name="orderby">Order by…</string>
