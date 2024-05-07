@@ -7,15 +7,16 @@ import com.enriquepalmadev.appmarvel.data.feature.character.utils.Constants
 import com.enriquepalmadev.appmarvel.data.feature.character.utils.Either
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
 
-class CharacterRemoteDataSource: CharacterDataSource {
+class CharacterRemoteDataSource @Inject constructor(private val service: CharacterService): CharacterDataSource {
 
-    private val retrofit = Retrofit.retrofitService
+    // private val retrofit = Retrofit.retrofitService
 
     override suspend fun getCharactersFromApi(): Either<CharacterError, CharacterResponseDTO<ResultDTO>> {
 
         return try {
-            val response: Response<CharacterResponseDTO<ResultDTO>> = retrofit.getAllCharacters(hash = Constants.HASH, ts = Constants.TS, limit = 100)
+            val response: Response<CharacterResponseDTO<ResultDTO>> = service.getAllCharacters(hash = Constants.HASH, ts = Constants.TS, limit = 100)
             val body = response.body()
             if(response.isSuccessful && body != null){
                 Either.Success(body)
@@ -38,7 +39,7 @@ class CharacterRemoteDataSource: CharacterDataSource {
     override suspend fun getCharacterDetailFromApi(characterId: Int): Either<CharacterError, CharacterResponseDTO<ResultDTO>>{
 
         return try {
-            val response: Response<CharacterResponseDTO<ResultDTO>> = retrofit.getCharacterById(characterId = characterId, hash = Constants.HASH, ts = Constants.TS)
+            val response: Response<CharacterResponseDTO<ResultDTO>> = service.getCharacterById(characterId = characterId, hash = Constants.HASH, ts = Constants.TS)
             val body = response.body()
             if(response.isSuccessful && body != null){
                 Either.Success(body)

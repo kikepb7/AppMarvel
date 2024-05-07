@@ -16,10 +16,11 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterMod
 import com.enriquepalmadev.appmarvel.ui.feature.character.view.utils.loadImage
 import com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel.CharactersDetailViewModel
 import com.enriquepalmadev.appmarvel.ui.feature.character.viewmodel.CharactersDetailViewModel.DetailState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-
+@AndroidEntryPoint
 class CharacterDetailFragment : Fragment() {
     private lateinit var  binding: FragmentItemDetailsCharactersBinding
     private val viewModel: CharactersDetailViewModel by viewModels()

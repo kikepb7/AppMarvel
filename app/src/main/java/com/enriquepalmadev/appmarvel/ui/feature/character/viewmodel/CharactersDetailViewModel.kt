@@ -6,17 +6,22 @@ import com.enriquepalmadev.appmarvel.data.feature.character.utils.CharacterError
 import com.enriquepalmadev.appmarvel.data.feature.character.utils.Either
 import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterModel
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.GetCharacterDetailUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CharactersDetailViewModel : ViewModel() {
+@HiltViewModel
+class CharactersDetailViewModel @Inject constructor(
+    private val getCharacterDetailUseCase : GetCharacterDetailUseCase
+
+): ViewModel() {
     //It is initialized with the state of Loading
     private val _state = MutableStateFlow<DetailState>(DetailState.Loading)
     val state = _state.asStateFlow()
-    private val getCharacterDetailUseCase = GetCharacterDetailUseCase()
 
     fun getCharacterDetail(characterId : Int){
         //If the character detail is found, a new state is emitted to the MutableStateFlow

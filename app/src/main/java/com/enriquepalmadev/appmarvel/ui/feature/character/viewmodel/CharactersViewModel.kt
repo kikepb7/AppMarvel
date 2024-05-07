@@ -9,20 +9,24 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.FiltListGe
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.GetCharacterUseCase
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.ListOrderFavouritesGetCharacterUseCase
 import com.enriquepalmadev.appmarvel.domain.feature.character.useCase.ListOrderNameGetCharacterUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class CharactersViewModel: ViewModel() {
+@HiltViewModel
+class CharactersViewModel @Inject constructor(
+    private val getCharacterUseCase : GetCharacterUseCase,
+    private val filtListGetCharacterUseCase : FiltListGetCharacterUseCase,
+    private val listOrderNameGetCharacterUseCase : ListOrderNameGetCharacterUseCase,
+    private val listOrderNameFavouritesGetCharacterUseCase : ListOrderFavouritesGetCharacterUseCase
+): ViewModel() {
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
-    private val getCharacterUseCase = GetCharacterUseCase()
-    private val filtListGetCharacterUseCase = FiltListGetCharacterUseCase()
-    private val listOrderNameGetCharacterUseCase= ListOrderNameGetCharacterUseCase()
-    private val listOrderNameFavouritesGetCharacterUseCase= ListOrderFavouritesGetCharacterUseCase()
+
 
     fun getCharacterList(){
         viewModelScope.launch {

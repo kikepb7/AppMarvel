@@ -7,10 +7,12 @@ import com.enriquepalmadev.appmarvel.domain.feature.character.model.CharacterMod
 import com.enriquepalmadev.appmarvel.domain.feature.character.utils.extensions.filterEmptyImageAndDescription
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class ListOrderNameGetCharacterUseCase {
+class ListOrderNameGetCharacterUseCase @Inject constructor(
+    private val characterListRepositoryImpl : CharacterRepositoryImpl
+) {
 
-    private val characterListRepositoryImpl= CharacterRepositoryImpl
 
     suspend fun getCharacterListOrderByName(): Flow<Either<CharacterError, List<CharacterModel>?>> {
 
