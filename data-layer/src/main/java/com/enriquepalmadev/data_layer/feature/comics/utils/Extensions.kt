@@ -18,7 +18,7 @@ fun List<ComicDto>.dtoToComicListModel(): List<ComicModel> {
 // Take the ResultDto object and transform it to a ComicModel object
 fun ComicDto.dtoToComicModel(): ComicModel {
     return ComicModel(
-        id = id ?: -1,
+        id = id,
         title = title.orEmpty(),
         description = description,
         pageCount = pageCount ?: -1,

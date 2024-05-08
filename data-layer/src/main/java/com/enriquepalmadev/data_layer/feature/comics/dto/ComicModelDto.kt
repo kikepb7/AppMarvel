@@ -16,7 +16,7 @@ data class DataDto(
 
 data class ComicDto(
     val description: String? = null,
-    val id: Int? = null,
+    val id: Int,
     val pageCount: Int? = null,
     val thumbnail: ThumnailDto? = null,
     val title: String? = null,

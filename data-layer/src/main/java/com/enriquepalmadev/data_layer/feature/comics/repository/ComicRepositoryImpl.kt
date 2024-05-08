@@ -28,7 +28,7 @@ class ComicRepositoryImpl @Inject constructor(
         return when (val response = remoteDataSource.fetchComicDetailFromApi(comicId)) {
             is Either.Failure -> Either.Failure(error = response.error.toFailureDomain())
             is Either.Success -> Either.Success(
-                data = response.data?.data?.results?.getOrNull(0)?.dtoToComicModel()
+                data = response.data?.data?.results?.firstOrNull()?.dtoToComicModel()
             )
         }
     }
