@@ -1,6 +1,5 @@
-package com.enriquepalmadev.domain_layer.feature.character.utils
+package com.enriquepalmadev.domain_layer.feature.commons
 
-//Generico
 sealed class Either<out L, out R> {
     data class Error<out L>(val error: L) : Either<L, Nothing>()
     data class Success<out R>(val data: R) : Either<Nothing, R>()

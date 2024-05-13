@@ -3,9 +3,9 @@ package com.enriquepalmadev.data_layer.feature.series.repository
 import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteDataSourceImpl
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.data_layer.feature.series.mapper.IFilmSerieMapper
+import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
-import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import org.mapstruct.factory.Mappers
 import javax.inject.Inject

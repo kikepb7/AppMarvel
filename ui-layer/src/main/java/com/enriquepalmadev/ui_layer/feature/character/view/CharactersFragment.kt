@@ -7,144 +7,124 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
-import android.widget.SearchView
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.databinding.FragmentCharactersBinding
-import com.enriquepalmadev.ui_layer.feature.character.view.adapter.CharactersAdapter
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.CharacterListScreen
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersViewModel
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersViewModel.State
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 // TODO Diferencia entre State Flow y Shared Flow
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
-    private lateinit var binding: FragmentCharactersBinding
-    private lateinit var charactersAdapter: CharactersAdapter
-    private val viewModel : CharactersViewModel by viewModels()
-
+    private lateinit var composeView: ComposeView
+    private val viewModel: CharactersViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCharactersBinding.inflate(inflater)
-        val view = binding.root
-        return view
+
+        return ComposeView(requireContext()).also {
+            composeView = it
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //Initializes the observer in case the screen state changes
-        initObserver()
-
-        //Call the viewModel to bring us the list of characters
-        viewModel.getCharacterList()
-
-        //Filter function
-        binding.btFiltros.setOnClickListener {
-            showFiltersMenu(binding.btFiltros)
-        }
-
-        //Search Function
-        binding.svBuscador.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            //When the customer submit the text
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.getCharacterFiltList(query.orEmpty())
-                return true
-            }
-
-            //When the text have been changed
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.getCharacterFiltList(newText.orEmpty())
-                return false
-            }
-
-        })
-    }
-
-    private fun initObserver(){
-        viewModel.state.onEach{ state ->
-            when(state){
-                is State.ListReceived -> {
-                    hideError()
-                    hideLoader()
-                    //Funcion a lista recibida.
-                    state.listCharacters?.let {
-                        initRecyclerView(it)
-                    }
-                }
-                is State.Loading -> {
-                    showLoader()
-                }
+        composeView.setContent {
+            val state by viewModel.state.collectAsState()// recolecta los estados
+            //Poner estados dentro del setContent
+            when (state) {
                 is State.CharacterError -> {
-                    hideLoader()
-                    showErrorCharacterError(state.error)
-
+                    showErrorCharacterError((state as State.CharacterError).error)
                 }
-                is State.Error -> {
+
+                State.Error -> {
                     val message = getString(R.string.unknownError)
-                    hideLoader()
                     showError(message)
                 }
-                is State.NavigateToDetail -> navigateToCharacterDetail(state.characterId)
-                else -> {}
+
+                is State.ListReceived -> {
+                    CharacterListScreen(//pasar por lambdas
+                        modifier = Modifier,
+                        navController = findNavController(),
+                        state = state,
+                        characterList = (state as State.ListReceived).listCharacters
+                    )
+                }
+
+                State.Loading -> {
+                    showLoader()
+
+                }
+
+                is State.NavigateToDetail -> {
+
+                    navigateToCharacterDetail((state as State.NavigateToDetail).characterId)
+                }
+
             }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }
+    }
+    @Composable
+    private fun showErrorCharacterError(characterErrorModel: CharacterErrorModel) {
+        Text(
+            text = characterErrorModel.toString(),
+            color = Color.Red,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            modifier = Modifier.padding(16.dp)
+        )
     }
 
-    private fun showErrorCharacterError(characterErrorDomain: CharacterErrorDomain){
-        binding.errorText.text = characterErrorDomain.toString()
-        binding.errorText.visibility = View.VISIBLE
+    @Composable
+    private fun showError(errorMessage: String) {
+        Text(
+            text = errorMessage,
+            color = Color.Red,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            modifier = Modifier.padding(16.dp)
+        )
     }
 
-    private fun showError(error: String){
-        binding.errorText.text = error
-        binding.errorText.visibility = View.VISIBLE
+
+    @Composable
+    private fun showLoader() {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
     }
 
-    private fun hideError(){
-        binding.errorText.visibility = View.GONE
-    }
+    private fun navigateToCharacterDetail(characterId: Int) {
 
-    private fun hideLoader(){
-        binding.progressBar.visibility = View.GONE
-    }
-
-    private fun showLoader(){
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    private fun navigateToCharacterDetail(characterId: Int){
-        binding.apply {
-            findNavController().navigate(
-                CharactersFragmentDirections.actionCharactersFragmentToItemDetailsCharactersFragment(
-                    id = characterId
-                )
+        findNavController().navigate(
+            CharactersFragmentDirections.actionCharactersFragmentToItemDetailsCharactersFragment(
+                id = characterId
             )
-        }
-    }
+        )
 
-    private fun initRecyclerView(list: List<CharacterModel>){
-
-        binding.rvCharacters.apply {
-            val manager = LinearLayoutManager(this.context)
-
-            layoutManager = manager
-
-            charactersAdapter = CharactersAdapter(list){c ->
-                navigateToCharacterDetail(c)
-            }
-            binding.rvCharacters.adapter = charactersAdapter
-        }
     }
 
     private fun showFiltersMenu(anchorView: Button){

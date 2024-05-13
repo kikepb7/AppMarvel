@@ -32,6 +32,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.9"
     }
 
     compileOptions {
@@ -58,6 +63,7 @@ dependencies {
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
+    val composeVersion = "1.6.7"
 
     implementation(project(":domain-layer"))
 
@@ -83,9 +89,19 @@ dependencies {
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
-    // HILT
+    /* HILT */
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    /* COMPOSE */
+    //implementation("androidx.compose.ui:ui-android:$composeVersion")
+    //implementation("androidx.compose.foundation:foundation:$composeVersion")
+    implementation("androidx.compose.material:material:1.6.7")
+    implementation("androidx.compose.compiler:compiler:1.5.13")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
+    implementation("androidx.compose.ui:ui-tooling:1.6.7")
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

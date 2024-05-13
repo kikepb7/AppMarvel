@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.FragmentFilmsSeriesBinding
 import com.enriquepalmadev.ui_layer.feature.series.view.adapterfilmsandseries.FilmSerieAdapter

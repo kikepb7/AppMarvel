@@ -2,12 +2,12 @@ package com.enriquepalmadev.data_layer.feature.character.repository
 
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.character.utils.extensions.toCharacterErrorDomain
-import com.enriquepalmadev.domain_layer.feature.character.utils.Either
 import com.enriquepalmadev.data_layer.feature.character.utils.extensions.toCharacterListModel
 import com.enriquepalmadev.data_layer.feature.character.utils.extensions.toCharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.CharacterRepository
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
+import com.enriquepalmadev.domain_layer.feature.commons.Either
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ class CharacterRepositoryImpl @Inject constructor(
 
     private var cachedCharacterList: List<CharacterModel>? = null
 
-    override suspend fun getCharacterList(): Either<CharacterErrorDomain, List<CharacterModel>?> {
+    override suspend fun getCharacterList(): Either<CharacterErrorModel, List<CharacterModel>?> {
         if (cachedCharacterList != null) {//Si ya se ha guardado utilizamos la lista guardada en cache.
             return Either.Success(cachedCharacterList)
         }
@@ -36,7 +36,7 @@ class CharacterRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharacterDetail(characterId: Int): Either<CharacterErrorDomain, CharacterModel?> {
+    override suspend fun getCharacterDetail(characterId: Int): Either<CharacterErrorModel, CharacterModel?> {
         val cachedCharacter = cachedCharacterList?.find {
             it.id == characterId
         }

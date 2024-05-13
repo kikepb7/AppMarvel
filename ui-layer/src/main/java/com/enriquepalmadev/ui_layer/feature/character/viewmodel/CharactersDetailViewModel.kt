@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.useCase.GetCharacterDetailUseCase
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
-import com.enriquepalmadev.domain_layer.feature.character.utils.Either
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
+import com.enriquepalmadev.domain_layer.feature.commons.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,7 +50,7 @@ class CharactersDetailViewModel @Inject constructor(
     //This class define the different possible states for CharacterDetails
     sealed class DetailState{
         data object Loading : DetailState()
-        data class CharacterError(val error: CharacterErrorDomain): DetailState()
+        data class CharacterError(val error: CharacterErrorModel): DetailState()
         data class  CharacterDetail(val character: CharacterModel?) : DetailState()
         data object Error: DetailState()
     }
