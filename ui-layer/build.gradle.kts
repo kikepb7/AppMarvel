@@ -32,6 +32,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.9"
     }
 
     compileOptions {
@@ -58,6 +63,11 @@ dependencies {
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
+    val composeVersion = "1.9.0"
+    val composeMaterialVersion = "1.6.7"
+    val constraintCompose = "1.0.1"
+    val composeUiVersion = "1.6.7"
+    val material3Compose = "1.2.1"
 
     implementation(project(":domain-layer"))
 
@@ -82,10 +92,23 @@ dependencies {
 
     /* GLIDE */
     implementation("com.github.bumptech.glide:glide:$glideVersion")
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    // COMPOSE
+    implementation("androidx.activity:activity-compose:$composeVersion")
+    implementation("androidx.compose.material:material:$composeMaterialVersion")
+    implementation("androidx.constraintlayout:constraintlayout-compose:$constraintCompose")
+    implementation("androidx.compose.ui:ui:$composeUiVersion")
+    implementation("androidx.compose.ui:ui-graphics:$composeUiVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+
+    //Material Design 3
+    implementation("androidx.compose.material3:material3:$material3Compose")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

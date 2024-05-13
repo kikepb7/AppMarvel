@@ -56,7 +56,7 @@
     <!-- FILMS AND SERIES FRAGMENT -->
     <fragment
         android:id="@+id/filmSerieFragment"
-        android:name="com.enriquepalmadev.ui_layer.feature.series.view.FilmSerieFragment"
+        android:name="com.enriquepalmadev.ui_layer.feature.series.compose.FilmSerieFragment"
         android:label="fragment_series"
         tools:layout="@layout/fragment_films_series" >
         <action
