@@ -11,7 +11,6 @@ import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorMo
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO Ya que he implementado las di; ahora ya no se puede hacer singleton sino que es una clase asi que tengo que buscar la manera de cachear la lista y el id.
 @Singleton
 class CharacterRepositoryImpl @Inject constructor(
     private val remoteDataSource: CharacterRemoteDataSource
