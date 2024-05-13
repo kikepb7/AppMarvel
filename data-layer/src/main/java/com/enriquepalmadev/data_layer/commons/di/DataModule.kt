@@ -10,7 +10,7 @@ import com.enriquepalmadev.data_layer.feature.character.repository.CharacterRepo
 import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteDataSourceImpl
 import com.enriquepalmadev.data_layer.feature.series.api.service.IMarvelFilmSerieService
 import com.enriquepalmadev.data_layer.feature.series.repository.FilmSerieRepositoryImpl
-import com.enriquepalmadev.domain_layer.feature.character.CharacterRepository
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
 import dagger.Module

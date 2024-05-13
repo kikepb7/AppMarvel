@@ -7,8 +7,8 @@ import com.enriquepalmadev.domain_layer.feature.character.useCase.FiltListGetCha
 import com.enriquepalmadev.domain_layer.feature.character.useCase.GetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderFavouritesGetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderNameGetCharacterUseCase
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
-import com.enriquepalmadev.domain_layer.feature.character.utils.Either
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
+import com.enriquepalmadev.domain_layer.commons.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -125,7 +125,7 @@ class CharactersViewModel @Inject constructor(
 
     sealed class State{
         data object Loading : State()
-        data class CharacterError(val error: CharacterErrorDomain) : State()//TODO Seguir por aqui.
+        data class CharacterError(val error: CharacterErrorModel) : State()//TODO Seguir por aqui.
         data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
         data class NavigateToDetail(val characterId: Int) : State()
         data object Error: State()

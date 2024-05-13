@@ -1,4 +1,4 @@
-package com.enriquepalmadev.domain_layer.feature.character.utils
+package com.enriquepalmadev.domain_layer.commons
 
 //Generico
 sealed class Either<out L, out R> {
