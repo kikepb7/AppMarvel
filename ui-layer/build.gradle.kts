@@ -1,11 +1,11 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs.kotlin")
+//    id("org.jetbrains.kotlin.android")
 
-    // HILT
+    kotlin("android")
     kotlin("kapt")
+    id("com.android.library")
     id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -19,11 +19,11 @@ android {
     }
 
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
+//    buildTypes {
+//        release {
+//            isMinifyEnabled = false
+//        }
+//    }
 
     kapt {
         correctErrorTypes = true

@@ -22,6 +22,7 @@ android {
             isMinifyEnabled = false
         }
     }
+
     kapt {
         correctErrorTypes = true
         generateStubs = true

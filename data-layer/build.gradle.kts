@@ -1,42 +1,41 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+//    id("org.jetbrains.kotlin.android")
 
     // HILT
     kotlin("kapt")
+    id("com.android.library")
     id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "com.enriquepalmadev.data_layer"
-    compileSdk = 34
+//    compileSdk = 34
 
     defaultConfig {
         minSdk = 29
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
+//    buildTypes {
+//        release {
+//            isMinifyEnabled = false
+//        }
+//    }
 
-    kapt {
-        correctErrorTypes = true
-        generateStubs = true
-    }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+//    compileOptions {
+//        sourceCompatibility = JavaVersion.VERSION_1_8
+//        targetCompatibility = JavaVersion.VERSION_1_8
+//    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
 
+kapt {
+    correctErrorTypes = true
+    generateStubs = true
+}
 dependencies {
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
@@ -56,8 +55,8 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
 
     /* MAPSTRUCT */
-    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
-    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
+    implementation("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     /* RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
