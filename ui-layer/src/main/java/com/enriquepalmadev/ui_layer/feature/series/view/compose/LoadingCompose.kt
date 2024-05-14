@@ -1,4 +1,4 @@
-package com.enriquepalmadev.ui_layer.feature.series.compose
+package com.enriquepalmadev.ui_layer.feature.series.view.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,7 +21,6 @@ import com.enriquepalmadev.ui_layer.R
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoadingView(){
-
     Box(
         modifier = Modifier
             .fillMaxSize()

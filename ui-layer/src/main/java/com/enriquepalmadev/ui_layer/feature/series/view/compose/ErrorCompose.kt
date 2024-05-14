@@ -1,4 +1,4 @@
-package com.enriquepalmadev.ui_layer.feature.series.compose
+package com.enriquepalmadev.ui_layer.feature.series.view.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

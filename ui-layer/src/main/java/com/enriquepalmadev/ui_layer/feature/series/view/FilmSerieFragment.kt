@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,10 +23,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.series.compose.ErrorView
-import com.enriquepalmadev.ui_layer.feature.series.compose.FilmSerieFragmentCompose
-import com.enriquepalmadev.ui_layer.feature.series.compose.LoadingView
-import com.enriquepalmadev.ui_layer.feature.series.compose.Series
+import com.enriquepalmadev.ui_layer.feature.series.view.compose.ErrorView
+import com.enriquepalmadev.ui_layer.feature.series.view.compose.FilmSerieFragmentCompose
+import com.enriquepalmadev.ui_layer.feature.series.view.compose.LoadingView
+import com.enriquepalmadev.ui_layer.feature.series.view.compose.Series
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -59,7 +60,8 @@ class FilmSerieFragment : Fragment() {
                             onFilmSerieClicked(
                                 findNavController(), id
                             )
-                        }
+                        },
+                        favClicked = ::onFavIconClicked
                     )
                 }
             }
@@ -117,14 +119,15 @@ class FilmSerieFragment : Fragment() {
         )
     }
 
-
+    /*
     private fun onSearchQueryChange(newText: String) {
         viewModel.filteringByName(newText)
     }
-
-    /*
-    private fun onFavIconClicked(id: Int, favState: String, favBtn: ImageView) {
-        // fsViewModel.favSerie(id, favState) TODO() Function to the database persist
+     */
+    private fun onFavIconClicked() {
+        // viewModel.favSerie(id, favState) TODO() Function to the database persist
+        Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
+        /*
         favBtn.apply {
             if (contentDescription == "on") {
                 setImageResource(R.drawable.ic_border_favorite_24dp)
@@ -134,7 +137,6 @@ class FilmSerieFragment : Fragment() {
                 contentDescription = "on"
             }
         }
+         */
     }
-     */
-
 }

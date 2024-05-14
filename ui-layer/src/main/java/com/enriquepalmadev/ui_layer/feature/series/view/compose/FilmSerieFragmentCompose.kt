@@ -1,4 +1,4 @@
-package com.enriquepalmadev.ui_layer.feature.series.compose
+package com.enriquepalmadev.ui_layer.feature.series.view.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -7,7 +7,7 @@ import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 
 @Composable
-fun FilmSerieFragmentCompose(uiState: FilmSerieUIState, dialogOrderBy: () -> Unit, itemClicked: (id: Int) -> Unit) {
+fun FilmSerieFragmentCompose(uiState: FilmSerieUIState, dialogOrderBy: () -> Unit, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
 
     when (uiState) {
         is FilmSerieUIState.Error -> {
@@ -62,7 +62,8 @@ fun FilmSerieFragmentCompose(uiState: FilmSerieUIState, dialogOrderBy: () -> Uni
             Series(
                 series = uiState.list,
                 dialogOrderBy = dialogOrderBy,
-                itemClicked = itemClicked
+                itemClicked = itemClicked,
+                favClicked = favClicked
             )
         }
 
