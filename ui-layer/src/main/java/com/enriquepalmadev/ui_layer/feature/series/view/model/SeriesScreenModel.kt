@@ -1,6 +1,7 @@
 package com.enriquepalmadev.ui_layer.feature.series.view.model
 
 import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
+import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 
 data class SeriesItem (
     val series : FilmSerieModel,
@@ -16,6 +17,24 @@ data class SeriesHeader (
     // val placeholderSearchViewResource : Int
 )
 
+sealed interface State {
+    data class SeriesScreen (
+        val header: SeriesHeader,
+        val list : SeriesBody
+    ) : State
+    data class ErrorScreen (
+        val errorImageResource: Int,
+        val errorTitleResource : Int,
+        val errorDescriptionResource : Int
+    ) : State
+    data class LoadingScreen (
+        val placeholderResource : Int
+    ) : State
+    data object Idle : State
+}
+
+
+/*
 data class SeriesScreen (
     val header: SeriesHeader,
     val list : SeriesBody
@@ -31,12 +50,7 @@ data class LoadingScreen (
     val placeholderResource : Int
 )
 
-data class State (
-    val seriesScreen : SeriesScreen,
-    val errorScreen : ErrorScreen,
-    val loadingScreen : LoadingScreen
-)
-
+ */
 
 /*
 sealed class FilmSerieUIState {

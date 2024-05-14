@@ -20,7 +20,7 @@ import com.enriquepalmadev.ui_layer.R
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun LoadingView(){
+fun LoadingView(/* placeholder : Int */){
     Box(
         modifier = Modifier
             .fillMaxSize()

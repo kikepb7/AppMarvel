@@ -4,10 +4,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.ui_layer.R
+import com.enriquepalmadev.ui_layer.feature.series.view.model.State
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 
 @Composable
-fun FilmSerieFragmentCompose(uiState: FilmSerieUIState, dialogOrderBy: () -> Unit, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
+fun FilmSerieFragmentCompose(
+    // state : State,
+    uiState: FilmSerieUIState,
+    dialogOrderBy: () -> Unit,
+    itemClicked: (id: Int) -> Unit,
+    favClicked: () -> Unit
+) {
+
+    /*
+    when(state){
+        is State.ErrorScreen -> TODO()
+        is State.LoadingScreen -> {
+            LoadingView(state.placeholderResource)
+        }
+        is State.SeriesScreen -> TODO()
+        else -> Unit
+    }
+     */
 
     when (uiState) {
         is FilmSerieUIState.Error -> {
@@ -69,5 +87,4 @@ fun FilmSerieFragmentCompose(uiState: FilmSerieUIState, dialogOrderBy: () -> Uni
 
         else -> Unit
     }
-
 }

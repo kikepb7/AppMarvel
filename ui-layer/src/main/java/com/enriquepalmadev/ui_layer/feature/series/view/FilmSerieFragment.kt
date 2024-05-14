@@ -27,6 +27,7 @@ import com.enriquepalmadev.ui_layer.feature.series.view.compose.ErrorView
 import com.enriquepalmadev.ui_layer.feature.series.view.compose.FilmSerieFragmentCompose
 import com.enriquepalmadev.ui_layer.feature.series.view.compose.LoadingView
 import com.enriquepalmadev.ui_layer.feature.series.view.compose.Series
+import com.enriquepalmadev.ui_layer.feature.series.view.model.State
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -35,6 +36,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class FilmSerieFragment : Fragment() {
 
     private val viewModel: FilmSerieViewModel by viewModels()
+
+    // private val state = State.LoadingScreen(placeholderResource = R.string.m_of_marvel)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +57,7 @@ class FilmSerieFragment : Fragment() {
                         .background(Color.White),
                 ) {
                     FilmSerieFragmentCompose(
+                        // state = state,
                         uiState = uiState,
                         dialogOrderBy = ::showDialogOrderBy,
                         itemClicked = { id ->
