@@ -152,7 +152,6 @@ class FilmSerieViewModel @Inject constructor(
             }
         }
     }
-
 }
 
 sealed interface FilmSerieUIState {
