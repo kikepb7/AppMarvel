@@ -104,7 +104,6 @@ class ItemDetailFilmSerieFragment : Fragment() {
     private fun showLoading(visible: Boolean) {
         bindingItemDetailsFilmsSeries.apply {
             loading.isVisible = visible
-            // detailFimsSeriesName.isVisible =!visible
         }
     }
 

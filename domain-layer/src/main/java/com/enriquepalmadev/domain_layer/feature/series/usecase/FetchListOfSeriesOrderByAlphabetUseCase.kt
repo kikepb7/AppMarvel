@@ -11,7 +11,6 @@ import javax.inject.Inject
 class FetchListOfSeriesOrderByAlphabetUseCase @Inject constructor(
     private val filmSerieRepository: IFilmSerieRepository
 ) {
-    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getListOfSeriesOrderByAlphabet(series: List<FilmSerieModel>): Flow<ResponseEither<FailureDomain, List<FilmSerieModel>>> {
         return flow { emit(filmSerieRepository.orderListByAlphabet(series)) }
     }

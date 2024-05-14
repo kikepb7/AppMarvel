@@ -11,7 +11,6 @@ import javax.inject.Inject
 class FetchListOfAllSeriesUseCase @Inject constructor(
     private val filmSerieRepository: IFilmSerieRepository
 ) {
-    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getListOfAllSeries(): Flow<ResponseEither<FailureDomain, List<FilmSerieModel>?>> {
         return flow { emit(filmSerieRepository.getListOfAllSeries()) }
     }

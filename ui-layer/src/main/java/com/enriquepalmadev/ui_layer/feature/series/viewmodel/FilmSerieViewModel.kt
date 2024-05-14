@@ -25,23 +25,18 @@ class FilmSerieViewModel @Inject constructor(
     private val iFetchListFilterByNameUseCase: FetchListFilterByNameUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Loading)
+    private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Idle)
     val uiState: StateFlow<FilmSerieUIState> = _uiState
-
-    // private val iFetchListOfAllSeriesUseCase = FetchListOfAllSeriesUseCase()
-    // private val iFetchListOfSeriesOrderByStartYearUseCase = FetchListOfSeriesOrderByStartYearUseCase()
-    // private val iFetchListOfSeriesOrderByAlphabetUseCase = FetchListOfSeriesOrderByAlphabetUseCase()
-    // private val iFetchListFilterByNameUseCase = FetchListFilterByNameUseCase()
 
     private var allSeriesList: List<FilmSerieModel>? = listOf()
 
     private fun customFilterList(series: List<FilmSerieModel>): List<FilmSerieModel> {
         return series.filter {
-            !it.description.isNullOrEmpty()
+            it.description.isNullOrEmpty().not()
         }.sortedByDescending { it.startYear }
     }
 
-    fun done() {
+    private fun done() {
         viewModelScope.launch {
             allSeriesList?.let { FilmSerieUIState.ListReceived(it) }?.let { _uiState.emit(it) }
         }
@@ -75,18 +70,6 @@ class FilmSerieViewModel @Inject constructor(
             }
         } else {
             done()
-        }
-    }
-
-    fun transferToDataDetail(id: Int) {
-        try {
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ItemClicked(id))
-            }
-        } catch (e: Exception) {
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain))
-            }
         }
     }
 
@@ -172,9 +155,9 @@ class FilmSerieViewModel @Inject constructor(
 
 }
 
-sealed class FilmSerieUIState {
-    data class Error(val error: FailureDomain) : FilmSerieUIState()
-    data object Loading : FilmSerieUIState()
-    data class ListReceived(val list: List<FilmSerieModel>) : FilmSerieUIState()
-    data class ItemClicked(val idSerie: Int) : FilmSerieUIState()
+sealed interface FilmSerieUIState {
+    data object Idle : FilmSerieUIState
+    data class Error(val error: FailureDomain) : FilmSerieUIState
+    data object Loading : FilmSerieUIState
+    data class ListReceived(val list: List<FilmSerieModel>) : FilmSerieUIState
 }

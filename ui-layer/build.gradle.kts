@@ -68,6 +68,7 @@ dependencies {
     val constraintCompose = "1.0.1"
     val composeUiVersion = "1.6.7"
     val material3Compose = "1.2.1"
+    val navigationCompose = "2.7.7"
 
     implementation(project(":domain-layer"))
 
@@ -106,8 +107,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics:$composeUiVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+    implementation("androidx.navigation:navigation-compose:$navigationCompose")
 
-    //Material Design 3
+    // SHIMMER ANIMATION
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.0")
+
+    //MATERIAL 3 COMPOSE
     implementation("androidx.compose.material3:material3:$material3Compose")
 
     testImplementation("junit:junit:$jUnitVersion")

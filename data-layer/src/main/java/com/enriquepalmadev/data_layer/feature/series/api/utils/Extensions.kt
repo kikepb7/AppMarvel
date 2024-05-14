@@ -8,7 +8,6 @@ import com.enriquepalmadev.data_layer.feature.series.failure.UnauthorizedErrorDa
 import com.enriquepalmadev.data_layer.feature.series.failure.UnknownHostErrorData
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 
-
 fun FailureData.toFailureDomain(): FailureDomain {
     return when (this) {
         CoroutineErrorData -> FailureDomain.CoroutineErrorDomain

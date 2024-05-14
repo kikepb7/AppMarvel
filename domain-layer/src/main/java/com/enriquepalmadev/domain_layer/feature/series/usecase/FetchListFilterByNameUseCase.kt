@@ -11,7 +11,6 @@ import javax.inject.Inject
 class FetchListFilterByNameUseCase @Inject constructor(
     private val filmSerieRepository: IFilmSerieRepository
 ) {
-    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getListFilterByName(
         newText: String,
         series: List<FilmSerieModel>

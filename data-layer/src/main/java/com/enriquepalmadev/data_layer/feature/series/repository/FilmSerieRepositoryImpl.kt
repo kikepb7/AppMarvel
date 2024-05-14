@@ -15,7 +15,6 @@ class FilmSerieRepositoryImpl @Inject constructor(
 ): IFilmSerieRepository {
 
     private val mapper: IFilmSerieMapper = Mappers.getMapper(IFilmSerieMapper::class.java)
-    // private val serieRemoteDataSourceImpl: ISerieRemoteDataSource = SerieRemoteRemoteDataSourceImpl()
 
     override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, List<FilmSerieModel>?> {
         return when(val responseEither = serieRemoteDataSource.getListOfAllSeries()){

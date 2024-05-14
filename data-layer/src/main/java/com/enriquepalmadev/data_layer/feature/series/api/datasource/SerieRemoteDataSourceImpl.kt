@@ -17,12 +17,6 @@ class SerieRemoteDataSourceImpl @Inject constructor(
     private val api: IMarvelFilmSerieService
 ) : ISerieDataSource {
 
-    /*
-    private val retrofitService: IMarvelFilmSerieService by lazy {
-        RetrofitBuilder.getRetrofit().create(IMarvelFilmSerieService::class.java)
-    }
-     */
-
     override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, ObjectResponseDto?> {
         return try {
             val response = api.getListOfAllSeries()

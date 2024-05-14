@@ -20,7 +20,6 @@ class ItemDetailFilmSerieViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiDetailState = MutableStateFlow<ItemDetailUIState>(ItemDetailUIState.Loading)
     val uiDetailState: StateFlow<ItemDetailUIState> = _uiDetailState
-    // private val iGetSerieByIdUseCase = FetchSerieByIdUseCase()
 
     fun getSerieById(id: Int) {
         viewModelScope.launch {
