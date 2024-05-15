@@ -115,6 +115,7 @@ dependencies {
     //MATERIAL 3 COMPOSE
     implementation("androidx.compose.material3:material3:$material3Compose")
 
+
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")

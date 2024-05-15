@@ -13,7 +13,8 @@ fun FilmSerieFragmentCompose(
     uiState: FilmSerieUIState,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
-    favClicked: () -> Unit
+    favClicked: () -> Unit,
+    onSearchQueryChange : (newText : String) -> Unit
 ) {
 
     /*
@@ -81,7 +82,8 @@ fun FilmSerieFragmentCompose(
                 series = uiState.list,
                 dialogOrderBy = dialogOrderBy,
                 itemClicked = itemClicked,
-                favClicked = favClicked
+                favClicked = favClicked,
+                onSearchQueryChange = onSearchQueryChange
             )
         }
 

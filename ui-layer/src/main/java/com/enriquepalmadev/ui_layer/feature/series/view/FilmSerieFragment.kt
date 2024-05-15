@@ -65,7 +65,10 @@ class FilmSerieFragment : Fragment() {
                                 findNavController(), id
                             )
                         },
-                        favClicked = ::onFavIconClicked
+                        favClicked = ::onFavIconClicked,
+                        onSearchQueryChange = { text ->
+                            onSearchQueryChange(text)
+                        }
                     )
                 }
             }
@@ -123,11 +126,10 @@ class FilmSerieFragment : Fragment() {
         )
     }
 
-    /*
     private fun onSearchQueryChange(newText: String) {
         viewModel.filteringByName(newText)
     }
-     */
+
     private fun onFavIconClicked() {
         // viewModel.favSerie(id, favState) TODO() Function to the database persist
         Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
