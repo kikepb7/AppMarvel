@@ -14,8 +14,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.painterResource
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
@@ -36,7 +38,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class FilmSerieFragment : Fragment() {
 
     private val viewModel: FilmSerieViewModel by viewModels()
-
     // private val state = State.LoadingScreen(placeholderResource = R.string.m_of_marvel)
 
     override fun onCreateView(
@@ -77,10 +78,7 @@ class FilmSerieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         //sendingListenerToAdapterItems()
-        //svOnQueryTextChange()
-
         viewModel.getAllSeriesListFromAPI()
     }
 
@@ -133,16 +131,18 @@ class FilmSerieFragment : Fragment() {
     private fun onFavIconClicked() {
         // viewModel.favSerie(id, favState) TODO() Function to the database persist
         Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
-        /*
-        favBtn.apply {
-            if (contentDescription == "on") {
-                setImageResource(R.drawable.ic_border_favorite_24dp)
-                contentDescription = "off"
-            } else if (contentDescription == "off") {
-                setImageResource(R.drawable.ic_full_favorite_24dp)
-                contentDescription = "on"
-            }
-        }
-         */
     }
+
+    /*
+    private fun onFavIconClicked(fav : Boolean) : Int {
+        // viewModel.favSerie(id, favState) TODO() Function to the database persist
+        Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
+
+        return if(fav){
+            R.drawable.ic_full_favorite_24dp
+        } else {
+            R.drawable.ic_border_favorite_24dp
+        }
+    }
+     */
 }

@@ -132,6 +132,8 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 @Composable
 fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
 
+    // var favIcon: Int
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
@@ -161,6 +163,13 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
                                     .padding(end = 3.dp, top = 3.dp),
                                 contentAlignment = Alignment.CenterEnd
                             ){
+                                /*
+                                favIcon = if (series[index].fav){
+                                    R.drawable.ic_full_favorite_24dp
+                                } else {
+                                    R.drawable.ic_border_favorite_24dp
+                                }
+                                 */
                                 Image(
                                     painter = painterResource(
                                         id = R.drawable.ic_border_favorite_24dp
@@ -169,7 +178,6 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
                                     alignment = Alignment.CenterEnd,
                                     modifier = Modifier.clickable { favClicked() }
                                 )
-
                             }
                         }
                         // Title
