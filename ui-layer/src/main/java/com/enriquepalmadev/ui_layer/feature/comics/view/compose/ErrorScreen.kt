@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenError
-import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHeader
 
 @Composable
 fun ErrorScreen(

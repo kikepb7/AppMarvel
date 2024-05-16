@@ -42,23 +42,6 @@ class ComicsFragment : Fragment() {
 
                 state?.let { stateModel ->
 
-                    // TODO -->
-                    //  Usar aquí la lógica if-else? o con when
-                    //  o mejor dejar la lógica en el Composable padre (ComicListScreen)
-
-                    /*
-                    if (stateModel.loadingModel?.loader == true) {
-                        LoadingScreen()
-                    } else if (stateModel.errorScreenModel != null) {
-                        ErrorScreen(
-                            errorScreenModel = stateModel.errorScreenModel
-                        )
-                    }
-                    else {
-                        ComicListScreen()
-                     }
-                     */
-
                     ComicListScreen(
                         state = stateModel,
                         onComicClicked = {

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,37 +40,33 @@ class ComicsViewModel @Inject constructor(
     fun getComicsList() {
         viewModelScope.launch {
             fetchComicListUseCase.fetchComicList()
-
-                // TODO --> DIFERENCIAS ENTRE EMIT Y UPDATE
-                // TODO --> DIFERENCIAS ENTRE STATE Y EVENT
-
                 .onStart {
-                    _state.emit(
-                        ComicScreenState(
+                    _state.update { comicScreenState ->
+                        comicScreenState?.copy(
                             loadingScreenData = ComicListScreenLoading(loader = true)
                         )
-                    )
+                    }
                 }
                 .catch { e ->
-                    _state.emit(
-                        ComicScreenState(
+                    _state.update { comicScreenState ->
+                        comicScreenState?.copy(
                             loadingScreenData = ComicListScreenLoading(loader = false),
                             errorScreenData = ComicListScreenError(
                                 image = R.drawable.comic_detail_error,
                                 errorMsg = e.message.toString(),
                             )
                         )
-                    )
+                    }
                 }
                 .collect { result ->
                     when (result) {
                         is Either.Failure ->
-                            _state.emit(
-                                ComicScreenState(
+                            _state.update { comicScreenState ->
+                                comicScreenState?.copy(
                                     loadingScreenData = ComicListScreenLoading(loader = false),
                                     errorScreenData = result.error.toComicListScreenError()
                                 )
-                            )
+                            }
 
                         is Either.Success -> {
                             if (!result.data.isNullOrEmpty()) {
@@ -81,8 +78,9 @@ class ComicsViewModel @Inject constructor(
                                 filteredList?.let {
                                     comicList =
                                         filteredList // Guardamos la lista filtrada en una variable
-                                    _state.emit(
-                                        ComicScreenState(
+
+                                    _state.update { comicScreenState ->
+                                        comicScreenState?.copy(
                                             comicScreenData = ComicListScreenModel(
                                                 comicListScreenHeader = toComicListModelHeader(),
                                                 comicListModel = filteredList.toComicListModel(
@@ -94,7 +92,7 @@ class ComicsViewModel @Inject constructor(
                                             ),
                                             loadingScreenData = ComicListScreenLoading(loader = false)
                                         )
-                                    )
+                                    }
                                 }
                             }
                         }
@@ -121,8 +119,7 @@ class ComicsViewModel @Inject constructor(
         }
     }
 
-
-    // Different possible states
+    // Different possible events
     sealed class Event {
         data class FilteredListByName(val filteredComicList: List<ComicModel>?) : Event()
         data class NavigateToDetail(val comicId: Int) : Event()
