@@ -9,28 +9,19 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.painterResource
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.series.view.compose.ErrorView
 import com.enriquepalmadev.ui_layer.feature.series.view.compose.FilmSerieFragmentCompose
-import com.enriquepalmadev.ui_layer.feature.series.view.compose.LoadingView
-import com.enriquepalmadev.ui_layer.feature.series.view.compose.Series
-import com.enriquepalmadev.ui_layer.feature.series.view.model.State
-import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -38,7 +29,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class FilmSerieFragment : Fragment() {
 
     private val viewModel: FilmSerieViewModel by viewModels()
-    // private val state = State.LoadingScreen(placeholderResource = R.string.m_of_marvel)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +48,6 @@ class FilmSerieFragment : Fragment() {
                         .background(Color.White),
                 ) {
                     FilmSerieFragmentCompose(
-                        // state = state,
                         uiState = uiState,
                         dialogOrderBy = ::showDialogOrderBy,
                         itemClicked = { id ->
@@ -78,7 +67,6 @@ class FilmSerieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //sendingListenerToAdapterItems()
         viewModel.getAllSeriesListFromAPI()
     }
 
@@ -131,13 +119,7 @@ class FilmSerieFragment : Fragment() {
     private fun onFavIconClicked() {
         // viewModel.favSerie(id, favState) TODO() Function to the database persist
         Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
-    }
-
-    /*
-    private fun onFavIconClicked(fav : Boolean) : Int {
-        // viewModel.favSerie(id, favState) TODO() Function to the database persist
-        Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
-
+        /*
         return if(fav){
             R.drawable.ic_full_favorite_24dp
         } else {
@@ -145,4 +127,5 @@ class FilmSerieFragment : Fragment() {
         }
     }
      */
+    }
 }

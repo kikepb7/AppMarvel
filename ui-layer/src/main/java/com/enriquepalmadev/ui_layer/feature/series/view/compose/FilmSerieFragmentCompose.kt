@@ -4,12 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.series.view.model.State
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 
 @Composable
 fun FilmSerieFragmentCompose(
-    // state : State,
     uiState: FilmSerieUIState,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
@@ -17,76 +15,61 @@ fun FilmSerieFragmentCompose(
     onSearchQueryChange : (newText : String) -> Unit
 ) {
 
-    /*
-    when(state){
-        is State.ErrorScreen -> TODO()
-        is State.LoadingScreen -> {
-            LoadingView(state.placeholderResource)
-        }
-        is State.SeriesScreen -> TODO()
-        else -> Unit
+    if (uiState.isLoading){
+        LoadingView()
     }
-     */
 
-    when (uiState) {
-        is FilmSerieUIState.Error -> {
-            when ((uiState).error) {
-                is FailureDomain.CustomErrorDomain -> {
-                    ErrorView(
-                        uiState.error.code,
-                        uiState.error.msg,
-                        R.drawable.error_404
-                    )
-                }
+    if(uiState.list.isNotEmpty()){
+        Series(
+            series = uiState.list,
+            dialogOrderBy = dialogOrderBy,
+            itemClicked = itemClicked,
+            favClicked = favClicked,
+            onSearchQueryChange = onSearchQueryChange
+        )
+    }
 
-                FailureDomain.UnauthorizedErrorDomain -> {
-                    ErrorView(
-                        stringResource(id = R.string.title_401),
-                        stringResource(id = R.string.msg_401),
-                        R.drawable.thanos_unauthorized
-                    )
-                }
+    if(uiState.isError!=null){
+        when(uiState.isError){
+            is FailureDomain.CustomErrorDomain -> {
+                ErrorView(
+                    uiState.isError.code,
+                    uiState.isError.msg,
+                    R.drawable.error_404
+                )
+            }
 
-                FailureDomain.EmptyErrorDomain -> {
-                    ErrorView(
-                        stringResource(R.string.title_empty_error),
-                        stringResource(R.string.msg_empty_error),
-                        R.drawable.deadpool_no_connection
-                    )
-                }
+            FailureDomain.UnauthorizedErrorDomain -> {
+                ErrorView(
+                    stringResource(id = R.string.title_401),
+                    stringResource(id = R.string.msg_401),
+                    R.drawable.thanos_unauthorized
+                )
+            }
 
-                FailureDomain.UnknownHostErrorDomain -> {
-                    ErrorView(
-                        stringResource(R.string.title_unknown_host_error),
-                        stringResource(R.string.msg_unknown_host_error),
-                        R.drawable.captain_empty
-                    )
-                }
+            FailureDomain.EmptyErrorDomain -> {
+                ErrorView(
+                    stringResource(R.string.title_empty_error),
+                    stringResource(R.string.msg_empty_error),
+                    R.drawable.deadpool_no_connection
+                )
+            }
 
-                FailureDomain.CoroutineErrorDomain -> {
-                    ErrorView(
-                        stringResource(R.string.title_coroutine_error),
-                        stringResource(R.string.msg_coroutine_error),
-                        R.drawable.groot_error
-                    )
-                }
+            FailureDomain.UnknownHostErrorDomain -> {
+                ErrorView(
+                    stringResource(R.string.title_unknown_host_error),
+                    stringResource(R.string.msg_unknown_host_error),
+                    R.drawable.captain_empty
+                )
+            }
+
+            FailureDomain.CoroutineErrorDomain -> {
+                ErrorView(
+                    stringResource(R.string.title_coroutine_error),
+                    stringResource(R.string.msg_coroutine_error),
+                    R.drawable.groot_error
+                )
             }
         }
-
-        FilmSerieUIState.Loading -> {
-            LoadingView()
-        }
-
-        is FilmSerieUIState.ListReceived -> {
-            Series(
-                series = uiState.list,
-                dialogOrderBy = dialogOrderBy,
-                itemClicked = itemClicked,
-                favClicked = favClicked,
-                onSearchQueryChange = onSearchQueryChange
-            )
-        }
-
-        else -> Unit
     }
 }

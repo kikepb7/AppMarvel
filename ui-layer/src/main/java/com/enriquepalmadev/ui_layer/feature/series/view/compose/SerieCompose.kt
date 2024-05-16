@@ -34,7 +34,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -133,7 +132,6 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
 
     // var favIcon: Int
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
@@ -196,59 +194,8 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
                             )
                         }
                     }
-
                 }
-
             }
-
         }
     )
 }
-
-/*
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(showSystemUi = true)
-@Composable
-fun FavIcon() {
-    var text by remember { mutableStateOf("") }
-    var active by remember { mutableStateOf(false) }
-    Row {
-        Box (
-            modifier = Modifier
-                .width(230.dp)
-                .height(45.dp)
-                .absolutePadding(5.dp, 5.dp, 5.dp, 0.dp),
-            contentAlignment = Alignment.CenterStart
-        ){
-            SearchBar(
-                query = text,
-                onQueryChange = { text = it },
-                onSearch = { active = false},
-                active = active,
-                onActiveChange = { active = it }
-            ) {
-
-            }
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp)
-                .absolutePadding(5.dp, 5.dp, 5.dp, 0.dp),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.dark_red)
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.orderby),
-                    color = Color.White
-                )
-            }
-        }
-    }
-}
-*/
