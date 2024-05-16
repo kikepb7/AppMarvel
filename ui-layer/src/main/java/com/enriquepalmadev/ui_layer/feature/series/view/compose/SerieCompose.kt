@@ -95,6 +95,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
                                     text = ""
                                 } else {
                                     active = false
+                                    onSearchQueryChange(text)
                                 }
                             },
                             imageVector = Icons.Default.Clear,
