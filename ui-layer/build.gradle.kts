@@ -1,11 +1,10 @@
 plugins {
+    id("kotlin-android")
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs.kotlin")
-
-    // HILT
-    kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -16,17 +15,6 @@ android {
         minSdk = 29
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     kapt {
@@ -76,20 +64,20 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
 
-    /* FACEBOOK */
+    // FACEBOOK
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
 
-    /* FRAGMENT */
+    // FRAGMENT
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
-    /* NAVIGATION */
+    // NAVIGATION
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
-    /* VIEWMODEL */
+    // VIEWMODEL
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion")
 
-    /* GLIDE */
+    // GLIDE
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
     // COIL
