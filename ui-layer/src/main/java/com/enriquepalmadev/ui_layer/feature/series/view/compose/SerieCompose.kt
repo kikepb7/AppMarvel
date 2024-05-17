@@ -64,66 +64,61 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
 
-    Row {
-        Box (
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        SearchBar(
             modifier = Modifier
-                .width(230.dp)
+                .fillMaxWidth(0.6f)
                 .height(80.dp)
-                .padding(5.dp, 8.dp, 5.dp, 5.dp),
-            contentAlignment = Alignment.CenterStart
-        ){
-            SearchBar(
-                query = text,
-                onQueryChange = {
-                    text = it
-                    onSearchQueryChange(text)
-                                },
-                onSearch = { active = false},
-                active = active,
-                onActiveChange = { active = it },
-                placeholder = {
-                    Text(text = stringResource(id = R.string.search))
-                },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                },
-                trailingIcon = {
-                    if (active){
-                        Icon(
-                            modifier = Modifier.clickable {
-                                if (text.isNotEmpty()){
-                                    text = ""
-                                } else {
-                                    active = false
-                                    onSearchQueryChange(text)
-                                }
+                .padding(5.dp, 5.dp, 5.dp, 5.dp),
+            query = text,
+            onQueryChange = {
+                text = it
+                onSearchQueryChange(text)
                             },
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = null
-                        )
-                    }
+            onSearch = { active = false},
+            active = active,
+            onActiveChange = { active = it },
+            placeholder = {
+                Text(text = stringResource(id = R.string.search))
+            },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            },
+            trailingIcon = {
+                if (active){
+                    Icon(
+                        modifier = Modifier.clickable {
+                            if (text.isNotEmpty()){
+                                text = ""
+                            } else {
+                                active = false
+                                onSearchQueryChange(text)
+                            }
+                        },
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = null
+                    )
                 }
-            ) { }
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .padding(5.dp, 12.dp, 5.dp, 5.dp),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Button(
-                modifier = Modifier.height(40.dp),
-                onClick = { dialogOrderBy() },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.dark_red)
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.orderby),
-                    color = Color.White
-                )
             }
+        ) { }
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .height(60.dp)
+                .padding(5.dp, 15.dp, 5.dp, 5.dp).align(Alignment.CenterVertically),
+            onClick = { dialogOrderBy() },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.dark_red)
+            )
+        ) {
+            Text(
+                text = stringResource(R.string.orderby),
+                color = Color.White
+            )
         }
     }
 }
@@ -162,13 +157,6 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
                                     .padding(end = 3.dp, top = 3.dp),
                                 contentAlignment = Alignment.CenterEnd
                             ){
-                                /*
-                                favIcon = if (series[index].fav){
-                                    R.drawable.ic_full_favorite_24dp
-                                } else {
-                                    R.drawable.ic_border_favorite_24dp
-                                }
-                                 */
                                 Image(
                                     painter = painterResource(
                                         id = R.drawable.ic_border_favorite_24dp

@@ -74,19 +74,6 @@ class FilmSerieViewModel @Inject constructor(
         }
     }
 
-        /* TODO() This function is thought to the database persist
-    fun favSerie(id: Int, favState: String) {
-        when (favState){
-            "on" -> {
-                TODO() // Add film to fav list
-            }
-            "off" -> {
-                TODO() // Remove film to fav list
-            }
-        }
-    }
-     */
-
     fun orderListByStartYear() {
         viewModelScope.launch {
             allSeriesList?.let { seriesList ->

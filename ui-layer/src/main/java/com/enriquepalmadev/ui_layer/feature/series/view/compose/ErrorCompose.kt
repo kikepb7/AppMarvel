@@ -1,12 +1,11 @@
 package com.enriquepalmadev.ui_layer.feature.series.view.compose
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,26 +23,21 @@ import com.enriquepalmadev.ui_layer.R
 @Composable
 fun ErrorView(error: String, msg: String, drawable: Int){
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Box(
+        Image(
             modifier = Modifier
-                .size(300.dp)
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 100.dp, bottom = 5.dp, start = 5.dp, end = 5.dp)
-        ){
-            Image(
-                modifier = Modifier
-                    .fillMaxSize(),
-                painter = painterResource(id = drawable),
-                contentDescription = "error")
-        }
-
+                .fillMaxHeight(0.5f)
+                .fillMaxWidth(1f)
+                .padding(top = 70.dp, bottom = 5.dp, start = 5.dp, end = 5.dp),
+            painter = painterResource(id = drawable),
+            contentDescription = "error"
+        )
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp),
+                .padding(top = 30.dp, bottom = 5.dp, start = 5.dp, end = 5.dp),
             text = error,
             style = TextStyle(
                 fontSize = 12.sp,
@@ -52,7 +46,6 @@ fun ErrorView(error: String, msg: String, drawable: Int){
                 fontWeight = FontWeight.Black
             )
         )
-
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,5 +63,5 @@ fun ErrorView(error: String, msg: String, drawable: Int){
 @Preview(showSystemUi = true)
 @Composable
 fun Error (){
-    ErrorView(error = "titulo", msg = "descripcion", drawable = R.drawable.error_404)
+    ErrorView(error = "Title", msg = "Description", drawable = R.drawable.captain_empty)
 }

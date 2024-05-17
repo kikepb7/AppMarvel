@@ -1,11 +1,10 @@
 package com.enriquepalmadev.ui_layer.feature.series.view.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -21,21 +20,18 @@ import com.enriquepalmadev.ui_layer.R
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun LoadingView(){
-    Box(
+    Text(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.dark_red))
-            .shimmer(),
-        contentAlignment = Alignment.Center){
-        Text(
-            style = TextStyle(
-                fontSize = 100.sp,
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontWeight = FontWeight.Black
-            ),
-            text = stringResource(id = R.string.m_of_marvel)
-        )
-    }
-
+            .shimmer()
+            .wrapContentHeight(),
+        style = TextStyle(
+            fontSize = 100.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Black
+        ),
+        textAlign = TextAlign.Center,
+        text = stringResource(id = R.string.m_of_marvel)
+    )
 }
