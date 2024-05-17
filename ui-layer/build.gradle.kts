@@ -67,20 +67,20 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
 
-    /* FACEBOOK */
+    // FACEBOOK
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
 
-    /* FRAGMENT */
+    // FRAGMENT
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
-    /* NAVIGATION */
+    // NAVIGATION
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
-    /* VIEWMODEL */
+    // VIEWMODEL
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion")
 
-    /* GLIDE */
+    // GLIDE
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
     // HILT

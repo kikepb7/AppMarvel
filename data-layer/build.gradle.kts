@@ -1,5 +1,5 @@
 plugins {
-//    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.android")
 
     // HILT
     kotlin("kapt")
@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.enriquepalmadev.data_layer"
-//    compileSdk = 34
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 29
@@ -23,10 +23,10 @@ android {
 //    }
 
 
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_1_8
-//        targetCompatibility = JavaVersion.VERSION_1_8
-//    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -36,6 +36,7 @@ kapt {
     correctErrorTypes = true
     generateStubs = true
 }
+
 dependencies {
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
@@ -54,15 +55,15 @@ dependencies {
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
 
-    /* MAPSTRUCT */
+    // MAPSTRUCT
     implementation("org.mapstruct:mapstruct:$mapStructVersion.Final")
     kapt("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
-    /* RETROFIT */
+    // RETROFIT
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-    /* INTERCEPTOR */
+    // INTERCEPTOR
     implementation("com.squareup.okhttp3:logging-interceptor:$interceptorVersion")
 
     // HILT
