@@ -19,8 +19,8 @@ class GetCharacterUseCase @Inject constructor(
         return flow {
             when (val response = characterListRepository.getCharacterList()) {
                 is Either.Success -> {
-                    val filteredList = response.data?.filterEmptyImageAndDescription()
-                    emit(Either.Success(filteredList))
+                    //val filteredList = response.data?.filterEmptyImageAndDescription()
+                    emit(Either.Success(response.data))
                 }
 
                 is Either.Error -> {

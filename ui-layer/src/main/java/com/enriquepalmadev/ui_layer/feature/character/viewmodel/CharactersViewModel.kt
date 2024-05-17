@@ -9,6 +9,12 @@ import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderFavou
 import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderNameGetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.domain_layer.feature.commons.Either
+import com.enriquepalmadev.ui_layer.R
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharacterItemModel
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharacterListModel
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharactersScreenModel
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.ErrorScreenModel
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.TitleListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +30,7 @@ class CharactersViewModel @Inject constructor(
     private val listOrderNameGetCharacterUseCase : ListOrderNameGetCharacterUseCase,
     private val listOrderNameFavouritesGetCharacterUseCase : ListOrderFavouritesGetCharacterUseCase
 ): ViewModel() {
-    private val _state = MutableStateFlow<State>(State.Loading)
+    private val _state = MutableStateFlow<CharactersScreenModel>(CharactersScreenModel())
     val state = _state.asStateFlow()
 
 
@@ -32,14 +38,27 @@ class CharactersViewModel @Inject constructor(
         viewModelScope.launch {
             //Para probar lo de los Errores
             getCharacterUseCase.getCharacterList()
-                .onStart { _state.emit(State.Loading) }
+                .onStart { _state.emit(CharactersScreenModel(loadingModel = true)) }
                 .catch {exception ->
-                    _state.emit(State.Error)
+                    _state.emit(CharactersScreenModel(errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = exception.message.toString())))
                 }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))
-                        is Either.Success -> _state.emit(State.ListReceived(characterList.data))
+                        is Either.Error -> _state.emit(CharactersScreenModel(
+                            errorScreenModel = ErrorScreenModel(
+                                image = R.drawable.deadpool_no_connection,
+                                message = characterList.error.toString()
+                            )
+                        ))
+                        is Either.Success -> _state.emit(CharactersScreenModel(
+                            characterListModel = CharacterListModel(
+                                titleListModel = TitleListModel(
+                                    icon = R.drawable.ironman,
+                                    title = R.string.characters_view.toString()
+                                ),
+                                characterList = characterList.data
+                            )
+                        ))
                     }
                 }
         }
@@ -48,21 +67,27 @@ class CharactersViewModel @Inject constructor(
     fun getCharacterFiltList(filt: String){
         viewModelScope.launch {
             filtListGetCharacterUseCase.getCharacterFilterList(filt)
-                .onStart { _state.emit(State.Loading) }
+                .onStart { _state.emit(CharactersScreenModel(loadingModel = true)) }
                 .catch {exception ->
-                    /*
-                    val error = when(exception){
-                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
-                        else -> {CharacterError.UnknownHostError}
-                    }
-                    _state.emit(State.CharacterError(error))
-                     */
-                    _state.emit(State.Error)
+                    _state.emit(CharactersScreenModel(errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = exception.message.toString())))
                 }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
-                        is Either.Success -> _state.emit(State.ListReceived(characterList.data))
+                        is Either.Error -> _state.emit(CharactersScreenModel(
+                            errorScreenModel = ErrorScreenModel(
+                                image = R.drawable.deadpool_no_connection,
+                                message = characterList.error.toString()
+                            )
+                        ))
+                        is Either.Success -> _state.emit(CharactersScreenModel(
+                            characterListModel = CharacterListModel(
+                                titleListModel = TitleListModel(
+                                    icon = R.drawable.ironman,
+                                    title = R.string.characters_view.toString()
+                                ),
+                                characterList = characterList.data
+                            )
+                        ))
                     }
                 }
         }
@@ -71,22 +96,27 @@ class CharactersViewModel @Inject constructor(
     fun getCharacterListOrderByName(){
         viewModelScope.launch {
             listOrderNameGetCharacterUseCase.getCharacterListOrderByName()
-                .onStart { _state.emit(State.Loading) }
+                .onStart { _state.emit(CharactersScreenModel(loadingModel = true)) }
                 .catch {exception ->
-                    /*
-                    val error = when(exception){
-                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
-                        else -> {CharacterError.UnknownHostError}
-                    }
-                    _state.emit(State.CharacterError(error))
-                     */
-                    _state.emit(State.Error)
+                    _state.emit(CharactersScreenModel(errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = exception.message.toString())))
                 }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
-                        is Either.Success -> _state.emit(State.ListReceived(characterList.data))
-                    }
+                        is Either.Error -> _state.emit(CharactersScreenModel(
+                            errorScreenModel = ErrorScreenModel(
+                                image = R.drawable.deadpool_no_connection,
+                                message = characterList.error.toString()
+                            )
+                        ))
+                        is Either.Success -> _state.emit(CharactersScreenModel(
+                            characterListModel = CharacterListModel(
+                                titleListModel = TitleListModel(
+                                    icon = R.drawable.ironman,
+                                    title = R.string.characters_view.toString()
+                                ),
+                                characterList = characterList.data
+                            )
+                        ))                    }
                 }
         }
     }
@@ -94,22 +124,27 @@ class CharactersViewModel @Inject constructor(
     fun getCharacterListOrderByFavourites(){
         viewModelScope.launch {
             listOrderNameFavouritesGetCharacterUseCase.getCharacterListOrderFavourites()
-                .onStart { _state.emit(State.Loading) }
+                .onStart { _state.emit(CharactersScreenModel(loadingModel = true)) }//Esto sustituye al state
                 .catch {exception ->
-                    /*
-                    val error = when(exception){
-                        is CharacterError -> CharacterError.ApiError(code = exception.hashCode(), message = exception.message.toString())
-                        else -> {CharacterError.UnknownHostError}
-                    }
-                    _state.emit(State.CharacterError(error))
-                     */
-                    _state.emit(State.Error)
-
+                    _state.emit(CharactersScreenModel(errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = exception.message.toString())))
                 }
                 .collect{characterList ->
                     when(characterList){
-                        is Either.Error -> _state.emit(State.CharacterError(characterList.error))//Emitir estado de error
-                        is Either.Success -> _state.emit(State.ListReceived(characterList.data))
+                        is Either.Error -> _state.emit(CharactersScreenModel(
+                            errorScreenModel = ErrorScreenModel(
+                                image = R.drawable.deadpool_no_connection,
+                                message = characterList.error.toString()
+                            )
+                        ))//Emitir estado de error
+                        is Either.Success -> _state.emit(CharactersScreenModel(
+                            characterListModel = CharacterListModel(
+                                titleListModel = TitleListModel(
+                                    icon = R.drawable.ironman,
+                                    title = R.string.characters_view.toString()
+                                ),
+                                characterList = characterList.data
+                            )
+                        ))
                     }
                 }
         }

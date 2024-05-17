@@ -1,5 +1,6 @@
 package com.enriquepalmadev.ui_layer.feature.character.view.adapter
 
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.ui_layer.R

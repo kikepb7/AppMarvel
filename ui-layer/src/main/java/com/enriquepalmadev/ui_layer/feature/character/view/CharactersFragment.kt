@@ -1,11 +1,11 @@
 package com.enriquepalmadev.ui_layer.feature.character.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.PopupMenu
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,19 +29,22 @@ import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorMo
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.CharacterListScreen
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersViewModel
-import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersViewModel.State
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-
-// TODO Diferencia entre State Flow y Shared Flow
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
     private lateinit var composeView: ComposeView
     private val viewModel: CharactersViewModel by viewModels()
+
+    /*init {
+        viewModel.getCharacterList()
+    }
+
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
         return ComposeView(requireContext()).also {
             composeView = it
         }
@@ -50,71 +53,53 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         composeView.setContent {
-            val state by viewModel.state.collectAsState()// recolecta los estados
-            //Poner estados dentro del setContent
-            when (state) {
-                is State.CharacterError -> {
-                    showErrorCharacterError((state as State.CharacterError).error)
+           val state by viewModel.state.collectAsState()
+            CharacterListScreen(
+                model = state,
+                onCharacterClicked = { navigateToCharacterDetail(it.id) },
+                dialogOrderBy = { ::showDialogOrderBy },
+                onSearchQueryChange = { newtext -> onSearchQueryChange(newtext) }
+            )
+        }
+        viewModel.getCharacterList()
+    }
+
+    // Dialog to select the items order
+    private fun showDialogOrderBy() {
+
+        var selectedItemIndex: Int = 0
+        val arrayItemsOrderBy = arrayOf(
+            getString(R.string.orderby_fav_only),
+            getString(R.string.orderby_alphabet)
+        )
+        var selectedItem = arrayItemsOrderBy[selectedItemIndex]
+
+        context?.let { context ->
+            MaterialAlertDialogBuilder(context)
+                .setTitle(getString(R.string.dialog_title))
+                .setSingleChoiceItems(arrayItemsOrderBy, selectedItemIndex) { _, which ->
+                    selectedItemIndex = which
+                    selectedItem = arrayItemsOrderBy[which]
                 }
-
-                State.Error -> {
-                    val message = getString(R.string.unknownError)
-                    showError(message)
+                .setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
+                    orderListBy(selectedItem, requireContext())
                 }
-
-                is State.ListReceived -> {
-                    CharacterListScreen(//pasar por lambdas
-                        modifier = Modifier,
-                        navController = findNavController(),
-                        state = state,
-                        characterList = (state as State.ListReceived).listCharacters
-                    )
+                .setNegativeButton(getString(R.string.dialog_cancel)) { _, _ ->
+                    // No action needed when cancel is clicked
                 }
-
-                State.Loading -> {
-                    showLoader()
-
-                }
-
-                is State.NavigateToDetail -> {
-
-                    navigateToCharacterDetail((state as State.NavigateToDetail).characterId)
-                }
-
-            }
+                .show()
         }
     }
-    @Composable
-    private fun showErrorCharacterError(characterErrorModel: CharacterErrorModel) {
-        Text(
-            text = characterErrorModel.toString(),
-            color = Color.Red,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
 
-    @Composable
-    private fun showError(errorMessage: String) {
-        Text(
-            text = errorMessage,
-            color = Color.Red,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(16.dp)
-        )
-    }
-
-
-    @Composable
-    private fun showLoader() {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator()
+    private fun orderListBy(selectedItem: String, context: Context) {
+        when (selectedItem) {
+            context.getString(R.string.orderby_fav_only) -> viewModel.getCharacterListOrderByFavourites()
+            context.getString(R.string.orderby_alphabet) -> viewModel.getCharacterListOrderByName()
         }
+    }
+
+    private fun onSearchQueryChange(newText: String) {
+        viewModel.getCharacterFiltList(newText)
     }
 
     private fun navigateToCharacterDetail(characterId: Int) {
@@ -126,10 +111,10 @@ class CharactersFragment : Fragment() {
         )
 
     }
+/*
+    private fun showFiltersMenu(){
 
-    private fun showFiltersMenu(anchorView: Button){
-
-        val popupMenu = PopupMenu(context, anchorView)
+        val popupMenu = PopupMenu(requireContext(), composeView)
         val inflater: MenuInflater = popupMenu.menuInflater
         inflater.inflate(R.menu.filters_menu, popupMenu.menu)
 
@@ -147,4 +132,6 @@ class CharactersFragment : Fragment() {
         }
         popupMenu.show()
     }
+
+ */
 }
