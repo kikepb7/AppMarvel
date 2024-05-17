@@ -3,7 +3,6 @@ package com.enriquepalmadev.ui_layer.feature.series.view.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,8 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.enriquepalmadev.ui_layer.R
 
 @Composable
 fun ErrorView(error: String, msg: String, drawable: Int){
@@ -30,7 +31,7 @@ fun ErrorView(error: String, msg: String, drawable: Int){
             modifier = Modifier
                 .size(300.dp)
                 .align(Alignment.CenterHorizontally)
-                .absolutePadding(top = 100.dp, bottom = 5.dp, left = 5.dp, right = 5.dp)
+                .padding(top = 100.dp, bottom = 5.dp, start = 5.dp, end = 5.dp)
         ){
             Image(
                 modifier = Modifier
@@ -64,4 +65,10 @@ fun ErrorView(error: String, msg: String, drawable: Int){
             )
         )
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun Error (){
+    ErrorView(error = "titulo", msg = "descripcion", drawable = R.drawable.error_404)
 }

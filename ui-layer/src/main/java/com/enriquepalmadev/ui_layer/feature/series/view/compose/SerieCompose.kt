@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,6 +41,7 @@ import com.bumptech.glide.integration.compose.placeholder
 import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.ui_layer.R
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.tooling.preview.Preview
 
 
 @Composable
@@ -54,7 +54,7 @@ fun Series(
 ) {
     Column {
         SeriesListHeader(dialogOrderBy, onSearchQueryChange)
-        SeriesList(series, itemClicked, favClicked)
+        SeriesListBody(series, itemClicked, favClicked)
     }
 }
 
@@ -69,7 +69,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
             modifier = Modifier
                 .width(230.dp)
                 .height(80.dp)
-                .absolutePadding(5.dp, 8.dp, 5.dp, 5.dp),
+                .padding(5.dp, 8.dp, 5.dp, 5.dp),
             contentAlignment = Alignment.CenterStart
         ){
             SearchBar(
@@ -109,7 +109,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp)
-                .absolutePadding(5.dp, 12.dp, 5.dp, 5.dp),
+                .padding(5.dp, 12.dp, 5.dp, 5.dp),
             contentAlignment = Alignment.CenterEnd
         ) {
             Button(
@@ -130,7 +130,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
+fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
 
     // var favIcon: Int
     LazyVerticalGrid(
@@ -140,7 +140,7 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .absolutePadding(5.dp, 8.dp, 5.dp, 5.dp)
+                        .padding(5.dp, 8.dp, 5.dp, 5.dp)
                         .clickable { itemClicked(series[index].id) }
                         .background(Color.White)
                 ) {
@@ -173,7 +173,7 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
                                     painter = painterResource(
                                         id = R.drawable.ic_border_favorite_24dp
                                     ),
-                                    contentDescription = "like",
+                                    contentDescription = null,
                                     alignment = Alignment.CenterEnd,
                                     modifier = Modifier.clickable { favClicked() }
                                 )
@@ -188,7 +188,7 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                modifier = Modifier.absolutePadding(5.dp, 0.dp, 5.dp, 5.dp),
+                                modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 5.dp),
                                 text = series[index].title,
                                 fontSize = 14.sp,
                                 color = Color.White
@@ -199,4 +199,36 @@ fun SeriesList(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, fav
             }
         }
     )
+}
+
+private val film : FilmSerieModel = FilmSerieModel(
+    id = 1,
+    title = "Title",
+    description = "Description",
+    startYear = 0,
+    thumbnailExt = "",
+    thumbnailPath = ""
+)
+
+private val seriesMock: List<FilmSerieModel> = listOf(film, film, film, film, film)
+
+@Preview (showSystemUi = true)
+@Composable
+fun SeriesView(){
+    Series(series = seriesMock, dialogOrderBy = {}, itemClicked = {}, favClicked = {}) {
+    }
+}
+
+@Preview
+@Composable
+fun Header(){
+    SeriesListHeader(dialogOrderBy = {}) {
+    }
+}
+
+@Preview
+@Composable
+fun Body(){
+    SeriesListBody(seriesMock, {}) {
+    }
 }

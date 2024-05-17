@@ -119,13 +119,5 @@ class FilmSerieFragment : Fragment() {
     private fun onFavIconClicked() {
         // viewModel.favSerie(id, favState) TODO() Function to the database persist
         Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
-        /*
-        return if(fav){
-            R.drawable.ic_full_favorite_24dp
-        } else {
-            R.drawable.ic_border_favorite_24dp
-        }
-    }
-     */
     }
 }

@@ -61,7 +61,7 @@ class FilmSerieViewModel @Inject constructor(
 
                             is ResponseEither.Success -> {
                                 if (responseEither.r?.isEmpty() == true) {
-                                    _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.CoroutineErrorDomain) }
+                                    _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.EmptyErrorDomain) }
                                 } else {
                                     allSeriesList = responseEither.r?.let { customFilterList(it) }
                                     allSeriesList?.let { list ->
@@ -149,7 +149,7 @@ class FilmSerieViewModel @Inject constructor(
                             }
 
                             is ResponseEither.Success -> {
-                                _uiState.update { it.copy(list = responseEither.r, isLoading = false, isError = null) }
+                                _uiState.update { FilmSerieUIState(list = responseEither.r) }
                             }
                         }
                     }
