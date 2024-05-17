@@ -21,12 +21,12 @@ class SerieRemoteDataSourceImpl @Inject constructor(
         return try {
             val response = api.getListOfAllSeries()
             if (response.isSuccessful) {
-                ResponseEither.Success(r = response.body())
+                ResponseEither.Success(success = response.body())
             } else {
                 if (response.code() == Constants.ERROR_401) {
-                    ResponseEither.Failure(l = UnauthorizedErrorData.toFailureDomain())
+                    ResponseEither.Failure(failure = UnauthorizedErrorData.toFailureDomain())
                 } else {
-                    ResponseEither.Failure(l = CustomErrorData(
+                    ResponseEither.Failure(failure = CustomErrorData(
                             response.code().toString(),
                             response.errorBody().toString()
                         ).toFailureDomain()
@@ -34,9 +34,9 @@ class SerieRemoteDataSourceImpl @Inject constructor(
                 }
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = UnknownHostErrorData.toFailureDomain())
+            ResponseEither.Failure(failure = UnknownHostErrorData.toFailureDomain())
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomErrorData(
+            ResponseEither.Failure(failure = CustomErrorData(
                     e.toString(),
                     e.message.toString()
                 ).toFailureDomain()
@@ -51,25 +51,25 @@ class SerieRemoteDataSourceImpl @Inject constructor(
 
             if (response.isSuccessful) {
                 if (result != null) {
-                    ResponseEither.Success(r = result.first())
+                    ResponseEither.Success(success = result.first())
                 } else {
-                    ResponseEither.Failure(l = CustomErrorData(
+                    ResponseEither.Failure(failure = CustomErrorData(
                             response.code().toString(),
                             response.errorBody().toString()
                         ).toFailureDomain()
                     )
                 }
             } else {
-                ResponseEither.Failure(l = CustomErrorData(
+                ResponseEither.Failure(failure = CustomErrorData(
                         response.code().toString(),
                         response.errorBody().toString()
                     ).toFailureDomain()
                 )
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = UnknownHostErrorData.toFailureDomain())
+            ResponseEither.Failure(failure = UnknownHostErrorData.toFailureDomain())
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomErrorData(
+            ResponseEither.Failure(failure = CustomErrorData(
                     e.toString(),
                     e.message.toString()
                 ).toFailureDomain()

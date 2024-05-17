@@ -18,8 +18,8 @@ class FilmSerieRepositoryImpl @Inject constructor(
 
     override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, List<FilmSerieModel>?> {
         return when(val responseEither = serieRemoteDataSource.getListOfAllSeries()){
-            is ResponseEither.Failure -> ResponseEither.Failure(l = responseEither.l)
-            is ResponseEither.Success -> ResponseEither.Success(r = responseEither.r?.data?.results?.let { handlerSuccessGetAllSeries(it) })
+            is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure)
+            is ResponseEither.Success -> ResponseEither.Success(success = responseEither.success?.data?.results?.let { handlerSuccessGetAllSeries(it) })
         }
     }
 
@@ -31,8 +31,8 @@ class FilmSerieRepositoryImpl @Inject constructor(
 
     override suspend fun getSerieById(id: Int): ResponseEither<FailureDomain, FilmSerieModel> {
         return when(val responseEither = serieRemoteDataSource.getSerieById(id)){
-            is ResponseEither.Failure -> ResponseEither.Failure(l = responseEither.l)
-            is ResponseEither.Success -> ResponseEither.Success(r = handlerSuccessGetSerie(responseEither.r))
+            is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure)
+            is ResponseEither.Success -> ResponseEither.Success(success = handlerSuccessGetSerie(responseEither.success))
         }
     }
 
@@ -43,13 +43,13 @@ class FilmSerieRepositoryImpl @Inject constructor(
     override suspend fun orderListByStartYear(series: List<FilmSerieModel>): ResponseEither<FailureDomain, List<FilmSerieModel>> {
         return try {
             if (series.isNotEmpty()) {
-                ResponseEither.Success(r = series.sortedByDescending { it.startYear })
+                ResponseEither.Success(success = series.sortedByDescending { it.startYear })
             } else {
-                ResponseEither.Failure(l = FailureDomain.EmptyErrorDomain)
+                ResponseEither.Failure(failure = FailureDomain.EmptyErrorDomain)
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = FailureDomain.CustomErrorDomain(
+            ResponseEither.Failure(failure = FailureDomain.CustomErrorDomain(
                 e.toString(),
                 e.message.toString()
             )
@@ -60,13 +60,13 @@ class FilmSerieRepositoryImpl @Inject constructor(
     override suspend fun orderListByAlphabet(series: List<FilmSerieModel>): ResponseEither<FailureDomain, List<FilmSerieModel>> {
         return try {
             if (series.isNotEmpty()) {
-                ResponseEither.Success(r = series.sortedBy { it.title })
+                ResponseEither.Success(success = series.sortedBy { it.title })
             } else {
-                ResponseEither.Failure(l = FailureDomain.EmptyErrorDomain)
+                ResponseEither.Failure(failure = FailureDomain.EmptyErrorDomain)
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = FailureDomain.CustomErrorDomain(
+            ResponseEither.Failure(failure = FailureDomain.CustomErrorDomain(
                 e.toString(),
                 e.message.toString()
             )
@@ -80,15 +80,15 @@ class FilmSerieRepositoryImpl @Inject constructor(
     ): ResponseEither<FailureDomain, List<FilmSerieModel>> {
         return try {
             if (series.isNotEmpty()) {
-                ResponseEither.Success(r = series.filter {
+                ResponseEither.Success(success = series.filter {
                     it.title.lowercase().contains(newText.lowercase())
                 })
             } else {
-                ResponseEither.Failure(l = FailureDomain.EmptyErrorDomain)
+                ResponseEither.Failure(failure = FailureDomain.EmptyErrorDomain)
             }
 
         } catch (e: Exception) {
-            ResponseEither.Failure(l = FailureDomain.CustomErrorDomain(
+            ResponseEither.Failure(failure = FailureDomain.CustomErrorDomain(
                 e.toString(),
                 e.message.toString()
             )

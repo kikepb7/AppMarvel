@@ -40,9 +40,7 @@ class FilmSerieViewModel @Inject constructor(
     private fun done() {
         viewModelScope.launch {
             allSeriesList?.let { list ->
-                _uiState.update {
-                    it.copy(list = list, isLoading = false, isError = null)
-                }
+                _uiState.update { updateSuccess(list) }
             }
         }
     }
@@ -51,21 +49,20 @@ class FilmSerieViewModel @Inject constructor(
         if (allSeriesList?.isEmpty() == true) {
             viewModelScope.launch {
                 iFetchListOfAllSeriesUseCase.getListOfAllSeries()
-                    .onStart { _uiState.update { it.copy(list = emptyList(), isLoading = true, isError = null) } }
-                    .catch { _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.CoroutineErrorDomain) } }
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateCoroutineFailure() } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = responseEither.l) }
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
-                            is ResponseEither.Success -> {
-                                if (responseEither.r?.isEmpty() == true) {
-                                    _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.EmptyErrorDomain) }
+                            is ResponseEither.Success -> { // If it is success but the list comes empty...
+                                if (responseEither.success?.isEmpty() == true) {
+                                    _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
                                 } else {
-                                    allSeriesList = responseEither.r?.let { customFilterList(it) }
+                                    allSeriesList = responseEither.success?.let { customFilterList(it) }
                                     allSeriesList?.let { list ->
-                                        _uiState.update { it.copy(list = list, isLoading = false, isError = null) }
+                                        _uiState.update { updateSuccess(list) }
                                     }
                                 }
                             }
@@ -95,17 +92,16 @@ class FilmSerieViewModel @Inject constructor(
             allSeriesList?.let { seriesList ->
                 iFetchListOfSeriesOrderByStartYearUseCase
                     .getListOfSeriesOrderByStartYear(seriesList)
-                    .onStart { _uiState.update { it.copy(list = emptyList(), isLoading = true, isError = null) } }
-                    .catch { _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.CoroutineErrorDomain) } }
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateCoroutineFailure() } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = responseEither.l) }
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                allSeriesList = responseEither.r
-                                _uiState.update { it.copy(list = responseEither.r, isLoading = false, isError = null) }
+                                allSeriesList = responseEither.success
+                                _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
@@ -118,17 +114,16 @@ class FilmSerieViewModel @Inject constructor(
             allSeriesList?.let { seriesList ->
                 iFetchListOfSeriesOrderByAlphabetUseCase
                     .getListOfSeriesOrderByAlphabet(seriesList)
-                    .onStart { _uiState.update { it.copy(list = emptyList(), isLoading = true, isError = null) } }
-                    .catch { _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.CoroutineErrorDomain) } }
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateCoroutineFailure() } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = responseEither.l) }
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                allSeriesList = responseEither.r
-                                _uiState.update { it.copy(list = responseEither.r, isLoading = false, isError = null) }
+                                allSeriesList = responseEither.success
+                                _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
@@ -140,22 +135,37 @@ class FilmSerieViewModel @Inject constructor(
         viewModelScope.launch {
             allSeriesList?.let { seriesList ->
                 iFetchListFilterByNameUseCase.getListFilterByName(newText, seriesList)
-                    .onStart { _uiState.update { it.copy(list = emptyList(), isLoading = true, isError = null) } }
-                    .catch { _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = FailureDomain.CoroutineErrorDomain) } }
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateCoroutineFailure() } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.update { it.copy(list = emptyList(), isLoading = false, isError = responseEither.l) }
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                _uiState.update { FilmSerieUIState(list = responseEither.r) }
+                                _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
             }
         }
     }
+}
+
+private fun updateLoading(): FilmSerieUIState{
+    return FilmSerieUIState(isLoading = true)
+}
+
+private fun updateCoroutineFailure(): FilmSerieUIState{
+    return FilmSerieUIState(isError = FailureDomain.CoroutineErrorDomain)
+}
+
+private fun updateFailure(failure : FailureDomain): FilmSerieUIState{
+    return FilmSerieUIState(isError = failure)
+}
+
+private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState{
+    return FilmSerieUIState(list = seriesList)
 }
 
 data class FilmSerieUIState (

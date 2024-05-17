@@ -29,11 +29,11 @@ class ItemDetailFilmSerieViewModel @Inject constructor(
                 .collect { responseEither ->
                     when (responseEither) {
                         is ResponseEither.Failure -> {
-                            _uiDetailState.emit(ItemDetailUIState.Error(responseEither.l))
+                            _uiDetailState.emit(ItemDetailUIState.Error(responseEither.failure))
                         }
 
                         is ResponseEither.Success -> {
-                            _uiDetailState.emit(ItemDetailUIState.IdReceived(responseEither.r))
+                            _uiDetailState.emit(ItemDetailUIState.IdReceived(responseEither.success))
                         }
                     }
                 }
