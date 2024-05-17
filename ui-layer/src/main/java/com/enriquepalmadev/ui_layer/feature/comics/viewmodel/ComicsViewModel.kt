@@ -29,7 +29,7 @@ class ComicsViewModel @Inject constructor(
     private val fetchComicListUseCase: FetchComicUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<ComicScreenState?>(ComicScreenState())
+    private val _state = MutableStateFlow<ComicScreenState>(ComicScreenState())
     val state: StateFlow<ComicScreenState?> = _state.asStateFlow()
 
     private val _event = MutableStateFlow<Event?>(null)
@@ -42,14 +42,14 @@ class ComicsViewModel @Inject constructor(
             fetchComicListUseCase.fetchComicList()
                 .onStart {
                     _state.update { comicScreenState ->
-                        comicScreenState?.copy(
+                        comicScreenState.copy(
                             loadingScreenData = ComicListScreenLoading(loader = true)
                         )
                     }
                 }
                 .catch { e ->
                     _state.update { comicScreenState ->
-                        comicScreenState?.copy(
+                        comicScreenState.copy(
                             loadingScreenData = ComicListScreenLoading(loader = false),
                             errorScreenData = ComicListScreenError(
                                 image = R.drawable.comic_detail_error,
@@ -62,7 +62,7 @@ class ComicsViewModel @Inject constructor(
                     when (result) {
                         is Either.Failure ->
                             _state.update { comicScreenState ->
-                                comicScreenState?.copy(
+                                comicScreenState.copy(
                                     loadingScreenData = ComicListScreenLoading(loader = false),
                                     errorScreenData = result.error.toComicListScreenError()
                                 )
@@ -80,7 +80,7 @@ class ComicsViewModel @Inject constructor(
                                         filteredList // Guardamos la lista filtrada en una variable
 
                                     _state.update { comicScreenState ->
-                                        comicScreenState?.copy(
+                                        comicScreenState.copy(
                                             comicScreenData = ComicListScreenModel(
                                                 comicListScreenHeader = toComicListModelHeader(),
                                                 comicListModel = filteredList.toComicListModel(

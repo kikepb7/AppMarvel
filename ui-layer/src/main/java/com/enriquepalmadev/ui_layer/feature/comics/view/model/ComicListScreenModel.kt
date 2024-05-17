@@ -34,7 +34,7 @@ data class ComicListModel(
 )
 
 data class ComicListScreenModel(
-    val comicListScreenHeader: ComicListScreenHeader? = null,
+    val comicListScreenHeader: ComicListScreenHeader,
     val comicListModel: ComicListModel? = null,
     val favoriteListModel: ComicListModel? = null,
 )

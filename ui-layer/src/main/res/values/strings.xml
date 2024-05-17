@@ -74,6 +74,7 @@
     <string name="logo_error">Logo de error</string>
     <string name="favorite_button">Favorite button</string>
     <string name="title_icon">Title icon</string>
+    <string name="search_text">Buscar …</string>
     <string name="all_comics_title">TODOS LOS COMICS</string>
     <string name="favorite_comics_title">COMICS FAVORITOS</string>
     <string name="error_fragment_text">Unauthorized access</string>

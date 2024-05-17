@@ -39,7 +39,7 @@ import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHea
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeaderComicList(
-    comicListScreenHeader: ComicListScreenHeader?,
+    comicListScreenHeader: ComicListScreenHeader,
     onBackButtonClicked: () -> Unit
 ) {
     Column(
@@ -50,7 +50,7 @@ fun HeaderComicList(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        comicListScreenHeader?.let { headerModel ->
+        comicListScreenHeader.let { headerModel ->
             CenterAlignedTopAppBar(
                 modifier = Modifier
                     .fillMaxWidth(),
