@@ -18,6 +18,10 @@ tasks.register("assembleDebug") {
     dependsOn("build")
 }
 
+tasks.register("assembleDebugUnitTest") {
+    dependsOn("test")
+}
+
 dependencies {
     val kotlinCorutines = "1.6.1"
     val jUnitVersion = "4.13.2"
