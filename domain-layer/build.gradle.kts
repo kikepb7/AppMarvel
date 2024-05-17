@@ -14,6 +14,10 @@ kapt {
     generateStubs = true
 }
 
+tasks.register("assembleDebug") {
+    dependsOn("build")
+}
+
 dependencies {
     val kotlinCorutines = "1.6.1"
     val jUnitVersion = "4.13.2"
