@@ -10,7 +10,6 @@ import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderNameG
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.domain_layer.feature.commons.Either
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharacterItemModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharacterListModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharactersScreenModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.ErrorScreenModel
@@ -93,9 +92,37 @@ class CharactersViewModel @Inject constructor(
         }
     }
 
-    fun getCharacterListOrderByName(){
+    fun getCharacterListOrderByNameAZ(){
         viewModelScope.launch {
-            listOrderNameGetCharacterUseCase.getCharacterListOrderByName()
+            listOrderNameGetCharacterUseCase.getCharacterListOrderByNameAZ()
+                .onStart { _state.emit(CharactersScreenModel(loadingModel = true)) }
+                .catch {exception ->
+                    _state.emit(CharactersScreenModel(errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = exception.message.toString())))
+                }
+                .collect{characterList ->
+                    when(characterList){
+                        is Either.Error -> _state.emit(CharactersScreenModel(
+                            errorScreenModel = ErrorScreenModel(
+                                image = R.drawable.deadpool_no_connection,
+                                message = characterList.error.toString()
+                            )
+                        ))
+                        is Either.Success -> _state.emit(CharactersScreenModel(
+                            characterListModel = CharacterListModel(
+                                titleListModel = TitleListModel(
+                                    icon = R.drawable.ironman,
+                                    title = R.string.characters_view.toString()
+                                ),
+                                characterList = characterList.data
+                            )
+                        ))                    }
+                }
+        }
+    }
+
+    fun getCharacterListOrderByNameZA(){
+        viewModelScope.launch {
+            listOrderNameGetCharacterUseCase.getCharacterListOrderByNameZA()
                 .onStart { _state.emit(CharactersScreenModel(loadingModel = true)) }
                 .catch {exception ->
                     _state.emit(CharactersScreenModel(errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = exception.message.toString())))

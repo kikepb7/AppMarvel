@@ -19,6 +19,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,17 +45,17 @@ fun CharacterListScreen(
     model: CharactersScreenModel,
     onCharacterClicked: (CharacterModel) -> Unit,
     dialogOrderBy: () -> Unit,
-    onSearchQueryChange : (newText : String) -> Unit
+    onSearchQueryChange : (newText : String) -> Unit,
+    onFavClicked: () -> Unit
 ){
     //val state by charactersViewModel.state.collectAsState()
     val titleListModel = model.characterListModel?.titleListModel
     val charactersModel = model.characterListModel?.characterList
 
     
-    Column(
+    Column(//TODO mirar bien los metodos
         modifier = Modifier.fillMaxSize().background(Color.Black),
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
+        //horizontalAlignment = Alignment.CenterHorizontally
     ){
         if(model.loadingModel){
             LoadingScreen()
@@ -73,27 +76,27 @@ fun CharacterListScreen(
         CharacterList(
             titleListModel = titleListModel,
             list = charactersModel,
-            onCharacterClicked = onCharacterClicked
+            onCharacterClicked = onCharacterClicked,
+            onFavClicked = onFavClicked
         )
     }
 }
 
 
 @Composable
-fun CharacterList(titleListModel: TitleListModel?, list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit){
+fun CharacterList(titleListModel: TitleListModel?, list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit){
 //IF si la lista esta vacia  ver empty view
     list?.let {characterList ->
         LazyColumn {
             items(characterList) { character ->
-                CharacterItem(character = character, onCharacterClicked = onCharacterClicked)
+                CharacterItem(character = character, onCharacterClicked = onCharacterClicked, onFavClicked = onFavClicked)
             }
         }
     }
 }
 
-//TODO Pasar la imagen
 @Composable
-fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel) -> Unit) {
+fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit) {
     Row(
         modifier = Modifier
             .clickable {
@@ -101,29 +104,35 @@ fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel
             }
             .padding(16.dp)
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+
     ) {
-        Box (//TODO Verificar si hace falta nox
+        Box (//TODO Verificar si hace falta box
             modifier = Modifier
         ){
             //Cargamos la imagen
-            CharacterImage(imageUrl = character.thumbnailDTO, isFavorite = false, onFavoriteClicked = {}, title = "Titulo", modifier = Modifier.size(64.dp))
+            CharacterImage(
+                imageUrl = character.thumbnailDTO,
+                isFavorite = false, title = "Titulo",
+                onFavClicked = onFavClicked,
+                modifier = Modifier.size(100.dp))
         }
-        Spacer(modifier = Modifier.width(8.dp))
         //Cargamos el texto
         Text(
+            modifier = Modifier.padding(horizontal = 8.dp),
             text = character.name,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             color = Color.White
         )
-        //Description
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavoriteClicked: () -> Unit, title: String, modifier: Modifier = Modifier){
+fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> Unit, title: String, modifier: Modifier = Modifier){
+    val currentImage = remember { mutableStateOf(R.drawable.ic_border_favorite_24dp) }
+
     Column(modifier = modifier) {
         Box(modifier = Modifier.height(200.dp).width(200.dp)) {
             if (!imageUrl.isNullOrBlank()) {
@@ -147,10 +156,17 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavoriteClicked: ()
                 contentAlignment = Alignment.TopEnd
             ) {
                 Image(
-                    painter = painterResource(id = if (isFavorite) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp),
+                    painter = painterResource( id = currentImage.value ),
                     contentDescription = "like",
                     alignment = Alignment.TopEnd,
-                    //modifier = Modifier.clickable(onClick = onFavoriteClicked)
+                    modifier = Modifier.clickable{
+                        currentImage.value = if (currentImage.value == R.drawable.ic_border_favorite_24dp) {
+                            R.drawable.ic_full_favorite_24dp
+                        } else {
+                            R.drawable.ic_border_favorite_24dp
+                        }
+                        onFavClicked()
+                    }
                 )
             }
         }
@@ -198,5 +214,5 @@ fun LoadingScreen() {
 fun PreviewCharacterList(){
     val model: CharactersScreenModel = CharactersScreenModel()
 
-    CharacterList(titleListModel = model.characterListModel?.titleListModel, list = model.characterListModel?.characterList, onCharacterClicked = {} )
+    CharacterList(titleListModel = model.characterListModel?.titleListModel, list = model.characterListModel?.characterList, onCharacterClicked = {}, onFavClicked = {} )
 }

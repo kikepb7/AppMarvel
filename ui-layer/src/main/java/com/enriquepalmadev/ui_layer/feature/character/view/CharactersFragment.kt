@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -37,11 +38,6 @@ class CharactersFragment : Fragment() {
     private lateinit var composeView: ComposeView
     private val viewModel: CharactersViewModel by viewModels()
 
-    /*init {
-        viewModel.getCharacterList()
-    }
-
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -53,12 +49,13 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         composeView.setContent {
-           val state by viewModel.state.collectAsState()
+           val state by viewModel.state.collectAsState()//TODO onFavClick
             CharacterListScreen(
                 model = state,
                 onCharacterClicked = { navigateToCharacterDetail(it.id) },
-                dialogOrderBy = { ::showDialogOrderBy },
-                onSearchQueryChange = { newtext -> onSearchQueryChange(newtext) }
+                dialogOrderBy = { showDialogOrderBy() },
+                onSearchQueryChange = { newtext -> onSearchQueryChange(newtext) },
+                onFavClicked = {  }
             )
         }
         viewModel.getCharacterList()
@@ -70,7 +67,8 @@ class CharactersFragment : Fragment() {
         var selectedItemIndex: Int = 0
         val arrayItemsOrderBy = arrayOf(
             getString(R.string.orderby_fav_only),
-            getString(R.string.orderby_alphabet)
+            getString(R.string.orderby_alphabet_A_Z),
+            getString(R.string.orderby_alphabet_Z_A)
         )
         var selectedItem = arrayItemsOrderBy[selectedItemIndex]
 
@@ -94,7 +92,8 @@ class CharactersFragment : Fragment() {
     private fun orderListBy(selectedItem: String, context: Context) {
         when (selectedItem) {
             context.getString(R.string.orderby_fav_only) -> viewModel.getCharacterListOrderByFavourites()
-            context.getString(R.string.orderby_alphabet) -> viewModel.getCharacterListOrderByName()
+            context.getString(R.string.orderby_alphabet_A_Z) -> viewModel.getCharacterListOrderByNameAZ()
+            context.getString(R.string.orderby_alphabet_Z_A) -> viewModel.getCharacterListOrderByNameZA()
         }
     }
 
@@ -111,27 +110,4 @@ class CharactersFragment : Fragment() {
         )
 
     }
-/*
-    private fun showFiltersMenu(){
-
-        val popupMenu = PopupMenu(requireContext(), composeView)
-        val inflater: MenuInflater = popupMenu.menuInflater
-        inflater.inflate(R.menu.filters_menu, popupMenu.menu)
-
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.ordenAlfabetico ->{
-                    viewModel.getCharacterListOrderByName()
-                    true
-                }
-                R.id.favoritos ->{
-                    true
-                }
-                else -> false
-            }
-        }
-        popupMenu.show()
-    }
-
- */
 }
