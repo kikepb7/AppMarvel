@@ -3,7 +3,7 @@ package com.enriquepalmadev.data_layer.feature.character.utils.extensions
 import com.enriquepalmadev.data_layer.feature.character.dto.ResultDTO
 import com.enriquepalmadev.data_layer.feature.character.utils.CharacterError
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 
 fun List<ResultDTO>.toCharacterListModel(): List<CharacterModel>?{
     return this.map {
@@ -20,10 +20,10 @@ fun ResultDTO.toCharacterModel(): CharacterModel {
     )
 }
 
-fun CharacterError.toCharacterErrorDomain(): CharacterErrorDomain {
+fun CharacterError.toCharacterErrorDomain(): CharacterErrorModel {
      return when (this) {
-         is CharacterError.ApiError -> CharacterErrorDomain.ApiError(code, message)
-         CharacterError.Unauthorized -> CharacterErrorDomain.Unauthorized
-         CharacterError.UnknownHostError -> CharacterErrorDomain.UnknownHostError
+         is CharacterError.ApiError -> CharacterErrorModel.ApiError(code, message)
+         CharacterError.Unauthorized -> CharacterErrorModel.Unauthorized
+         CharacterError.UnknownHostError -> CharacterErrorModel.UnknownHostError
      }
 }

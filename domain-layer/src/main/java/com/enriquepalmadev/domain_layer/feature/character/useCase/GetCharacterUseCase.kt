@@ -1,9 +1,9 @@
 package com.enriquepalmadev.domain_layer.feature.character.useCase
 
-import com.enriquepalmadev.domain_layer.feature.character.CharacterRepository
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
-import com.enriquepalmadev.domain_layer.feature.character.utils.Either
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.character.utils.extensions.filterEmptyImageAndDescription
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +14,7 @@ class GetCharacterUseCase @Inject constructor(
     private val characterListRepository : CharacterRepository
 ){
 
-    suspend fun getCharacterList(): Flow<Either<CharacterErrorDomain, List<CharacterModel>?>> {
+    suspend fun getCharacterList(): Flow<Either<CharacterErrorModel, List<CharacterModel>?>> {
         //Filter to empty description and image
         return flow {
             when (val response = characterListRepository.getCharacterList()) {

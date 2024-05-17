@@ -40,6 +40,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initObserver()
+        retrieveFilmOrSerie()
     }
 
     private fun initObserver() {
@@ -85,7 +86,6 @@ class ItemDetailFilmSerieFragment : Fragment() {
                 }
 
                 ItemDetailUIState.Loading -> {
-                    retrieveFilmOrSerie()
                     showErrorView(false, null)
                     showLoading(true)
                 }

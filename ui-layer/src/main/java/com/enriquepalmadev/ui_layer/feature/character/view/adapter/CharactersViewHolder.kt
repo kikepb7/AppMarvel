@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.ItemSuperheroBinding
-import com.enriquepalmadev.ui_layer.feature.character.view.utils.loadImage
+import com.enriquepalmadev.ui_layer.commons.loadImage
 
 
 class CharactersViewHolder(
