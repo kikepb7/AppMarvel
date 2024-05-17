@@ -1,10 +1,8 @@
 plugins {
-    id("org.jetbrains.kotlin.android")
-
-    // HILT
-    kotlin("kapt")
     id("com.android.library")
+    id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -15,13 +13,6 @@ android {
         minSdk = 29
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-//    buildTypes {
-//        release {
-//            isMinifyEnabled = false
-//        }
-//    }
-
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

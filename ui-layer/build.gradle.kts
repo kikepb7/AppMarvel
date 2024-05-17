@@ -1,11 +1,10 @@
 plugins {
-//    id("org.jetbrains.kotlin.android")
-
-    kotlin("android")
-    kotlin("kapt")
+    id("kotlin-android")
     id("com.android.library")
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -17,13 +16,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-
-//    buildTypes {
-//        release {
-//            isMinifyEnabled = false
-//        }
-//    }
 
     kapt {
         correctErrorTypes = true

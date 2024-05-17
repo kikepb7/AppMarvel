@@ -2,12 +2,11 @@ plugins {
     id("java-library")
     id("kotlin")
     kotlin("kapt")
-
 }
-java {
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 kapt {
@@ -15,10 +14,10 @@ kapt {
     generateStubs = true
 }
 
-
 dependencies {
     val kotlinCorutines = "1.6.1"
     val jUnitVersion = "4.13.2"
+    val javaxInjextVersion = "1"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
 
@@ -30,7 +29,7 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     // HILT
-    implementation("javax.inject:javax.inject:1")
+    implementation("javax.inject:javax.inject:$javaxInjextVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
 }
