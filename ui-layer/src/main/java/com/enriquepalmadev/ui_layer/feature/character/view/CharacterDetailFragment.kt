@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.FragmentItemDetailsCharactersBinding
-import com.enriquepalmadev.ui_layer.feature.character.view.utils.loadImage
+import com.enriquepalmadev.ui_layer.commons.loadImage
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersDetailViewModel
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersDetailViewModel.DetailState
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,8 +82,8 @@ class CharacterDetailFragment : Fragment() {
         binding.errorText.visibility = View.VISIBLE
     }
 
-    private fun showErrorCharacterError(characterErrorDomain: CharacterErrorDomain){
-        binding.errorText.text = characterErrorDomain.toString()
+    private fun showErrorCharacterError(characterErrorModel: CharacterErrorModel){
+        binding.errorText.text = characterErrorModel.toString()
         binding.errorText.visibility = View.VISIBLE
     }
 

@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorDomain
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.FragmentCharactersBinding
 import com.enriquepalmadev.ui_layer.feature.character.view.adapter.CharactersAdapter
@@ -101,8 +101,8 @@ class CharactersFragment : Fragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun showErrorCharacterError(characterErrorDomain: CharacterErrorDomain){
-        binding.errorText.text = characterErrorDomain.toString()
+    private fun showErrorCharacterError(characterErrorModel: CharacterErrorModel){
+        binding.errorText.text = characterErrorModel.toString()
         binding.errorText.visibility = View.VISIBLE
     }
 
