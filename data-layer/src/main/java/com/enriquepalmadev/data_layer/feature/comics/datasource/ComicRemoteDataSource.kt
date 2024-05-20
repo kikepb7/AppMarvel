@@ -25,13 +25,6 @@ class ComicRemoteDataSource @Inject constructor(
                     )
                 )
             }
-        } catch (e: IOException) {
-            Either.Failure(
-                FailureDto(
-                    code = request.code(),
-                    message = request.errorBody().toString()
-                )
-            )
         } catch (e: Exception) {
             Either.Failure(
                 FailureDto(
@@ -56,13 +49,6 @@ class ComicRemoteDataSource @Inject constructor(
                     )
                 )
             }
-        } catch (e: IOException) {
-            Either.Failure(
-                FailureDto(
-                    code = request.code(),
-                    message = request.errorBody().toString()
-                )
-            )
         } catch (e: Exception) {
             Either.Failure(
                 FailureDto(

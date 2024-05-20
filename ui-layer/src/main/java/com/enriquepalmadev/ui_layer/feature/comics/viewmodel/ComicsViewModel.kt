@@ -36,11 +36,8 @@ class ComicsViewModel @Inject constructor(
     val event: StateFlow<Event?> = _event.asStateFlow()
 
     private var comicList: List<ComicModel> = emptyList()
-    private var fetchedComics = false
 
     fun getComicsList() {
-        if (fetchedComics) return else fetchedComics = true
-
         viewModelScope.launch {
             fetchComicListUseCase.fetchComicList()
                 .onStart { manageLoading() }
@@ -66,7 +63,8 @@ class ComicsViewModel @Inject constructor(
     private fun manageError(throwableError: Throwable) {
         _state.update { comicScreenState ->
             comicScreenState.copy(
-                errorScreenData = throwableError.toComicListScreenError()
+                errorScreenData = throwableError.toComicListScreenError(),
+                loadingScreenData = ComicListScreenLoading(loader = false)
             )
         }
     }
@@ -74,8 +72,8 @@ class ComicsViewModel @Inject constructor(
     private fun manageFailure(error: FailureDomain) {
         _state.update { comicScreenState ->
             comicScreenState.copy(
-                loadingScreenData = ComicListScreenLoading(loader = false),
-                errorScreenData = error.toComicListScreenError()
+                errorScreenData = error.toComicListScreenError(),
+                loadingScreenData = ComicListScreenLoading(loader = false)
             )
         }
     }
@@ -97,12 +95,22 @@ class ComicsViewModel @Inject constructor(
     }
 
     private fun updateListComicsState(filteredList: List<ComicModel>) {
-        comicList = filteredList
+        comicList = filteredList    // TODO --> Eliminar cuando recuperemos la lista por bbdd
 
+        _state.update { comicScreenState ->
+            comicScreenState.copy(
+                comicScreenData = ComicListScreenModel(
+                    comicListScreenHeader = toComicListModelHeader(),
+                    comicListModel = filteredList.toComicListModel(ComicListType.ALL_COMICS),
+                    favoriteListModel = filteredList.toComicListModel(ComicListType.FAVORITES)
+                ),
+                loadingScreenData = ComicListScreenLoading(loader = false)
+            )
+        }
         /*
         We use compareAndSet here, because it's a place where we are updating multiple properties
         together and we wanna ensure the atomic updates
-        */
+
         _state.value.let { comicScreenState ->
             val newComicScreenData = ComicListScreenModel(
                 comicListScreenHeader = toComicListModelHeader(),
@@ -115,7 +123,7 @@ class ComicsViewModel @Inject constructor(
             if (comicScreenState.comicScreenData != newComicScreenData ||
                 comicScreenState.loadingScreenData != newLoadingScreenData
             ) {
-                /*
+
                 With compareAndSet we only update the state if 'comicScreenState' is the same state than '_state'
 
                 If '_state' has changed since we obtained 'comicScreenState', compareAndSet will fail
@@ -123,7 +131,7 @@ class ComicsViewModel @Inject constructor(
 
                 compareAndSet is useful when multiples coroutines may be trying to update the sate
                 simultaneously. compareAndSet only update if the current state matches the expected one
-                 */
+
                 _state.compareAndSet(
                     expect = comicScreenState,
                     update = comicScreenState.copy(
@@ -132,13 +140,14 @@ class ComicsViewModel @Inject constructor(
                     )
                 )
             }
-        }
+        }*/
     }
 
     private fun manageEmptyList() {
         _state.update { comicScreenState ->
             comicScreenState.copy(
-                emptyListScreenData = toEmptyListModel()
+                emptyListScreenData = toEmptyListModel(),
+                loadingScreenData = ComicListScreenLoading(loader = false)
             )
         }
     }
