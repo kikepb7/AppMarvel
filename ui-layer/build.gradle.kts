@@ -56,8 +56,6 @@ dependencies {
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
     val composeVersion = "1.9.0"
-    val composeMaterialVersion = "1.6.7"
-    val constraintCompose = "1.0.1"
     val composeUiVersion = "1.6.7"
     val material3Compose = "1.2.1"
     val navigationCompose = "2.7.7"
@@ -93,8 +91,7 @@ dependencies {
 
     // COMPOSE
     implementation("androidx.activity:activity-compose:$composeVersion")
-    implementation("androidx.compose.material:material:$composeMaterialVersion")
-    implementation("androidx.constraintlayout:constraintlayout-compose:$constraintCompose")
+    implementation("androidx.compose.material:material:$composeUiVersion")
     implementation("androidx.compose.ui:ui:$composeUiVersion")
     implementation("androidx.compose.ui:ui-graphics:$composeUiVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
