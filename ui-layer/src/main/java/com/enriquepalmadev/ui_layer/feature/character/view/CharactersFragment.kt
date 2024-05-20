@@ -74,7 +74,7 @@ class CharactersFragment : Fragment() {
 
         context?.let { context ->
             MaterialAlertDialogBuilder(context)
-                .setTitle(getString(R.string.dialog_title))
+                .setTitle(getString(R.string.dialog_title_characters))
                 .setSingleChoiceItems(arrayItemsOrderBy, selectedItemIndex) { _, which ->
                     selectedItemIndex = which
                     selectedItem = arrayItemsOrderBy[which]

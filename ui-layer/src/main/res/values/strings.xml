@@ -23,9 +23,11 @@
     <string name="search_button">Buscar</string>
     <string name="filter_button">Ordenar por</string>
 
-    <!-- Films and series' dialog "order by" texts -->
+    <!-- Characters dialog "order by" texts -->
     <string name="orderby_alphabet_A_Z">by alphabet A-Z</string>
     <string name="orderby_alphabet_Z_A">by alphabet Z-A</string>
+    <string name="dialog_title_characters">Order characters…</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

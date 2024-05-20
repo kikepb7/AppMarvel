@@ -48,13 +48,14 @@ fun CharacterListScreen(
     onSearchQueryChange : (newText : String) -> Unit,
     onFavClicked: () -> Unit
 ){
-    //val state by charactersViewModel.state.collectAsState()
     val titleListModel = model.characterListModel?.titleListModel
     val charactersModel = model.characterListModel?.characterList
 
     
     Column(//TODO mirar bien los metodos
-        modifier = Modifier.fillMaxSize().background(Color.Black),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
         //horizontalAlignment = Alignment.CenterHorizontally
     ){
         if(model.loadingModel){
@@ -85,7 +86,6 @@ fun CharacterListScreen(
 
 @Composable
 fun CharacterList(titleListModel: TitleListModel?, list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit){
-//IF si la lista esta vacia  ver empty view
     list?.let {characterList ->
         LazyColumn {
             items(characterList) { character ->
@@ -97,29 +97,22 @@ fun CharacterList(titleListModel: TitleListModel?, list: List<CharacterModel>?, 
 
 @Composable
 fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit) {
-    Row(
+    Column(
         modifier = Modifier
-            .clickable {
-                onCharacterClicked(character)
-            }
+            .clickable { onCharacterClicked(character) }
             .padding(16.dp)
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box (//TODO Verificar si hace falta box
-            modifier = Modifier
-        ){
-            //Cargamos la imagen
-            CharacterImage(
-                imageUrl = character.thumbnailDTO,
-                isFavorite = false, title = "Titulo",
-                onFavClicked = onFavClicked,
-                modifier = Modifier.size(100.dp))
-        }
-        //Cargamos el texto
+        CharacterImage(
+            imageUrl = character.thumbnailDTO,
+            isFavorite = false,
+            title = character.name,
+            onFavClicked = onFavClicked,
+            modifier = Modifier.size(150.dp)
+        )
         Text(
-            modifier = Modifier.padding(horizontal = 8.dp),
+            modifier = Modifier.padding(top = 8.dp),
             text = character.name,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
@@ -134,7 +127,9 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
     val currentImage = remember { mutableStateOf(R.drawable.ic_border_favorite_24dp) }
 
     Column(modifier = modifier) {
-        Box(modifier = Modifier.height(200.dp).width(200.dp)) {
+        Box(modifier = Modifier
+            .height(200.dp)
+            .width(200.dp)) {
             if (!imageUrl.isNullOrBlank()) {
                 GlideImage(
                     model = imageUrl,
@@ -142,33 +137,30 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
                     //loading = { Box(Modifier.fillMaxSize()) { CircularProgressIndicator() } },
                     //failure = { Box(Modifier.fillMaxSize()) { Text(text = "Error") } },
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .height(200.dp)
+                        .width(200.dp)
                 )
             } else {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(text = "No Image", modifier = Modifier.align(Alignment.Center))
                 }
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 3.dp, top = 3.dp),
-                contentAlignment = Alignment.TopEnd
-            ) {
-                Image(
-                    painter = painterResource( id = currentImage.value ),
-                    contentDescription = "like",
-                    alignment = Alignment.TopEnd,
-                    modifier = Modifier.clickable{
-                        currentImage.value = if (currentImage.value == R.drawable.ic_border_favorite_24dp) {
-                            R.drawable.ic_full_favorite_24dp
-                        } else {
-                            R.drawable.ic_border_favorite_24dp
-                        }
-                        onFavClicked()
+            Image(
+                painter = painterResource( id = currentImage.value ),
+                contentDescription = "like",
+                alignment = Alignment.TopEnd,
+                modifier = Modifier.clickable{
+                    currentImage.value = if (currentImage.value == R.drawable.ic_border_favorite_24dp) {
+                        R.drawable.ic_full_favorite_24dp
+                    } else {
+                        R.drawable.ic_border_favorite_24dp
                     }
-                )
-            }
+                    onFavClicked()
+                }.fillMaxWidth()
+                    .padding(end = 3.dp, top = 3.dp),
+            )
         }
         Box(
             modifier = Modifier
@@ -187,25 +179,45 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
     }
 }
 
-
-/* funcion Errores */
 @Composable
 fun ErrorScreen(errorMessageId: Int, errorMessageString: String) {
     // Muestra el mensaje de error solo si errorMessageId no es 0
     if (errorMessageId != 0) {
-        Text(
-            text = stringResource(id = errorMessageId),
-            color = Color.Red,
-            modifier = Modifier.padding(8.dp)
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.deadpool_no_connection),
+                contentDescription = "No conection",
+                modifier = Modifier
+                    .size(150.dp)
+                    .padding(bottom = 16.dp)
+            )
+            Text(
+                text = errorMessageString,
+                color = Color.Red,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
     }
 }
 
 /* funcion Loader */
 @Composable
 fun LoadingScreen() {
-    // Muestra el ProgressBar
-    CircularProgressIndicator(modifier = Modifier)
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
 }
 
 
@@ -215,4 +227,47 @@ fun PreviewCharacterList(){
     val model: CharactersScreenModel = CharactersScreenModel()
 
     CharacterList(titleListModel = model.characterListModel?.titleListModel, list = model.characterListModel?.characterList, onCharacterClicked = {}, onFavClicked = {} )
+}
+
+@Preview
+@Composable
+fun PreviewCharacterItem(){
+    val character = CharacterModel(
+        id = 1,
+        name = "Spider-Man",
+        thumbnailDTO = "https://example.com/spiderman.jpg",
+        description = "Friendly neighborhood Spider-Man"
+    )
+    CharacterItem(
+        character = character,
+        onCharacterClicked = {},
+        onFavClicked = {}
+    )
+}
+
+@Preview
+@Composable
+fun PreviewCharacterImage() {
+    CharacterImage(
+        imageUrl = "https://example.com/spiderman.jpg",
+        isFavorite = false,
+        onFavClicked = {},
+        title = "Spider-Man",
+        modifier = Modifier.size(200.dp)
+    )
+}
+
+@Preview
+@Composable
+fun PreviewErrorScreen() {
+    ErrorScreen(
+        errorMessageId = R.drawable.deadpool_no_connection,
+        errorMessageString = "No connection"
+    )
+}
+
+@Preview
+@Composable
+fun PreviewLoadingScreen() {
+    LoadingScreen()
 }
