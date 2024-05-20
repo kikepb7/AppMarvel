@@ -1,9 +1,11 @@
 package com.enriquepalmadev.ui_layer.feature.comics.view.compose
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
@@ -15,51 +17,52 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenError
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenEmpty
 
 @Composable
-fun ErrorScreen(
-    comicListScreenError: ComicListScreenError
+fun EmptyListScreen(
+    comicListScreenEmpty: ComicListScreenEmpty
 ) {
+    Spacer(modifier = Modifier.height(32.dp))
+
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxSize()
+            .background(color = Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = comicListScreenError.image),
-            contentDescription = "Image Error"
+            painter = painterResource(id = comicListScreenEmpty.image),
+            contentDescription = "Empty list image",
+            modifier = Modifier
+                .fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = stringResource(id = comicListScreenError.errorMsg),
+            text = stringResource(id = comicListScreenEmpty.emptyMessage),
             style = TextStyle(
+                color = Color.Red,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
-
-            ),
-            color = Color.Red,
-            textAlign = TextAlign.Center
+            )
         )
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun ErrorScreenPreview() {
-    ErrorScreen(
-        comicListScreenError = ComicListScreenError(
-            image = R.drawable.unauthorized_error_logo,
-            errorMsg = R.string.api_error
+fun EmptyListScreenPreview() {
+    EmptyListScreen(
+        comicListScreenEmpty = ComicListScreenEmpty(
+            image = R.drawable.spiderman_deadpool_empty_list,
+            emptyMessage = R.string.empty_list
         )
     )
 }

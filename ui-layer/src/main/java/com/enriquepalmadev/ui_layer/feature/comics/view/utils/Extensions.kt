@@ -15,6 +15,7 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListModel
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenEmpty
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenError
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHeader
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenItemModel
@@ -55,7 +56,7 @@ fun toComicListModelHeader(): ComicListScreenHeader {
     return ComicListScreenHeader(
         imageLogo = R.drawable.marvel_comics_logo,
         icon = Icons.AutoMirrored.Filled.ArrowBack,
-        placeholderText = "Buscar...",
+        placeholderText = R.string.search_text,
         onClickSearch = {}
     )
 }
@@ -73,7 +74,7 @@ fun List<ComicModel>.toComicListModel(
             ComicListModel(
                 comicListScreenTitle = ComicListScreenTitle(
                     icon = R.drawable.ironman,
-                    title = "TODOS LOS COMICS"
+                    title = R.string.all_comics_title
                 ),
                 comicsModel = this.map {
                     it.toComicModel()
@@ -85,7 +86,7 @@ fun List<ComicModel>.toComicListModel(
             ComicListModel(
                 comicListScreenTitle = ComicListScreenTitle(
                     icon = R.drawable.ic_solid_heart,
-                    title = "COMICS FAVORITOS"
+                    title = R.string.favorite_comics_title
                 ),
                 comicsModel = this.map {
                     it.toComicModel()
@@ -106,20 +107,36 @@ fun FailureDomain.toComicListScreenError(): ComicListScreenError {
         is FailureDomain.ApiError -> {
             ComicListScreenError(
                 image = R.drawable.comic_detail_error,
-                errorMsg = R.string.error_code.toString()
+                errorMsg = R.string.api_error
             )
         }
-        FailureDomain.Unauthorized -> {
+
+        is FailureDomain.Unauthorized -> {
             ComicListScreenError(
-                image = R.drawable.comic_detail_error,
-                errorMsg = "ERROR 401 \nYou are not authorized!"
+                image = R.drawable.unauthorized_error_logo,
+                errorMsg = R.string.unauthorized_error
             )
         }
-        FailureDomain.UnknownHostError -> {
+
+        is FailureDomain.UnknownHostError -> {
             ComicListScreenError(
                 image = R.drawable.comic_detail_error,
-                errorMsg = R.string.error_code.toString()
+                errorMsg = R.string.unknownError
             )
         }
     }
+}
+
+fun Throwable.toComicListScreenError(): ComicListScreenError {
+    return ComicListScreenError(
+        image = R.drawable.comic_detail_error,
+        errorMsg = R.string.api_error
+    )
+}
+
+fun toEmptyListModel(): ComicListScreenEmpty {
+    return ComicListScreenEmpty(
+        image = R.drawable.spiderman_deadpool_empty_list,
+        emptyMessage = R.string.empty_list
+    )
 }

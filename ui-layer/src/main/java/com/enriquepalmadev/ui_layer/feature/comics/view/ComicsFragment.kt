@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.comics.view.compose.ComicListScreen
 import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.ComicsViewModel
+import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.Event
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,8 +36,6 @@ class ComicsFragment : Fragment() {
 
             initObserver()
 
-            viewModel.getComicsList()
-
             setContent {
                 val state by viewModel.state.collectAsState()
 
@@ -56,11 +55,22 @@ class ComicsFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /*
+        We call viewModel.getComicList() only if savedInstanceState is null
+        We ensures the comics list is only loaded the first time the fragment is created
+        */
+        if (savedInstanceState == null) {
+            viewModel.getComicsList()
+        }
+    }
+
     private fun initObserver() {
         viewModel.event.onEach { state ->
             when (state) {
-                is ComicsViewModel.Event.FilteredListByName -> {}
-                is ComicsViewModel.Event.NavigateToDetail -> {
+                is Event.NavigateToDetail -> {
                     findNavController().navigate(
                         ComicsFragmentDirections.actionComicsFragmentToComicDetail(
                             id = state.comicId
@@ -69,11 +79,12 @@ class ComicsFragment : Fragment() {
                     viewModel.idle()
                 }
 
-                ComicsViewModel.Event.NavigateToHome -> {
+                Event.NavigateToHome -> {
                     findNavController().navigate(R.id.homeFragment)
                 }
-                ComicsViewModel.Event.Idle -> {}
+                Event.Idle -> {}
                 null -> {}
+
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.Either
+import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.comics.usecase.FetchComicUseCase
-import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenError
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenLoading
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenModel
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicScreenState
@@ -14,6 +13,7 @@ import com.enriquepalmadev.ui_layer.feature.comics.view.utils.ComicListType
 import com.enriquepalmadev.ui_layer.feature.comics.view.utils.toComicListModel
 import com.enriquepalmadev.ui_layer.feature.comics.view.utils.toComicListModelHeader
 import com.enriquepalmadev.ui_layer.feature.comics.view.utils.toComicListScreenError
+import com.enriquepalmadev.ui_layer.feature.comics.view.utils.toEmptyListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,75 +29,131 @@ class ComicsViewModel @Inject constructor(
     private val fetchComicListUseCase: FetchComicUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<ComicScreenState>(ComicScreenState())
+    private val _state = MutableStateFlow(ComicScreenState())
     val state: StateFlow<ComicScreenState?> = _state.asStateFlow()
 
     private val _event = MutableStateFlow<Event?>(null)
     val event: StateFlow<Event?> = _event.asStateFlow()
 
     private var comicList: List<ComicModel> = emptyList()
+    private var fetchedComics = false
 
     fun getComicsList() {
+        if (fetchedComics) return else fetchedComics = true
+
         viewModelScope.launch {
             fetchComicListUseCase.fetchComicList()
-                .onStart {
-                    _state.update { comicScreenState ->
-                        comicScreenState.copy(
-                            loadingScreenData = ComicListScreenLoading(loader = true)
-                        )
-                    }
-                }
-                .catch { e ->
-                    _state.update { comicScreenState ->
-                        comicScreenState.copy(
-                            loadingScreenData = ComicListScreenLoading(loader = false),
-                            errorScreenData = ComicListScreenError(
-                                image = R.drawable.comic_detail_error,
-                                errorMsg = e.message.toString(),
-                            )
-                        )
-                    }
-                }
+                .onStart { manageLoading() }
+                .catch { throwableError -> manageError(throwableError = throwableError) }
                 .collect { result ->
                     when (result) {
-                        is Either.Failure ->
-                            _state.update { comicScreenState ->
-                                comicScreenState.copy(
-                                    loadingScreenData = ComicListScreenLoading(loader = false),
-                                    errorScreenData = result.error.toComicListScreenError()
-                                )
-                            }
+                        is Either.Failure -> { manageFailure(error = result.error) }
 
-                        is Either.Success -> {
-                            if (!result.data.isNullOrEmpty()) {
-                                val filteredList = result.data?.filter { comic ->
-                                    (!comic.description.isNullOrEmpty() && comic.description != "#N/A") &&
-                                            (comic.thumbnail != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg")
-                                }
-
-                                filteredList?.let {
-                                    comicList =
-                                        filteredList // Guardamos la lista filtrada en una variable
-
-                                    _state.update { comicScreenState ->
-                                        comicScreenState.copy(
-                                            comicScreenData = ComicListScreenModel(
-                                                comicListScreenHeader = toComicListModelHeader(),
-                                                comicListModel = filteredList.toComicListModel(
-                                                    ComicListType.ALL_COMICS
-                                                ),
-                                                favoriteListModel = filteredList.toComicListModel(
-                                                    ComicListType.FAVORITES
-                                                ),
-                                            ),
-                                            loadingScreenData = ComicListScreenLoading(loader = false)
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        is Either.Success -> { manageSuccess(result.data) }
                     }
                 }
+        }
+    }
+
+    private fun manageLoading() {
+        _state.update { comicScreenState ->
+            comicScreenState.copy(
+                loadingScreenData = ComicListScreenLoading(loader = true)
+            )
+        }
+    }
+
+    private fun manageError(throwableError: Throwable) {
+        _state.update { comicScreenState ->
+            comicScreenState.copy(
+                errorScreenData = throwableError.toComicListScreenError()
+            )
+        }
+    }
+
+    private fun manageFailure(error: FailureDomain) {
+        _state.update { comicScreenState ->
+            comicScreenState.copy(
+                loadingScreenData = ComicListScreenLoading(loader = false),
+                errorScreenData = error.toComicListScreenError()
+            )
+        }
+    }
+
+    private fun manageSuccess(data: List<ComicModel>?) {
+        if (!data.isNullOrEmpty()) {
+            val filteredList = filterComics(data)
+            updateListComicsState(filteredList = filteredList)
+        } else {
+            manageEmptyList()
+        }
+    }
+
+    private fun filterComics(comics: List<ComicModel>): List<ComicModel> {
+        return comics.filter { comic ->
+            (!comic.description.isNullOrEmpty() && comic.description != "#N/A") &&
+                    (comic.thumbnail != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg")
+        }
+    }
+
+    private fun updateListComicsState(filteredList: List<ComicModel>) {
+        comicList = filteredList
+
+        /*
+        We use compareAndSet here, because it's a place where we are updating multiple properties
+        together and we wanna ensure the atomic updates
+        */
+        _state.value.let { comicScreenState ->
+            val newComicScreenData = ComicListScreenModel(
+                comicListScreenHeader = toComicListModelHeader(),
+                comicListModel = filteredList.toComicListModel(ComicListType.ALL_COMICS),
+                favoriteListModel = filteredList.toComicListModel(ComicListType.FAVORITES)
+            )
+
+            val newLoadingScreenData = ComicListScreenLoading(loader = false)
+
+            if (comicScreenState.comicScreenData != newComicScreenData ||
+                comicScreenState.loadingScreenData != newLoadingScreenData
+            ) {
+                /*
+                With compareAndSet we only update the state if 'comicScreenState' is the same state than '_state'
+
+                If '_state' has changed since we obtained 'comicScreenState', compareAndSet will fail
+                and the update will not realise
+
+                compareAndSet is useful when multiples coroutines may be trying to update the sate
+                simultaneously. compareAndSet only update if the current state matches the expected one
+                 */
+                _state.compareAndSet(
+                    expect = comicScreenState,
+                    update = comicScreenState.copy(
+                        comicScreenData = newComicScreenData,
+                        loadingScreenData = newLoadingScreenData
+                    )
+                )
+            }
+        }
+    }
+
+    private fun manageEmptyList() {
+        _state.update { comicScreenState ->
+            comicScreenState.copy(
+                emptyListScreenData = toEmptyListModel()
+            )
+        }
+    }
+
+    fun filterComicsByName(text: String) {
+        val filteredList = comicList.filter { comic ->
+            comic.title.contains(text, ignoreCase = true)
+        }
+        _state.update { comicScreenState ->
+            comicScreenState.copy(
+                comicScreenData = comicScreenState.comicScreenData?.copy(
+                    comicListModel = filteredList.toComicListModel(ComicListType.ALL_COMICS),
+                    favoriteListModel = filteredList.toComicListModel(ComicListType.FAVORITES)
+                )
+            )
         }
     }
 
@@ -118,12 +174,11 @@ class ComicsViewModel @Inject constructor(
             _event.emit(Event.Idle)
         }
     }
+}
 
-    // Different possible events
-    sealed class Event {
-        data class FilteredListByName(val filteredComicList: List<ComicModel>?) : Event()
-        data class NavigateToDetail(val comicId: Int) : Event()
-        data object NavigateToHome : Event()
-        data object Idle : Event()
-    }
+// Different possible events
+sealed class Event {
+    data class NavigateToDetail(val comicId: Int) : Event()
+    data object NavigateToHome : Event()
+    data object Idle : Event()
 }

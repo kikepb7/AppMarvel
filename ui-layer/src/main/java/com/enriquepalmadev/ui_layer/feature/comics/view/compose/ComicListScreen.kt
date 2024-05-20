@@ -1,17 +1,27 @@
 package com.enriquepalmadev.ui_layer.feature.comics.view.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
+import com.enriquepalmadev.ui_layer.R
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListModel
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHeader
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenItemModel
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenModel
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenTitle
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicScreenState
 
 @Composable
@@ -24,19 +34,30 @@ fun ComicListScreen(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Color.Black),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
 
         if (state.loadingScreenData.loader) {
-            LoadingScreen()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                LoadingScreen()
+            }
         }
 
         state.errorScreenData?.let {
-            ErrorScreen(comicListScreenError = state.errorScreenData)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                ErrorScreen(comicListScreenError = state.errorScreenData)
+            }
         }
 
         state.comicScreenData?.let { comicScreenModel ->
+
             HeaderComicList(
                 comicListScreenHeader = comicScreenModel.comicListScreenHeader,
                 onBackButtonClicked = { onBackButtonClicked() }
@@ -65,78 +86,91 @@ fun ComicListScreen(
     }
 }
 
-
-/*@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun ComicListScreenPreview() {
     ComicListScreen(
-        state = ComicListScreenModel(
-            comicListScreenHeader = ComicListScreenHeader(
-                imageLogo = R.drawable.marvel_comics_logo,
-                icon = Icons.AutoMirrored.Filled.ArrowBack,
-                placeholderText = "Buscar",
-                onClickSearch = {}
-            ),
-            comicListModel = ComicListModel(
-                comicListScreenTitle = ComicListScreenTitle(
-                    icon = R.drawable.ironman,
-                    title = "TODOS LOS COMICS"
+        state = ComicScreenState(
+            comicScreenData = ComicListScreenModel(
+                comicListScreenHeader = ComicListScreenHeader(
+                    imageLogo = R.drawable.marvel_comics_logo,
+                    icon = Icons.AutoMirrored.Filled.ArrowBack,
+                    placeholderText = R.string.search_text,
+                    onClickSearch = {}
                 ),
-                comicsModel = listOf(
-                    ComicListScreenItemModel(
-                        comic = ComicModel(
-                            id = 1,
-                            title = "Spiderman",
-                            description = "Spiderman",
-                            pageCount = 30,
-                            thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
-                        )
+                comicListModel = ComicListModel(
+                    comicListScreenTitle = ComicListScreenTitle(
+                        icon = R.drawable.ironman,
+                        title = R.string.all_comics_title
                     ),
-                    ComicListScreenItemModel(
-                        comic = ComicModel(
-                            id = 1,
-                            title = "Spiderman",
-                            description = "Spiderman",
-                            pageCount = 30,
-                            thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                    comicsModel = listOf(
+                        ComicListScreenItemModel(
+                            comic = ComicModel(
+                                id = 1,
+                                title = "Spiderman",
+                                description = "Spiderman",
+                                pageCount = 30,
+                                thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                            )
+                        ),
+                        ComicListScreenItemModel(
+                            comic = ComicModel(
+                                id = 1,
+                                title = "Spiderman",
+                                description = "Spiderman",
+                                pageCount = 30,
+                                thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                            )
+                        ),
+                        ComicListScreenItemModel(
+                            comic = ComicModel(
+                                id = 1,
+                                title = "Spiderman",
+                                description = "Spiderman",
+                                pageCount = 30,
+                                thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                            )
+                        )
+                    )
+                ),
+                favoriteListModel = ComicListModel(
+                    comicListScreenTitle = ComicListScreenTitle(
+                        icon = R.drawable.ic_solid_heart,
+                        title = R.string.favorite_comics_title
+                    ),
+                    comicsModel = listOf(
+                        ComicListScreenItemModel(
+                            comic = ComicModel(
+                                id = 1,
+                                title = "Spiderman",
+                                description = "Spiderman",
+                                pageCount = 30,
+                                thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                            )
+                        ),
+                        ComicListScreenItemModel(
+                            comic = ComicModel(
+                                id = 1,
+                                title = "Spiderman",
+                                description = "Spiderman",
+                                pageCount = 30,
+                                thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                            )
+                        ),
+                        ComicListScreenItemModel(
+                            comic = ComicModel(
+                                id = 1,
+                                title = "Spiderman",
+                                description = "Spiderman",
+                                pageCount = 30,
+                                thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
+                            )
                         )
                     )
                 )
-            ),
-            favoriteListModel = ComicListModel(
-                comicListScreenTitle = ComicListScreenTitle(
-                    icon = R.drawable.ironman,
-                    title = "TODOS LOS COMICS"
-                ),
-                comicsModel = listOf(
-                    ComicListScreenItemModel(
-                        comic = ComicModel(
-                            id = 1,
-                            title = "Spiderman",
-                            description = "Spiderman",
-                            pageCount = 30,
-                            thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
-                        )
-                    ),
-                    ComicListScreenItemModel(
-                        comic = ComicModel(
-                            id = 1,
-                            title = "Spiderman",
-                            description = "Spiderman",
-                            pageCount = 30,
-                            thumbnail = "http://i.annihil.us/u/prod/marvel/i/mg/9/b0/62f3c7bba6677.jpg"
-                        )
-                    )
-                )
-            ),
-            comicListScreenLoading = ComicListScreenLoading(
-                loader = false
-            ),
-            comicListScreenError = ComicListScreenError(
-                image = R.drawable.unauthorized_error_logo,
-                errorMsg = "Error 401"
             )
-        )
+        ),
+        {},
+        {}
     )
-}*/
-
+}

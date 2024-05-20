@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,7 +82,7 @@ fun TitleList(
         Spacer(modifier = Modifier.width(16.dp))
 
         Text(
-            text = comicListScreenTitle.title,
+            text = stringResource(id = comicListScreenTitle.title),
             fontWeight = FontWeight.Bold,
             color = Color.White,
             fontSize = 22.sp
@@ -139,7 +140,7 @@ fun ComicListPreview() {
         comicListScreenTitle =
         ComicListScreenTitle(
             icon = R.drawable.ironman,
-            title = "LISTA DE COMICS"
+            title = R.string.all_comics_title
         ),
         comicListScreenItemModel = listOf(
             ComicListScreenItemModel(
@@ -170,7 +171,7 @@ fun TitleListPreview() {
     TitleList(
         comicListScreenTitle = ComicListScreenTitle(
             icon = R.drawable.ironman,
-            title = "LISTA DE COMICS"
+            title = R.string.favorite_comics_title
         )
     )
 }

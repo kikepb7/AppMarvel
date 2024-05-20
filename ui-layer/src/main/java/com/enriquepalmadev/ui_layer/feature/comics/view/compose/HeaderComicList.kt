@@ -28,13 +28,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHeader
+import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.ComicsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +68,8 @@ fun HeaderComicList(
                 },
                 navigationIcon = {
                     IconButton(
+                        modifier = Modifier
+                            .padding(start = 20.dp),
                         onClick = { onBackButtonClicked() }
                     ) {
                         Icon(
@@ -80,7 +85,7 @@ fun HeaderComicList(
             Spacer(modifier = Modifier.height(16.dp))
 
             SearchComic(
-                placeholder = comicListScreenHeader.placeholderText,
+                placeholder = stringResource(id = comicListScreenHeader.placeholderText),
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
@@ -92,7 +97,7 @@ fun SearchComic(
     placeholder: String,
     modifier: Modifier
 ) {
-
+    val viewModel: ComicsViewModel = viewModel()
     val textState = remember {
         mutableStateOf(TextFieldValue(""))
     }
@@ -101,6 +106,7 @@ fun SearchComic(
         value = textState.value,
         onValueChange = { value ->
             textState.value = value
+            viewModel.filterComicsByName(value.text)
         },
         modifier = modifier
             .fillMaxWidth()
@@ -128,7 +134,7 @@ fun HeaderComicListPreview() {
     HeaderComicList(comicListScreenHeader = ComicListScreenHeader(
         imageLogo = R.drawable.marvel_comics_logo,
         icon = Icons.AutoMirrored.Filled.ArrowBack,
-        placeholderText = "Buscar ...",
+        placeholderText = R.string.search_text,
         onClickSearch = {}
     ),
         onBackButtonClicked = {}

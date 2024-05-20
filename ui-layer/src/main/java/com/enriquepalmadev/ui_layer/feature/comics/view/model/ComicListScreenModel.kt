@@ -5,7 +5,7 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 
 data class ComicListScreenTitle(
     val icon: Int,
-    val title: String
+    val title: Int
 )
 
 data class ComicListScreenItemModel(
@@ -15,7 +15,7 @@ data class ComicListScreenItemModel(
 data class ComicListScreenHeader(
     val imageLogo: Int,
     val icon: ImageVector,
-    val placeholderText: String,
+    val placeholderText: Int,
     val onClickSearch: () -> Unit
 )
 
@@ -25,7 +25,12 @@ data class ComicListScreenLoading(
 
 data class ComicListScreenError(
     val image: Int,
-    val errorMsg: String
+    val errorMsg: Int
+)
+
+data class ComicListScreenEmpty(
+    val image: Int,
+    val emptyMessage: Int
 )
 
 data class ComicListModel(
@@ -42,5 +47,6 @@ data class ComicListScreenModel(
 data class ComicScreenState(
     val comicScreenData: ComicListScreenModel? = null,
     val loadingScreenData: ComicListScreenLoading = ComicListScreenLoading(loader = false),
-    val errorScreenData: ComicListScreenError? = null
+    val errorScreenData: ComicListScreenError? = null,
+    val emptyListScreenData: ComicListScreenEmpty? = null
 )

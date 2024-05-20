@@ -46,6 +46,7 @@ dependencies {
     val materialVersion = "1.12.0"
     val constraintLayoutVersion = "2.1.4"
     val legacySupportVersion = "1.0.0"
+    val viewModelComposeVersion = "2.8.0"
     val fragmentVersion = "1.7.0"
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
@@ -63,6 +64,7 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
 
     // FACEBOOK
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
