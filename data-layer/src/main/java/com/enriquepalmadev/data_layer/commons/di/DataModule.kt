@@ -1,11 +1,16 @@
 package com.enriquepalmadev.data_layer.commons.di
 
+import android.app.Application
+import androidx.room.Room
 import com.enriquepalmadev.data_layer.commons.interceptor.ApiKeyInterceptor
 import com.enriquepalmadev.data_layer.commons.interceptor.NetworkErrorInterceptor
 import com.enriquepalmadev.data_layer.commons.utils.Constants
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterService
 import com.enriquepalmadev.data_layer.feature.character.repository.CharacterRepositoryImpl
+import com.enriquepalmadev.data_layer.feature.comics.database.ComicDatabase
+import com.enriquepalmadev.data_layer.feature.comics.database.dao.ComicDao
+import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicDatabaseDataSource
 import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.comics.repository.ComicRepositoryImpl
 import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
@@ -69,10 +74,34 @@ object DataModule {
         return ComicRemoteDataSource(comicService)
     }
 
-    @Singleton
+    /*@Singleton
     @Provides
     fun provideComicRepository(comicRemoteDataSource: ComicRemoteDataSource): ComicRepository {
         return ComicRepositoryImpl(comicRemoteDataSource)
+    }*/
+
+    @Singleton
+    @Provides
+    fun provideDatabase(application: Application): ComicDatabase {
+        return Room.databaseBuilder(application, ComicDatabase::class.java, "comic_db").fallbackToDestructiveMigration().build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideComicDatabaseDataSource(comicDao: ComicDao): ComicDatabaseDataSource {
+        return ComicDatabaseDataSource(comicDao = comicDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDao(database: ComicDatabase): ComicDao {
+        return database.getComicDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideComicRepository(comicRemoteDataSource: ComicRemoteDataSource, comicDatabaseDataSource: ComicDatabaseDataSource): ComicRepository {
+        return ComicRepositoryImpl(comicRemoteDataSource, comicDatabaseDataSource)
     }
 
     // Series

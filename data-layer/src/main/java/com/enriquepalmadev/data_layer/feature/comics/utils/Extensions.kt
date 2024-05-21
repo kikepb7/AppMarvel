@@ -1,5 +1,6 @@
 package com.enriquepalmadev.data_layer.feature.comics.utils
 
+import com.enriquepalmadev.data_layer.feature.comics.database.entities.ComicEntity
 import com.enriquepalmadev.data_layer.feature.comics.dto.ComicDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.FailureDto
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
@@ -29,4 +30,24 @@ fun FailureDto.toFailureDomain(): FailureDomain {
         401 -> FailureDomain.Unauthorized
         else -> FailureDomain.ApiError
     }
+}
+
+fun ComicEntity.comicEntityToComicModel(): ComicModel {
+    return ComicModel(
+        id = id,
+        title = title,
+        description = description,
+        pageCount = pageCount,
+        thumbnail = thumbnail
+    )
+}
+
+fun ComicModel.comicModelToComicEntity(): ComicEntity {
+    return ComicEntity(
+        id = id,
+        title = title,
+        description = description ?: "",
+        pageCount = pageCount,
+        thumbnail = thumbnail
+    )
 }
