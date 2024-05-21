@@ -136,15 +136,15 @@ class FilmSerieViewModel @Inject constructor(
     }
 }
 
-private fun updateLoading(): FilmSerieUIState{
+private fun updateLoading(): FilmSerieUIState {
     return FilmSerieUIState(isLoading = true)
 }
 
-private fun updateFailure(failure : FailureDomain): FilmSerieUIState{
+private fun updateFailure(failure : FailureDomain): FilmSerieUIState {
     return FilmSerieUIState(isError = failure)
 }
 
-private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState{
+private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState {
     return FilmSerieUIState(list = seriesList)
 }
 

@@ -116,9 +116,15 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
             onClick = {
                 if(isClickable) { dialogOrderBy() }
                  },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.dark_red)
-            )
+            colors = if(isClickable) {
+                ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.dark_red)
+                )
+            } else {
+                ButtonDefaults.buttonColors(
+                    containerColor = Color.Gray
+                )
+            }
         ) {
             Text(
                 text = stringResource(R.string.orderby),
