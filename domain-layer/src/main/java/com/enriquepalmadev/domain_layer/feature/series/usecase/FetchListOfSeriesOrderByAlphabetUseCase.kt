@@ -8,10 +8,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FetchListOfSeriesOrderByAlphabetUseCase @Inject constructor(
-    private val filmSerieRepository: IFilmSerieRepository
-) {
+class FetchListOfSeriesOrderByAlphabetUseCase @Inject constructor() {
     suspend fun getListOfSeriesOrderByAlphabet(series: List<FilmSerieModel>): Flow<ResponseEither<FailureDomain, List<FilmSerieModel>>> {
-        return flow { emit(filmSerieRepository.orderListByAlphabet(series)) }
+        return flow { emit(
+            if(series.isNotEmpty()){
+                ResponseEither.Success(success = series.sortedByDescending { it.title })
+            } else {
+                ResponseEither.Failure(failure = FailureDomain.EmptyErrorDomain)
+            }
+        )}
     }
 }

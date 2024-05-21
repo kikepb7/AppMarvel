@@ -12,6 +12,14 @@ class FetchListOfAllSeriesUseCase @Inject constructor(
     private val filmSerieRepository: IFilmSerieRepository
 ) {
     suspend fun getListOfAllSeries(): Flow<ResponseEither<FailureDomain, List<FilmSerieModel>?>> {
-        return flow { emit(filmSerieRepository.getListOfAllSeries()) }
+        return flow { emit(
+            when(val responseEither = filmSerieRepository.getListOfAllSeries()){
+                is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure)
+                is ResponseEither.Success -> ResponseEither.Success(success = responseEither.success?.filter {
+                    // This was in viewmodel but I changed it
+                    it.description.isNullOrEmpty().not()
+                }?.sortedByDescending { it.startYear })
+            }
+        ) }
     }
 }

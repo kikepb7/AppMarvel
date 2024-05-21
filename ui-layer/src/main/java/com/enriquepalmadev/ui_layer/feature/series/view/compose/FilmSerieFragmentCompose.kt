@@ -35,7 +35,7 @@ fun FilmSerieFragmentCompose(
                 ErrorView(
                     uiState.isError.code,
                     uiState.isError.msg,
-                    R.drawable.error_404
+                    R.drawable.groot_error
                 )
             }
 
@@ -63,7 +63,7 @@ fun FilmSerieFragmentCompose(
                 )
             }
 
-            FailureDomain.CoroutineErrorDomain -> {
+            FailureDomain.AnotherErrorDomain -> {
                 ErrorView(
                     stringResource(R.string.title_coroutine_error),
                     stringResource(R.string.msg_coroutine_error),

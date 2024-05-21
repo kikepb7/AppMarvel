@@ -74,7 +74,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                             showErrorView(true, R.drawable.captain_empty)
                         }
 
-                        is FailureDomain.CoroutineErrorDomain -> {
+                        is FailureDomain.AnotherErrorDomain -> {
                             setErrorView(
                                 getString(R.string.title_coroutine_error),
                                 getString(R.string.msg_coroutine_error)

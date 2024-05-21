@@ -24,6 +24,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -66,7 +67,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         SearchBar(
             modifier = Modifier
@@ -109,7 +110,8 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
             modifier = Modifier
                 .fillMaxWidth(0.8f)
                 .height(60.dp)
-                .padding(5.dp, 15.dp, 5.dp, 5.dp).align(Alignment.CenterVertically),
+                .padding(5.dp, 15.dp, 5.dp, 5.dp)
+                .align(Alignment.CenterVertically),
             onClick = { dialogOrderBy() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.dark_red)
@@ -127,7 +129,9 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 @Composable
 fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
 
-    // var favIcon: Int
+    var isFav by remember { mutableStateOf(false) }
+    var resFavIcon by remember { mutableIntStateOf(R.drawable.ic_border_favorite_24dp) }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
@@ -140,7 +144,7 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
                         .background(Color.White)
                 ) {
                     Column {
-                        Box {
+                        Box{
                             GlideImage(
                                 model = "${series[index].thumbnailPath}.${series[index].thumbnailExt}",
                                 contentDescription = null,
@@ -151,21 +155,26 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
                                     .height(200.dp)
                                     .width(200.dp)
                             )
-                            Box(
+                            Image(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(end = 3.dp, top = 3.dp),
-                                contentAlignment = Alignment.CenterEnd
-                            ){
-                                Image(
-                                    painter = painterResource(
-                                        id = R.drawable.ic_border_favorite_24dp
-                                    ),
-                                    contentDescription = null,
-                                    alignment = Alignment.CenterEnd,
-                                    modifier = Modifier.clickable { favClicked() }
-                                )
-                            }
+                                    .padding(top = 3.dp, end = 3.dp)
+                                    .clickable {
+                                        favClicked()
+                                        if (isFav) {
+                                            resFavIcon = R.drawable.ic_border_favorite_24dp
+                                            isFav = false
+                                        } else {
+                                            resFavIcon = R.drawable.ic_full_favorite_24dp
+                                            isFav = true
+                                        }
+                                    },
+                                painter = painterResource(
+                                    id = resFavIcon
+                                ),
+                                contentDescription = null,
+                                alignment = Alignment.CenterEnd
+                            )
                         }
                         // Title
                         Box(
