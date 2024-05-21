@@ -25,7 +25,7 @@ fun FilmSerieFragmentCompose(
             SeriesListHeader(
                 dialogOrderBy = dialogOrderBy,
                 onSearchQueryChange = onSearchQueryChange,
-                isClickable = uiState.itemsFound
+                completeList = uiState.itemsFound
             )
             if(uiState.list.isNotEmpty()){
                 SeriesListBody(

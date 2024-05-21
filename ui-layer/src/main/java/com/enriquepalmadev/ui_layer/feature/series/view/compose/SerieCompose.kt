@@ -61,7 +61,7 @@ fun Series(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: String) -> Unit, isClickable : Boolean) {
+fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: String) -> Unit, completeList : Boolean) {
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
 
@@ -114,15 +114,15 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
                 .padding(5.dp, 15.dp, 5.dp, 5.dp)
                 .align(Alignment.CenterVertically),
             onClick = {
-                if(isClickable) { dialogOrderBy() }
+                if(completeList && !active) { dialogOrderBy() }
                  },
-            colors = if(isClickable) {
+            colors = if(!completeList || active) {
                 ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.dark_red)
+                    containerColor = Color.Gray
                 )
             } else {
                 ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray
+                    containerColor = colorResource(id = R.color.dark_red)
                 )
             }
         ) {
@@ -235,7 +235,7 @@ fun SeriesView(){
 @Preview
 @Composable
 fun Header(){
-    SeriesListHeader(dialogOrderBy = {}, onSearchQueryChange = {}, isClickable = true)
+    SeriesListHeader(dialogOrderBy = {}, onSearchQueryChange = {}, completeList = true)
 }
 
 @Preview
