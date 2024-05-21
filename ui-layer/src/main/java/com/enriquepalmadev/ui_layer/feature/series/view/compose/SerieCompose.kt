@@ -50,7 +50,7 @@ fun Series(
     series: List<FilmSerieModel>,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
-    favClicked: () -> Unit,
+    favClicked: (id: Int) -> Unit,
     onSearchQueryChange : (newText : String) -> Unit
 ) {
     Column {
@@ -94,6 +94,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
                         modifier = Modifier.clickable {
                             if (text.isNotEmpty()){
                                 text = ""
+                                onSearchQueryChange(text)
                             } else {
                                 active = false
                                 onSearchQueryChange(text)
@@ -127,7 +128,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: () -> Unit) {
+fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int) -> Unit) {
 
     var isFav by remember { mutableStateOf(false) }
     var resFavIcon by remember { mutableIntStateOf(R.drawable.ic_border_favorite_24dp) }
@@ -160,17 +161,11 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
                                     .fillMaxWidth()
                                     .padding(top = 3.dp, end = 3.dp)
                                     .clickable {
-                                        favClicked()
-                                        if (isFav) {
-                                            resFavIcon = R.drawable.ic_border_favorite_24dp
-                                            isFav = false
-                                        } else {
-                                            resFavIcon = R.drawable.ic_full_favorite_24dp
-                                            isFav = true
-                                        }
+                                        favClicked(series[index].id)
+                                        isFav = !isFav
                                     },
                                 painter = painterResource(
-                                    id = resFavIcon
+                                    if (isFav) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp
                                 ),
                                 contentDescription = null,
                                 alignment = Alignment.CenterEnd
@@ -195,6 +190,16 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
                 }
             }
         }
+    )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun SeriesEmptyList(){
+    ErrorView(
+        error = stringResource(id = R.string.title_empty_error),
+        msg = stringResource(id = R.string.msg_empty_error),
+        drawable = R.drawable.captain_empty
     )
 }
 

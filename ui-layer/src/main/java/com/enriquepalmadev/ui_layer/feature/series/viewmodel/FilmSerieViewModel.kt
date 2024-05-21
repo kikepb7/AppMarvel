@@ -123,7 +123,11 @@ class FilmSerieViewModel @Inject constructor(
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
                             is ResponseEither.Success -> {
-                                _uiState.update { updateSuccess(responseEither.success) }
+                                if(responseEither.success.isEmpty()){
+                                    _uiState.update { updateNoItemsFound() }
+                                } else {
+                                    _uiState.update { updateSuccess(responseEither.success) }
+                                }
                             }
                         }
                     }
@@ -144,8 +148,13 @@ private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState{
     return FilmSerieUIState(list = seriesList)
 }
 
+private fun updateNoItemsFound(): FilmSerieUIState {
+    return FilmSerieUIState(noItemsFound = true)
+}
+
 data class FilmSerieUIState (
     val isError: FailureDomain? = null,
     val isLoading: Boolean = false,
-    val list: List<FilmSerieModel> = emptyList()
+    val list: List<FilmSerieModel> = emptyList(),
+    val noItemsFound: Boolean = false
 )

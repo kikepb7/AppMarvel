@@ -55,9 +55,11 @@ class FilmSerieFragment : Fragment() {
                                 findNavController(), id
                             )
                         },
-                        favClicked = ::onFavIconClicked,
-                        onSearchQueryChange = { text ->
-                            onSearchQueryChange(text)
+                        favClicked = { id : Int ->
+                            onFavIconClicked(id)
+                        },
+                        onSearchQueryChange =  { text ->
+                        onSearchQueryChange(text)
                         }
                     )
                 }
@@ -72,7 +74,7 @@ class FilmSerieFragment : Fragment() {
 
     // Dialog to select the items order
     private fun showDialogOrderBy() {
-        var selectedItemIndex: Int = 0
+        var selectedItemIndex = 0
         val arrayItemsOrderBy = arrayOf(
             getString(R.string.orderby_year),
             getString(R.string.orderby_alphabet),
@@ -116,8 +118,8 @@ class FilmSerieFragment : Fragment() {
         viewModel.filteringByName(newText)
     }
 
-    private fun onFavIconClicked() {
+    private fun onFavIconClicked(id: Int) {
         // viewModel.favSerie(id, favState) TODO() Function to the database persist
-        Toast.makeText(context, "FAV", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "FAV $id", Toast.LENGTH_LONG).show()
     }
 }

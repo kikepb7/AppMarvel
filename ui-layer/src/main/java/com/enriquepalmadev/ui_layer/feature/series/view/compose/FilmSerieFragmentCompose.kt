@@ -1,5 +1,6 @@
 package com.enriquepalmadev.ui_layer.feature.series.view.compose
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
@@ -11,14 +12,33 @@ fun FilmSerieFragmentCompose(
     uiState: FilmSerieUIState,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
-    favClicked: () -> Unit,
-    onSearchQueryChange : (newText : String) -> Unit
+    favClicked: (Int) -> Unit,
+    onSearchQueryChange: (newText : String) -> Unit
 ) {
 
     if (uiState.isLoading){
         LoadingView()
     }
 
+    if(uiState.noItemsFound || uiState.list.isNotEmpty()){
+        Column {
+            SeriesListHeader(
+                dialogOrderBy = dialogOrderBy,
+                onSearchQueryChange = onSearchQueryChange
+            )
+            if(uiState.list.isNotEmpty()){
+                SeriesListBody(
+                    series = uiState.list,
+                    itemClicked = itemClicked,
+                    favClicked = favClicked
+                )
+            } else {
+                SeriesEmptyList()
+            }
+        }
+    }
+
+    /*
     if(uiState.list.isNotEmpty()){
         Series(
             series = uiState.list,
@@ -27,7 +47,11 @@ fun FilmSerieFragmentCompose(
             favClicked = favClicked,
             onSearchQueryChange = onSearchQueryChange
         )
+    } else {
+        SeriesEmptyList()
     }
+
+     */
 
     if(uiState.isError!=null){
         when(uiState.isError){
