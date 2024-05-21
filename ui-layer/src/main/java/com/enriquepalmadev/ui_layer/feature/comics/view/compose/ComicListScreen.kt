@@ -23,12 +23,14 @@ import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenIte
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenModel
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenTitle
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicScreenState
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.SearchBarHeader
 
 @Composable
 fun ComicListScreen(
     state: ComicScreenState,
     onComicClicked: (ComicModel) -> Unit,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    onSearchBar: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -60,7 +62,10 @@ fun ComicListScreen(
 
             HeaderComicList(
                 comicListScreenHeader = comicScreenModel.comicListScreenHeader,
-                onBackButtonClicked = { onBackButtonClicked() }
+                onBackButtonClicked = { onBackButtonClicked() },
+                onSearchBar = { text ->
+                    onSearchBar(text)
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -96,7 +101,7 @@ fun ComicListScreenPreview() {
                     imageLogo = R.drawable.marvel_comics_logo,
                     icon = Icons.AutoMirrored.Filled.ArrowBack,
                     placeholderText = R.string.search_text,
-                    onClickSearch = {}
+                    searchBarHeader = SearchBarHeader(placeholder = R.string.search_text)
                 ),
                 comicListModel = ComicListModel(
                     comicListScreenTitle = ComicListScreenTitle(
@@ -170,6 +175,7 @@ fun ComicListScreenPreview() {
                 )
             )
         ),
+        {},
         {},
         {}
     )

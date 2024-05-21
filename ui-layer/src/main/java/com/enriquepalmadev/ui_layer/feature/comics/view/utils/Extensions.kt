@@ -20,6 +20,7 @@ import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenErr
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHeader
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenItemModel
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenTitle
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.SearchBarHeader
 
 fun ImageView.loadImage(image: String) {
     Glide.with(this)
@@ -57,7 +58,7 @@ fun toComicListModelHeader(): ComicListScreenHeader {
         imageLogo = R.drawable.marvel_comics_logo,
         icon = Icons.AutoMirrored.Filled.ArrowBack,
         placeholderText = R.string.search_text,
-        onClickSearch = {}
+        searchBarHeader = SearchBarHeader(placeholder = R.string.search_text)
     )
 }
 

@@ -16,7 +16,11 @@ data class ComicListScreenHeader(
     val imageLogo: Int,
     val icon: ImageVector,
     val placeholderText: Int,
-    val onClickSearch: () -> Unit
+    val searchBarHeader: SearchBarHeader
+)
+
+data class SearchBarHeader(
+    val placeholder: Int,
 )
 
 data class ComicListScreenLoading(
