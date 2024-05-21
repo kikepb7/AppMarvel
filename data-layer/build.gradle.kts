@@ -1,10 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-
-    // HILT
-    kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -13,19 +11,7 @@ android {
 
     defaultConfig {
         minSdk = 29
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
-
-    kapt {
-        correctErrorTypes = true
-        generateStubs = true
     }
 
     compileOptions {
@@ -35,6 +21,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+kapt {
+    correctErrorTypes = true
+    generateStubs = true
 }
 
 dependencies {
@@ -55,15 +46,15 @@ dependencies {
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
 
-    /* MAPSTRUCT */
-    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
-    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
+    // MAPSTRUCT
+    implementation("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
-    /* RETROFIT */
+    // RETROFIT
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-    /* INTERCEPTOR */
+    // INTERCEPTOR
     implementation("com.squareup.okhttp3:logging-interceptor:$interceptorVersion")
 
     // HILT

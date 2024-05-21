@@ -2,10 +2,10 @@ package com.enriquepalmadev.ui_layer.feature.character.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.useCase.GetCharacterDetailUseCase
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
-import com.enriquepalmadev.domain_layer.feature.commons.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

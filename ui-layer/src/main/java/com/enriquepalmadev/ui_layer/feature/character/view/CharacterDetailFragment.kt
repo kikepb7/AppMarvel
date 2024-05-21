@@ -11,8 +11,8 @@ import androidx.navigation.fragment.navArgs
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.ui_layer.R
+import com.enriquepalmadev.ui_layer.commons.loadImage
 import com.enriquepalmadev.ui_layer.databinding.FragmentItemDetailsCharactersBinding
-import com.enriquepalmadev.ui_layer.feature.character.view.utils.loadImage
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersDetailViewModel
 import com.enriquepalmadev.ui_layer.feature.character.viewmodel.CharactersDetailViewModel.DetailState
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ class CharacterDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentItemDetailsCharactersBinding.inflate(inflater)
         return binding.root
     }
@@ -71,9 +71,9 @@ class CharacterDetailFragment : Fragment() {
 
     private fun showCharacterDetail(characterModel: CharacterModel){
         binding.apply {
-            tvTitulo.text = characterModel?.name
+            tvTitulo.text = characterModel.name
             ivItemDetailCharacter.loadImage(characterModel.thumbnailDTO)
-            tvDescripcion.text = characterModel?.description
+            tvDescripcion.text = characterModel.description
         }
     }
 

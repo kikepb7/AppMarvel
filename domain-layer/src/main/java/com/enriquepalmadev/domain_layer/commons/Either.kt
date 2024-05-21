@@ -1,4 +1,4 @@
-package com.enriquepalmadev.domain_layer.feature.commons
+package com.enriquepalmadev.domain_layer.commons
 
 sealed class Either<out L, out R> {
     data class Error<out L>(val error: L) : Either<L, Nothing>()

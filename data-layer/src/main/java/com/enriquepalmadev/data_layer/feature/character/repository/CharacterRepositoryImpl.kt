@@ -4,10 +4,10 @@ import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterRemo
 import com.enriquepalmadev.data_layer.feature.character.utils.extensions.toCharacterErrorDomain
 import com.enriquepalmadev.data_layer.feature.character.utils.extensions.toCharacterListModel
 import com.enriquepalmadev.data_layer.feature.character.utils.extensions.toCharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
-import com.enriquepalmadev.domain_layer.feature.commons.Either
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,61 +1,43 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-
-    // HILT
+    id("java-library")
+    id("kotlin")
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
 }
 
-android {
-    namespace = "com.enriquepalmadev.domain_layer"
-    compileSdk = 34
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
-    defaultConfig {
-        minSdk = 29
+kapt {
+    correctErrorTypes = true
+    generateStubs = true
+}
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+tasks.register("assembleDebug") {
+    dependsOn("build")
+}
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
-    kapt {
-        correctErrorTypes = true
-        generateStubs = true
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+tasks.register("assembleDebugUnitTest") {
+    dependsOn("test")
 }
 
 dependencies {
-    val appCompatVersion = "1.6.1"
-    val materialVersion = "1.12.0"
+    val kotlinCorutines = "1.6.1"
     val jUnitVersion = "4.13.2"
-    val jUnitTestVersion = "1.1.5"
-    val hiltVersion = "2.51"
+    val javaxInjextVersion = "1"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:$appCompatVersion")
-    implementation("com.google.android.material:material:$materialVersion")
+    // COROUTINES
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCorutines")
 
-    /* MAPSTRUCT */
-    implementation ("org.mapstruct:mapstruct:$mapStructVersion.Final")
-    kapt ("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
+    // MAPSTRUCT
+    implementation("org.mapstruct:mapstruct:$mapStructVersion.Final")
+    kapt("org.mapstruct:mapstruct-processor:$mapStructProcessorVersion.Final")
 
     // HILT
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation("javax.inject:javax.inject:$javaxInjextVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
 }

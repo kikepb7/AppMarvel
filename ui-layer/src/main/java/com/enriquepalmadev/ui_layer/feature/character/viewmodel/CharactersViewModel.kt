@@ -2,13 +2,11 @@ package com.enriquepalmadev.ui_layer.feature.character.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.character.useCase.FiltListGetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.GetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderFavouritesGetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderNameGetCharacterUseCase
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
-import com.enriquepalmadev.domain_layer.feature.commons.Either
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharacterListModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharactersScreenModel
@@ -177,13 +175,4 @@ class CharactersViewModel @Inject constructor(
         }
 
     }
-
-    sealed class State{
-        data object Loading : State()
-        data class CharacterError(val error: CharacterErrorModel) : State()//TODO Seguir por aqui.
-        data class ListReceived(val listCharacters: List<CharacterModel>?) : State()
-        data class NavigateToDetail(val characterId: Int) : State()
-        data object Error: State()
-    }
-
 }
