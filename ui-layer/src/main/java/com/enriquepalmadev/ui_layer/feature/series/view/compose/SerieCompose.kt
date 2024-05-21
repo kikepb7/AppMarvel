@@ -51,17 +51,18 @@ fun Series(
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
     favClicked: (id: Int) -> Unit,
-    onSearchQueryChange : (newText : String) -> Unit
+    onSearchQueryChange : (newText : String) -> Unit,
+    isClickable: Boolean
 ) {
     Column {
-        SeriesListHeader(dialogOrderBy, onSearchQueryChange)
+        SeriesListHeader(dialogOrderBy, onSearchQueryChange, isClickable)
         SeriesListBody(series, itemClicked, favClicked)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: String) -> Unit) {
+fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: String) -> Unit, isClickable : Boolean) {
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
 
@@ -113,7 +114,9 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
                 .height(60.dp)
                 .padding(5.dp, 15.dp, 5.dp, 5.dp)
                 .align(Alignment.CenterVertically),
-            onClick = { dialogOrderBy() },
+            onClick = {
+                if(isClickable) { dialogOrderBy() }
+                 },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.dark_red)
             )
@@ -126,71 +129,75 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int) -> Unit) {
-
-    var isFav by remember { mutableStateOf(false) }
-    var resFavIcon by remember { mutableIntStateOf(R.drawable.ic_border_favorite_24dp) }
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
             items(series.size) { index ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp, 8.dp, 5.dp, 5.dp)
-                        .clickable { itemClicked(series[index].id) }
-                        .background(Color.White)
-                ) {
-                    Column {
-                        Box{
-                            GlideImage(
-                                model = "${series[index].thumbnailPath}.${series[index].thumbnailExt}",
-                                contentDescription = null,
-                                loading = placeholder(R.drawable.loading),
-                                failure = placeholder(R.drawable.error_404),
-                                contentScale = ContentScale.FillBounds,
-                                modifier = Modifier
-                                    .height(200.dp)
-                                    .width(200.dp)
-                            )
-                            Image(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 3.dp, end = 3.dp)
-                                    .clickable {
-                                        favClicked(series[index].id)
-                                        isFav = !isFav
-                                    },
-                                painter = painterResource(
-                                    if (isFav) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp
-                                ),
-                                contentDescription = null,
-                                alignment = Alignment.CenterEnd
-                            )
-                        }
-                        // Title
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(colorResource(id = R.color.light_red))
-                                .height(50.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 5.dp),
-                                text = series[index].title,
-                                fontSize = 14.sp,
-                                color = Color.White
-                            )
-                        }
-                    }
-                }
+                CardView(index = index, series = series, itemClicked = itemClicked, favClicked = favClicked)
             }
         }
     )
+}
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int) -> Unit) {
+
+    var isFav by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp, 8.dp, 5.dp, 5.dp)
+            .clickable { itemClicked(series[index].id) }
+            .background(Color.White)
+    ) {
+        Column {
+            Box{
+                GlideImage(
+                    model = "${series[index].thumbnailPath}.${series[index].thumbnailExt}",
+                    contentDescription = null,
+                    loading = placeholder(R.drawable.loading),
+                    failure = placeholder(R.drawable.error_404),
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .height(200.dp)
+                        .width(200.dp)
+                )
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 3.dp, end = 3.dp)
+                        .clickable {
+                            favClicked(series[index].id)
+                            isFav = !isFav
+                        },
+                    painter = painterResource(
+                        if (isFav) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp
+                    ),
+                    contentDescription = null,
+                    alignment = Alignment.CenterEnd
+                )
+            }
+            // Title
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colorResource(id = R.color.light_red))
+                    .height(50.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 5.dp),
+                    text = series[index].title,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+            }
+        }
+    }
 }
 
 @Preview(showSystemUi = true)
@@ -217,15 +224,13 @@ private val seriesMock: List<FilmSerieModel> = listOf(film, film, film, film, fi
 @Preview (showSystemUi = true)
 @Composable
 fun SeriesView(){
-    Series(series = seriesMock, dialogOrderBy = {}, itemClicked = {}, favClicked = {}) {
-    }
+    Series(series = seriesMock, dialogOrderBy = {}, itemClicked = {}, favClicked = {}, onSearchQueryChange = {}, isClickable = true)
 }
 
 @Preview
 @Composable
 fun Header(){
-    SeriesListHeader(dialogOrderBy = {}) {
-    }
+    SeriesListHeader(dialogOrderBy = {}, onSearchQueryChange = {}, isClickable = true)
 }
 
 @Preview

@@ -149,12 +149,12 @@ private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState{
 }
 
 private fun updateNoItemsFound(): FilmSerieUIState {
-    return FilmSerieUIState(noItemsFound = true)
+    return FilmSerieUIState(itemsFound = false)
 }
 
 data class FilmSerieUIState (
     val isError: FailureDomain? = null,
     val isLoading: Boolean = false,
     val list: List<FilmSerieModel> = emptyList(),
-    val noItemsFound: Boolean = false
+    val itemsFound: Boolean = true
 )

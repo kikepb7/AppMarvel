@@ -20,11 +20,12 @@ fun FilmSerieFragmentCompose(
         LoadingView()
     }
 
-    if(uiState.noItemsFound || uiState.list.isNotEmpty()){
+    if(!uiState.itemsFound || uiState.list.isNotEmpty()){
         Column {
             SeriesListHeader(
                 dialogOrderBy = dialogOrderBy,
-                onSearchQueryChange = onSearchQueryChange
+                onSearchQueryChange = onSearchQueryChange,
+                isClickable = uiState.itemsFound
             )
             if(uiState.list.isNotEmpty()){
                 SeriesListBody(
@@ -37,21 +38,6 @@ fun FilmSerieFragmentCompose(
             }
         }
     }
-
-    /*
-    if(uiState.list.isNotEmpty()){
-        Series(
-            series = uiState.list,
-            dialogOrderBy = dialogOrderBy,
-            itemClicked = itemClicked,
-            favClicked = favClicked,
-            onSearchQueryChange = onSearchQueryChange
-        )
-    } else {
-        SeriesEmptyList()
-    }
-
-     */
 
     if(uiState.isError!=null){
         when(uiState.isError){
