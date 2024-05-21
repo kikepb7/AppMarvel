@@ -107,40 +107,6 @@ class ComicsViewModel @Inject constructor(
                 loadingScreenData = ComicListScreenLoading(loader = false)
             )
         }
-        /*
-        We use compareAndSet here, because it's a place where we are updating multiple properties
-        together and we wanna ensure the atomic updates
-
-        _state.value.let { comicScreenState ->
-            val newComicScreenData = ComicListScreenModel(
-                comicListScreenHeader = toComicListModelHeader(),
-                comicListModel = filteredList.toComicListModel(ComicListType.ALL_COMICS),
-                favoriteListModel = filteredList.toComicListModel(ComicListType.FAVORITES)
-            )
-
-            val newLoadingScreenData = ComicListScreenLoading(loader = false)
-
-            if (comicScreenState.comicScreenData != newComicScreenData ||
-                comicScreenState.loadingScreenData != newLoadingScreenData
-            ) {
-
-                With compareAndSet we only update the state if 'comicScreenState' is the same state than '_state'
-
-                If '_state' has changed since we obtained 'comicScreenState', compareAndSet will fail
-                and the update will not realise
-
-                compareAndSet is useful when multiples coroutines may be trying to update the sate
-                simultaneously. compareAndSet only update if the current state matches the expected one
-
-                _state.compareAndSet(
-                    expect = comicScreenState,
-                    update = comicScreenState.copy(
-                        comicScreenData = newComicScreenData,
-                        loadingScreenData = newLoadingScreenData
-                    )
-                )
-            }
-        }*/
     }
 
     private fun manageEmptyList() {

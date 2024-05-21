@@ -34,16 +34,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenHeader
-import com.enriquepalmadev.ui_layer.feature.comics.viewmodel.ComicsViewModel
+import com.enriquepalmadev.ui_layer.feature.comics.view.model.SearchBarHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeaderComicList(
     comicListScreenHeader: ComicListScreenHeader,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    onSearchBar: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -85,8 +85,10 @@ fun HeaderComicList(
             Spacer(modifier = Modifier.height(16.dp))
 
             SearchComic(
-                placeholder = stringResource(id = comicListScreenHeader.placeholderText),
-                modifier = Modifier.padding(horizontal = 8.dp)
+                searchBarHeader = SearchBarHeader(placeholder = headerModel.searchBarHeader.placeholder),
+                onSearchBar = { text ->
+                    onSearchBar(text)
+                }
             )
         }
     }
@@ -94,10 +96,9 @@ fun HeaderComicList(
 
 @Composable
 fun SearchComic(
-    placeholder: String,
-    modifier: Modifier
+    searchBarHeader: SearchBarHeader,
+    onSearchBar: (String) -> Unit
 ) {
-    val viewModel: ComicsViewModel = viewModel()
     val textState = remember {
         mutableStateOf(TextFieldValue(""))
     }
@@ -106,15 +107,15 @@ fun SearchComic(
         value = textState.value,
         onValueChange = { value ->
             textState.value = value
-            viewModel.filterComicsByName(value.text)
+            onSearchBar(value.text)
         },
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
             .clip(RoundedCornerShape(30.dp))
             .border(2.dp, Color.DarkGray, RoundedCornerShape(30.dp)),
         placeholder = {
-            Text(text = placeholder)
+            Text(stringResource(id = searchBarHeader.placeholder))
         },
         colors = TextFieldDefaults.colors(
             disabledPlaceholderColor = Color.White
@@ -135,8 +136,9 @@ fun HeaderComicListPreview() {
         imageLogo = R.drawable.marvel_comics_logo,
         icon = Icons.AutoMirrored.Filled.ArrowBack,
         placeholderText = R.string.search_text,
-        onClickSearch = {}
+        searchBarHeader = SearchBarHeader(placeholder = R.string.search_text)
     ),
-        onBackButtonClicked = {}
+        onBackButtonClicked = {},
+        {}
     )
 }

@@ -32,8 +32,6 @@ class ComicsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-            val viewModel: ComicsViewModel by viewModels()
-
             initObserver()
 
             setContent {
@@ -48,6 +46,9 @@ class ComicsFragment : Fragment() {
                         },
                         onBackButtonClicked = {
                             viewModel.navigateToHome()
+                        },
+                        onSearchBar = { searchText ->
+                            viewModel.filterComicsByName(searchText)
                         }
                     )
                 }
