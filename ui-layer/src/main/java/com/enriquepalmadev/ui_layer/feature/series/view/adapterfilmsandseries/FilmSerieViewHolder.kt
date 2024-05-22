@@ -2,7 +2,7 @@ package com.enriquepalmadev.ui_layer.feature.series.view.adapterfilmsandseries
 
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
+import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.ui_layer.databinding.ItemFilmsSeriesBinding
 import com.enriquepalmadev.ui_layer.feature.series.view.utils.loadImage
 

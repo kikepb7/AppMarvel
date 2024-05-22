@@ -1,6 +1,6 @@
 package com.enriquepalmadev.domain_layer.feature.series.usecase
 
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
+import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither

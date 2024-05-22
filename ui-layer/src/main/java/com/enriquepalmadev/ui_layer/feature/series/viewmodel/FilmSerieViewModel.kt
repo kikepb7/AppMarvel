@@ -2,7 +2,7 @@ package com.enriquepalmadev.ui_layer.feature.series.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
+import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListFilterByNameUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfAllSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase

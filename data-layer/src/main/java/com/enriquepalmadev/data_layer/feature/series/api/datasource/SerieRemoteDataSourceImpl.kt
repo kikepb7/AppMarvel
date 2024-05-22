@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class SerieRemoteDataSourceImpl @Inject constructor(
     private val api: IMarvelFilmSerieService
-) : ISerieDataSource {
+) : ISerieRemoteDataSource {
 
     override suspend fun getListOfAllSeries(): ResponseEither<FailureData, ObjectResponseDto?> {
         return try {

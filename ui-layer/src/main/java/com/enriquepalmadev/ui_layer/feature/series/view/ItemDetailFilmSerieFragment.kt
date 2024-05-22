@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
+import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.ItemDetailsFilmsSeriesBinding

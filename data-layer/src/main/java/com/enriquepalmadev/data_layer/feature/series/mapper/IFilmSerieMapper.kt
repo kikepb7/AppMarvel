@@ -1,7 +1,7 @@
 package com.enriquepalmadev.data_layer.feature.series.mapper
 
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelFilmSerieItemDto
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
+import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 
