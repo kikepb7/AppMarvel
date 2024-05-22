@@ -21,7 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.series.view.compose.FilmSerieFragmentCompose
+import com.enriquepalmadev.ui_layer.feature.series.view.compose.FilmSerieComposeView
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -47,7 +47,7 @@ class FilmSerieFragment : Fragment() {
                         .fillMaxSize()
                         .background(Color.White),
                 ) {
-                    FilmSerieFragmentCompose(
+                    FilmSerieComposeView(
                         uiState = uiState,
                         dialogOrderBy = ::showDialogOrderBy,
                         itemClicked = { id ->
@@ -98,13 +98,11 @@ class FilmSerieFragment : Fragment() {
         }
     }
 
-    // Function to order the items of the RecyclerView
+    // Function to order the items
     private fun orderListBy(selectedItem: String, context: Context) {
         when (selectedItem) {
             context.getString(R.string.orderby_year) -> viewModel.orderListByStartYear()
             context.getString(R.string.orderby_alphabet) -> viewModel.orderListByAlphabet()
-            // getString(R.string.orderby_fav_first)-> arrayList.sortedBy { it.name }
-            // getString(R.string.orderby_fav_only)-> arrayList.sortedBy { it.name }
         }
     }
 
@@ -119,7 +117,6 @@ class FilmSerieFragment : Fragment() {
     }
 
     private fun onFavIconClicked(id: Int) {
-        // viewModel.favSerie(id, favState) TODO() Function to the database persist
         Toast.makeText(context, "FAV $id", Toast.LENGTH_LONG).show()
     }
 }
