@@ -6,5 +6,6 @@ data class FilmSerieModel(
     val description : String?,
     val thumbnailPath : String,
     val thumbnailExt : String,
-    val startYear : Int
+    val startYear : Int,
+    val isFav : Boolean
 )

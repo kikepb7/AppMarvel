@@ -1,5 +1,6 @@
 package com.enriquepalmadev.data_layer.feature.series.api.utils
 
+import com.enriquepalmadev.data_layer.feature.series.database.entities.SerieEntity
 import com.enriquepalmadev.data_layer.feature.series.failure.AnotherErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.CustomErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.EmptyErrorData
@@ -7,6 +8,7 @@ import com.enriquepalmadev.data_layer.feature.series.failure.FailureData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnauthorizedErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnknownHostErrorData
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 
 fun FailureData.toFailureDomain(): FailureDomain {
     return when (this) {
@@ -16,4 +18,22 @@ fun FailureData.toFailureDomain(): FailureDomain {
         UnauthorizedErrorData -> FailureDomain.UnauthorizedErrorDomain
         UnknownHostErrorData -> FailureDomain.UnknownHostErrorDomain
     }
+}
+
+fun List<SerieEntity>.entityToSerieListModel(): List<FilmSerieModel> {
+    return this.map {
+        it.entityToSerieModel()
+    }
+}
+
+fun SerieEntity.entityToSerieModel(): FilmSerieModel {
+    return FilmSerieModel(
+        id = idSerie,
+        title = titleSerie,
+        description = descriptionSerie,
+        thumbnailPath = thumbnailPathSerie,
+        thumbnailExt = thumbnailExtSerie,
+        startYear = startYearSerie,
+        isFav = isFav
+    )
 }

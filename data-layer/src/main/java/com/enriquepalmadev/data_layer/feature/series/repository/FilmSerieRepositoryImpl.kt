@@ -12,13 +12,13 @@ import org.mapstruct.factory.Mappers
 import javax.inject.Inject
 
 class FilmSerieRepositoryImpl @Inject constructor(
-    private val serieRemoteDataSource: SerieRemoteDataSourceImpl
+    private val serieRemoteDataSourceImpl: SerieRemoteDataSourceImpl
 ): IFilmSerieRepository {
 
     private val mapper: IFilmSerieMapper = Mappers.getMapper(IFilmSerieMapper::class.java)
 
     override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, List<FilmSerieModel>?> {
-        return when(val responseEither = serieRemoteDataSource.getListOfAllSeries()){
+        return when(val responseEither = serieRemoteDataSourceImpl.getListOfAllSeries()){
             is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure.toFailureDomain())
             is ResponseEither.Success -> ResponseEither.Success(success = responseEither.success?.data?.results?.let { handlerSuccessGetAllSeries(it) })
         }
@@ -32,7 +32,7 @@ class FilmSerieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSerieById(id: Int): ResponseEither<FailureDomain, FilmSerieModel> {
-        return when(val responseEither = serieRemoteDataSource.getSerieById(id)){
+        return when(val responseEither = serieRemoteDataSourceImpl.getSerieById(id)){
             is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure.toFailureDomain())
             is ResponseEither.Success -> ResponseEither.Success(success = handlerSuccessGetSerie(responseEither.success))
         }

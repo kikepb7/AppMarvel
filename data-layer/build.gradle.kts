@@ -64,6 +64,7 @@ dependencies {
 
     // ROOM
     implementation("androidx.room:room-ktx:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
