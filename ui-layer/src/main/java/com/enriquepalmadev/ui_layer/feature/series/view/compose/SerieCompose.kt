@@ -173,7 +173,8 @@ fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -
                 )
                 Image(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .width(30.dp)
+                        .align(Alignment.TopEnd)
                         .padding(top = 3.dp, end = 3.dp)
                         .clickable {
                             favClicked(series[index].id)
@@ -182,8 +183,7 @@ fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -
                     painter = painterResource(
                         if (isFav) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp
                     ),
-                    contentDescription = null,
-                    alignment = Alignment.CenterEnd
+                    contentDescription = null
                 )
             }
             // Title
