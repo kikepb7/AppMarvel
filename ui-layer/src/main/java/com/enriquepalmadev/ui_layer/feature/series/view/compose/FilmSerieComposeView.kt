@@ -8,7 +8,7 @@ import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.series.viewmodel.FilmSerieUIState
 
 @Composable
-fun FilmSerieFragmentCompose(
+fun FilmSerieComposeView(
     uiState: FilmSerieUIState,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
