@@ -221,7 +221,8 @@ private val film : FilmSerieModel = FilmSerieModel(
     description = "Description",
     startYear = 0,
     thumbnailExt = "",
-    thumbnailPath = ""
+    thumbnailPath = "",
+    isFav = false
 )
 
 private val seriesMock: List<FilmSerieModel> = listOf(film, film, film, film, film)

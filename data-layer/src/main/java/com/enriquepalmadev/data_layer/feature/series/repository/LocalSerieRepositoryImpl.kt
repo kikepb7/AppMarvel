@@ -1,8 +1,9 @@
 package com.enriquepalmadev.data_layer.feature.series.repository
 
-import com.enriquepalmadev.data_layer.feature.series.api.utils.entityToSerieListModel
-import com.enriquepalmadev.data_layer.feature.series.api.utils.entityToSerieModel
+import com.enriquepalmadev.data_layer.feature.series.utils.entityToSerieListModel
+import com.enriquepalmadev.data_layer.feature.series.utils.entityToSerieModel
 import com.enriquepalmadev.data_layer.feature.series.database.datasource.SerieLocalDataSourceImpl
+import com.enriquepalmadev.data_layer.feature.series.utils.modelToSerieListEntity
 import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.repository.ILocalSerieRepository
 import javax.inject.Inject
@@ -21,5 +22,9 @@ class LocalSerieRepositoryImpl @Inject constructor(
 
     override suspend fun updateFavSerie(id: Boolean) {
         return serieLocalDataSourceImpl.updateFavSerie(id)
+    }
+
+    override suspend fun insertAllSeries(series: List<FilmSerieModel>) {
+        serieLocalDataSourceImpl.insertAllSeries(series.modelToSerieListEntity())
     }
 }

@@ -19,4 +19,8 @@ class SerieLocalDataSourceImpl @Inject constructor(
     override suspend fun getSerieById(idSerie: Int): SerieEntity {
         return serieDao.getSerieById(idSerie)
     }
+
+    override suspend fun insertAllSeries(series: List<SerieEntity>) {
+        serieDao.insertAllSeries(series)
+    }
 }

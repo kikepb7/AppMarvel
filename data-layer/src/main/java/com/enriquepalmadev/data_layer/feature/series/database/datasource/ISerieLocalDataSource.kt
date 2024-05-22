@@ -7,4 +7,5 @@ interface ISerieLocalDataSource {
     suspend fun getAllSeries(): List<SerieEntity>
     suspend fun updateFavSerie(fav : Boolean)
     suspend fun getSerieById(idSerie : Int): SerieEntity
+    suspend fun insertAllSeries(series : List<SerieEntity>)
 }

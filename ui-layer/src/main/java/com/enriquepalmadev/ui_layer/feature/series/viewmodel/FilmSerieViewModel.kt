@@ -8,6 +8,8 @@ import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfAllSer
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByStartYearUseCase
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.usecase.GetLocalSeriesListUseCase
+import com.enriquepalmadev.domain_layer.feature.series.usecase.InsertAllSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,23 +25,25 @@ class FilmSerieViewModel @Inject constructor(
     private val fetchListOfAllSeriesUseCase: FetchListOfAllSeriesUseCase,
     private val fetchListOfSeriesOrderByStartYearUseCase: FetchListOfSeriesOrderByStartYearUseCase,
     private val fetchListOfSeriesOrderByAlphabetUseCase: FetchListOfSeriesOrderByAlphabetUseCase,
-    private val fetchListFilterByNameUseCase: FetchListFilterByNameUseCase
+    private val fetchListFilterByNameUseCase: FetchListFilterByNameUseCase,
+    private val insertAllSeriesUseCase: InsertAllSeriesUseCase,
+    private val getLocalSeriesListUseCase: GetLocalSeriesListUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FilmSerieUIState())
     val uiState: StateFlow<FilmSerieUIState> = _uiState
-    private var allSeriesList: List<FilmSerieModel>? = listOf()
+    private var localSeriesList: List<FilmSerieModel>? = listOf()
 
     private fun done() {
         viewModelScope.launch {
-            allSeriesList?.let { list ->
+            localSeriesList?.let { list ->
                 _uiState.update { updateSuccess(list) }
             }
         }
     }
 
     fun getAllSeriesListFromAPI() {
-        if (allSeriesList?.isEmpty() == true) {
+        if (localSeriesList?.isEmpty() == true) {
             viewModelScope.launch {
                 fetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.update { updateLoading() } }
@@ -53,8 +57,10 @@ class FilmSerieViewModel @Inject constructor(
                                 if (responseEither.success?.isEmpty() == true) {
                                     _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
                                 } else {
-                                    allSeriesList = responseEither.success
-                                    allSeriesList?.let { list ->
+                                    responseEither.success?.let { insertAllSeriesUseCase.insertAllSeries(it) }
+                                    // TODO() Guardar la lista en la BBDD (Limpiandola antes)
+                                    localSeriesList = responseEither.success
+                                    localSeriesList?.let { list ->
                                         _uiState.update { updateSuccess(list) }
                                     }
                                 }
@@ -69,7 +75,7 @@ class FilmSerieViewModel @Inject constructor(
 
     fun orderListByStartYear() {
         viewModelScope.launch {
-            allSeriesList?.let { seriesList ->
+            localSeriesList?.let { seriesList ->
                 fetchListOfSeriesOrderByStartYearUseCase
                     .getListOfSeriesOrderByStartYear(seriesList)
                     .onStart { _uiState.update { updateLoading() } }
@@ -80,7 +86,7 @@ class FilmSerieViewModel @Inject constructor(
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
                             is ResponseEither.Success -> {
-                                allSeriesList = responseEither.success
+                                localSeriesList = responseEither.success
                                 _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
@@ -91,7 +97,7 @@ class FilmSerieViewModel @Inject constructor(
 
     fun orderListByAlphabet() {
         viewModelScope.launch {
-            allSeriesList?.let { seriesList ->
+            localSeriesList?.let { seriesList ->
                 fetchListOfSeriesOrderByAlphabetUseCase
                     .getListOfSeriesOrderByAlphabet(seriesList)
                     .onStart { _uiState.update { updateLoading() } }
@@ -102,7 +108,7 @@ class FilmSerieViewModel @Inject constructor(
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
                             is ResponseEither.Success -> {
-                                allSeriesList = responseEither.success
+                                localSeriesList = responseEither.success
                                 _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
@@ -113,7 +119,7 @@ class FilmSerieViewModel @Inject constructor(
 
     fun filteringByName(newText: String) {
         viewModelScope.launch {
-            allSeriesList?.let { seriesList ->
+            localSeriesList?.let { seriesList ->
                 fetchListFilterByNameUseCase.getListFilterByName(newText, seriesList)
                     .onStart { _uiState.update { updateLoading() } }
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }

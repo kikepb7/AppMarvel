@@ -19,6 +19,6 @@ data class SerieEntity (
     val thumbnailExtSerie : String,
     @ColumnInfo("startYearSerie")
     val startYearSerie : Int,
-    @ColumnInfo("favSerie")
+    @ColumnInfo("isFav")
     val isFav : Boolean
 )

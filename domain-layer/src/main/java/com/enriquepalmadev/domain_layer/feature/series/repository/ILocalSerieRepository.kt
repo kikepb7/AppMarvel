@@ -6,4 +6,5 @@ interface ILocalSerieRepository {
     suspend fun getAllSeries(): List<FilmSerieModel>
     suspend fun getSerieById(id : Int): FilmSerieModel
     suspend fun updateFavSerie(id : Boolean)
+    suspend fun insertAllSeries(series : List<FilmSerieModel>)
 }

@@ -1,4 +1,4 @@
-package com.enriquepalmadev.data_layer.feature.series.api.utils
+package com.enriquepalmadev.data_layer.feature.series.utils
 
 import com.enriquepalmadev.data_layer.feature.series.database.entities.SerieEntity
 import com.enriquepalmadev.data_layer.feature.series.failure.AnotherErrorData
@@ -36,4 +36,23 @@ fun SerieEntity.entityToSerieModel(): FilmSerieModel {
         startYear = startYearSerie,
         isFav = isFav
     )
+}
+
+fun FilmSerieModel.modelToSerieEntity(): SerieEntity {
+    return SerieEntity(
+        idSerie = id,
+        titleSerie = title,
+        descriptionSerie = description,
+        thumbnailPathSerie = thumbnailPath,
+        thumbnailExtSerie = thumbnailExt,
+        startYearSerie = startYear,
+        isFav = isFav
+    )
+}
+
+
+fun List<FilmSerieModel>.modelToSerieListEntity(): List<SerieEntity> {
+    return this.map {
+        it.modelToSerieEntity()
+    }
 }

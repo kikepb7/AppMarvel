@@ -1,10 +1,12 @@
 package com.enriquepalmadev.data_layer.feature.series.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.enriquepalmadev.data_layer.feature.series.database.entities.SerieEntity
+
 
 @Dao
 interface SerieDao {
@@ -17,8 +19,8 @@ interface SerieDao {
     @Query("SELECT * FROM SERIES WHERE idSerie = idSerie")
     suspend fun getSerieById(idSerie : Int): SerieEntity
 
-    /*
-    @Query("DELETE FROM SERIES WHERE idSerie = idSerie")
-    suspend fun removeFavSerie(idSerie: Int)
-     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllSeries(series: List<SerieEntity>)
+    @Query("DELETE FROM series")
+    suspend fun clearAllSeries()
 }
