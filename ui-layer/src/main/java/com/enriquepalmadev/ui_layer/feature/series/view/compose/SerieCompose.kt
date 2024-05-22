@@ -241,6 +241,5 @@ fun Header(){
 @Preview
 @Composable
 fun Body(){
-    SeriesListBody(seriesMock, {}) {
-    }
+    SeriesListBody(seriesMock, {}, {})
 }
