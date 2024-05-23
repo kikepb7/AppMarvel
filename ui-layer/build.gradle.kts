@@ -57,6 +57,11 @@ dependencies {
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
+    val composeMaterial = "1.6.7"
+    val composeCompiler = "1.5.13"
+    val composeUi = "1.6.7"
+    val composeActivity = "1.9.0"
+    val composeRuntime = "1.6.7"
 
     implementation(project(":domain-layer"))
 
@@ -88,14 +93,12 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     /* COMPOSE */
-    //implementation("androidx.compose.ui:ui-android:$composeVersion")
-    //implementation("androidx.compose.foundation:foundation:$composeVersion")
-    implementation("androidx.compose.material:material:1.6.7")
-    implementation("androidx.compose.compiler:compiler:1.5.13")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
-    implementation("androidx.compose.ui:ui-tooling:1.6.7")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
+    implementation("androidx.compose.material:material:$composeMaterial")
+    implementation("androidx.compose.compiler:compiler:$composeCompiler")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
+    implementation("androidx.compose.ui:ui-tooling:$composeUi")
+    implementation("androidx.activity:activity-compose:$composeActivity")
+    implementation("androidx.compose.runtime:runtime-livedata:$composeRuntime")
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation("junit:junit:$jUnitVersion")

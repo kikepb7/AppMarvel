@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,20 +34,19 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.ui_layer.R
-import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharactersScreenModel
-import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.TitleListModel
+import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharactersUIModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.screens.HeaderCharacterList
 
 @Composable
 fun CharacterListScreen(
-    model: CharactersScreenModel,
+    model: CharactersUIModel,
     onCharacterClicked: (CharacterModel) -> Unit,
     dialogOrderBy: () -> Unit,
     onSearchQueryChange : (newText : String) -> Unit,
     onFavClicked: () -> Unit
 ){
     val titleListModel = model.characterListModel?.titleListModel
-    val charactersModel = model.characterListModel?.characterList
+    val charactersList = model.characterListModel?.characterList
 
     
     Column(//TODO mirar bien los metodos
@@ -61,19 +61,18 @@ fun CharacterListScreen(
 
         model.errorScreenModel?.let {
             ErrorScreen(
-                errorMessageId = R.drawable.deadpool_no_connection,
+                errorMessageImage = R.drawable.deadpool_no_connection,
                 errorMessageString = R.string.unknownError.toString()
             )
         }
 
 
-        HeaderCharacterList(dialogOrderBy = dialogOrderBy, onSearchQueryChange = onSearchQueryChange )
+        HeaderCharacterList(titleListModel = titleListModel, dialogOrderBy = dialogOrderBy, onSearchQueryChange = onSearchQueryChange )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         CharacterList(
-            titleListModel = titleListModel,
-            list = charactersModel,
+            list = charactersList,
             onCharacterClicked = onCharacterClicked,
             onFavClicked = onFavClicked
         )
@@ -82,10 +81,12 @@ fun CharacterListScreen(
 
 
 @Composable
-fun CharacterList(titleListModel: TitleListModel?, list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit){
-    list?.let {characterList ->
+fun CharacterList(list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit){
+    if (list.isNullOrEmpty()) {
+        Text("No characters available")
+    } else {
         LazyColumn {
-            items(characterList) { character ->
+            items(list) { character ->
                 CharacterItem(character = character, onCharacterClicked = onCharacterClicked, onFavClicked = onFavClicked)
             }
         }
@@ -104,7 +105,6 @@ fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel
         CharacterImage(
             imageUrl = character.thumbnailDTO,
             isFavorite = false,
-            title = character.name,
             onFavClicked = onFavClicked,
             modifier = Modifier.size(150.dp)
         )
@@ -120,7 +120,7 @@ fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> Unit, title: String, modifier: Modifier = Modifier){
+fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> Unit, modifier: Modifier = Modifier){
     val currentImage = remember { mutableStateOf(R.drawable.ic_border_favorite_24dp) }
 
     Column(modifier = modifier) {
@@ -131,8 +131,6 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
                 GlideImage(
                     model = imageUrl,
                     contentDescription = null,
-                    //loading = { Box(Modifier.fillMaxSize()) { CircularProgressIndicator() } },
-                    //failure = { Box(Modifier.fillMaxSize()) { Text(text = "Error") } },
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .fillMaxSize()
@@ -140,46 +138,42 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
                         .width(200.dp)
                 )
             } else {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(text = "No Image", modifier = Modifier.align(Alignment.Center))
-                }
+                GlideImage(
+                    model = R.drawable.captain_empty,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .height(200.dp)
+                        .width(200.dp)
+                )
             }
             Image(
                 painter = painterResource( id = currentImage.value ),
                 contentDescription = "like",
                 alignment = Alignment.TopEnd,
-                modifier = Modifier.clickable{
-                    currentImage.value = if (currentImage.value == R.drawable.ic_border_favorite_24dp) {
-                        R.drawable.ic_full_favorite_24dp
-                    } else {
-                        R.drawable.ic_border_favorite_24dp
+                modifier = Modifier
+                    .clickable {
+                        currentImage.value =
+                            if (currentImage.value == R.drawable.ic_border_favorite_24dp) {
+                                R.drawable.ic_full_favorite_24dp
+                            } else {
+                                R.drawable.ic_border_favorite_24dp
+                            }
+                        onFavClicked()
                     }
-                    onFavClicked()
-                }.fillMaxWidth()
+                    .fillMaxWidth()
                     .padding(end = 3.dp, top = 3.dp),
             )
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.LightGray)
-                .height(50.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                modifier = Modifier.padding(5.dp),
-                text = title,
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-        }
+
     }
 }
 
 @Composable
-fun ErrorScreen(errorMessageId: Int, errorMessageString: String) {
+fun ErrorScreen(errorMessageImage: Int, errorMessageString: String) {
     // Muestra el mensaje de error solo si errorMessageId no es 0
-    if (errorMessageId != 0) {
+    if (errorMessageImage != 0) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -189,7 +183,7 @@ fun ErrorScreen(errorMessageId: Int, errorMessageString: String) {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.deadpool_no_connection),
-                contentDescription = "No conection",
+                contentDescription = null,
                 modifier = Modifier
                     .size(150.dp)
                     .padding(bottom = 16.dp)
@@ -221,9 +215,9 @@ fun LoadingScreen() {
 @Preview
 @Composable
 fun PreviewCharacterList(){
-    val model: CharactersScreenModel = CharactersScreenModel()
+    val model = CharactersUIModel()
 
-    CharacterList(titleListModel = model.characterListModel?.titleListModel, list = model.characterListModel?.characterList, onCharacterClicked = {}, onFavClicked = {} )
+    CharacterList(list = model.characterListModel?.characterList, onCharacterClicked = {}, onFavClicked = {} )
 }
 
 @Preview
@@ -249,7 +243,6 @@ fun PreviewCharacterImage() {
         imageUrl = "https://example.com/spiderman.jpg",
         isFavorite = false,
         onFavClicked = {},
-        title = "Spider-Man",
         modifier = Modifier.size(200.dp)
     )
 }
@@ -258,8 +251,8 @@ fun PreviewCharacterImage() {
 @Composable
 fun PreviewErrorScreen() {
     ErrorScreen(
-        errorMessageId = R.drawable.deadpool_no_connection,
-        errorMessageString = "No connection"
+        errorMessageImage = R.drawable.deadpool_no_connection,
+        errorMessageString = stringResource(id = R.string.no_connection)
     )
 }
 

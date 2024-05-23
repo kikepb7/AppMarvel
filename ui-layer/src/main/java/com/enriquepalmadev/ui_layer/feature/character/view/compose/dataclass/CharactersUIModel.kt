@@ -3,7 +3,7 @@ package com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 
-data class CharactersScreenModel(
+data class CharactersUIModel(
     val loadingModel: Boolean = false,
     val errorScreenModel: ErrorScreenModel? = null,
     val characterListModel: CharacterListModel? = null,
@@ -35,10 +35,3 @@ data class CharacterListModel(
     val titleListModel: TitleListModel,
     val characterList: List<CharacterModel>?
 )
-
-/*data class Loading(
-    val loader: Boolean = false
-)
- */
-
-

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,29 +20,29 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
-    private lateinit var composeView: ComposeView
     private val viewModel: CharactersViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).also {
-            composeView = it
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                val state by viewModel.state.collectAsState()//TODO onFavClick
+                CharacterListScreen(
+                    model = state,
+                    onCharacterClicked = { navigateToCharacterDetail(it.id) },
+                    dialogOrderBy = { showDialogOrderBy() },
+                    onSearchQueryChange = { newtext -> onSearchQueryChange(newtext) },
+                    onFavClicked = {  }
+                )
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        composeView.setContent {
-           val state by viewModel.state.collectAsState()//TODO onFavClick
-            CharacterListScreen(
-                model = state,
-                onCharacterClicked = { navigateToCharacterDetail(it.id) },
-                dialogOrderBy = { showDialogOrderBy() },
-                onSearchQueryChange = { newtext -> onSearchQueryChange(newtext) },
-                onFavClicked = {  }
-            )
-        }
         viewModel.getCharacterList()
     }
 
