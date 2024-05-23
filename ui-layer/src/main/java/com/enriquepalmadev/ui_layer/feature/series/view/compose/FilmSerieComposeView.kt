@@ -12,7 +12,7 @@ fun FilmSerieComposeView(
     uiState: FilmSerieUIState,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
-    favClicked: (Int) -> Unit,
+    favClicked: (id: Int, fav: Boolean) -> Unit,
     onSearchQueryChange: (newText : String) -> Unit
 ) {
 

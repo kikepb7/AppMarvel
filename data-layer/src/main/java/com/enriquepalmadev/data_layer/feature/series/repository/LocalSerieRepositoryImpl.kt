@@ -15,16 +15,22 @@ class LocalSerieRepositoryImpl @Inject constructor(
     override suspend fun getAllSeries(): List<FilmSerieModel> {
         return serieLocalDataSourceImpl.getAllSeries().entityToSerieListModel()
         }
-
+/*
     override suspend fun getSerieById(id: Int): FilmSerieModel {
         return serieLocalDataSourceImpl.getSerieById(id).entityToSerieModel()
     }
 
-    override suspend fun updateFavSerie(id: Boolean) {
-        return serieLocalDataSourceImpl.updateFavSerie(id)
+ */
+
+    override suspend fun updateFavSerie(id: Int, fav: Boolean) {
+        return serieLocalDataSourceImpl.updateFavSerie(id, fav)
     }
 
     override suspend fun insertAllSeries(series: List<FilmSerieModel>) {
         serieLocalDataSourceImpl.insertAllSeries(series.modelToSerieListEntity())
+    }
+
+    override suspend fun clearAllSeries() {
+        serieLocalDataSourceImpl.clearAllSeries()
     }
 }

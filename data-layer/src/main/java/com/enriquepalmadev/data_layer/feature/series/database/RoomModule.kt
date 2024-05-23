@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.enriquepalmadev.data_layer.feature.series.database.dao.SerieDao
 import com.enriquepalmadev.data_layer.feature.series.database.datasource.SerieLocalDataSourceImpl
 import com.enriquepalmadev.data_layer.feature.series.repository.LocalSerieRepositoryImpl
+import com.enriquepalmadev.domain_layer.feature.series.repository.ILocalSerieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +17,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RoomModule {
-    @Provides
+
     @Singleton
+    @Provides
     fun provideSerieDatabase(@ApplicationContext appContext: Context): SerieDatabase {
         return Room.databaseBuilder(
             appContext,
@@ -25,14 +27,22 @@ object RoomModule {
             "series_database"
         ).build()
     }
-    @Provides
+
     @Singleton
+    @Provides
     fun provideSerieDao(serieDatabase: SerieDatabase) : SerieDao{
         return serieDatabase.serieDao()
     }
-    @Provides
+
     @Singleton
-    fun provideLocalSerieRepository(serieDao: SerieLocalDataSourceImpl): LocalSerieRepositoryImpl {
-        return LocalSerieRepositoryImpl(serieDao)
+    @Provides
+    fun provideSerieLocalDataSource(serieDao: SerieDao) : SerieLocalDataSourceImpl{
+        return SerieLocalDataSourceImpl(serieDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLocalSerieRepository(serieLocalDataSourceImpl: SerieLocalDataSourceImpl): ILocalSerieRepository {
+        return LocalSerieRepositoryImpl(serieLocalDataSourceImpl)
     }
 }

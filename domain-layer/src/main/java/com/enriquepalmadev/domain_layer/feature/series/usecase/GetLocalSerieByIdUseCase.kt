@@ -9,7 +9,9 @@ import javax.inject.Inject
 class GetLocalSerieByIdUseCase @Inject constructor(
     private val localSerieRepository: ILocalSerieRepository
 ) {
+    /*
     suspend fun getLocalSerieById(id : Int): Flow<FilmSerieModel> {
         return flow { emit( localSerieRepository.getSerieById(id) ) }
     }
+     */
 }

@@ -55,8 +55,8 @@ class FilmSerieFragment : Fragment() {
                                 findNavController(), id
                             )
                         },
-                        favClicked = { id : Int ->
-                            onFavIconClicked(id)
+                        favClicked = { id : Int, fav: Boolean ->
+                            onFavIconClicked(id, fav)
                         },
                         onSearchQueryChange =  { text ->
                         onSearchQueryChange(text)
@@ -116,7 +116,8 @@ class FilmSerieFragment : Fragment() {
         viewModel.filteringByName(newText)
     }
 
-    private fun onFavIconClicked(id: Int) {
+    private fun onFavIconClicked(id: Int, fav: Boolean) {
         Toast.makeText(context, "FAV $id", Toast.LENGTH_LONG).show()
+        viewModel.updateFavSerie(id, fav)
     }
 }

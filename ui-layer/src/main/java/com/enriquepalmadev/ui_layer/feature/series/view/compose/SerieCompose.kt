@@ -49,7 +49,7 @@ fun Series(
     series: List<FilmSerieModel>,
     dialogOrderBy: () -> Unit,
     itemClicked: (id: Int) -> Unit,
-    favClicked: (id: Int) -> Unit,
+    favClicked: (id: Int, fav: Boolean) -> Unit,
     onSearchQueryChange : (newText : String) -> Unit,
     isClickable: Boolean
 ) {
@@ -135,7 +135,7 @@ fun SeriesListHeader(dialogOrderBy: () -> Unit, onSearchQueryChange: (newText: S
 }
 
 @Composable
-fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int) -> Unit) {
+fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int, fav: Boolean) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
@@ -148,7 +148,7 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int) -> Unit) {
+fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int, fav: Boolean) -> Unit) {
 
     var isFav by remember { mutableStateOf(false) }
 
@@ -177,11 +177,15 @@ fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -
                         .align(Alignment.TopEnd)
                         .padding(top = 3.dp, end = 3.dp)
                         .clickable {
-                            favClicked(series[index].id)
                             isFav = !isFav
+                            favClicked(series[index].id, isFav)
                         },
                     painter = painterResource(
-                        if (isFav) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp
+                        if (isFav) {
+                            R.drawable.ic_full_favorite_24dp
+                        } else {
+                            R.drawable.ic_border_favorite_24dp
+                        }
                     ),
                     contentDescription = null
                 )
@@ -230,7 +234,7 @@ private val seriesMock: List<FilmSerieModel> = listOf(film, film, film, film, fi
 @Preview (showSystemUi = true)
 @Composable
 fun SeriesView(){
-    Series(series = seriesMock, dialogOrderBy = {}, itemClicked = {}, favClicked = {}, onSearchQueryChange = {}, isClickable = true)
+    Series(series = seriesMock, dialogOrderBy = {}, itemClicked = {}, favClicked = TODO(), onSearchQueryChange = {}, isClickable = true)
 }
 
 @Preview
@@ -242,5 +246,5 @@ fun Header(){
 @Preview
 @Composable
 fun Body(){
-    SeriesListBody(seriesMock, {}, {})
+    SeriesListBody(seriesMock, {}, TODO())
 }

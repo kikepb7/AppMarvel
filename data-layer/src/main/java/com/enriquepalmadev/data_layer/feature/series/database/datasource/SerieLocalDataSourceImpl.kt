@@ -12,15 +12,21 @@ class SerieLocalDataSourceImpl @Inject constructor(
         return serieDao.getAllSeries()
     }
 
-    override suspend fun updateFavSerie(fav: Boolean) {
-        return serieDao.updateFavSerie(fav)
+    override suspend fun updateFavSerie(idSerie: Int, fav: Boolean) {
+        return serieDao.updateFavSerie(idSerie, fav)
     }
-
+    /*
     override suspend fun getSerieById(idSerie: Int): SerieEntity {
         return serieDao.getSerieById(idSerie)
     }
 
+     */
+
     override suspend fun insertAllSeries(series: List<SerieEntity>) {
         serieDao.insertAllSeries(series)
+    }
+
+    override suspend fun clearAllSeries() {
+        serieDao.clearAllSeries()
     }
 }

@@ -8,10 +8,14 @@ import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfAllSer
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByStartYearUseCase
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.usecase.ClearAllLocalSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.GetLocalSeriesListUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.InsertAllSeriesUseCase
+import com.enriquepalmadev.domain_layer.feature.series.usecase.UpdateFavSerieUseCase
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -27,7 +31,9 @@ class FilmSerieViewModel @Inject constructor(
     private val fetchListOfSeriesOrderByAlphabetUseCase: FetchListOfSeriesOrderByAlphabetUseCase,
     private val fetchListFilterByNameUseCase: FetchListFilterByNameUseCase,
     private val insertAllSeriesUseCase: InsertAllSeriesUseCase,
-    private val getLocalSeriesListUseCase: GetLocalSeriesListUseCase
+    private val getLocalSeriesListUseCase: GetLocalSeriesListUseCase,
+    private val clearAllLocalSeriesUseCase: ClearAllLocalSeriesUseCase,
+    private val updateFavSerieUseCase: UpdateFavSerieUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FilmSerieUIState())
@@ -53,13 +59,17 @@ class FilmSerieViewModel @Inject constructor(
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
+
                             is ResponseEither.Success -> { // If it is success but the list comes empty...
                                 if (responseEither.success?.isEmpty() == true) {
                                     _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
                                 } else {
-                                    responseEither.success?.let { insertAllSeriesUseCase.insertAllSeries(it) }
-                                    // TODO() Guardar la lista en la BBDD (Limpiandola antes)
-                                    localSeriesList = responseEither.success
+                                    responseEither.success?.let {
+                                        // Cleaning cache before insert all series
+                                        //clearAllSeriesFromDB()
+                                        insertSeriesToDB(it)
+                                        localSeriesList = it
+                                    }
                                     localSeriesList?.let { list ->
                                         _uiState.update { updateSuccess(list) }
                                     }
@@ -85,6 +95,7 @@ class FilmSerieViewModel @Inject constructor(
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
+
                             is ResponseEither.Success -> {
                                 localSeriesList = responseEither.success
                                 _uiState.update { updateSuccess(responseEither.success) }
@@ -107,6 +118,7 @@ class FilmSerieViewModel @Inject constructor(
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
+
                             is ResponseEither.Success -> {
                                 localSeriesList = responseEither.success
                                 _uiState.update { updateSuccess(responseEither.success) }
@@ -128,8 +140,9 @@ class FilmSerieViewModel @Inject constructor(
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
+
                             is ResponseEither.Success -> {
-                                if(responseEither.success.isEmpty()){
+                                if (responseEither.success.isEmpty()) {
                                     _uiState.update { updateNoItemsFound() }
                                 } else {
                                     _uiState.update { updateSuccess(responseEither.success) }
@@ -140,22 +153,41 @@ class FilmSerieViewModel @Inject constructor(
             }
         }
     }
-}
 
-private fun updateLoading(): FilmSerieUIState {
-    return FilmSerieUIState(isLoading = true)
-}
 
-private fun updateFailure(failure : FailureDomain): FilmSerieUIState {
-    return FilmSerieUIState(isError = failure)
-}
+    private fun clearAllSeriesFromDB() {
+        CoroutineScope(Dispatchers.IO).launch {
+            clearAllLocalSeriesUseCase.clearAllLocalSeries()
+        }
+    }
 
-private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState {
-    return FilmSerieUIState(list = seriesList)
-}
+    private fun insertSeriesToDB(seriesList: List<FilmSerieModel>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            insertAllSeriesUseCase.insertAllSeries(seriesList)
+        }
+    }
 
-private fun updateNoItemsFound(): FilmSerieUIState {
-    return FilmSerieUIState(itemsFound = false)
+    fun updateFavSerie(id: Int, isFav: Boolean) {
+        CoroutineScope(Dispatchers.IO).launch {
+            updateFavSerieUseCase.updateFavSerie(id, isFav)
+        }
+    }
+
+    private fun updateLoading(): FilmSerieUIState {
+        return FilmSerieUIState(isLoading = true)
+    }
+
+    private fun updateFailure(failure: FailureDomain): FilmSerieUIState {
+        return FilmSerieUIState(isError = failure)
+    }
+
+    private fun updateSuccess(seriesList: List<FilmSerieModel>): FilmSerieUIState {
+        return FilmSerieUIState(list = seriesList)
+    }
+
+    private fun updateNoItemsFound(): FilmSerieUIState {
+        return FilmSerieUIState(itemsFound = false)
+    }
 }
 
 data class FilmSerieUIState (
