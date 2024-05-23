@@ -150,7 +150,7 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
 @Composable
 fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int, fav: Boolean) -> Unit) {
 
-    var isFav by remember { mutableStateOf(false) }
+    var favSelected by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -177,11 +177,20 @@ fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -
                         .align(Alignment.TopEnd)
                         .padding(top = 3.dp, end = 3.dp)
                         .clickable {
-                            isFav = !isFav
-                            favClicked(series[index].id, isFav)
+
+                            if (series[index].isFav){
+                                favSelected = !favSelected
+                            }
+                            favSelected = !favSelected
+                            favClicked(series[index].id, favSelected)
+
                         },
                     painter = painterResource(
-                        if (isFav) {
+                        if(series[index].isFav || favSelected){
+                            R.drawable.ic_full_favorite_24dp
+                        } else if(series[index].isFav && !favSelected){
+                            R.drawable.ic_border_favorite_24dp
+                        } else if(!series[index].isFav && favSelected) {
                             R.drawable.ic_full_favorite_24dp
                         } else {
                             R.drawable.ic_border_favorite_24dp

@@ -38,18 +38,25 @@ class FilmSerieViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(FilmSerieUIState())
     val uiState: StateFlow<FilmSerieUIState> = _uiState
-    private var localSeriesList: List<FilmSerieModel>? = listOf()
+    // private var localSeriesList: List<FilmSerieModel>? = listOf()
 
-    private fun done() {
+    private fun rescueFromDB(): List<FilmSerieModel> {
+        var series : List<FilmSerieModel> = emptyList()
         viewModelScope.launch {
-            localSeriesList?.let { list ->
-                _uiState.update { updateSuccess(list) }
-            }
+            getLocalSeriesListUseCase.getLocalSeriesList()
+                .onStart { _uiState.update { updateLoading() } }
+                .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
+                .collect {list ->
+                    list?.let {
+                        series = list
+                        _uiState.update { updateSuccess(list) }
+                    }
+                }
         }
+        return series
     }
 
     fun getAllSeriesListFromAPI() {
-        if (localSeriesList?.isEmpty() == true) {
             viewModelScope.launch {
                 fetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.update { updateLoading() } }
@@ -59,90 +66,85 @@ class FilmSerieViewModel @Inject constructor(
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> { // If it is success but the list comes empty...
                                 if (responseEither.success?.isEmpty() == true) {
                                     _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
                                 } else {
-                                    responseEither.success?.let {
-                                        // Cleaning cache before insert all series
-                                        //clearAllSeriesFromDB()
-                                        insertSeriesToDB(it)
-                                        localSeriesList = it
-                                    }
-                                    localSeriesList?.let { list ->
-                                        _uiState.update { updateSuccess(list) }
+                                    responseEither.success?.let { list ->
+                                        // Not cleaning cache before insert all series because we ignore equal items
+                                        insertSeriesToDB(list)
+                                        _uiState.update { updateSuccess(rescueFromDB()) }
                                     }
                                 }
                             }
                         }
                     }
             }
-        } else {
-            done()
-        }
     }
 
     fun orderListByStartYear() {
         viewModelScope.launch {
-            localSeriesList?.let { seriesList ->
+            if(rescueFromDB().isNotEmpty()){
+                val series = rescueFromDB()
                 fetchListOfSeriesOrderByStartYearUseCase
-                    .getListOfSeriesOrderByStartYear(seriesList)
+                    .getListOfSeriesOrderByStartYear(series)
                     .onStart { _uiState.update { updateLoading() } }
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
-                    .collect { responseEither ->
+                    .collect{ responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                localSeriesList = responseEither.success
                                 _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
+            } else {
+                _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
             }
         }
     }
 
     fun orderListByAlphabet() {
         viewModelScope.launch {
-            localSeriesList?.let { seriesList ->
+            if(rescueFromDB().isNotEmpty()){
+                val series = rescueFromDB()
                 fetchListOfSeriesOrderByAlphabetUseCase
-                    .getListOfSeriesOrderByAlphabet(seriesList)
+                    .getListOfSeriesOrderByAlphabet(series)
                     .onStart { _uiState.update { updateLoading() } }
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
-                    .collect { responseEither ->
+                    .collect{ responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                localSeriesList = responseEither.success
                                 _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
+            } else {
+                _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
             }
         }
     }
 
     fun filteringByName(newText: String) {
         viewModelScope.launch {
-            localSeriesList?.let { seriesList ->
-                fetchListFilterByNameUseCase.getListFilterByName(newText, seriesList)
+            if(rescueFromDB().isNotEmpty()){
+                val series = rescueFromDB()
+                fetchListFilterByNameUseCase
+                    .getListFilterByName(newText, series)
                     .onStart { _uiState.update { updateLoading() } }
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
-                    .collect { responseEither ->
+                    .collect{ responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
                                 _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                if (responseEither.success.isEmpty()) {
+                                if(responseEither.success.isEmpty()){
                                     _uiState.update { updateNoItemsFound() }
                                 } else {
                                     _uiState.update { updateSuccess(responseEither.success) }
@@ -150,6 +152,8 @@ class FilmSerieViewModel @Inject constructor(
                             }
                         }
                     }
+            } else {
+                _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
             }
         }
     }

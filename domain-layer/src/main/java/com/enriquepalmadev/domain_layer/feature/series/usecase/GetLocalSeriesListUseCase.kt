@@ -10,6 +10,10 @@ class GetLocalSeriesListUseCase @Inject constructor(
     private val localSerieRepository: ILocalSerieRepository
 ) {
     suspend fun getLocalSeriesList(): Flow<List<FilmSerieModel>?> {
-        return flow { emit( localSerieRepository.getAllSeries() ) }
+        return flow { emit(localSerieRepository.getAllSeries()
+            .filter {
+                it.description.isNullOrEmpty().not()}
+            .sortedByDescending { it.startYear })
+        }
     }
 }
