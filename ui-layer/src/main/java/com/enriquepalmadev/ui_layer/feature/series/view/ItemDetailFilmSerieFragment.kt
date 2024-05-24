@@ -26,7 +26,6 @@ class ItemDetailFilmSerieFragment : Fragment() {
     private var serieModel: FilmSerieModel? = null
     private var idSerie: Int? = null
     private val idViewModel: ItemDetailFilmSerieViewModel by viewModels()
-
     private val args: ItemDetailFilmSerieFragmentArgs by navArgs()
 
     override fun onCreateView(

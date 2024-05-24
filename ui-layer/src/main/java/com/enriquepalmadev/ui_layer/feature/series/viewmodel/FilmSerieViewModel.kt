@@ -1,5 +1,9 @@
 package com.enriquepalmadev.ui_layer.feature.series.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
@@ -38,7 +42,6 @@ class FilmSerieViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(FilmSerieUIState())
     val uiState: StateFlow<FilmSerieUIState> = _uiState
-    // private var localSeriesList: List<FilmSerieModel>? = listOf()
 
     private fun rescueFromDB(): List<FilmSerieModel> {
         var series : List<FilmSerieModel> = emptyList()
