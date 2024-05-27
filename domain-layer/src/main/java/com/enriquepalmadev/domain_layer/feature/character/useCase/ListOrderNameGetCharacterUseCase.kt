@@ -16,40 +16,16 @@ class ListOrderNameGetCharacterUseCase @Inject constructor(
     suspend fun getCharacterListOrderByNameAZ(): Flow<Either<CharacterErrorModel, List<CharacterModel>?>> {
 
         return flow{
-            when (val response = characterListRepositoryImpl.getCharacterList()){
-                is Either.Error -> {
-                    emit(Either.Error(response.error))
-                }
-                is Either.Success-> {
-                    val filteredList = response.data?.sortedBy {
-                        it.name
-                    }/*.filterEmptyImageAndDescription()
-
-                    emit(Either.Success(filteredList))
-                     */
-                    emit(Either.Success(filteredList))
-                }
-            }
+            val localCharacters = characterListRepositoryImpl.getCharactersOrderByNameAZ()
+            emit(Either.Success(localCharacters))
         }
     }
 
     suspend fun getCharacterListOrderByNameZA(): Flow<Either<CharacterErrorModel, List<CharacterModel>?>> {
 
-        return flow{
-            when (val response = characterListRepositoryImpl.getCharacterList()){
-                is Either.Error -> {
-                    emit(Either.Error(response.error))
-                }
-                is Either.Success-> {
-                    val filteredList = response.data?.sortedByDescending {
-                        it.name
-                    }/*.filterEmptyImageAndDescription()
-
-                    emit(Either.Success(filteredList))
-                     */
-                    emit(Either.Success(filteredList))
-                }
-            }
+        return flow {
+            val localCharacters = characterListRepositoryImpl.getCharactersOrderByNameZA()
+            emit(Either.Success(localCharacters))
         }
     }
 }

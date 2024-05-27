@@ -35,7 +35,9 @@ class CharactersFragment : Fragment() {
                     onCharacterClicked = { navigateToCharacterDetail(it.id) },
                     dialogOrderBy = { showDialogOrderBy() },
                     onSearchQueryChange = { newtext -> onSearchQueryChange(newtext) },
-                    onFavClicked = {  }
+                    onFavClicked = { characterId, isFavourite ->
+                        onFavClick(characterId, isFavourite)
+                    }
                 )
             }
         }
@@ -94,5 +96,9 @@ class CharactersFragment : Fragment() {
             )
         )
 
+    }
+
+    private fun onFavClick(characterId: Int, isFavourite: Boolean){
+        viewModel.modifierFavouriteCharacter(characterId, isFavourite)
     }
 }

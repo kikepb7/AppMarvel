@@ -3,6 +3,7 @@ package com.enriquepalmadev.data_layer.commons.di
 import com.enriquepalmadev.data_layer.commons.interceptor.ApiKeyInterceptor
 import com.enriquepalmadev.data_layer.commons.interceptor.NetworkErrorInterceptor
 import com.enriquepalmadev.data_layer.commons.utils.Constants
+import com.enriquepalmadev.data_layer.feature.character.database.dao.CharacterDAO
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterService
 import com.enriquepalmadev.data_layer.feature.character.repository.CharacterRepositoryImpl
@@ -109,7 +110,10 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideCharacterRepository(characterRemoteDataSourceImpl: CharacterRemoteDataSource): CharacterRepository {
-        return CharacterRepositoryImpl(characterRemoteDataSourceImpl)
+    fun provideCharacterRepository(
+        characterRemoteDataSourceImpl: CharacterRemoteDataSource,
+        characterDAO: CharacterDAO
+    ): CharacterRepository {
+        return CharacterRepositoryImpl(characterRemoteDataSourceImpl, characterDAO)
     }
 }

@@ -16,16 +16,8 @@ class GetCharacterUseCase @Inject constructor(
     suspend fun getCharacterList(): Flow<Either<CharacterErrorModel, List<CharacterModel>?>> {
         //Filter to empty description and image
         return flow {
-            when (val response = characterListRepository.getCharacterList()) {
-                is Either.Success -> {
-                    //val filteredList = response.data?.filterEmptyImageAndDescription()
-                    emit(Either.Success(response.data))
-                }
-
-                is Either.Error -> {
-                    emit(Either.Error(response.error))
-                }
-            }
+            val response = characterListRepository.getCharacterList()
+            emit(response)
         }
     }
 }

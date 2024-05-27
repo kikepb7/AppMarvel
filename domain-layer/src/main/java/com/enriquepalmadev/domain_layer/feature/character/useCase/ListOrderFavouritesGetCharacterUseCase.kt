@@ -15,17 +15,8 @@ class ListOrderFavouritesGetCharacterUseCase @Inject constructor(
 
     suspend fun getCharacterListOrderFavourites(): Flow<Either<CharacterErrorModel, List<CharacterModel>?>> {
         return flow {
-            when (val response = characterListRepositoryImpl.getCharacterList()){
-                is Either.Error -> {
-                    emit(Either.Error(response.error))
-                }
-                is Either.Success-> {
-                    val filteredList = response.data?.sortedBy { item->
-                        item.name
-                    }?.filterEmptyImageAndDescription()
-                    emit(Either.Success(filteredList))
-                }
-            }
+            val localCharacters = characterListRepositoryImpl.getCharactersOrderByFavourites()
+            emit(Either.Success(localCharacters))
         }
     }
 }

@@ -39,6 +39,8 @@ dependencies {
     val retrofitVersion = "2.11.0"
     val interceptorVersion = "4.12.0"
     val hiltVersion = "2.51"
+    val room = "2.6.1"
+
 
     implementation(project(":domain-layer"))
 
@@ -60,6 +62,10 @@ dependencies {
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    //ROOM
+    implementation("androidx.room:room-ktx:$room")
+    kapt("androidx.room:room-compiler:$room")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
