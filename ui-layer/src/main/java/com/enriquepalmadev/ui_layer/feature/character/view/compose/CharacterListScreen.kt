@@ -1,5 +1,7 @@
 package com.enriquepalmadev.ui_layer.feature.character.view.compose
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,11 +51,10 @@ fun CharacterListScreen(
     val charactersList = model.characterListModel?.characterList
 
     
-    Column(//TODO mirar bien los metodos
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black),
-        //horizontalAlignment = Alignment.CenterHorizontally
     ){
         if(model.loadingModel){
             LoadingScreen()
@@ -62,7 +63,7 @@ fun CharacterListScreen(
         model.errorScreenModel?.let {
             ErrorScreen(
                 errorMessageImage = R.drawable.deadpool_no_connection,
-                errorMessageString = R.string.unknownError.toString()
+                errorMessageString = R.string.unknownError
             )
         }
 
@@ -171,7 +172,7 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
 }
 
 @Composable
-fun ErrorScreen(errorMessageImage: Int, errorMessageString: String) {
+fun ErrorScreen(@DrawableRes errorMessageImage: Int, @StringRes errorMessageString: Int) {
     // Muestra el mensaje de error solo si errorMessageId no es 0
     if (errorMessageImage != 0) {
         Column(
@@ -189,7 +190,7 @@ fun ErrorScreen(errorMessageImage: Int, errorMessageString: String) {
                     .padding(bottom = 16.dp)
             )
             Text(
-                text = errorMessageString,
+                text = stringResource(id = errorMessageString),
                 color = Color.Red,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
@@ -252,7 +253,7 @@ fun PreviewCharacterImage() {
 fun PreviewErrorScreen() {
     ErrorScreen(
         errorMessageImage = R.drawable.deadpool_no_connection,
-        errorMessageString = stringResource(id = R.string.no_connection)
+        errorMessageString = R.string.no_connection
     )
 }
 
