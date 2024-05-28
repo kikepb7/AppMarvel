@@ -113,16 +113,10 @@ class ComicsViewModelTest {
     }
 
     @Test
-    // TODO --> Tengo el catch en el viewModel, pero el caso de uso no contempla devolver una Exception
     fun `GIVEN fetch comic list WHEN we call fetchComicListUseCase method and there's an exception THEN it return a throwable error`() {
         return runTest {
-            val error = ComicListScreenError(
-                image = 2131230828,
-                errorMsg = 2132017182
-            )
 
-//            coEvery { fetchComicUseCase.fetchComicList() } returns flow (emit { Exception() })
-            coEvery { fetchComicUseCase.fetchComicList() } throws Exception()
+            coEvery { fetchComicUseCase.fetchComicList() } returns flow { throw Exception() }
 
             viewModel.state.test {
                 // First State
@@ -132,18 +126,18 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                viewModel.getComicsList()
+
                 assertEquals(
                     ComicScreenState(
                         loadingScreenData = ComicListScreenLoading(loader = true)
                     ), awaitItem()
                 )
 
-                viewModel.getComicsList()
-
                 assertEquals(
                     ComicScreenState(
                         loadingScreenData = ComicListScreenLoading(loader = false),
-                        errorScreenData = error
+                        errorScreenData = errorMocked
                     ), awaitItem()
                 )
 
