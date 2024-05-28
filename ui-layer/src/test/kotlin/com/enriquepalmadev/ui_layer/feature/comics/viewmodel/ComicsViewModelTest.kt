@@ -2,8 +2,8 @@ package com.enriquepalmadev.ui_layer.feature.comics.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
-import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.comics.usecase.FetchComicUseCase
 import com.enriquepalmadev.ui_layer.R
@@ -76,7 +76,7 @@ class ComicsViewModelTest {
 
             coEvery { fetchComicUseCase.fetchComicList() } returns flow {
                 emit(
-                    Either.Failure(
+                    Either.Error(
                         FailureDomain.ApiError
                     )
                 )
