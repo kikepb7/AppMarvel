@@ -58,7 +58,8 @@ class FilmSerieViewModel @Inject constructor(
                                         apiSeries = list
                                         insertSeriesToDB(list)
                                         // TODO -> comparo listas y seteo isFav de db a apiList
-                                        _uiState.update { updateSuccess(list) }
+                                        //compareFavAttr(apiSeries, getSeriesFromDB())
+                                        _uiState.update { updateSuccess(apiSeries) }
                                     }
                                 }
                             }
@@ -165,6 +166,18 @@ class FilmSerieViewModel @Inject constructor(
             dbSeries = getAllSeriesUseCase.getAllSeries()
         }
         return dbSeries
+    }
+
+    private fun compareFavAttr(apiList : List<FilmSerieModel>, dbList : List<FilmSerieModel>) /*: List<FilmSerieModel>*/ {
+        //val list: List<FilmSerieModel> = apiList
+        dbList.forEach { dbItem ->
+            apiList.forEach { apiItem ->
+                if(dbItem.id==apiItem.id){
+                    apiItem.isFav = dbItem.isFav
+                }
+            }
+        }
+        //return list
     }
 
     private fun updateLoading(): FilmSerieUIState {
