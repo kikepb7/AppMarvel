@@ -7,26 +7,15 @@ import javax.inject.Inject
 class SerieLocalDataSourceImpl @Inject constructor(
     private val serieDao: SerieDao
 ): ISerieLocalDataSource {
-
-    override suspend fun getAllSeries(): List<SerieEntity> {
-        return serieDao.getAllSeries()
-    }
-
     override suspend fun updateFavSerie(idSerie: Int, fav: Boolean) {
         return serieDao.updateFavSerie(idSerie, fav)
     }
-    /*
-    override suspend fun getSerieById(idSerie: Int): SerieEntity {
-        return serieDao.getSerieById(idSerie)
-    }
-
-     */
 
     override suspend fun insertAllSeries(series: List<SerieEntity>) {
         serieDao.insertAllSeries(series)
     }
 
-    override suspend fun clearAllSeries() {
-        serieDao.clearAllSeries()
+    override suspend fun getAllSeries(): List<SerieEntity> {
+        return serieDao.getAllSeries()
     }
 }

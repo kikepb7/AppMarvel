@@ -12,15 +12,6 @@ import javax.inject.Inject
 class LocalSerieRepositoryImpl @Inject constructor(
     private val serieLocalDataSourceImpl: SerieLocalDataSourceImpl
 ) : ILocalSerieRepository{
-    override suspend fun getAllSeries(): List<FilmSerieModel> {
-        return serieLocalDataSourceImpl.getAllSeries().entityToSerieListModel()
-        }
-/*
-    override suspend fun getSerieById(id: Int): FilmSerieModel {
-        return serieLocalDataSourceImpl.getSerieById(id).entityToSerieModel()
-    }
-
- */
 
     override suspend fun updateFavSerie(id: Int, fav: Boolean) {
         return serieLocalDataSourceImpl.updateFavSerie(id, fav)
@@ -30,7 +21,7 @@ class LocalSerieRepositoryImpl @Inject constructor(
         serieLocalDataSourceImpl.insertAllSeries(series.modelToSerieListEntity())
     }
 
-    override suspend fun clearAllSeries() {
-        serieLocalDataSourceImpl.clearAllSeries()
+    override suspend fun getAllSeries(): List<FilmSerieModel> {
+        return serieLocalDataSourceImpl.getAllSeries().entityToSerieListModel()
     }
 }
