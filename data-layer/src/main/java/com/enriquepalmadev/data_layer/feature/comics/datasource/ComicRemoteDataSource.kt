@@ -3,7 +3,7 @@ package com.enriquepalmadev.data_layer.feature.comics.datasource
 import com.enriquepalmadev.data_layer.feature.comics.dto.FailureDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.ResponseMarvelDto
 import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
-import com.enriquepalmadev.domain_layer.feature.comics.model.Either
+import com.enriquepalmadev.domain_layer.commons.Either
 import java.io.IOException
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class ComicRemoteDataSource @Inject constructor(
             if (request.isSuccessful && request.body() != null) {
                 Either.Success(data = request.body())
             } else {
-                Either.Failure(
+                Either.Error(
                     error = FailureDto(
                         code = request.code(),
                         message = request.errorBody().toString()
@@ -26,7 +26,7 @@ class ComicRemoteDataSource @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            Either.Failure(
+            Either.Error(
                 FailureDto(
                     code = request.code(),
                     message = request.errorBody().toString()
@@ -42,7 +42,7 @@ class ComicRemoteDataSource @Inject constructor(
             if (request.isSuccessful && request.body() != null) {
                 Either.Success(data = request.body())
             } else {
-                Either.Failure(
+                Either.Error(
                     error = FailureDto(
                         code = request.code(),
                         message = request.errorBody().toString()
@@ -50,7 +50,7 @@ class ComicRemoteDataSource @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            Either.Failure(
+            Either.Error(
                 FailureDto(
                     code = request.code(),
                     message = request.errorBody().toString()

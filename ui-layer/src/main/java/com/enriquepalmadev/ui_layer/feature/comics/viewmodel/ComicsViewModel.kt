@@ -2,8 +2,8 @@ package com.enriquepalmadev.ui_layer.feature.comics.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
-import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.comics.usecase.FetchComicUseCase
 import com.enriquepalmadev.ui_layer.feature.comics.view.model.ComicListScreenLoading
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ComicsViewModel @Inject constructor(
     private val fetchComicListUseCase: FetchComicUseCase
-) : ViewModel() {
+): ViewModel() {
 
     private val _state = MutableStateFlow(ComicScreenState())
     val state: StateFlow<ComicScreenState?> = _state.asStateFlow()
@@ -44,7 +44,7 @@ class ComicsViewModel @Inject constructor(
                 .catch { throwableError -> manageError(throwableError = throwableError) }
                 .collect { result ->
                     when (result) {
-                        is Either.Failure -> { manageFailure(error = result.error) }
+                        is Either.Error -> { manageFailure(error = result.error) }
 
                         is Either.Success -> { manageSuccess(result.data) }
                     }
