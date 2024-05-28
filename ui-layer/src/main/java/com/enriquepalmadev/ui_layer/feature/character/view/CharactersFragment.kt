@@ -24,8 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-// TODO Diferencia entre State Flow y Shared Flow
-
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
     private lateinit var binding: FragmentCharactersBinding
@@ -34,7 +32,7 @@ class CharactersFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCharactersBinding.inflate(inflater)
         val view = binding.root
         return view
@@ -96,7 +94,6 @@ class CharactersFragment : Fragment() {
                     showError(message)
                 }
                 is State.NavigateToDetail -> navigateToCharacterDetail(state.characterId)
-                else -> {}
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
