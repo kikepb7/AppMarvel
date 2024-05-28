@@ -23,7 +23,7 @@ tasks.register("assembleDebugUnitTest") {
 }
 
 dependencies {
-    val kotlinCorutines = "1.6.1"
+    val kotlinCorutines = "1.8.0"
     val jUnitVersion = "4.13.2"
     val javaxInjextVersion = "1"
     val mapStructVersion = "1.4.2"
@@ -39,5 +39,7 @@ dependencies {
     // HILT
     implementation("javax.inject:javax.inject:$javaxInjextVersion")
 
+    testImplementation("io.mockk:mockk:1.12.2")
     testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${kotlinCorutines}")
 }
