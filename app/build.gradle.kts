@@ -44,7 +44,6 @@ dependencies {
     implementation(project(":data-layer"))
     implementation(project(":domain-layer"))
     implementation(project(":ui-layer"))
-
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
 }

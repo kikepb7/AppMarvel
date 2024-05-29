@@ -14,13 +14,7 @@ kapt {
     generateStubs = true
 }
 
-tasks.register("assembleDebug") {
-    dependsOn("build")
-}
 
-tasks.register("assembleDebugUnitTest") {
-    dependsOn("test")
-}
 
 dependencies {
     val kotlinCorutines = "1.6.1"
@@ -28,6 +22,7 @@ dependencies {
     val javaxInjextVersion = "1"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
+    val mockkVersion = "1.12.2"
 
     // COROUTINES
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCorutines")
@@ -40,4 +35,5 @@ dependencies {
     implementation("javax.inject:javax.inject:$javaxInjextVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }

@@ -62,6 +62,7 @@ dependencies {
     val composeUi = "1.6.7"
     val composeActivity = "1.9.0"
     val composeRuntime = "1.6.7"
+    val mockkVersion = "1.12.2"
 
     implementation(project(":domain-layer"))
 
@@ -102,6 +103,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }
