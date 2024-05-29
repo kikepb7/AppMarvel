@@ -56,6 +56,15 @@ dependencies {
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
+    val material3Version = "1.2.1"
+    val composeCompilerVersion = "1.5.13"
+    val composeToolingVersion = "1.6.7"
+    val activityVersion = "1.9.0"
+    val mockkVersion = "1.12.2"
+    val mockitoVersion = "5.11.0"
+    val coroutinesTestVersion = "1.6.4"
+    val archCoreTestVersion = "2.2.0"
+    val turbineVersion = "1.0.0"
 
     implementation(project(":domain-layer"))
 
@@ -90,18 +99,18 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     // JETPACK COMPOSE
-    implementation("androidx.compose.material3:material3:1.2.1")
-    implementation("androidx.compose.compiler:compiler:1.5.13")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
-    implementation("androidx.compose.ui:ui-tooling:1.6.7")
-    implementation("androidx.activity:activity:1.9.0")
+    implementation("androidx.compose.material3:material3:$material3Version")
+    implementation("androidx.compose.compiler:compiler:$composeCompilerVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeToolingVersion")
+    implementation("androidx.compose.ui:ui-tooling:$composeToolingVersion")
+    implementation("androidx.activity:activity:$activityVersion")
 
     testImplementation("junit:junit:$jUnitVersion")
-    testImplementation("io.mockk:mockk:1.12.2")
-    testImplementation("org.mockito:mockito-core:5.11.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
+    testImplementation("androidx.arch.core:core-testing:$archCoreTestVersion")
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
 
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")

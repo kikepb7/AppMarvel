@@ -67,7 +67,7 @@ class ComicsViewModelTest {
     @Before
     fun setUp() {
         viewModel = ComicsViewModel(fetchComicListUseCase = fetchComicUseCase)
-        Dispatchers.setMain(dispatcher = StandardTestDispatcher())  // TODO --> Es lo que he encontrado para que funcione, debo dejarlo?
+        Dispatchers.setMain(dispatcher = StandardTestDispatcher())
     }
 
     @Test

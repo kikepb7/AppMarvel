@@ -39,6 +39,11 @@ dependencies {
     val retrofitVersion = "2.11.0"
     val interceptorVersion = "4.12.0"
     val hiltVersion = "2.51"
+    val mockkVersion = "1.12.2"
+    val mockitoVersion = "5.11.0"
+    val coroutinesTestVersion = "1.6.4"
+    val archCoreTestVersion = "2.2.0"
+    val turbineVersion = "1.0.0"
 
     implementation(project(":domain-layer"))
 
@@ -72,9 +77,19 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.2")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
 
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.37")
-    kaptAndroidTest("com.google.dagger:hilt-android-testing:2.37")
+    testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
+    testImplementation("androidx.arch.core:core-testing:$archCoreTestVersion")
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
 
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+
+
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation("org.mockito:mockito-core:3.+")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.+")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
 }

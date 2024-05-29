@@ -1,41 +1,42 @@
 package com.enriquepalmadev.domain_layer.feature.comics.usecase
 
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
-import com.enriquepalmadev.domain_layer.feature.comics.model.Either
-import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class FetchComicUseCaseTest {
 
-    @MockK
-    private lateinit var comicRepository: ComicRepository
+    private val comicRepository = mockk<ComicRepository>()
     private lateinit var fecthComicUseCase: FetchComicUseCase
 
     @Before
     fun setUp() {
-        MockKAnnotations.init(this)
-        comicRepository = mockk()
         fecthComicUseCase = FetchComicUseCase(comicRepository)
+        Dispatchers.setMain(dispatcher = StandardTestDispatcher())
     }
 
     @Test
-    fun `check if repository is called`() = runBlocking {
+    fun `check if repository is called`() = runTest {
 
         // Given
-        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
+//        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
+        coEvery { comicRepository.fetchComicList() } answers { Either.Success(getComicListMocked()) }
 
         // When
-        fecthComicUseCase.fetchComicList().first()
+//        fecthComicUseCase.fetchComicList()
+        fecthComicUseCase.fetchComicList().collect { }
+
 
         // Then
         coVerify(exactly = 1) { comicRepository.fetchComicList() }
