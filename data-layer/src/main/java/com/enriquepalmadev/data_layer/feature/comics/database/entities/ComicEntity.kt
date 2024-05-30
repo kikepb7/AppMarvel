@@ -16,5 +16,7 @@ data class ComicEntity(
     @ColumnInfo(name = "thumbnail")
     val thumbnail: String,
     @ColumnInfo(name = "pageCount")
-    val pageCount: Int
+    val pageCount: Int,
+    @ColumnInfo(name = "isFavorite")
+    val isFavorite: Boolean = false
 )

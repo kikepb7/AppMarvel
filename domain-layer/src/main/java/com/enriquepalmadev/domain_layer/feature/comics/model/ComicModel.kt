@@ -5,5 +5,6 @@ data class ComicModel(
     val title: String,
     val description: String?,
     val pageCount: Int,
-    val thumbnail: String
+    val thumbnail: String,
+    val isFavorite: Boolean = false
 )

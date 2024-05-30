@@ -13,7 +13,7 @@ interface ComicDao {
     suspend fun findAllComics(): List<ComicEntity>
 
     @Query("SELECT * FROM comic_table WHERE id = :comicId")
-    suspend fun findComicById(comicId: Int): ComicEntity
+    suspend fun findComicById(comicId: Int): ComicEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllComics(comicList: List<ComicEntity>)
@@ -26,4 +26,7 @@ interface ComicDao {
 
     @Query("DELETE FROM comic_table WHERE id = :comicId")
     suspend fun deleteComicById(comicId: Int)
+
+    @Query("SELECT * FROM comic_table WHERE isFavorite = 1")
+    suspend fun getFavoriteComicList(): List<ComicEntity>
 }

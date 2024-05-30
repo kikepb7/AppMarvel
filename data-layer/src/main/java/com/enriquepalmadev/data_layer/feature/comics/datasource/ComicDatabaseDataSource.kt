@@ -15,8 +15,8 @@ class ComicDatabaseDataSource @Inject constructor(
         }
     }
 
-    suspend fun findComicDetailFromDatabase(comicId: Int): ComicModel {
-        return comicDao.findComicById(comicId = comicId).comicEntityToComicModel()
+    suspend fun findComicDetailFromDatabase(comicId: Int): ComicModel? {
+        return comicDao.findComicById(comicId = comicId)?.comicEntityToComicModel()
     }
 
     suspend fun insertComicToDatabase(comic: ComicEntity) {

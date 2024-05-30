@@ -16,7 +16,6 @@ class ComicRepositoryImpl @Inject constructor(
     private val remoteDataSource: ComicRemoteDataSource,
     private val databaseDataSource: ComicDatabaseDataSource
 ) : ComicRepository {
-
     override suspend fun fetchComicList(): Either<FailureDomain, List<ComicModel>?> {
 
         return try {
@@ -43,20 +42,38 @@ class ComicRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             Either.Failure(error = FailureDomain.ApiError)
         }
-
-        /* return when (val response = remoteDataSource.fetchComicsFromApi()) {
-            is Either.Failure -> Either.Failure(error = response.error.toFailureDomain())
-            is Either.Success -> Either.Success(data = response.data?.data?.results?.dtoToComicListModel())
-        }*/
     }
 
-    override suspend fun fetchComicDetail(comicId: Int): Either<FailureDomain, ComicModel?> {
+    override suspend fun fetchComicDetail(comicId: Int): Either<FailureDomain, ComicModel?> = try {
 
-        return when (val response = remoteDataSource.fetchComicDetailFromApi(comicId)) {
-            is Either.Failure -> Either.Failure(error = response.error.toFailureDomain())
-            is Either.Success -> Either.Success(
-                data = response.data?.data?.results?.firstOrNull()?.dtoToComicModel()
-            )
+        val comicDetailFromDatabase =
+            databaseDataSource.findComicDetailFromDatabase(comicId = comicId)
+
+        if (comicDetailFromDatabase != null) {
+            Either.Success(data = comicDetailFromDatabase)
+        } else {
+            when (val response = remoteDataSource.fetchComicDetailFromApi(comicId)) {
+                is Either.Failure -> Either.Failure(error = response.error.toFailureDomain())
+                is Either.Success -> {
+                    val comicFromApi =
+                        response.data?.data?.results?.firstOrNull()?.dtoToComicModel()
+
+                    comicFromApi?.let { comicModel ->
+                        databaseDataSource.clearComic(comicId = comicId)
+                        databaseDataSource.insertComicToDatabase(comic = comicModel.comicModelToComicEntity())
+                    }
+                    Either.Success(data = comicFromApi)
+                }
+            }
         }
+    } catch (e: Exception) {
+        Either.Failure(error = FailureDomain.ApiError)
+    }
+
+    override suspend fun insertComicIntoDatabase(comic: ComicModel): Either<FailureDomain, Unit> = try {
+
+        val comicFavorite = databaseDataSource.insertComicToDatabase(comic = comic.comicModelToComicEntity())
+
+
     }
 }

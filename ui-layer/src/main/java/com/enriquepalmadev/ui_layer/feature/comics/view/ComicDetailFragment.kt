@@ -78,6 +78,10 @@ class ComicDetailFragment : Fragment() {
                     state.comicModel?.let { showComicDetail(it) }
                 }
 
+                is DetailState.FavoriteSuccess -> {
+
+                }
+
                 DetailState.Loading -> manageLoader(true)
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -101,6 +105,8 @@ class ComicDetailFragment : Fragment() {
             btnFavorite.setOnClickListener {
                 isFavorite = !isFavorite
                 updateFavoriteIcon()
+
+                viewModel.addComicToFavorite(comicModel)
             }
 
             btnBack.setOnClickListener {
