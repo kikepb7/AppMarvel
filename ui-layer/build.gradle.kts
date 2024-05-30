@@ -60,8 +60,7 @@ dependencies {
     val composeCompilerVersion = "1.5.13"
     val composeToolingVersion = "1.6.7"
     val activityVersion = "1.9.0"
-    val mockkVersion = "1.12.2"
-    val mockitoVersion = "5.11.0"
+    val mockkVersion = "1.13.11"
     val coroutinesTestVersion = "1.6.4"
     val archCoreTestVersion = "2.2.0"
     val turbineVersion = "1.0.0"
@@ -107,7 +106,6 @@ dependencies {
 
     testImplementation("junit:junit:$jUnitVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.mockito:mockito-core:$mockitoVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
     testImplementation("androidx.arch.core:core-testing:$archCoreTestVersion")
     testImplementation("app.cash.turbine:turbine:$turbineVersion")

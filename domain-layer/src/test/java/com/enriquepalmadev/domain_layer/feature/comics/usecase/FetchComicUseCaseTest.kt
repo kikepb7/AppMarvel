@@ -6,40 +6,38 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
 class FetchComicUseCaseTest {
 
+
     private val comicRepository = mockk<ComicRepository>()
-    private lateinit var fecthComicUseCase: FetchComicUseCase
+    private lateinit var fetchComicUseCase: FetchComicUseCase
 
     @Before
     fun setUp() {
-        fecthComicUseCase = FetchComicUseCase(comicRepository)
-        Dispatchers.setMain(dispatcher = StandardTestDispatcher())
+        fetchComicUseCase = FetchComicUseCase(comicRepository)
     }
 
     @Test
-    fun `check if repository is called`() = runTest {
+    fun `check if repository is called`() = runTest(UnconfinedTestDispatcher()) {
 
         // Given
-//        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
-        coEvery { comicRepository.fetchComicList() } answers { Either.Success(getComicListMocked()) }
+        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
 
         // When
-//        fecthComicUseCase.fetchComicList()
-        fecthComicUseCase.fetchComicList().collect { }
-
+        val result = fetchComicUseCase.fetchComicList().first()
 
         // Then
         coVerify(exactly = 1) { comicRepository.fetchComicList() }
+        assertEquals(result, Either.Success(getComicListMocked()))
     }
 
     private fun getComicListMocked() = listOf(
