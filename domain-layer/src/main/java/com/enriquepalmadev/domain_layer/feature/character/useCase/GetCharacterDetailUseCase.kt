@@ -13,15 +13,8 @@ class GetCharacterDetailUseCase @Inject constructor(
 ){
     suspend fun getCharacterDetail(characterId: Int): Flow<Either<CharacterErrorModel, CharacterModel?>> {
         return flow {
-            when (val response = characterListRepository.getCharacterDetail(characterId)){
-                is Either.Success -> {
-                    val character = response.data
-                    emit(Either.Success(character))
-                }
-                is Either.Error -> {
-                    emit(Either.Error(response.error))
-                }
-            }
+            val result = characterListRepository.getCharacterDetail(characterId)
+            emit(result)
         }
     }
 }

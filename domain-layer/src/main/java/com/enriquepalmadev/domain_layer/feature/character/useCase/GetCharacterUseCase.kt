@@ -15,15 +15,8 @@ class GetCharacterUseCase @Inject constructor(
 
     suspend fun getCharacterList(): Flow<Either<CharacterErrorModel, List<CharacterModel>?>> {
         return flow {
-            when (val response = characterListRepository.getCharacterList()) {
-                is Either.Success -> {
-                    emit(Either.Success(response.data))
-                }
-
-                is Either.Error -> {
-                    emit(Either.Error(response.error))
-                }
-            }
+            val response = characterListRepository.getCharacterList()
+            emit(response)
         }
     }
 }

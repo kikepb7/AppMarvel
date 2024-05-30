@@ -36,6 +36,7 @@ dependencies {
     val hiltVersion = "2.51"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
+    val mockkVersion = "1.13.11"
 
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
@@ -44,6 +45,12 @@ dependencies {
     implementation(project(":data-layer"))
     implementation(project(":domain-layer"))
     implementation(project(":ui-layer"))
+
     testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
 }

@@ -32,6 +32,6 @@ data class HeaderCharacterListModel(
 )
 
 data class CharacterListModel(
-    val titleListModel: TitleListModel,
+    val titleListModel: TitleListModel?,
     val characterList: List<CharacterModel>?
 )

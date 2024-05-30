@@ -63,6 +63,10 @@ dependencies {
     val composeActivity = "1.9.0"
     val composeRuntime = "1.6.7"
     val mockkVersion = "1.12.2"
+    val mockitoVersion = "5.11.0"
+    val coroutinesTestVersion = "1.6.4"
+    val turbineVersion = "1.0.0"
+    val composeVersion = "1.0.0"
 
     implementation(project(":domain-layer"))
 
@@ -102,8 +106,17 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:$composeRuntime")
     debugImplementation("androidx.compose.ui:ui-tooling")
 
+    /* CORRUTINAS */
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
     testImplementation("junit:junit:$jUnitVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }
