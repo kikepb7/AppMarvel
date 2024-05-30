@@ -7,5 +7,6 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 interface ComicRepository {
     suspend fun fetchComicList() : Either<FailureDomain, List<ComicModel>?>
     suspend fun fetchComicDetail(comicId : Int) : Either<FailureDomain, ComicModel?>
-    suspend fun insertComicIntoDatabase(comic: ComicModel) : Either<FailureDomain, Unit>
+    suspend fun insertComicIntoDatabase(comic: ComicModel) : Boolean
+    suspend fun removeComicFromDatabase(comic: ComicModel) : Boolean
 }

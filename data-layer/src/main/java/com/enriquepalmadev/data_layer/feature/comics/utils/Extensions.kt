@@ -1,6 +1,7 @@
 package com.enriquepalmadev.data_layer.feature.comics.utils
 
 import com.enriquepalmadev.data_layer.feature.comics.database.entities.ComicEntity
+import com.enriquepalmadev.data_layer.feature.comics.database.entities.FavoriteComicEntity
 import com.enriquepalmadev.data_layer.feature.comics.dto.ComicDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.FailureDto
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
@@ -50,4 +51,31 @@ fun ComicModel.comicModelToComicEntity(): ComicEntity {
         pageCount = pageCount,
         thumbnail = thumbnail
     )
+}
+
+fun ComicModel.comicModelToFavoriteComicEntity(): FavoriteComicEntity {
+    return FavoriteComicEntity(
+        id = id,
+        title = title,
+        description = description ?: "",
+        pageCount = pageCount,
+        thumbnail = thumbnail,
+        isFavorite = isFavorite
+    )
+}
+
+fun FavoriteComicEntity.favoriteComicEntityToComicModel(): ComicModel {
+    return ComicModel(
+        id = id,
+        title = title,
+        description = description,
+        pageCount = pageCount,
+        thumbnail = thumbnail
+    )
+}
+
+fun List<FavoriteComicEntity>.favoriteComicEntityListToComicModelList(): List<ComicModel> {
+    return this.map {
+        it.favoriteComicEntityToComicModel()
+    }
 }

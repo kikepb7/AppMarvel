@@ -2,6 +2,7 @@ package com.enriquepalmadev.data_layer.feature.comics.datasource
 
 import com.enriquepalmadev.data_layer.feature.comics.database.dao.ComicDao
 import com.enriquepalmadev.data_layer.feature.comics.database.entities.ComicEntity
+import com.enriquepalmadev.data_layer.feature.comics.database.entities.FavoriteComicEntity
 import com.enriquepalmadev.data_layer.feature.comics.utils.comicEntityToComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import javax.inject.Inject
@@ -19,8 +20,15 @@ class ComicDatabaseDataSource @Inject constructor(
         return comicDao.findComicById(comicId = comicId)?.comicEntityToComicModel()
     }
 
-    suspend fun insertComicToDatabase(comic: ComicEntity) {
+    suspend fun insertComicToDatabase(comic: FavoriteComicEntity) {
         return comicDao.insertComic(comic = comic)
+    }
+    suspend fun removeComicFromDatabase(comicId: Int) {
+        return comicDao.removeComic(comicId = comicId)
+    }
+
+    suspend fun getFavoriteComics(): List<FavoriteComicEntity> {
+        return comicDao.getFavoriteComicList()
     }
 
     suspend fun insertComicListToDatabase(comicList: List<ComicEntity>) {

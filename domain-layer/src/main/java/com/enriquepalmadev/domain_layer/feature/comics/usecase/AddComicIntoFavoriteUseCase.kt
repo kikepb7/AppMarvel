@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UpdateComicFavoriteUseCase @Inject constructor(
+class AddComicIntoFavoriteUseCase @Inject constructor(
     private val comicListRepository: ComicRepository
 ) {
 
-    suspend fun updateComicFavorite(comic: ComicModel): Flow<Either<FailureDomain, Unit>> {
+    suspend fun addComicIntoFavorite(comic: ComicModel): Flow<Boolean> {
         return flow { emit(comicListRepository.insertComicIntoDatabase(comic = comic)) }
     }
 }

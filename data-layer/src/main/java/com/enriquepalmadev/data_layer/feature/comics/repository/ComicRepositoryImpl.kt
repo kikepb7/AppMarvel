@@ -3,8 +3,10 @@ package com.enriquepalmadev.data_layer.feature.comics.repository
 import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicDatabaseDataSource
 import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.comics.utils.comicModelToComicEntity
+import com.enriquepalmadev.data_layer.feature.comics.utils.comicModelToFavoriteComicEntity
 import com.enriquepalmadev.data_layer.feature.comics.utils.dtoToComicListModel
 import com.enriquepalmadev.data_layer.feature.comics.utils.dtoToComicModel
+import com.enriquepalmadev.data_layer.feature.comics.utils.favoriteComicEntityListToComicModelList
 import com.enriquepalmadev.data_layer.feature.comics.utils.toFailureDomain
 import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
@@ -60,7 +62,7 @@ class ComicRepositoryImpl @Inject constructor(
 
                     comicFromApi?.let { comicModel ->
                         databaseDataSource.clearComic(comicId = comicId)
-                        databaseDataSource.insertComicToDatabase(comic = comicModel.comicModelToComicEntity())
+                        databaseDataSource.insertComicToDatabase(comic = comicModel.comicModelToFavoriteComicEntity())
                     }
                     Either.Success(data = comicFromApi)
                 }
@@ -70,10 +72,21 @@ class ComicRepositoryImpl @Inject constructor(
         Either.Failure(error = FailureDomain.ApiError)
     }
 
-    override suspend fun insertComicIntoDatabase(comic: ComicModel): Either<FailureDomain, Unit> = try {
+    override suspend fun insertComicIntoDatabase(comic: ComicModel): Boolean {
+        val favoriteComic = comic.comicModelToFavoriteComicEntity()
+        databaseDataSource.insertComicToDatabase(comic = favoriteComic)
 
-        val comicFavorite = databaseDataSource.insertComicToDatabase(comic = comic.comicModelToComicEntity())
+        val favoriteList = databaseDataSource.getFavoriteComics()
 
+        return favoriteList.contains(favoriteComic)
+    }
 
+    override suspend fun removeComicFromDatabase(comic: ComicModel): Boolean {
+        val favoriteComic = comic.comicModelToFavoriteComicEntity()
+        databaseDataSource.removeComicFromDatabase(comicId = favoriteComic.id)
+
+        val favoriteList = databaseDataSource.getFavoriteComics()
+
+        return favoriteList.contains(favoriteComic).not()
     }
 }

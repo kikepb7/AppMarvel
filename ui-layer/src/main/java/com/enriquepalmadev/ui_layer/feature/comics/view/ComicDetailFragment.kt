@@ -28,7 +28,6 @@ class ComicDetailFragment : Fragment() {
         const val KEY_ID = "id"
     }
 
-    private var isFavorite = false
     private val comicId by lazy { arguments?.getInt(KEY_ID) }
     private lateinit var binding: FragmentComicDetailBinding
     private val viewModel: ComicDetailViewModel by viewModels()
@@ -78,8 +77,8 @@ class ComicDetailFragment : Fragment() {
                     state.comicModel?.let { showComicDetail(it) }
                 }
 
-                is DetailState.FavoriteSuccess -> {
-
+                is DetailState.ManageFavorite -> {
+                    updateFavoriteIcon(isFavorite = state.isFavorite)
                 }
 
                 DetailState.Loading -> manageLoader(true)
@@ -103,10 +102,15 @@ class ComicDetailFragment : Fragment() {
             tvDescription.text = comicModel.description
 
             btnFavorite.setOnClickListener {
-                isFavorite = !isFavorite
+                if(comicModel.isFavorite) {
+                    viewModel.removeComicFromFavorite(comic = comicModel)
+                } else {
+                    viewModel.addComicToFavorite(comic = comicModel)
+                }
+                /*isFavorite = !isFavorite
                 updateFavoriteIcon()
 
-                viewModel.addComicToFavorite(comicModel)
+                viewModel.addComicToFavorite(comicModel)*/
             }
 
             btnBack.setOnClickListener {
@@ -116,7 +120,7 @@ class ComicDetailFragment : Fragment() {
     }
 
     // Favorite button
-    private fun updateFavoriteIcon() {
+    private fun updateFavoriteIcon(isFavorite: Boolean) {
         binding.btnFavorite.setImageResource(
             if (isFavorite) R.drawable.ic_solid_heart else R.drawable.ic_line_heart
         )
