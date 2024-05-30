@@ -60,7 +60,6 @@ dependencies {
     val composeMaterial = "1.6.7"
     val composeCompiler = "1.5.13"
     val composeUi = "1.6.7"
-    val composeActivity = "1.9.0"
     val composeRuntime = "1.6.7"
 
     implementation(project(":domain-layer"))
@@ -97,7 +96,6 @@ dependencies {
     implementation("androidx.compose.compiler:compiler:$composeCompiler")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
     implementation("androidx.compose.ui:ui-tooling:$composeUi")
-    implementation("androidx.activity:activity-compose:$composeActivity")
     implementation("androidx.compose.runtime:runtime-livedata:$composeRuntime")
     debugImplementation("androidx.compose.ui:ui-tooling")
 

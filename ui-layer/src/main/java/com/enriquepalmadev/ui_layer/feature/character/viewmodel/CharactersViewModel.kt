@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enriquepalmadev.domain_layer.commons.Either
+import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.useCase.FiltListGetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.GetCharacterUseCase
 import com.enriquepalmadev.domain_layer.feature.character.useCase.ListOrderFavouritesGetCharacterUseCase
@@ -39,43 +40,23 @@ class CharactersViewModel @Inject constructor(
             getCharacterUseCase.getCharacterList()
                 .onStart {
                     _state.update {
-                        it.copy(
-                            loadingModel = true
-                        )
+                        loadingState()
                     }
-                    Log.d("CharactersViewModel", "onStart: loadingModel set to true")
                 }
                 .catch {e ->
                     _state.update {
-                        it.copy(
-                            loadingModel = false,
-                            errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = R.string.unknownError.toString())
-                        )
+                        errorState()
                     }
-                    Log.e("CharactersViewModel", "Error: ${e.message}")
                 }
                 .collect{characterList ->
                     when(characterList){
                         is Either.Error -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = R.string.unknownError.toString())
-                            )
+                            errorEither()
                         }
                         is Either.Success -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                characterListModel = CharacterListModel(
-                                    titleListModel = TitleListModel(
-                                        icon = R.drawable.ironman,
-                                        title = R.string.characters_view.toString()
-                                    ),
-                                    characterList = characterList.data
-                                )
-                            )
+                            successEither(characterList.data)
                         }
                     }
-                    Log.d("CharactersViewModel", "collect: characterList processed")
                 }
         }
     }
@@ -85,38 +66,21 @@ class CharactersViewModel @Inject constructor(
             filtListGetCharacterUseCase.getCharacterFilterList(filt)
                 .onStart {
                     _state.update {
-                        it.copy(
-                            loadingModel = true
-                        )
+                        loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        it.copy(
-                            loadingModel = false,
-                            errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = R.string.unknownError.toString())
-                        )
+                        errorState()
                     }
                 }
                 .collect{characterList ->
                     when(characterList){
                         is Either.Error -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                errorScreenModel = ErrorScreenModel(image = R.drawable.deadpool_no_connection, message = R.string.unknownError.toString())
-                            )
+                            errorEither()
                         }
                         is Either.Success -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                characterListModel = CharacterListModel(
-                                    titleListModel = TitleListModel(
-                                        icon = R.drawable.ironman,
-                                        title = R.string.characters_view.toString()
-                                    ),
-                                    characterList = characterList.data
-                                )
-                            )
+                            successEither(characterList.data)
                         }
                     }
                 }
@@ -128,45 +92,22 @@ class CharactersViewModel @Inject constructor(
             listOrderNameGetCharacterUseCase.getCharacterListOrderByNameAZ()
                 .onStart {
                     _state.update {
-                        it.copy(
-                            loadingModel = true
-                        )
+                        loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        it.copy(
-                            loadingModel = false,
-                            errorScreenModel = ErrorScreenModel(
-                                image = R.drawable.deadpool_no_connection,
-                                message = R.string.unknownError.toString()
-                            )
-                        )
+                        errorState()
                     }
                 }
                 .collect { characterList ->
                     when (characterList) {
                         is Either.Error -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                errorScreenModel = ErrorScreenModel(
-                                    image = R.drawable.deadpool_no_connection,
-                                    message = R.string.unknownError.toString()
-                                )
-                            )
+                            errorEither()
                         }
 
                         is Either.Success -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                characterListModel = CharacterListModel(
-                                    titleListModel = TitleListModel(
-                                        icon = R.drawable.ironman,
-                                        title = R.string.characters_view.toString()
-                                    ),
-                                    characterList = characterList.data
-                                )
-                            )
+                            successEither(characterList.data)
                         }
                     }
                 }
@@ -178,45 +119,22 @@ class CharactersViewModel @Inject constructor(
             listOrderNameGetCharacterUseCase.getCharacterListOrderByNameZA()
                 .onStart {
                     _state.update {
-                        it.copy(
-                            loadingModel = true
-                        )
+                        loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        it.copy(
-                            loadingModel = false,
-                            errorScreenModel = ErrorScreenModel(
-                                image = R.drawable.deadpool_no_connection,
-                                message = R.string.unknownError.toString()
-                            )
-                        )
+                        errorState()
                     }
                 }
                 .collect { characterList ->
                     when (characterList) {
                         is Either.Error -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                errorScreenModel = ErrorScreenModel(
-                                    image = R.drawable.deadpool_no_connection,
-                                    message = R.string.unknownError.toString()
-                                )
-                            )
+                            errorEither()
                         }
 
                         is Either.Success -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                characterListModel = CharacterListModel(
-                                    titleListModel = TitleListModel(
-                                        icon = R.drawable.ironman,
-                                        title = R.string.characters_view.toString()
-                                    ),
-                                    characterList = characterList.data
-                                )
-                            )
+                            successEither(characterList.data)
                         }
                     }
                 }
@@ -228,48 +146,62 @@ class CharactersViewModel @Inject constructor(
             listOrderNameFavouritesGetCharacterUseCase.getCharacterListOrderFavourites()
                 .onStart {
                     _state.update {
-                        it.copy(
-                            loadingModel = true
-                        )
+                        loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        it.copy(
-                            loadingModel = false,
-                            errorScreenModel = ErrorScreenModel(
-                                image = R.drawable.deadpool_no_connection,
-                                message = R.string.unknownError.toString()
-                            )
-                        )
+                        errorState()
                     }
                 }
                 .collect { characterList ->
                     when (characterList) {
                         is Either.Error -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                errorScreenModel = ErrorScreenModel(
-                                    image = R.drawable.deadpool_no_connection,
-                                    message = R.string.unknownError.toString()
-                                )
-                            )
+                            errorEither()
                         }
 
                         is Either.Success -> _state.update {
-                            it.copy(
-                                loadingModel = false,
-                                characterListModel = CharacterListModel(
-                                    titleListModel = TitleListModel(
-                                        icon = R.drawable.ironman,
-                                        title = R.string.characters_view.toString()
-                                    ),
-                                    characterList = characterList.data
-                                )
-                            )
+                            successEither(characterList.data)
                         }
                     }
                 }
         }
+    }
+
+    fun loadingState(): CharactersUIModel{
+        return CharactersUIModel(loadingModel = true)
+    }
+
+    fun errorState(): CharactersUIModel{
+        return CharactersUIModel(
+            loadingModel = false,
+            errorScreenModel = ErrorScreenModel(
+                image = R.drawable.deadpool_no_connection,
+                message = R.string.unknownError.toString()
+            )
+        )
+    }
+
+    fun errorEither(): CharactersUIModel{
+        return CharactersUIModel(
+            loadingModel = false,
+            errorScreenModel = ErrorScreenModel(
+                image = R.drawable.deadpool_no_connection,
+                message = R.string.unknownError.toString()
+            )
+        )
+    }
+
+    fun successEither(list: List<CharacterModel>?): CharactersUIModel{
+        return CharactersUIModel(
+            loadingModel = false,
+            characterListModel = CharacterListModel(
+                titleListModel = TitleListModel(
+                    icon = R.drawable.ironman,
+                    title = R.string.characters_view.toString()
+                ),
+                characterList = list
+            )
+        )
     }
 }

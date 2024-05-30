@@ -8,7 +8,7 @@ fun List<CharacterModel>.filterEmptyImageAndDescription(): List<CharacterModel>?
     }
 }
 
-fun List<CharacterModel>.filterEmptyImageAndDescriptionAndName(name: String): List<CharacterModel>?{
+fun List<CharacterModel>.filterByName(name: String): List<CharacterModel>?{
     return this.filter {character ->
         character.name.startsWith(name)
     }
