@@ -14,6 +14,10 @@ import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.Cha
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.CharactersUIModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.ErrorScreenModel
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.TitleListModel
+import com.enriquepalmadev.ui_layer.feature.character.view.utils.errorEither
+import com.enriquepalmadev.ui_layer.feature.character.view.utils.errorState
+import com.enriquepalmadev.ui_layer.feature.character.view.utils.loadingState
+import com.enriquepalmadev.ui_layer.feature.character.view.utils.successEither
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,21 +44,21 @@ class CharactersViewModel @Inject constructor(
             getCharacterUseCase.getCharacterList()
                 .onStart {
                     _state.update {
-                        loadingState()
+                        it.loadingState()
                     }
                 }
                 .catch {e ->
                     _state.update {
-                        errorState()
+                        it.errorState()
                     }
                 }
                 .collect{characterList ->
                     when(characterList){
                         is Either.Error -> _state.update {
-                            errorEither()
+                            it.errorEither()
                         }
                         is Either.Success -> _state.update {
-                            successEither(characterList.data)
+                            it.successEither(characterList.data)
                         }
                     }
                 }
@@ -66,21 +70,21 @@ class CharactersViewModel @Inject constructor(
             filtListGetCharacterUseCase.getCharacterFilterList(filt)
                 .onStart {
                     _state.update {
-                        loadingState()
+                        it.loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        errorState()
+                        it.errorState()
                     }
                 }
                 .collect{characterList ->
                     when(characterList){
                         is Either.Error -> _state.update {
-                            errorEither()
+                            it.errorEither()
                         }
                         is Either.Success -> _state.update {
-                            successEither(characterList.data)
+                            it.successEither(characterList.data)
                         }
                     }
                 }
@@ -92,22 +96,22 @@ class CharactersViewModel @Inject constructor(
             listOrderNameGetCharacterUseCase.getCharacterListOrderByNameAZ()
                 .onStart {
                     _state.update {
-                        loadingState()
+                        it.loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        errorState()
+                        it.errorState()
                     }
                 }
                 .collect { characterList ->
                     when (characterList) {
                         is Either.Error -> _state.update {
-                            errorEither()
+                            it.errorEither()
                         }
 
                         is Either.Success -> _state.update {
-                            successEither(characterList.data)
+                            it.successEither(characterList.data)
                         }
                     }
                 }
@@ -119,22 +123,22 @@ class CharactersViewModel @Inject constructor(
             listOrderNameGetCharacterUseCase.getCharacterListOrderByNameZA()
                 .onStart {
                     _state.update {
-                        loadingState()
+                        it.loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        errorState()
+                        it.errorState()
                     }
                 }
                 .collect { characterList ->
                     when (characterList) {
                         is Either.Error -> _state.update {
-                            errorEither()
+                            it.errorEither()
                         }
 
                         is Either.Success -> _state.update {
-                            successEither(characterList.data)
+                            it.successEither(characterList.data)
                         }
                     }
                 }
@@ -146,62 +150,25 @@ class CharactersViewModel @Inject constructor(
             listOrderNameFavouritesGetCharacterUseCase.getCharacterListOrderFavourites()
                 .onStart {
                     _state.update {
-                        loadingState()
+                        it.loadingState()
                     }
                 }
                 .catch {
                     _state.update {
-                        errorState()
+                        it.errorState()
                     }
                 }
                 .collect { characterList ->
                     when (characterList) {
                         is Either.Error -> _state.update {
-                            errorEither()
+                            it.errorEither()
                         }
 
                         is Either.Success -> _state.update {
-                            successEither(characterList.data)
+                            it.successEither(characterList.data)
                         }
                     }
                 }
         }
-    }
-
-    fun loadingState(): CharactersUIModel{
-        return CharactersUIModel(loadingModel = true)
-    }
-
-    fun errorState(): CharactersUIModel{
-        return CharactersUIModel(
-            loadingModel = false,
-            errorScreenModel = ErrorScreenModel(
-                image = R.drawable.deadpool_no_connection,
-                message = R.string.unknownError.toString()
-            )
-        )
-    }
-
-    fun errorEither(): CharactersUIModel{
-        return CharactersUIModel(
-            loadingModel = false,
-            errorScreenModel = ErrorScreenModel(
-                image = R.drawable.deadpool_no_connection,
-                message = R.string.unknownError.toString()
-            )
-        )
-    }
-
-    fun successEither(list: List<CharacterModel>?): CharactersUIModel{
-        return CharactersUIModel(
-            loadingModel = false,
-            characterListModel = CharacterListModel(
-                titleListModel = TitleListModel(
-                    icon = R.drawable.ironman,
-                    title = R.string.characters_view.toString()
-                ),
-                characterList = list
-            )
-        )
     }
 }
