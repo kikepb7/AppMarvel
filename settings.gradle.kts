@@ -16,4 +16,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "AppMarvel"
 include(":app")
- 
+include(":data-layer")
+include(":domain-layer")
+include(":ui-layer")
