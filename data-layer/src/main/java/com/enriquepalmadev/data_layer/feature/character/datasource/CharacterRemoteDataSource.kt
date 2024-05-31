@@ -8,10 +8,9 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class CharacterRemoteDataSource @Inject constructor(private val service: CharacterService):
-    CharacterDataSource {
-
-    // private val retrofit = Retrofit.retrofitService
+class CharacterRemoteDataSource @Inject constructor(
+    private val service: CharacterService
+): CharacterDataSource {
 
     override suspend fun getCharactersFromApi(): Either<CharacterError, CharacterResponseDTO<ResultDTO>> {
 

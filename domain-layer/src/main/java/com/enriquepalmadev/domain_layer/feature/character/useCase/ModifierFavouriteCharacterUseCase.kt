@@ -1,12 +1,13 @@
 package com.enriquepalmadev.domain_layer.feature.character.useCase
 
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterLocalRepository
 import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import javax.inject.Inject
 
 class ModifierFavouriteCharacterUseCase @Inject constructor(
-    private val characterRepositoryImpl: CharacterRepository
+    private val characterLocalRepository: CharacterLocalRepository
 ) {
     suspend fun modifierFavouriteCharacter(characterId: Int, isFavourite: Boolean){
-        characterRepositoryImpl.modifierFavouriteCharacter(characterId, isFavourite)
+        characterLocalRepository.modifierFavouriteCharacter(characterId, isFavourite)
     }
 }

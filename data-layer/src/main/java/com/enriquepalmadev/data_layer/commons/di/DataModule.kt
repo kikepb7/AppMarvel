@@ -6,6 +6,7 @@ import com.enriquepalmadev.data_layer.commons.utils.Constants
 import com.enriquepalmadev.data_layer.feature.character.database.dao.CharacterDAO
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.character.datasource.CharacterService
+import com.enriquepalmadev.data_layer.feature.character.repository.CharacterLocalRepositoryImpl
 import com.enriquepalmadev.data_layer.feature.character.repository.CharacterRepositoryImpl
 import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.comics.repository.ComicRepositoryImpl
@@ -13,6 +14,7 @@ import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
 import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteDataSourceImpl
 import com.enriquepalmadev.data_layer.feature.series.api.service.IMarvelFilmSerieService
 import com.enriquepalmadev.data_layer.feature.series.repository.FilmSerieRepositoryImpl
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterLocalRepository
 import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.comics.ComicRepository
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
@@ -110,10 +112,18 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideCharacterLocalRepository(
+        characterDAO: CharacterDAO
+    ): CharacterLocalRepository{
+        return CharacterLocalRepositoryImpl(characterDAO)
+    }
+
+    @Singleton
+    @Provides
     fun provideCharacterRepository(
         characterRemoteDataSourceImpl: CharacterRemoteDataSource,
-        characterDAO: CharacterDAO
+        characterLocalRepositoryImpl: CharacterLocalRepositoryImpl
     ): CharacterRepository {
-        return CharacterRepositoryImpl(characterRemoteDataSourceImpl, characterDAO)
+        return CharacterRepositoryImpl(characterRemoteDataSourceImpl, characterLocalRepositoryImpl)
     }
 }
