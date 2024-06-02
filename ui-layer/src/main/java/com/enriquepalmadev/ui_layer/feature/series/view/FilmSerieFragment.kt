@@ -41,7 +41,6 @@ class FilmSerieFragment : Fragment() {
             )
             setContent {
                 val uiState by viewModel.uiState.collectAsState()
-                // View
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -72,7 +71,6 @@ class FilmSerieFragment : Fragment() {
         viewModel.getAllSeriesListFromAPI()
     }
 
-    // Dialog to select the items order
     private fun showDialogOrderBy() {
         var selectedItemIndex = 0
         val arrayItemsOrderBy = arrayOf(
@@ -98,7 +96,6 @@ class FilmSerieFragment : Fragment() {
         }
     }
 
-    // Function to order the items
     private fun orderListBy(selectedItem: String, context: Context) {
         when (selectedItem) {
             context.getString(R.string.orderby_year) -> viewModel.orderListByStartYear()
