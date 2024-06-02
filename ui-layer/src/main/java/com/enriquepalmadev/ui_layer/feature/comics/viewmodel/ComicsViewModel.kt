@@ -2,9 +2,9 @@ package com.enriquepalmadev.ui_layer.feature.comics.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.domain_layer.commons.Either
 
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
-import com.enriquepalmadev.domain_layer.feature.comics.model.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.comics.usecase.FetchComicUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +33,7 @@ class ComicsViewModel @Inject constructor(
                 }
                 .collect { result ->
                     when (result) {
-                        is Either.Failure ->
+                        is Either.Error ->
                             _state.emit(State.Error(error = result.error))
 
                         is Either.Success -> {

@@ -6,7 +6,7 @@ import com.enriquepalmadev.data_layer.feature.comics.dto.ResponseMarvelDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.Unauthorized
 import com.enriquepalmadev.data_layer.feature.comics.dto.UnknownHostError
 import com.enriquepalmadev.data_layer.feature.comics.service.ComicService
-import com.enriquepalmadev.domain_layer.feature.comics.model.Either
+import com.enriquepalmadev.domain_layer.commons.Either
 import java.io.IOException
 import javax.inject.Inject
 
@@ -22,11 +22,11 @@ class ComicRemoteDataSource @Inject constructor(
                 Either.Success(data = request.body())
             } else {
                 if (request.code() == 400) {
-                    Either.Failure(error = UnknownHostError)
+                    Either.Error(error = UnknownHostError)
                 } else if (request.code() == 401) {
-                    Either.Failure(error = Unauthorized)
+                    Either.Error(error = Unauthorized)
                 } else {
-                    Either.Failure(
+                    Either.Error(
                         ApiError(
                             code = request.code(),
                             message = request.errorBody().toString()
@@ -35,14 +35,14 @@ class ComicRemoteDataSource @Inject constructor(
                 }
             }
         } catch (e: IOException) {
-            Either.Failure(
+            Either.Error(
                 ApiError(
                     code = request.code(),
                     message = request.errorBody().toString()
                 )
             )
         } catch (e: Exception) {
-            Either.Failure(
+            Either.Error(
                 ApiError(
                     code = request.code(),
                     message = request.errorBody().toString()
@@ -59,11 +59,11 @@ class ComicRemoteDataSource @Inject constructor(
                 Either.Success(data = request.body())
             } else {
                 if (request.code() == 400) {
-                    Either.Failure(error = UnknownHostError)
+                    Either.Error(error = UnknownHostError)
                 } else if (request.code() == 401) {
-                    Either.Failure(error = Unauthorized)
+                    Either.Error(error = Unauthorized)
                 } else {
-                    Either.Failure(
+                    Either.Error(
                         ApiError(
                             code = request.code(),
                             message = request.errorBody().toString()
@@ -72,14 +72,14 @@ class ComicRemoteDataSource @Inject constructor(
                 }
             }
         } catch (e: IOException) {
-            Either.Failure(
+            Either.Error(
                 ApiError(
                     code = request.code(),
                     message = request.errorBody().toString()
                 )
             )
         } catch (e: Exception) {
-            Either.Failure(
+            Either.Error(
                 ApiError(
                     code = request.code(),
                     message = request.errorBody().toString()
