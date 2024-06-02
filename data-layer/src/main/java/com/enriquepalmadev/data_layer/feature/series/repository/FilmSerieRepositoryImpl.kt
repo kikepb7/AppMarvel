@@ -4,10 +4,10 @@ import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteD
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.data_layer.feature.series.utils.toFailureDomain
 import com.enriquepalmadev.data_layer.feature.series.mapper.IFilmSerieMapper
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.repository.IFilmSerieRepository
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
-import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import org.mapstruct.factory.Mappers
 import javax.inject.Inject
 
@@ -17,10 +17,10 @@ class FilmSerieRepositoryImpl @Inject constructor(
 
     private val mapper: IFilmSerieMapper = Mappers.getMapper(IFilmSerieMapper::class.java)
 
-    override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, List<FilmSerieModel>?> {
+    override suspend fun getListOfAllSeries(): Either<FailureDomain, List<FilmSerieModel>?> {
         return when(val responseEither = serieRemoteDataSourceImpl.getListOfAllSeries()){
-            is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure.toFailureDomain())
-            is ResponseEither.Success -> ResponseEither.Success(success = responseEither.success?.data?.results?.let { handlerSuccessGetAllSeries(it) })
+            is Either.Error -> Either.Error(error = responseEither.error.toFailureDomain())
+            is Either.Success -> Either.Success(data = responseEither.data?.data?.results?.let { handlerSuccessGetAllSeries(it) })
         }
     }
 
@@ -31,10 +31,10 @@ class FilmSerieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSerieById(id: Int): ResponseEither<FailureDomain, FilmSerieModel> {
+    override suspend fun getSerieById(id: Int): Either<FailureDomain, FilmSerieModel> {
         return when(val responseEither = serieRemoteDataSourceImpl.getSerieById(id)){
-            is ResponseEither.Failure -> ResponseEither.Failure(failure = responseEither.failure.toFailureDomain())
-            is ResponseEither.Success -> ResponseEither.Success(success = handlerSuccessGetSerie(responseEither.success))
+            is Either.Error -> Either.Error(error = responseEither.error.toFailureDomain())
+            is Either.Success -> Either.Success(data = handlerSuccessGetSerie(responseEither.data))
         }
     }
 

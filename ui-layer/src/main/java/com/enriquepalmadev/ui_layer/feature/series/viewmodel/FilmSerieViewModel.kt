@@ -2,6 +2,7 @@ package com.enriquepalmadev.ui_layer.feature.series.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListFilterByNameUseCase
@@ -11,7 +12,6 @@ import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeries
 import com.enriquepalmadev.domain_layer.feature.series.usecase.GetLocalSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.InsertAllSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.UpdateFavSerieUseCase
-import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,14 +48,14 @@ class FilmSerieViewModel @Inject constructor(
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
-                            is ResponseEither.Failure -> {
-                                _uiState.update { updateFailure(responseEither.failure) }
+                            is Either.Error -> {
+                                _uiState.update { updateFailure(responseEither.error) }
                             }
-                            is ResponseEither.Success -> { // If it is success but the list comes empty...
-                                if (responseEither.success?.isEmpty() == true) {
+                            is Either.Success -> { // If it is success but the list comes empty...
+                                if (responseEither.data?.isEmpty() == true) {
                                     _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
                                 } else {
-                                    responseEither.success?.let { list ->
+                                    responseEither.data?.let { list ->
                                         // Not cleaning cache before insert all series because we ignore equal items
                                         apiSeries = list
                                         insertSeriesToDB(list)
@@ -87,11 +87,11 @@ class FilmSerieViewModel @Inject constructor(
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
                     .collect{ responseEither ->
                         when (responseEither) {
-                            is ResponseEither.Failure -> {
-                                _uiState.update { updateFailure(responseEither.failure) }
+                            is Either.Error -> {
+                                _uiState.update { updateFailure(responseEither.error) }
                             }
-                            is ResponseEither.Success -> {
-                                _uiState.update { updateSuccess(responseEither.success) }
+                            is Either.Success -> {
+                                _uiState.update { updateSuccess(responseEither.data) }
                             }
                         }
                     }
@@ -110,11 +110,11 @@ class FilmSerieViewModel @Inject constructor(
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
                     .collect{ responseEither ->
                         when (responseEither) {
-                            is ResponseEither.Failure -> {
-                                _uiState.update { updateFailure(responseEither.failure) }
+                            is Either.Error -> {
+                                _uiState.update { updateFailure(responseEither.error) }
                             }
-                            is ResponseEither.Success -> {
-                                _uiState.update { updateSuccess(responseEither.success) }
+                            is Either.Success -> {
+                                _uiState.update { updateSuccess(responseEither.data) }
                             }
                         }
                     }
@@ -133,14 +133,14 @@ class FilmSerieViewModel @Inject constructor(
                     .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
                     .collect{ responseEither ->
                         when (responseEither) {
-                            is ResponseEither.Failure -> {
-                                _uiState.update { updateFailure(responseEither.failure) }
+                            is Either.Error -> {
+                                _uiState.update { updateFailure(responseEither.error) }
                             }
-                            is ResponseEither.Success -> {
-                                if(responseEither.success.isEmpty()){
+                            is Either.Success -> {
+                                if(responseEither.data.isEmpty()){
                                     _uiState.update { updateNoItemsFound() }
                                 } else {
-                                    _uiState.update { updateSuccess(responseEither.success) }
+                                    _uiState.update { updateSuccess(responseEither.data) }
                                 }
                             }
                         }

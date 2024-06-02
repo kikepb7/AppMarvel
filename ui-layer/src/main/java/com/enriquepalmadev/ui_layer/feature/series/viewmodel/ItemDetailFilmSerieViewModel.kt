@@ -2,10 +2,10 @@ package com.enriquepalmadev.ui_layer.feature.series.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchSerieByIdUseCase
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
-import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,18 +28,17 @@ class ItemDetailFilmSerieViewModel @Inject constructor(
                 .catch { ItemDetailUIState.Error(FailureDomain.AnotherErrorDomain) }
                 .collect { responseEither ->
                     when (responseEither) {
-                        is ResponseEither.Failure -> {
-                            _uiDetailState.emit(ItemDetailUIState.Error(responseEither.failure))
+                        is Either.Error -> {
+                            _uiDetailState.emit(ItemDetailUIState.Error(responseEither.error))
                         }
 
-                        is ResponseEither.Success -> {
-                            _uiDetailState.emit(ItemDetailUIState.IdReceived(responseEither.success))
+                        is Either.Success -> {
+                            _uiDetailState.emit(ItemDetailUIState.IdReceived(responseEither.data))
                         }
                     }
                 }
         }
     }
-
 }
 
 sealed class ItemDetailUIState {

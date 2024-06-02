@@ -8,7 +8,7 @@ import com.enriquepalmadev.data_layer.feature.series.failure.CustomErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnauthorizedErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnknownHostErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.FailureData
-import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
+import com.enriquepalmadev.domain_layer.commons.Either
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -16,16 +16,16 @@ class SerieRemoteDataSourceImpl @Inject constructor(
     private val api: IMarvelFilmSerieService
 ) : ISerieRemoteDataSource {
 
-    override suspend fun getListOfAllSeries(): ResponseEither<FailureData, ObjectResponseDto?> {
+    override suspend fun getListOfAllSeries(): Either<FailureData, ObjectResponseDto?> {
         return try {
             val response = api.getListOfAllSeries()
             if (response.isSuccessful) {
-                ResponseEither.Success(success = response.body())
+                Either.Success(data = response.body())
             } else {
                 if (response.code() == Constants.ERROR_401) {
-                    ResponseEither.Failure(failure = UnauthorizedErrorData)
+                    Either.Error(error = UnauthorizedErrorData)
                 } else {
-                    ResponseEither.Failure(failure = CustomErrorData(
+                    Either.Error(error = CustomErrorData(
                             response.code().toString(),
                             response.errorBody().toString()
                         )
@@ -33,9 +33,9 @@ class SerieRemoteDataSourceImpl @Inject constructor(
                 }
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(failure = UnknownHostErrorData)
+            Either.Error(error = UnknownHostErrorData)
         } catch (e: Exception) {
-            ResponseEither.Failure(failure = CustomErrorData(
+            Either.Error(error = CustomErrorData(
                     e.toString(),
                     e.message.toString()
                 )
@@ -43,32 +43,32 @@ class SerieRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSerieById(id: Int): ResponseEither<FailureData, MarvelFilmSerieItemDto> {
+    override suspend fun getSerieById(id: Int): Either<FailureData, MarvelFilmSerieItemDto> {
         return try {
             val response = api.getSerieById(id)
             val result = response.body()?.data?.results
 
             if (response.isSuccessful) {
                 if (result != null) {
-                    ResponseEither.Success(success = result.first())
+                    Either.Success(data = result.first())
                 } else {
-                    ResponseEither.Failure(failure = CustomErrorData(
+                    Either.Error(error = CustomErrorData(
                             response.code().toString(),
                             response.errorBody().toString()
                         )
                     )
                 }
             } else {
-                ResponseEither.Failure(failure = CustomErrorData(
+                Either.Error(error = CustomErrorData(
                         response.code().toString(),
                         response.errorBody().toString()
                     )
                 )
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(failure = UnknownHostErrorData)
+            Either.Error(error = UnknownHostErrorData)
         } catch (e: Exception) {
-            ResponseEither.Failure(failure = CustomErrorData(
+            Either.Error(error = CustomErrorData(
                     e.toString(),
                     e.message.toString()
                 )
