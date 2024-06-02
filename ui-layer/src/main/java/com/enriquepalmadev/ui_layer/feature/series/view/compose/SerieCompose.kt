@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -140,8 +141,12 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         content = {
+            /*
+            itemsIndexed(series) { index, serie ->
+                CardView(index = serie.id, serie = serie, itemClicked = itemClicked, favClicked = favClicked)
+            }*/
             items(series.size) { index ->
-                CardView(index = index, series = series, itemClicked = itemClicked, favClicked = favClicked)
+                CardView(index = index, serie = series[index], itemClicked = itemClicked, favClicked = favClicked)
             }
         }
     )
@@ -149,21 +154,22 @@ fun SeriesListBody(series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit,
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -> Unit, favClicked: (id: Int, fav: Boolean) -> Unit) {
+fun CardView (index: Int, serie: FilmSerieModel, itemClicked: (id: Int) -> Unit, favClicked: (id: Int, fav: Boolean) -> Unit) {
 
-    var isFav by remember { mutableStateOf(series[index].isFav) }
+    var isFav by remember { mutableStateOf(serie.isFav) }
+    //var favList by remember { mutableListOf <FilmSerieModel>(series) }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp, 8.dp, 5.dp, 5.dp)
-            .clickable { itemClicked(series[index].id) }
+            .clickable { itemClicked(serie.id) }
             .background(Color.White)
     ) {
         Column {
             Box{
                 GlideImage(
-                    model = "${series[index].thumbnailPath}.${series[index].thumbnailExt}",
+                    model = "${serie.thumbnailPath}.${serie.thumbnailExt}",
                     contentDescription = null,
                     loading = placeholder(R.drawable.loading),
                     failure = placeholder(R.drawable.error_404),
@@ -179,7 +185,7 @@ fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -
                         .padding(top = 3.dp, end = 3.dp)
                         .clickable {
                             isFav = !isFav
-                            favClicked(series[index].id, isFav)
+                            favClicked(serie.id, isFav)
                         },
                     painter = painterResource(
                         if(isFav) R.drawable.ic_full_favorite_24dp else R.drawable.ic_border_favorite_24dp
@@ -197,7 +203,7 @@ fun CardView (index: Int, series: List<FilmSerieModel>, itemClicked: (id: Int) -
             ) {
                 Text(
                     modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 5.dp),
-                    text = series[index].title,
+                    text = serie.title,
                     fontSize = 14.sp,
                     color = Color.White
                 )

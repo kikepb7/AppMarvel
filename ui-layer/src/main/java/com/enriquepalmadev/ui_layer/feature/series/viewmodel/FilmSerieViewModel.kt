@@ -2,12 +2,12 @@ package com.enriquepalmadev.ui_layer.feature.series.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.series.model.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListFilterByNameUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfAllSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByAlphabetUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.FetchListOfSeriesOrderByStartYearUseCase
-import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 import com.enriquepalmadev.domain_layer.feature.series.usecase.GetLocalSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.InsertAllSeriesUseCase
 import com.enriquepalmadev.domain_layer.feature.series.usecase.UpdateFavSerieUseCase
@@ -30,13 +30,15 @@ class FilmSerieViewModel @Inject constructor(
     private val fetchListOfSeriesOrderByAlphabetUseCase: FetchListOfSeriesOrderByAlphabetUseCase,
     private val fetchListFilterByNameUseCase: FetchListFilterByNameUseCase,
     private val insertAllSeriesUseCase: InsertAllSeriesUseCase,
-    private val updateFavSerieUseCase: UpdateFavSerieUseCase,
+    private val updateFavSeriesUseCase: UpdateFavSerieUseCase,
     private val getAllSeriesUseCase: GetLocalSeriesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FilmSerieUIState())
     val uiState: StateFlow<FilmSerieUIState> = _uiState
+
     private var apiSeries : List<FilmSerieModel> = emptyList()
+    private var dbSeries : List<FilmSerieModel> = emptyList()
 
     fun getAllSeriesListFromAPI() {
             viewModelScope.launch {
@@ -58,7 +60,8 @@ class FilmSerieViewModel @Inject constructor(
                                         apiSeries = list
                                         insertSeriesToDB(list)
                                         // TODO -> comparo listas y seteo isFav de db a apiList
-                                        //compareFavAttr(apiSeries, getSeriesFromDB())
+                                        getSeriesFromDB()
+                                        apiSeries = compareFavAttr(apiSeries, dbSeries)
                                         _uiState.update { updateSuccess(apiSeries) }
                                     }
                                 }
@@ -148,36 +151,45 @@ class FilmSerieViewModel @Inject constructor(
         }
     }
 
-    private fun insertSeriesToDB(seriesList: List<FilmSerieModel>) {
+    private suspend fun insertSeriesToDB(seriesList: List<FilmSerieModel>) {
         CoroutineScope(Dispatchers.IO).launch {
             insertAllSeriesUseCase.insertAllSeries(seriesList)
-        }
+        }.join()
     }
 
     fun updateFavSerie(id: Int, isFav: Boolean) {
         CoroutineScope(Dispatchers.IO).launch {
-            updateFavSerieUseCase.updateFavSerie(id, isFav)
+            updateFavSeriesUseCase.updateFavSerie(id, isFav)
+            apiSeries.forEach { if(it.id == id) it.isFav = isFav }
         }
     }
 
-    private fun getSeriesFromDB() : List<FilmSerieModel>{
-        var dbSeries = emptyList<FilmSerieModel>()
+    private suspend fun getSeriesFromDB() {
         CoroutineScope(Dispatchers.IO).launch {
             dbSeries = getAllSeriesUseCase.getAllSeries()
-        }
-        return dbSeries
+        }.join()
     }
 
-    private fun compareFavAttr(apiList : List<FilmSerieModel>, dbList : List<FilmSerieModel>) /*: List<FilmSerieModel>*/ {
-        //val list: List<FilmSerieModel> = apiList
+    private fun compareFavAttr(apiList : List<FilmSerieModel>, dbList : List<FilmSerieModel>) : List<FilmSerieModel> {
+        val list: List<FilmSerieModel> = apiList
         dbList.forEach { dbItem ->
             apiList.forEach { apiItem ->
-                if(dbItem.id==apiItem.id){
-                    apiItem.isFav = dbItem.isFav
-                }
+                if(dbItem.id==apiItem.id) apiItem.isFav = dbItem.isFav
             }
         }
-        //return list
+        return list
+    }
+
+    // Saco una lista con items con isFav = true
+    // Paso esa lista de ids por parametro a compose
+    private fun favIdList (apiList : List<FilmSerieModel>, dbList : List<FilmSerieModel>) : List<Int> {
+        val idList = mutableListOf<Int>()
+        for (item in apiList) {
+            if (!dbList.contains(item)) {
+                idList.add(item.id)
+            }
+        }
+        return idList
     }
 
     private fun updateLoading(): FilmSerieUIState {

@@ -10,12 +10,12 @@ import com.enriquepalmadev.data_layer.feature.series.database.entities.SerieEnti
 @Dao
 interface SerieDao {
     @Query("UPDATE series SET isFav = :isFav WHERE idSerie = :id")
-    fun updateFavSerie(id: Int, isFav: Boolean)
+    suspend fun updateFavSerie(id: Int, isFav: Boolean)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllSeries(series: List<SerieEntity>)
+    suspend fun insertAllSeries(series: List<SerieEntity>)
 
     @Query("SELECT * FROM series")
-    fun getAllSeries() : List<SerieEntity>
+    suspend fun getAllSeries() : List<SerieEntity>
 
 }
