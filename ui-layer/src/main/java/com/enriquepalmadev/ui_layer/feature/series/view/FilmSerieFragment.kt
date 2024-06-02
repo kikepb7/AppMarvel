@@ -114,7 +114,6 @@ class FilmSerieFragment : Fragment() {
     }
 
     private fun onFavIconClicked(id: Int, fav: Boolean) {
-        Toast.makeText(context, "FAV $id", Toast.LENGTH_LONG).show()
         viewModel.updateFavSerie(id, fav)
     }
 }
