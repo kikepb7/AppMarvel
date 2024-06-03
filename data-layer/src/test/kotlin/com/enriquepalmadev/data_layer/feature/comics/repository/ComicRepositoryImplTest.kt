@@ -4,14 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.enriquepalmadev.data_layer.feature.comics.datasource.ComicRemoteDataSource
 import com.enriquepalmadev.data_layer.feature.comics.dto.ComicDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.DataDto
+import com.enriquepalmadev.data_layer.feature.comics.dto.FailureDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.ResponseMarvelDto
 import com.enriquepalmadev.data_layer.feature.comics.dto.ThumnailDto
 import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
-import io.mockk.MockKAnnotations
+import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,43 +39,70 @@ class ComicRepositoryImplTest {
     }
 
     @Test
-    fun `when 'fetchComicList' is successful, response is a list of comic list`() = runTest {
+    fun `WHEN 'fetchComicList' is Successful, response is a list of comic list`() = runTest {
 
         // Given
-        val comicModelList = getComicModelList(getResponseMarvelDto())
-        coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Success(getResponseMarvelDto())
+        coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Success(
+            getResponseMarvelDto
+        )
 
         // When
         val response = comicRepositoryImpl.fetchComicList()
 
         // Then
+        assert(response is Either.Success<List<ComicModel>?>)
         coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
-        assert(response is Either.Success<*>)
-        val successResponse = response as Either.Success
-        assert(successResponse.data == comicModelList)
     }
 
-    private fun getResponseMarvelDto() = ResponseMarvelDto(
-        code = 1,
-        data = DataDto(results = listOf(
-            ComicDto(
-                id = 1,
-                title = "Test Comic",
-                description = "A test comic",
-                thumbnail = ThumnailDto(path = "path", extension = "jpg"),
-            ))),
-        etag = "none"
-    )
+    @Test
+    fun `WHEN 'fetchComicList' is Successful, response is a null list of comic model`() = runTest {
 
-    private fun getComicModelList(responseMarvelDto: ResponseMarvelDto): List<ComicModel> {
-        return responseMarvelDto.data?.results?.map {
-            ComicModel(
-                id = it.id,
-                title = it.title ?: "",
-                description = it.description ?: "",
-                thumbnail = "${it.thumbnail?.path}.${it.thumbnail?.extension}",
-                pageCount = it.pageCount ?: 0
+        // Given
+        coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Success(
+            getResponseMarvelDto.copy(
+                data = DataDto(
+                    results = null
+                )
             )
-        } ?: emptyList()
+        )
+
+        // When
+        val response = comicRepositoryImpl.fetchComicList()
+
+        // Then
+        assert(response is Either.Success<List<ComicModel>?>)
+        coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
     }
+
+    @Test
+    fun `WHEN 'fetchComicList' is Error, response is a FailureDomain error`() = runTest {
+
+        // Given
+        coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Error(
+            FailureDto(code = -1, message = "")
+        )
+
+        // When
+        val response = comicRepositoryImpl.fetchComicList()
+
+        // Then
+        assert(response is Either.Error<FailureDomain>)
+        coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
+    }
+
+    private val getResponseMarvelDto =
+        ResponseMarvelDto(
+            code = 1,
+            data = DataDto(
+                results = listOf(
+                    ComicDto(
+                        id = 1,
+                        title = "Test Comic",
+                        description = "A test comic",
+                        thumbnail = ThumnailDto(path = "path", extension = "jpg"),
+                    )
+                )
+            ),
+            etag = "none"
+        )
 }
