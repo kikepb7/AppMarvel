@@ -26,7 +26,7 @@ class LocalSerieRepositoryImplTest {
     @Test
     fun `updateFavSerie updates favorite status in local data source`() {
         runBlocking {
-            // Given
+            // Given -> Object mocked
             val id = 1
             val isFavorite = true
 

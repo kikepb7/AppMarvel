@@ -41,7 +41,7 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getListOfAllSeries returns success when response is successful`() = runBlocking {
 
-        // Object mocked
+        // Given -> Object mocked
         val marvelSeriesItem = MarvelFilmSerieItemDto(
             characters = MarvelCharactersDto(0, "", emptyList(), 0),
             comics = MarvelComicsDto(0, "", emptyList(), 0),
@@ -77,9 +77,10 @@ class SerieRemoteDataSourceImplTest {
         // Configuring the mock to return success
         coEvery { api.getListOfAllSeries() } returns Response.success(responseDto)
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getListOfAllSeries()
 
+        // Then
         // Verify that result is Either.Success type
         assertTrue(result is Either.Success)
         // Verify that actual response and expected response are equals
@@ -89,12 +90,14 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getListOfAllSeries returns UnauthorizedErrorData when response code is 401`() = runBlocking {
 
+        // Given
         // Configuring the mock to return a 401
         coEvery { api.getListOfAllSeries() } returns Response.error(Constants.ERROR_401, "".toResponseBody(null))
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getListOfAllSeries()
 
+        // Then
         // Verify that result is Either.Error type
         assertTrue(result is Either.Error)
         // Verify that actual response and expected response are equals
@@ -104,7 +107,7 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getListOfAllSeries returns CustomErrorData when response code is not 401`() = runBlocking {
 
-        // Mocking an error code
+        // Given -> Mocking an error code
         val errorCode = 500
 
         // Configuring the mock to return the mock error
@@ -112,7 +115,7 @@ class SerieRemoteDataSourceImplTest {
             "Server error".toResponseBody(null)
         )
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getListOfAllSeries()
 
         // Verify that result is Either.Error type
@@ -126,12 +129,14 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getListOfAllSeries returns UnknownHostErrorData when UnknownHostException is thrown`() = runBlocking {
 
+        // Given
         // Configuring the mock to throw the UnknownHostException
         coEvery { api.getListOfAllSeries() } throws UnknownHostException()
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getListOfAllSeries()
 
+        // Then
         // Verify that result is Either.Error type
         assertTrue(result is Either.Error)
         // Verify that actual response and expected response are equals
@@ -141,7 +146,7 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getSerieById returns success when response is successful and has result`() = runBlocking {
 
-        // Object mocked
+        // Given -> Object mocked
         val marvelItem = MarvelFilmSerieItemDto(
             characters = MarvelCharactersDto(0, "", emptyList(), 0),
             comics = MarvelComicsDto(0, "", emptyList(), 0),
@@ -177,9 +182,10 @@ class SerieRemoteDataSourceImplTest {
         // Configuring the mock to return success
         coEvery { api.getSerieById(1) } returns Response.success(responseDto)
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getSerieById(1)
 
+        // Then
         // Verify that result is Either.Success type
         assertTrue(result is Either.Success)
         // Verify that actual response and expected response are equals
@@ -189,7 +195,7 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getSerieById returns CustomErrorData when response is successful but has no result`() = runBlocking {
 
-        // Object mocked
+        // Given -> Object mocked
         val responseDto = ObjectResponseDto(
             code = 200,
             data = DataDto(
@@ -204,9 +210,10 @@ class SerieRemoteDataSourceImplTest {
         // Configuring the mock to return success
         coEvery { api.getSerieById(1) } returns Response.success(responseDto)
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getSerieById(1)
 
+        // Then
         // Verify that result is Either.Success type
         assertTrue(result is Either.Error)
         // Casting the error to CustomErrorData
@@ -218,7 +225,7 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getSerieById returns CustomErrorData when response is not successful`() = runBlocking {
 
-        // Mocking an error code
+        // Given -> Mocking an error code
         val errorCode = 404
 
         // Configuring the mock to return the mock error
@@ -226,9 +233,10 @@ class SerieRemoteDataSourceImplTest {
             "Not found".toResponseBody(null)
         )
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getSerieById(1)
 
+        // Then
         // Verify that result is Either.Error type
         assertTrue(result is Either.Error)
         // Casting the error to CustomErrorData
@@ -240,12 +248,14 @@ class SerieRemoteDataSourceImplTest {
     @Test
     fun `getSerieById returns UnknownHostErrorData when UnknownHostException is thrown`() = runBlocking {
 
+        // Given
         // Configuring the mock to throw the UnknownHostException
         coEvery { api.getSerieById(1) } throws UnknownHostException()
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = dataSource.getSerieById(1)
 
+        // Then
         // Verify that result is Either.Error type
         assertTrue(result is Either.Error)
         // Verify that actual response and expected response are equals

@@ -23,18 +23,19 @@ class SerieLocalDataSourceImplTest {
 
     @Test
     fun `updateFavSerie updates favorite status in local database`() { runBlocking {
-            // Given -> Preparing the initial state of the test
-            val idSerie = 1
-            val isFavorite = true
+        // Given -> Preparing the initial state of the test
+        val idSerie = 1
+        val isFavorite = true
 
-            coEvery { serieDao.updateFavSerie(idSerie, isFavorite) } returns Unit
+        // Configuring the mock to return void
+        coEvery { serieDao.updateFavSerie(idSerie, isFavorite) } returns Unit
 
-            // When -> Calling to the method that is going to be tested
-            dataSource.updateFavSerie(idSerie, isFavorite)
+        // When -> Calling to the method that is going to be tested
+        dataSource.updateFavSerie(idSerie, isFavorite)
 
-            // Then
-            // Verify that updateFavSerie was called with the correct parameters
-            coEvery { serieDao.updateFavSerie(idSerie, isFavorite) }
+        // Then
+        // Verify that updateFavSerie was called with the correct parameters
+        coEvery { serieDao.updateFavSerie(idSerie, isFavorite) }
         }
     }
 

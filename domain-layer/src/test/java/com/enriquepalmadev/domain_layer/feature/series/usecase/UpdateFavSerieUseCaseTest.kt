@@ -4,26 +4,35 @@ import com.enriquepalmadev.domain_layer.feature.series.repository.ILocalSerieRep
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Test
 
 class UpdateFavSerieUseCaseTest {
 
+    private lateinit var repository: ILocalSerieRepository
+    private lateinit var useCase: UpdateFavSerieUseCase
+
+    @Before
+    fun onBefore(){
+        repository = mockk()
+        useCase = UpdateFavSerieUseCase(repository)
+    }
+
     @Test
     fun `updateFavSerie updates favorite status in local repository`() { runBlocking {
-        // Given
+        // Given -> Preparing the initial state of the test
         val id = 1
         val isFavorite = true
-        val localSerieRepository: ILocalSerieRepository = mockk {
-            coEvery { updateFavSerie(id, isFavorite) } returns Unit
-        }
-        val useCase = UpdateFavSerieUseCase(localSerieRepository)
 
-        // When
+        // Configuring the mock to return void
+        coEvery { repository.updateFavSerie(id, isFavorite) } returns Unit
+
+        // When -> Calling to the method that is going to be tested
         useCase.updateFavSerie(id, isFavorite)
 
         // Then
         // Verify that updateFavSerie was called with the correct parameters
-        coEvery { localSerieRepository.updateFavSerie(id, isFavorite) }
+        coEvery { repository.updateFavSerie(id, isFavorite) }
         }
     }
 }

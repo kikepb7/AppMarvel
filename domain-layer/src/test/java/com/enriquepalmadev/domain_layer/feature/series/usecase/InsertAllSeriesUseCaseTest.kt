@@ -5,9 +5,20 @@ import com.enriquepalmadev.domain_layer.feature.series.repository.ILocalSerieRep
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Test
 
 class InsertAllSeriesUseCaseTest {
+
+    private lateinit var repository: ILocalSerieRepository
+    private lateinit var useCase: InsertAllSeriesUseCase
+
+    // This function is going to be executed before every @Test
+    @Before
+    fun onBefore(){
+        repository = mockk()
+        useCase = InsertAllSeriesUseCase(repository)
+    }
 
     @Test
     fun `insertAllSeries inserts series into local repository`() {
@@ -18,17 +29,16 @@ class InsertAllSeriesUseCaseTest {
                 FilmSerieModel(2, "Series Two", "", "", "", 2021, false),
                 FilmSerieModel(3, "Series Three", "", "", "", 2022, false)
             )
-            val localSerieRepository: ILocalSerieRepository = mockk {
-                coEvery { insertAllSeries(series) } returns Unit
-            }
-            val useCase = InsertAllSeriesUseCase(localSerieRepository)
+
+            // Configuring the mock to return the response object mocked
+            coEvery { repository.insertAllSeries(series) } returns Unit
 
             // When -> Calling to the method that is going to be tested
             useCase.insertAllSeries(series)
 
             // Then
             // Verify that insertAllSeries was called with the correct parameter
-            coEvery { localSerieRepository.insertAllSeries(series) }
+            coEvery { repository.insertAllSeries(series) }
         }
     }
 }

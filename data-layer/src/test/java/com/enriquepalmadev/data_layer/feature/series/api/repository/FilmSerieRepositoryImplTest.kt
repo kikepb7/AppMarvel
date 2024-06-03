@@ -31,7 +31,7 @@ class FilmSerieRepositoryImplTest {
     @Test
     fun `getListOfAllSeries returns success when response is successful`() = runBlocking {
 
-        // Object mocked
+        // Given -> Object mocked
         val marvelSeriesItem = MarvelFilmSerieItemDto(
             characters = MarvelCharactersDto(0, "", emptyList(), 0),
             comics = MarvelComicsDto(0, "", emptyList(), 0),
@@ -77,9 +77,10 @@ class FilmSerieRepositoryImplTest {
             isFav = false
         )
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = repository.getListOfAllSeries()
 
+        // Then
         // Verify that result is Either.Success type
         assertTrue(result is Either.Success)
         // Verify that actual response and expected response are equals
@@ -89,12 +90,14 @@ class FilmSerieRepositoryImplTest {
     @Test
     fun `getListOfAllSeries returns error when response is error`() = runBlocking {
 
+        // Given
         // Configuring the mock to return an CustomErrorData
         coEvery { dataSource.getListOfAllSeries() } returns Either.Error(CustomErrorData("Error", "error message"))
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = repository.getListOfAllSeries()
 
+        // Then
         // Verify that result is Either.Error type
         assertTrue(result is Either.Error)
         // Verify that actual response and expected response are equals
@@ -104,7 +107,7 @@ class FilmSerieRepositoryImplTest {
     @Test
     fun `getSerieById returns success when response is successful`() = runBlocking {
 
-        // Object mocked
+        // Given -> Object mocked
         val marvelSeriesItem = MarvelFilmSerieItemDto(
             characters = MarvelCharactersDto(0, "", emptyList(), 0),
             comics = MarvelComicsDto(0, "", emptyList(), 0),
@@ -142,9 +145,10 @@ class FilmSerieRepositoryImplTest {
             isFav = false
         )
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = repository.getSerieById(1)
 
+        // Then
         // Verify that result is Either.Success type
         assertTrue(result is Either.Success)
         // Verify that actual response and expected response are equals
@@ -154,12 +158,14 @@ class FilmSerieRepositoryImplTest {
     @Test
     fun `getSerieById returns error when response is error`() = runBlocking {
 
+        // Given
         // Configuring the mock to return an CustomErrorData
         coEvery { dataSource.getSerieById(1) } returns Either.Error(CustomErrorData("Error", "error message"))
 
-        // Calling to the method that is going to be tested
+        // When -> Calling to the method that is going to be tested
         val result = repository.getSerieById(1)
 
+        // Then
         // Verify that result is Either.Error type
         assertTrue(result is Either.Error)
         // Verify that actual response and expected response are equals
