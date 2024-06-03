@@ -17,15 +17,15 @@ import org.junit.Test
 
 class FilmSerieRepositoryImplTest {
 
-    private lateinit var api: SerieRemoteDataSourceImpl
+    private lateinit var dataSource: SerieRemoteDataSourceImpl
     private lateinit var repository: FilmSerieRepositoryImpl
     private val mapper: IFilmSerieMapper = mockk()
 
     // This function is going to be executed before every @Test
     @Before
     fun onBefore() {
-        api = mockk()
-        repository = FilmSerieRepositoryImpl(api)
+        dataSource = mockk()
+        repository = FilmSerieRepositoryImpl(dataSource)
     }
 
     @Test
@@ -65,7 +65,7 @@ class FilmSerieRepositoryImplTest {
         )
 
         // Configuring the mock to return success with the response object mocked
-        coEvery { api.getListOfAllSeries() } returns Either.Success(responseDto)
+        coEvery { dataSource.getListOfAllSeries() } returns Either.Success(responseDto)
         // Configuring the mock to mapping the response object mocked
         coEvery { mapper.marvelFilmSerieItemDtoToFilmSerieModel(marvelSeriesItem) } returns FilmSerieModel(
             id = 1,
@@ -90,7 +90,7 @@ class FilmSerieRepositoryImplTest {
     fun `getListOfAllSeries returns error when response is error`() = runBlocking {
 
         // Configuring the mock to return an CustomErrorData
-        coEvery { api.getListOfAllSeries() } returns Either.Error(CustomErrorData("Error", "error message"))
+        coEvery { dataSource.getListOfAllSeries() } returns Either.Error(CustomErrorData("Error", "error message"))
 
         // Calling to the method that is going to be tested
         val result = repository.getListOfAllSeries()
@@ -130,7 +130,7 @@ class FilmSerieRepositoryImplTest {
         val responseDto = Either.Success(marvelSeriesItem)
 
         // Configuring the mock to return the response mocked before
-        coEvery { api.getSerieById(1) } returns responseDto
+        coEvery { dataSource.getSerieById(1) } returns responseDto
         // Configuring the mock to mapping the response object mocked
         coEvery { mapper.marvelFilmSerieItemDtoToFilmSerieModel(marvelSeriesItem) } returns FilmSerieModel(
             id = 1,
@@ -155,7 +155,7 @@ class FilmSerieRepositoryImplTest {
     fun `getSerieById returns error when response is error`() = runBlocking {
 
         // Configuring the mock to return an CustomErrorData
-        coEvery { api.getSerieById(1) } returns Either.Error(CustomErrorData("Error", "error message"))
+        coEvery { dataSource.getSerieById(1) } returns Either.Error(CustomErrorData("Error", "error message"))
 
         // Calling to the method that is going to be tested
         val result = repository.getSerieById(1)
