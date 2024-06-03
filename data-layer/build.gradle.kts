@@ -40,6 +40,7 @@ dependencies {
     val interceptorVersion = "4.12.0"
     val hiltVersion = "2.51"
     val roomVersion = "2.6.1"
+    val mockkVersion = "1.12.2"
 
     implementation(project(":domain-layer"))
 
@@ -67,6 +68,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
+    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")

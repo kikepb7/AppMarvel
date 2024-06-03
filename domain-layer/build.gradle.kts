@@ -28,6 +28,7 @@ dependencies {
     val javaxInjextVersion = "1"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
+    val mockkVersion = "1.12.2"
 
     // COROUTINES
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCorutines")
@@ -39,5 +40,6 @@ dependencies {
     // HILT
     implementation("javax.inject:javax.inject:$javaxInjextVersion")
 
+    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("junit:junit:$jUnitVersion")
 }

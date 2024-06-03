@@ -59,6 +59,7 @@ dependencies {
     val composeUiVersion = "1.6.7"
     val material3Compose = "1.2.1"
     val navigationCompose = "2.7.7"
+    val mockkVersion = "1.12.2"
 
     implementation(project(":domain-layer"))
 
@@ -104,7 +105,7 @@ dependencies {
     //MATERIAL 3 COMPOSE
     implementation("androidx.compose.material3:material3:$material3Compose")
 
-
+    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")

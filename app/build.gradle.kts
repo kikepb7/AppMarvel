@@ -36,6 +36,8 @@ dependencies {
     val hiltVersion = "2.51"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
+    val mockkVersion = "1.12.2"
+    val espressoVersion = "3.5.1"
 
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
@@ -45,6 +47,8 @@ dependencies {
     implementation(project(":domain-layer"))
     implementation(project(":ui-layer"))
 
+    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }
