@@ -105,8 +105,10 @@ dependencies {
     //MATERIAL 3 COMPOSE
     implementation("androidx.compose.material3:material3:$material3Compose")
 
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+
 }
