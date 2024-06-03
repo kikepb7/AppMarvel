@@ -36,7 +36,7 @@ dependencies {
     val hiltVersion = "2.51"
     val jUnitVersion = "4.13.2"
     val jUnitTestVersion = "1.1.5"
-    val mockkVersion = "1.12.2"
+    val mockkVersion = "1.13.11"
     val espressoVersion = "3.5.1"
 
     // HILT

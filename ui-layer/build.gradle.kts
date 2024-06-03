@@ -59,7 +59,7 @@ dependencies {
     val composeUiVersion = "1.6.7"
     val material3Compose = "1.2.1"
     val navigationCompose = "2.7.7"
-    val mockkVersion = "1.12.2"
+    val mockkVersion = "1.13.11"
 
     implementation(project(":domain-layer"))
 

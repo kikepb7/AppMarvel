@@ -40,7 +40,7 @@ dependencies {
     val interceptorVersion = "4.12.0"
     val hiltVersion = "2.51"
     val roomVersion = "2.6.1"
-    val mockkVersion = "1.12.2"
+    val mockkVersion = "1.13.11"
 
     implementation(project(":domain-layer"))
 

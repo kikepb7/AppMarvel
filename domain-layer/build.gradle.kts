@@ -28,7 +28,7 @@ dependencies {
     val javaxInjextVersion = "1"
     val mapStructVersion = "1.4.2"
     val mapStructProcessorVersion = "1.4.2"
-    val mockkVersion = "1.12.2"
+    val mockkVersion = "1.13.11"
 
     // COROUTINES
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCorutines")
