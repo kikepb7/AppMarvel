@@ -1,7 +1,6 @@
-package com.enriquepalmadev.domain_layer.feature.series.api.datasource
+package com.enriquepalmadev.data_layer.feature.series.api.datasource
 
 import com.enriquepalmadev.data_layer.commons.utils.Constants
-import com.enriquepalmadev.data_layer.feature.series.api.datasource.SerieRemoteDataSourceImpl
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.DataDto
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelCharactersDto
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelComicsDto
