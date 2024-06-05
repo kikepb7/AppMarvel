@@ -1,6 +1,6 @@
 package com.enriquepalmadev.data_layer.feature.series.api.utils
 
-import com.enriquepalmadev.data_layer.feature.series.failure.AnotherErrorData
+import com.enriquepalmadev.data_layer.feature.series.failure.DefaultErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.CustomErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.EmptyErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.FailureData
@@ -10,7 +10,7 @@ import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
 
 fun FailureData.toFailureDomain(): FailureDomain {
     return when (this) {
-        AnotherErrorData -> FailureDomain.AnotherErrorDomain
+        DefaultErrorData -> FailureDomain.DefaultErrorDomain
         is CustomErrorData -> FailureDomain.CustomErrorDomain(code = code, msg = msg)
         EmptyErrorData -> FailureDomain.EmptyErrorDomain
         UnauthorizedErrorData -> FailureDomain.UnauthorizedErrorDomain

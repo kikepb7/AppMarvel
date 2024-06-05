@@ -43,7 +43,7 @@ class FilmSerieViewModel @Inject constructor(
             viewModelScope.launch {
                 fetchListOfAllSeriesUseCase.getListOfAllSeries()
                     .onStart { _uiState.update { updateLoading() } }
-                    .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
@@ -73,7 +73,7 @@ class FilmSerieViewModel @Inject constructor(
                 fetchListOfSeriesOrderByStartYearUseCase
                     .getListOfSeriesOrderByStartYear(seriesList)
                     .onStart { _uiState.update { updateLoading() } }
-                    .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
@@ -95,7 +95,7 @@ class FilmSerieViewModel @Inject constructor(
                 fetchListOfSeriesOrderByAlphabetUseCase
                     .getListOfSeriesOrderByAlphabet(seriesList)
                     .onStart { _uiState.update { updateLoading() } }
-                    .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
@@ -116,7 +116,7 @@ class FilmSerieViewModel @Inject constructor(
             allSeriesList?.let { seriesList ->
                 fetchListFilterByNameUseCase.getListFilterByName(newText, seriesList)
                     .onStart { _uiState.update { updateLoading() } }
-                    .catch { _uiState.update { updateFailure(FailureDomain.AnotherErrorDomain) } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
