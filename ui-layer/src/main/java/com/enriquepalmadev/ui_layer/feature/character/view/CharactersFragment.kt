@@ -29,7 +29,7 @@ class CharactersFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
-                val state by viewModel.state.collectAsState()//TODO onFavClick
+                val state by viewModel.state.collectAsState()
                 CharacterListScreen(
                     model = state,
                     onCharacterClicked = { navigateToCharacterDetail(it.id) },

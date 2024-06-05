@@ -12,6 +12,7 @@
     <!-- Error text -->
     <string name="unknownError">Un error ha ocurrido</string>
     <string name="unknownHost">Host desconocido</string>
+    <string name= "emptyList">Lista no disponible</string>
 
 
     <!-- Fragments' placeholder text -->
@@ -33,7 +34,7 @@
     <string name="no_connection">No Connection</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 

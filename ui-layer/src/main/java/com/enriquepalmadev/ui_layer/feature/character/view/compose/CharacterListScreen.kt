@@ -84,7 +84,7 @@ fun CharacterListScreen(
 @Composable
 fun CharacterList(list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit){
     if (list.isNullOrEmpty()) {
-        Text("No characters available")
+        Text(stringResource(id = R.string.emptyList))
     } else {
         LazyColumn {
             items(list) { character ->

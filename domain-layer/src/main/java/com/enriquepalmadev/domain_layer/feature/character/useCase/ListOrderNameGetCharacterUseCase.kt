@@ -23,10 +23,7 @@ class ListOrderNameGetCharacterUseCase @Inject constructor(
                 is Either.Success-> {
                     val filteredList = response.data?.sortedBy {
                         it.name
-                    }/*.filterEmptyImageAndDescription()
-
-                    emit(Either.Success(filteredList))
-                     */
+                    }
                     emit(Either.Success(filteredList))
                 }
             }
@@ -43,10 +40,7 @@ class ListOrderNameGetCharacterUseCase @Inject constructor(
                 is Either.Success-> {
                     val filteredList = response.data?.sortedByDescending {
                         it.name
-                    }/*.filterEmptyImageAndDescription()
-
-                    emit(Either.Success(filteredList))
-                     */
+                    }
                     emit(Either.Success(filteredList))
                 }
             }
