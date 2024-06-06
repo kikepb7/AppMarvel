@@ -46,6 +46,7 @@ dependencies {
     val materialVersion = "1.12.0"
     val constraintLayoutVersion = "2.1.4"
     val legacySupportVersion = "1.0.0"
+    val viewModelComposeVersion = "2.8.0"
     val fragmentVersion = "1.7.0"
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
@@ -67,6 +68,7 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
 
     // FACEBOOK
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
@@ -85,6 +87,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
 
+    // COIL
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
@@ -98,12 +103,15 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
     implementation("androidx.navigation:navigation-compose:$navigationCompose")
 
+    // JETPACK COMPOSE
+    implementation("androidx.compose.compiler:compiler:1.5.13")
+    implementation("androidx.activity:activity:1.9.0")
+
     // SHIMMER ANIMATION
     implementation("com.valentinilk.shimmer:compose-shimmer:1.3.0")
 
     //MATERIAL 3 COMPOSE
     implementation("androidx.compose.material3:material3:$material3Compose")
-
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

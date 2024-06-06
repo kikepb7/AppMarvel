@@ -10,7 +10,7 @@
     <string name="toast_buttonFilmsAndSeries">Botón películas y series</string>
 
     <!-- Error text -->
-    <string name="unknownError">Un error ha ocurrido</string>
+    <string name="unknownError">There\'s a conexion problem!</string>
     <string name="unknownHost">Host desconocido</string>
 
     <!-- Fragments' placeholder text -->
@@ -76,8 +76,13 @@
     <string name="logo_error">Logo de error</string>
     <string name="favorite_button">Favorite button</string>
     <string name="title_icon">Title icon</string>
+    <string name="search_text">Buscar …</string>
     <string name="all_comics_title">TODOS LOS COMICS</string>
     <string name="favorite_comics_title">COMICS FAVORITOS</string>
-    <string name="error_fragment_text">Unauthorized access</string>
-    <string name="error_code">Error %1$s</string>
+    <string name="general_error">Unexpected error! Error code: %1$s</string>
+    <string name="unauthorized_error">Unauthorized access</string>
+    <string name="api_error">Unexpected error!</string>
+    <string name="unknown_host_error">Unknown error!</string>
+    <string name="empty_list">That\'s quite empty! :/</string>
+    <string name="search_title">Buscar …</string>
 </resources>
