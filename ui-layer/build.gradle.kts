@@ -24,6 +24,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
 
     compileOptions {
@@ -41,6 +46,7 @@ dependencies {
     val materialVersion = "1.12.0"
     val constraintLayoutVersion = "2.1.4"
     val legacySupportVersion = "1.0.0"
+    val viewModelComposeVersion = "2.8.0"
     val fragmentVersion = "1.7.0"
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
@@ -58,6 +64,7 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
 
     // FACEBOOK
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
@@ -75,9 +82,19 @@ dependencies {
     // GLIDE
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
+    // COIL
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    // JETPACK COMPOSE
+    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.compose.compiler:compiler:1.5.13")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
+    implementation("androidx.compose.ui:ui-tooling:1.6.7")
+    implementation("androidx.activity:activity:1.9.0")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")

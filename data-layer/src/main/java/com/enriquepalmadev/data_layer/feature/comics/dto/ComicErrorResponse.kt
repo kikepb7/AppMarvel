@@ -1,5 +1,6 @@
 package com.enriquepalmadev.data_layer.feature.comics.dto
 
+data class FailureDto(val code: Int, val message: String?)
 sealed class Failure
 
 data class ApiError(val code: Int, val message: String): Failure()
