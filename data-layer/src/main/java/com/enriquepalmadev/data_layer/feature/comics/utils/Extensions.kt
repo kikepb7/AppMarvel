@@ -1,10 +1,7 @@
 package com.enriquepalmadev.data_layer.feature.comics.utils
 
-import com.enriquepalmadev.data_layer.feature.comics.dto.ApiError
 import com.enriquepalmadev.data_layer.feature.comics.dto.ComicDto
-import com.enriquepalmadev.data_layer.feature.comics.dto.Failure
-import com.enriquepalmadev.data_layer.feature.comics.dto.Unauthorized
-import com.enriquepalmadev.data_layer.feature.comics.dto.UnknownHostError
+import com.enriquepalmadev.data_layer.feature.comics.dto.FailureDto
 import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 
@@ -26,10 +23,10 @@ fun ComicDto.dtoToComicModel(): ComicModel {
     )
 }
 
-fun Failure.toFailureDomain(): FailureDomain {
-    return when (this) {
-        is ApiError -> FailureDomain.ApiError(code = code, message = message)
-        Unauthorized -> FailureDomain.Unauthorized
-        UnknownHostError -> FailureDomain.UnknownHostError
+fun FailureDto.toFailureDomain(): FailureDomain {
+    return when (this.code) {
+        400 -> FailureDomain.UnknownHostError
+        401 -> FailureDomain.Unauthorized
+        else -> FailureDomain.ApiError
     }
 }

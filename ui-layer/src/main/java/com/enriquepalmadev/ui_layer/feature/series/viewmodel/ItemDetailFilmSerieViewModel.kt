@@ -25,7 +25,7 @@ class ItemDetailFilmSerieViewModel @Inject constructor(
         viewModelScope.launch {
             iGetSerieByIdUseCase.getSerieById(id)
                 .onStart { ItemDetailUIState.Loading }
-                .catch { ItemDetailUIState.Error(FailureDomain.AnotherErrorDomain) }
+                .catch { ItemDetailUIState.Error(FailureDomain.DefaultErrorDomain) }
                 .collect { responseEither ->
                     when (responseEither) {
                         is Either.Error -> {

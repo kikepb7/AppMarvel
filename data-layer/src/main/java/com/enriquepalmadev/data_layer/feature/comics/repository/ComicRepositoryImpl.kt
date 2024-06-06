@@ -10,7 +10,6 @@ import com.enriquepalmadev.domain_layer.feature.comics.model.ComicModel
 import com.enriquepalmadev.domain_layer.feature.comics.model.FailureDomain
 import javax.inject.Inject
 
-
 class ComicRepositoryImpl @Inject constructor(
     private val remoteDataSource: ComicRemoteDataSource
 ) : ComicRepository {
