@@ -24,6 +24,14 @@
     <string name="search_button">Buscar</string>
     <string name="filter_button">Ordenar por</string>
 
+    <!-- Characters Accesibility text -->
+    <string name="loadingMessage">Loading screen</string>
+    <string name="errorImageDescription">Error image</string>
+    <string name="characterImageDescription">Image about </string>
+    <string name="characterNameDescription">Title about </string>
+    <string name="searchBarMessage">SearchBar</string>
+    <string name="buttonOrderByMessage">Button order by</string>
+
     <!-- Characters dialog "order by" texts -->
     <string name="orderby_alphabet_A_Z">by alphabet A-Z</string>
     <string name="orderby_alphabet_Z_A">by alphabet Z-A</string>

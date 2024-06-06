@@ -26,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.feature.character.view.compose.dataclass.TitleListModel
@@ -40,6 +42,8 @@ fun HeaderCharacterList(
 ) {
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
+    val searchBarMessage = stringResource(id = R.string.searchBarMessage)
+    val buttonOrderByMessage = stringResource(id = R.string.buttonOrderByMessage)
 
     Row (
         modifier = Modifier
@@ -52,7 +56,8 @@ fun HeaderCharacterList(
         SearchBar(
             modifier = Modifier
                 .width(230.dp)
-                .padding(5.dp, 8.dp, 5.dp, 5.dp),
+                .padding(5.dp, 8.dp, 5.dp, 5.dp)
+                .semantics { contentDescription = searchBarMessage },
             query = text,
             onQueryChange = {
                 text = it
@@ -93,7 +98,9 @@ fun HeaderCharacterList(
             contentAlignment = Alignment.CenterEnd
         ) {
             Button(
-                modifier = Modifier.height(40.dp),
+                modifier = Modifier
+                    .height(40.dp)
+                    .semantics { contentDescription = buttonOrderByMessage },
                 onClick = { dialogOrderBy() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red

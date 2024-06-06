@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,7 +86,11 @@ fun CharacterListScreen(
 @Composable
 fun CharacterList(list: List<CharacterModel>?, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit){
     if (list.isNullOrEmpty()) {
-        Text(stringResource(id = R.string.emptyList))
+        val emptyListDescription = stringResource(id = R.string.emptyList)
+        Text(
+            emptyListDescription,
+            Modifier.semantics { contentDescription = emptyListDescription }
+        )
     } else {
         LazyColumn {
             items(list) { character ->
@@ -96,6 +102,9 @@ fun CharacterList(list: List<CharacterModel>?, onCharacterClicked: (CharacterMod
 
 @Composable
 fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel) -> Unit, onFavClicked: () -> Unit) {
+    val characterImageDescription =  stringResource(id = R.string.characterImageDescription) + character.name
+    val characterNameDescription = stringResource(id = R.string.characterNameDescription) + character.name
+
     Column(
         modifier = Modifier
             .clickable { onCharacterClicked(character) }
@@ -107,10 +116,14 @@ fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel
             imageUrl = character.thumbnailDTO,
             isFavorite = false,
             onFavClicked = onFavClicked,
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier
+                .size(150.dp)
+                .semantics { contentDescription = characterImageDescription }
         )
         Text(
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .semantics { contentDescription = characterNameDescription },
             text = character.name,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
@@ -173,8 +186,10 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
 
 @Composable
 fun ErrorScreen(@DrawableRes errorMessageImage: Int, @StringRes errorMessageString: Int) {
-    // Muestra el mensaje de error solo si errorMessageId no es 0
     if (errorMessageImage != 0) {
+        val errorImageDescription = stringResource(id = R.string.errorImageDescription)
+        val errorMessageDescription = stringResource(id = errorMessageString)
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -188,13 +203,16 @@ fun ErrorScreen(@DrawableRes errorMessageImage: Int, @StringRes errorMessageStri
                 modifier = Modifier
                     .size(150.dp)
                     .padding(bottom = 16.dp)
+                    .semantics { contentDescription = errorImageDescription }
             )
             Text(
                 text = stringResource(id = errorMessageString),
                 color = Color.Red,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .padding(8.dp)
+                    .semantics { contentDescription = errorMessageDescription }
             )
         }
     }
@@ -203,9 +221,11 @@ fun ErrorScreen(@DrawableRes errorMessageImage: Int, @StringRes errorMessageStri
 /* funcion Loader */
 @Composable
 fun LoadingScreen() {
+    val loadingMessage = stringResource(id = R.string.loadingMessage)
     Box(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .semantics { contentDescription = loadingMessage },
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
