@@ -73,7 +73,7 @@ fun FilmSerieComposeView(
                 )
             }
 
-            FailureDomain.AnotherErrorDomain -> {
+            FailureDomain.DefaultErrorDomain -> {
                 ErrorView(
                     stringResource(R.string.title_coroutine_error),
                     stringResource(R.string.msg_coroutine_error),

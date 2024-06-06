@@ -58,12 +58,12 @@ class ComicDetailFragment : Fragment() {
                 is DetailState.Error -> {
                     when (state.error) {
                         is FailureDomain.ApiError -> {
-                            showErrorMessage(code = state.error.code, message = state.error.message)
-                            manageErrorApi(code = state.error.code.toString())
+                            manageErrorApi(code = state.error.toString())
                         }
 
                         FailureDomain.UnknownHostError -> manageErrorApi(code = "400")
                         FailureDomain.Unauthorized -> manageErrorApi(code = "401")
+                        FailureDomain.ApiError -> manageErrorApi(code = "")
                     }
                     manageLoader(false)
                 }
@@ -128,7 +128,7 @@ class ComicDetailFragment : Fragment() {
         binding.apply {
             ivError.visible()
             tvErrorCode.visible()
-            tvErrorCode.text = getString(R.string.error_code, code)
+            tvErrorCode.text = getString(R.string.api_error)
         }
     }
 }
