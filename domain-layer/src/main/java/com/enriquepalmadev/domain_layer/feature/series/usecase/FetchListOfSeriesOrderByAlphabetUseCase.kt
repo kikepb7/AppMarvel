@@ -11,7 +11,7 @@ class FetchListOfSeriesOrderByAlphabetUseCase @Inject constructor() {
     suspend fun getListOfSeriesOrderByAlphabet(series: List<FilmSerieModel>): Flow<Either<FailureDomain, List<FilmSerieModel>>> {
         return flow { emit(
             if(series.isNotEmpty()){
-                Either.Success(data = series.sortedBy { it.title })
+                Either.Success(data = series.sortedByDescending { it.title })
             } else {
                 Either.Error(error = FailureDomain.EmptyErrorDomain)
             }

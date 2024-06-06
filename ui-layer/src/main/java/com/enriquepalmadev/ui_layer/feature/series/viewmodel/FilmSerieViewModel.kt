@@ -92,6 +92,7 @@ class FilmSerieViewModel @Inject constructor(
                             }
                             is Either.Success -> {
                                 _uiState.update { updateSuccess(responseEither.data) }
+                                apiSeries = responseEither.data
                             }
                         }
                     }
@@ -115,6 +116,7 @@ class FilmSerieViewModel @Inject constructor(
                             }
                             is Either.Success -> {
                                 _uiState.update { updateSuccess(responseEither.data) }
+                                apiSeries = responseEither.data
                             }
                         }
                     }
