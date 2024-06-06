@@ -5,5 +5,5 @@ sealed class FailureDomain {
     data object UnauthorizedErrorDomain: FailureDomain()
     data object EmptyErrorDomain: FailureDomain()
     data object UnknownHostErrorDomain: FailureDomain()
-    data object AnotherErrorDomain: FailureDomain()
+    data object DefaultErrorDomain: FailureDomain()
 }
