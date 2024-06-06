@@ -14,60 +14,49 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FilmSerieViewModel @Inject constructor(
-    private val iFetchListOfAllSeriesUseCase: FetchListOfAllSeriesUseCase,
-    private val iFetchListOfSeriesOrderByStartYearUseCase: FetchListOfSeriesOrderByStartYearUseCase,
-    private val iFetchListOfSeriesOrderByAlphabetUseCase: FetchListOfSeriesOrderByAlphabetUseCase,
-    private val iFetchListFilterByNameUseCase: FetchListFilterByNameUseCase
+    private val fetchListOfAllSeriesUseCase: FetchListOfAllSeriesUseCase,
+    private val fetchListOfSeriesOrderByStartYearUseCase: FetchListOfSeriesOrderByStartYearUseCase,
+    private val fetchListOfSeriesOrderByAlphabetUseCase: FetchListOfSeriesOrderByAlphabetUseCase,
+    private val fetchListFilterByNameUseCase: FetchListFilterByNameUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<FilmSerieUIState>(FilmSerieUIState.Loading)
+    private val _uiState = MutableStateFlow(FilmSerieUIState())
     val uiState: StateFlow<FilmSerieUIState> = _uiState
-
-    // private val iFetchListOfAllSeriesUseCase = FetchListOfAllSeriesUseCase()
-    // private val iFetchListOfSeriesOrderByStartYearUseCase = FetchListOfSeriesOrderByStartYearUseCase()
-    // private val iFetchListOfSeriesOrderByAlphabetUseCase = FetchListOfSeriesOrderByAlphabetUseCase()
-    // private val iFetchListFilterByNameUseCase = FetchListFilterByNameUseCase()
-
     private var allSeriesList: List<FilmSerieModel>? = listOf()
 
-    private fun customFilterList(series: List<FilmSerieModel>): List<FilmSerieModel> {
-        return series.filter {
-            !it.description.isNullOrEmpty()
-        }.sortedByDescending { it.startYear }
-    }
-
-    fun done() {
+    private fun done() {
         viewModelScope.launch {
-            allSeriesList?.let { FilmSerieUIState.ListReceived(it) }?.let { _uiState.emit(it) }
+            allSeriesList?.let { list ->
+                _uiState.update { updateSuccess(list) }
+            }
         }
     }
 
     fun getAllSeriesListFromAPI() {
         if (allSeriesList?.isEmpty() == true) {
             viewModelScope.launch {
-                iFetchListOfAllSeriesUseCase.getListOfAllSeries()
-                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
+                fetchListOfAllSeriesUseCase.getListOfAllSeries()
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
-                            is ResponseEither.Success -> {
-                                if (responseEither.r?.isEmpty() == true) {
-                                    _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain))
+                            is ResponseEither.Success -> { // If it is success but the list comes empty...
+                                if (responseEither.success?.isEmpty() == true) {
+                                    _uiState.update { updateFailure(FailureDomain.EmptyErrorDomain) }
                                 } else {
-                                    allSeriesList =
-                                        responseEither.r?.let { customFilterList(it) }
-                                    allSeriesList?.let {
-                                        FilmSerieUIState.ListReceived(it)
-                                    }?.let { _uiState.emit(it) }
+                                    allSeriesList = responseEither.success
+                                    allSeriesList?.let { list ->
+                                        _uiState.update { updateSuccess(list) }
+                                    }
                                 }
                             }
                         }
@@ -78,47 +67,21 @@ class FilmSerieViewModel @Inject constructor(
         }
     }
 
-    fun transferToDataDetail(id: Int) {
-        try {
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.ItemClicked(id))
-            }
-        } catch (e: Exception) {
-            viewModelScope.launch {
-                _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain))
-            }
-        }
-    }
-
-    /* TODO() This function is thought to the database persist
-    fun favSerie(id: Int, favState: String) {
-        when (favState){
-            "on" -> {
-                TODO() // Add film to fav list
-            }
-            "off" -> {
-                TODO() // Remove film to fav list
-            }
-        }
-    }
-     */
-
     fun orderListByStartYear() {
         viewModelScope.launch {
-            allSeriesList?.let {
-                iFetchListOfSeriesOrderByStartYearUseCase
-                    .getListOfSeriesOrderByStartYear(it)
-                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
+            allSeriesList?.let { seriesList ->
+                fetchListOfSeriesOrderByStartYearUseCase
+                    .getListOfSeriesOrderByStartYear(seriesList)
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                allSeriesList = responseEither.r
-                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                                allSeriesList = responseEither.success
+                                _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
@@ -128,20 +91,19 @@ class FilmSerieViewModel @Inject constructor(
 
     fun orderListByAlphabet() {
         viewModelScope.launch {
-            allSeriesList?.let {
-                iFetchListOfSeriesOrderByAlphabetUseCase
-                    .getListOfSeriesOrderByAlphabet(it)
-                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
+            allSeriesList?.let { seriesList ->
+                fetchListOfSeriesOrderByAlphabetUseCase
+                    .getListOfSeriesOrderByAlphabet(seriesList)
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                allSeriesList = responseEither.r
-                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                                allSeriesList = responseEither.success
+                                _uiState.update { updateSuccess(responseEither.success) }
                             }
                         }
                     }
@@ -151,30 +113,48 @@ class FilmSerieViewModel @Inject constructor(
 
     fun filteringByName(newText: String) {
         viewModelScope.launch {
-            allSeriesList?.let {
-                iFetchListFilterByNameUseCase.getListFilterByName(newText, it)
-                    .onStart { _uiState.emit(FilmSerieUIState.Loading) }
-                    .catch { _uiState.emit(FilmSerieUIState.Error(FailureDomain.CoroutineErrorDomain)) }
+            allSeriesList?.let { seriesList ->
+                fetchListFilterByNameUseCase.getListFilterByName(newText, seriesList)
+                    .onStart { _uiState.update { updateLoading() } }
+                    .catch { _uiState.update { updateFailure(FailureDomain.DefaultErrorDomain) } }
                     .collect { responseEither ->
                         when (responseEither) {
                             is ResponseEither.Failure -> {
-                                _uiState.emit(FilmSerieUIState.Error(responseEither.l))
+                                _uiState.update { updateFailure(responseEither.failure) }
                             }
-
                             is ResponseEither.Success -> {
-                                _uiState.emit(FilmSerieUIState.ListReceived(responseEither.r))
+                                if(responseEither.success.isEmpty()){
+                                    _uiState.update { updateNoItemsFound() }
+                                } else {
+                                    _uiState.update { updateSuccess(responseEither.success) }
+                                }
                             }
                         }
                     }
             }
         }
     }
-
 }
 
-sealed class FilmSerieUIState {
-    data class Error(val error: FailureDomain) : FilmSerieUIState()
-    data object Loading : FilmSerieUIState()
-    data class ListReceived(val list: List<FilmSerieModel>) : FilmSerieUIState()
-    data class ItemClicked(val idSerie: Int) : FilmSerieUIState()
+private fun updateLoading(): FilmSerieUIState {
+    return FilmSerieUIState(isLoading = true)
 }
+
+private fun updateFailure(failure : FailureDomain): FilmSerieUIState {
+    return FilmSerieUIState(isError = failure)
+}
+
+private fun updateSuccess(seriesList : List<FilmSerieModel>): FilmSerieUIState {
+    return FilmSerieUIState(list = seriesList)
+}
+
+private fun updateNoItemsFound(): FilmSerieUIState {
+    return FilmSerieUIState(itemsFound = false)
+}
+
+data class FilmSerieUIState (
+    val isError: FailureDomain? = null,
+    val isLoading: Boolean = false,
+    val list: List<FilmSerieModel> = emptyList(),
+    val itemsFound: Boolean = true
+)
