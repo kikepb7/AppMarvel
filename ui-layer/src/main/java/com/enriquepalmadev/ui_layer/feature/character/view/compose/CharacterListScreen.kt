@@ -164,7 +164,7 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
             }
             Image(
                 painter = painterResource( id = currentImage.value ),
-                contentDescription = "like",
+                contentDescription = stringResource(id = R.string.imageButtonLikeIcon),
                 alignment = Alignment.TopEnd,
                 modifier = Modifier
                     .clickable {
