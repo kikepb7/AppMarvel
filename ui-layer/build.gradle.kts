@@ -104,12 +104,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:$composeToolingVersion")
     implementation("androidx.activity:activity:$activityVersion")
 
+    // TEST
     testImplementation("junit:junit:$jUnitVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
     testImplementation("androidx.arch.core:core-testing:$archCoreTestVersion")
     testImplementation("app.cash.turbine:turbine:$turbineVersion")
-
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }

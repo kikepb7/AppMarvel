@@ -8,7 +8,6 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -43,16 +42,17 @@ class FetchComicUseCaseTest {
     }
 
     @Test
-    fun `GIVEN a mocked repository WHEN fetching comic list THEN repository is called once and returns expected result`() = runTest {
+    fun `GIVEN a mocked repository WHEN fetching comic list THEN repository is called once and returns expected result`() =
+        runTest {
 
-        // GIVEN
-        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
+            // GIVEN
+            coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
 
-        // WHEN
-        val result = fetchComicUseCase.fetchComicList().first()
+            // WHEN
+            val result = fetchComicUseCase.fetchComicList().first()
 
-        // THEN
-        coVerify(exactly = 1) { comicRepository.fetchComicList() }
-        assertEquals(result, Either.Success(getComicListMocked()))
-    }
+            // THEN
+            coVerify(exactly = 1) { comicRepository.fetchComicList() }
+            assertEquals(result, Either.Success(getComicListMocked()))
+        }
 }
