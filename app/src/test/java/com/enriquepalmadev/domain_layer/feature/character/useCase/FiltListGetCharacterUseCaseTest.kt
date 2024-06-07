@@ -5,6 +5,8 @@ import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -39,7 +41,8 @@ class FiltListGetCharacterUseCaseTest{
         //Then
         val expected = Either.Success(listOf(CharacterModel(id = 1, name = "Deadpool", description = "Un tio con Katanas", thumbnailDTO = "")))
         assertEquals(expected, result)
-
+        coVerify(exactly = 1) { characterListRepository.getCharacterList() }
+        confirmVerified(characterListRepository)
     }
 
     @Test

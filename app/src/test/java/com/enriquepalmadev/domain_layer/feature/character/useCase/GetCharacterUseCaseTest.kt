@@ -6,6 +6,7 @@ import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRe
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -50,6 +51,8 @@ class GetCharacterUseCaseTest{
 
         //Then
         assertEquals(result, successResponse)
+        coVerify(exactly = 1) { characterListRepository.getCharacterList() }
+        confirmVerified(characterListRepository)
     }
 
     @Test

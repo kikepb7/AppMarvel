@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Test
 
 class CharacterRepositoryImplTest{
-    private var characterRemoteDataSource = mockk<CharacterRemoteDataSource>()
+    private val characterRemoteDataSource = mockk<CharacterRemoteDataSource>()
     private lateinit var characterRepositoryImpl: CharacterRepositoryImpl
 
     @Before
@@ -60,8 +60,8 @@ class CharacterRepositoryImplTest{
         )
         val expectedList = resultList.toCharacterListModel()
         val responseDTO = CharacterResponseDTO<ResultDTO>(data = dataDTO)
-        val either: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = Either.Success(responseDTO)
-        coEvery { characterRemoteDataSource.getCharactersFromApi() } returns either
+        val expectedResult: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = Either.Success(responseDTO)
+        coEvery { characterRemoteDataSource.getCharactersFromApi() } returns expectedResult
 
         // When
         val result = characterRepositoryImpl.getCharacterList()
@@ -69,6 +69,7 @@ class CharacterRepositoryImplTest{
         // Then
         assertTrue(result is Either.Success)
         assertEquals((result as Either.Success).data, expectedList)
+        coVerify(exactly = 1) { characterRemoteDataSource.getCharactersFromApi() }
     }
 
     @Test
@@ -76,16 +77,15 @@ class CharacterRepositoryImplTest{
 
         // Given
         val error = Either.Error(CharacterError.UnknownHostError)
-        val either: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = error
-        coEvery { characterRemoteDataSource.getCharactersFromApi() } returns either
+        val expectedResult: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = error
+        coEvery { characterRemoteDataSource.getCharactersFromApi() } returns expectedResult
 
         // When
         val result = characterRepositoryImpl.getCharacterList()
 
         // Then
-        coVerify { characterRemoteDataSource.getCharactersFromApi() }
         assertEquals(Either.Error(CharacterErrorModel.UnknownHostError), result)
-
+        coVerify { characterRemoteDataSource.getCharactersFromApi() }
     }
 
     //getDetail
@@ -123,8 +123,8 @@ class CharacterRepositoryImplTest{
             it.id == 1
         }
         val responseDTO = CharacterResponseDTO<ResultDTO>(data = dataDTO)
-        val either: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = Either.Success(responseDTO)
-        coEvery { characterRemoteDataSource.getCharacterDetailFromApi(1) } returns either
+        val expectedResult: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = Either.Success(responseDTO)
+        coEvery { characterRemoteDataSource.getCharacterDetailFromApi(1) } returns expectedResult
 
         // When
         val result = characterRepositoryImpl.getCharacterDetail(1)
@@ -137,14 +137,14 @@ class CharacterRepositoryImplTest{
     fun `getCharacterDetail error`() = runTest {
         // Given
         val error = Either.Error(CharacterError.UnknownHostError)
-        val either: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = error
-        coEvery { characterRemoteDataSource.getCharacterDetailFromApi(1) } returns either
+        val expectedResult: Either<CharacterError, CharacterResponseDTO<ResultDTO>> = error
+        coEvery { characterRemoteDataSource.getCharacterDetailFromApi(1) } returns expectedResult
 
         // When
         val result = characterRepositoryImpl.getCharacterDetail(1)
 
         // Then
-        coVerify { characterRemoteDataSource.getCharacterDetailFromApi(1) }
         assertEquals(Either.Error(CharacterErrorModel.UnknownHostError), result)
+        coVerify { characterRemoteDataSource.getCharacterDetailFromApi(1) }
     }
 }

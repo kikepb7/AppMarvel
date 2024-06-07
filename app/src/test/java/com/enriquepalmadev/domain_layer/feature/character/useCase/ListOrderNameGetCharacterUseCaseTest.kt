@@ -4,6 +4,8 @@ import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -37,6 +39,8 @@ class ListOrderNameGetCharacterUseCaseTest{
         //Then
         val expected = Either.Success(characterList.sortedBy { it.name })
         assertEquals(expected, result.first())
+        coVerify(exactly = 1) { characterListRepository.getCharacterList() }
+        confirmVerified(characterListRepository)
     }
 
     @Test
