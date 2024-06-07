@@ -55,9 +55,8 @@ class CharacterLocalRepositoryImpl @Inject constructor(
         // Obtener el personaje de la base de datos local
         val character = characterDAO.getCharacterDetail(characterId)
         character?.let {
-            it.favourite = isFavourite
             // Actualizar el personaje en la base de datos local
-            characterDAO.updateFavouriteCharacter(it)
+            characterDAO.updateFavouriteCharacter(it.copy(favourite = isFavourite))
         }
     }
 

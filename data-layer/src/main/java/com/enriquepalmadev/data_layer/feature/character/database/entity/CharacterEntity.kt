@@ -14,10 +14,12 @@ data class CharacterEntity(
     @ColumnInfo(name = "thumbnail") val thumbnail: String?,
     @ColumnInfo(name = "favourite") var favourite: Boolean = false
 )
-fun CharacterModel.toDatabase() = CharacterEntity(
-    id = id,
-    name = name,
-    description = description,
-    thumbnail = thumbnailDTO,
-    favourite = false
-)
+fun CharacterModel.toDatabase() = favourite?.let {
+    CharacterEntity(
+        id = id,
+        name = name,
+        description = description,
+        thumbnail = thumbnailDTO,
+        favourite = it
+    )
+}
