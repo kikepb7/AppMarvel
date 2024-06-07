@@ -1,7 +1,7 @@
 package com.enriquepalmadev.domain_layer.feature.series.repository
 
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 
 interface IFilmSerieRepository {

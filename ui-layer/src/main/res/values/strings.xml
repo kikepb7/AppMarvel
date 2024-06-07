@@ -12,6 +12,7 @@
     <!-- Error text -->
     <string name="unknownError">There\'s a conexion problem!</string>
     <string name="unknownHost">Host desconocido</string>
+    <string name= "emptyList">Lista no disponible</string>
 
     <!-- Fragments' placeholder text -->
     <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
@@ -22,7 +23,17 @@
     <string name="search_button">Buscar</string>
     <string name="filter_button">Ordenar por</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Characters dialog "order by" texts -->
+    <string name="orderby_alphabet_A_Z">by alphabet A-Z</string>
+    <string name="orderby_alphabet_Z_A">by alphabet Z-A</string>
+    <string name="dialog_title_characters">Order characters…</string>
+
+
+    <!-- Characters Error texts -->
+    <string name="no_connection">No Connection</string>
+
+
+    <!-- Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Films and series' fragment's text -->
