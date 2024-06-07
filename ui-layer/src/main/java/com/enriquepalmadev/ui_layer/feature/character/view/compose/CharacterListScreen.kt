@@ -162,9 +162,16 @@ fun CharacterImage(imageUrl: String?, isFavorite: Boolean, onFavClicked: () -> U
                         .width(200.dp)
                 )
             }
+            var resultLikeMessage : String
+            if (currentImage.value == R.drawable.ic_full_favorite_24dp) {
+                resultLikeMessage = stringResource(id = R.string.imageButtonLikeIcon)
+            } else {
+                resultLikeMessage = stringResource(id = R.string.imageButtonUnLikeIcon)
+            }
+
             Image(
                 painter = painterResource( id = currentImage.value ),
-                contentDescription = stringResource(id = R.string.imageButtonLikeIcon),
+                contentDescription = resultLikeMessage,
                 alignment = Alignment.TopEnd,
                 modifier = Modifier
                     .clickable {

@@ -32,6 +32,7 @@
     <string name="searchBarMessage">SearchBar</string>
     <string name="buttonOrderByMessage">Button order by</string>
     <string name="imageButtonLikeIcon">Image Button, Like Icon</string>
+    <string name="imageButtonUnLikeIcon">Image Button, Unlike Icon</string>
 
     <!-- Characters dialog "order by" texts -->
     <string name="orderby_alphabet_A_Z">by alphabet A-Z</string>
