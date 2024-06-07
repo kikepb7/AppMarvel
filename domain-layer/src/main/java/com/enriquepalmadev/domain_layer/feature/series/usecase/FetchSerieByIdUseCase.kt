@@ -11,7 +11,6 @@ import javax.inject.Inject
 class FetchSerieByIdUseCase @Inject constructor(
     private val filmSerieRepository: IFilmSerieRepository
 ) {
-    // private val filmSerieRepository = FilmSerieRepositoryImpl()
     suspend fun getSerieById(id: Int): Flow<ResponseEither<FailureDomain, FilmSerieModel>> {
         return flow { emit(filmSerieRepository.getSerieById(id)) }
     }

@@ -4,11 +4,10 @@ import com.enriquepalmadev.data_layer.commons.utils.Constants
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.MarvelFilmSerieItemDto
 import com.enriquepalmadev.data_layer.feature.series.api.dtos.ObjectResponseDto
 import com.enriquepalmadev.data_layer.feature.series.api.service.IMarvelFilmSerieService
-import com.enriquepalmadev.data_layer.feature.series.api.utils.toFailureDomain
 import com.enriquepalmadev.data_layer.feature.series.failure.CustomErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnauthorizedErrorData
 import com.enriquepalmadev.data_layer.feature.series.failure.UnknownHostErrorData
-import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.data_layer.feature.series.failure.FailureData
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -17,68 +16,62 @@ class SerieRemoteDataSourceImpl @Inject constructor(
     private val api: IMarvelFilmSerieService
 ) : ISerieDataSource {
 
-    /*
-    private val retrofitService: IMarvelFilmSerieService by lazy {
-        RetrofitBuilder.getRetrofit().create(IMarvelFilmSerieService::class.java)
-    }
-     */
-
-    override suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, ObjectResponseDto?> {
+    override suspend fun getListOfAllSeries(): ResponseEither<FailureData, ObjectResponseDto?> {
         return try {
             val response = api.getListOfAllSeries()
             if (response.isSuccessful) {
-                ResponseEither.Success(r = response.body())
+                ResponseEither.Success(success = response.body())
             } else {
                 if (response.code() == Constants.ERROR_401) {
-                    ResponseEither.Failure(l = UnauthorizedErrorData.toFailureDomain())
+                    ResponseEither.Failure(failure = UnauthorizedErrorData)
                 } else {
-                    ResponseEither.Failure(l = CustomErrorData(
+                    ResponseEither.Failure(failure = CustomErrorData(
                             response.code().toString(),
                             response.errorBody().toString()
-                        ).toFailureDomain()
+                        )
                     )
                 }
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = UnknownHostErrorData.toFailureDomain())
+            ResponseEither.Failure(failure = UnknownHostErrorData)
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomErrorData(
+            ResponseEither.Failure(failure = CustomErrorData(
                     e.toString(),
                     e.message.toString()
-                ).toFailureDomain()
+                )
             )
         }
     }
 
-    override suspend fun getSerieById(id: Int): ResponseEither<FailureDomain, MarvelFilmSerieItemDto> {
+    override suspend fun getSerieById(id: Int): ResponseEither<FailureData, MarvelFilmSerieItemDto> {
         return try {
             val response = api.getSerieById(id)
             val result = response.body()?.data?.results
 
             if (response.isSuccessful) {
                 if (result != null) {
-                    ResponseEither.Success(r = result.first())
+                    ResponseEither.Success(success = result.first())
                 } else {
-                    ResponseEither.Failure(l = CustomErrorData(
+                    ResponseEither.Failure(failure = CustomErrorData(
                             response.code().toString(),
                             response.errorBody().toString()
-                        ).toFailureDomain()
+                        )
                     )
                 }
             } else {
-                ResponseEither.Failure(l = CustomErrorData(
+                ResponseEither.Failure(failure = CustomErrorData(
                         response.code().toString(),
                         response.errorBody().toString()
-                    ).toFailureDomain()
+                    )
                 )
             }
         } catch (e: UnknownHostException) {
-            ResponseEither.Failure(l = UnknownHostErrorData.toFailureDomain())
+            ResponseEither.Failure(failure = UnknownHostErrorData)
         } catch (e: Exception) {
-            ResponseEither.Failure(l = CustomErrorData(
+            ResponseEither.Failure(failure = CustomErrorData(
                     e.toString(),
                     e.message.toString()
-                ).toFailureDomain()
+                )
             )
         }
     }

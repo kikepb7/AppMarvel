@@ -74,7 +74,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                             showErrorView(true, R.drawable.captain_empty)
                         }
 
-                        is FailureDomain.CoroutineErrorDomain -> {
+                        is FailureDomain.DefaultErrorDomain -> {
                             setErrorView(
                                 getString(R.string.title_coroutine_error),
                                 getString(R.string.msg_coroutine_error)
@@ -104,7 +104,6 @@ class ItemDetailFilmSerieFragment : Fragment() {
     private fun showLoading(visible: Boolean) {
         bindingItemDetailsFilmsSeries.apply {
             loading.isVisible = visible
-            // detailFimsSeriesName.isVisible =!visible
         }
     }
 

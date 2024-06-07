@@ -5,10 +5,6 @@ import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.utils.ResponseEither
 
 interface IFilmSerieRepository {
-
     suspend fun getListOfAllSeries(): ResponseEither<FailureDomain, List<FilmSerieModel>?>
     suspend fun getSerieById(id: Int): ResponseEither<FailureDomain, FilmSerieModel>
-    suspend fun orderListByStartYear(series: List<FilmSerieModel>): ResponseEither<FailureDomain, List<FilmSerieModel>>
-    suspend fun orderListByAlphabet(series: List<FilmSerieModel>): ResponseEither<FailureDomain, List<FilmSerieModel>>
-    suspend fun filterByName(newText: String, series: List<FilmSerieModel>) : ResponseEither<FailureDomain, List<FilmSerieModel>>
 }

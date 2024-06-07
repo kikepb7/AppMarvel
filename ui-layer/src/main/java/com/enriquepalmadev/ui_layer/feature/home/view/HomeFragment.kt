@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.FragmentHomeBinding
-import com.enriquepalmadev.ui_layer.feature.home.view.extensions.navigateTo
+import com.enriquepalmadev.ui_layer.commons.navigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

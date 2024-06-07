@@ -42,12 +42,12 @@ android {
 
 dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.1")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
     val ktxVersion = "1.13.1"
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
     val constraintLayoutVersion = "2.1.4"
     val legacySupportVersion = "1.0.0"
+    val viewModelComposeVersion = "2.8.0"
     val fragmentVersion = "1.7.0"
     val navVersion = "2.7.7"
     val viewModelVersion = "2.7.0"
@@ -57,10 +57,10 @@ dependencies {
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
-    val composeMaterial = "1.6.7"
-    val composeCompiler = "1.5.13"
-    val composeUi = "1.6.7"
-    val composeRuntime = "1.6.7"
+    val composeVersion = "1.9.0"
+    val composeUiVersion = "1.6.7"
+    val material3Compose = "1.2.1"
+    val navigationCompose = "2.7.7"
 
     implementation(project(":domain-layer"))
 
@@ -69,6 +69,7 @@ dependencies {
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("androidx.legacy:legacy-support-v4:$legacySupportVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$viewModelComposeVersion")
 
     // FACEBOOK
     implementation("com.facebook.shimmer:shimmer:$facebookVersion")
@@ -87,17 +88,31 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
 
-    /* HILT */
+    // COIL
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // HILT
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-    /* COMPOSE */
-    implementation("androidx.compose.material:material:$composeMaterial")
-    implementation("androidx.compose.compiler:compiler:$composeCompiler")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
-    implementation("androidx.compose.ui:ui-tooling:$composeUi")
-    implementation("androidx.compose.runtime:runtime-livedata:$composeRuntime")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    // COMPOSE
+    implementation("androidx.activity:activity-compose:$composeVersion")
+    implementation("androidx.compose.material:material:$composeUiVersion")
+    implementation("androidx.compose.ui:ui:$composeUiVersion")
+    implementation("androidx.compose.ui:ui-graphics:$composeUiVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+    implementation("androidx.navigation:navigation-compose:$navigationCompose")
+
+    // JETPACK COMPOSE
+    implementation("androidx.compose.compiler:compiler:1.5.13")
+    implementation("androidx.activity:activity:1.9.0")
+
+    // SHIMMER ANIMATION
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.0")
+
+    //MATERIAL 3 COMPOSE
+    implementation("androidx.compose.material3:material3:$material3Compose")
 
     testImplementation("junit:junit:$jUnitVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
