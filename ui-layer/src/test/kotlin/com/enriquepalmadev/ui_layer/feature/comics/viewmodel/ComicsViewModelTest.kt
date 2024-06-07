@@ -151,6 +151,7 @@ class ComicsViewModelTest {
     fun `GIVEN fetch comic list WHEN we call fetchComicListUseCase method and the response is success THEN it return an empty comic list`() {
 
         return runTest {
+            // GIVEN
             coEvery { fetchComicUseCase.fetchComicList() } returns flow {
                 emit(
                     Either.Success(
@@ -159,6 +160,7 @@ class ComicsViewModelTest {
                 )
             }
 
+            // WHEN
             viewModel.state.test {
                 // First State
                 assertEquals(
@@ -176,6 +178,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // THEN
                 assertEquals(
                     ComicScreenState(
                         loadingScreenData = ComicListScreenLoading(loader = false),

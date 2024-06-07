@@ -31,6 +31,21 @@ class ComicRepositoryImplTest {
 
     private val comicRemoteDataSource = mockk<ComicRemoteDataSource>()
     private lateinit var comicRepositoryImpl: ComicRepositoryImpl
+    private val getResponseMarvelDto =
+        ResponseMarvelDto(
+            code = 1,
+            data = DataDto(
+                results = listOf(
+                    ComicDto(
+                        id = 1,
+                        title = "Test Comic",
+                        description = "A test comic",
+                        thumbnail = ThumnailDto(path = "path", extension = "jpg"),
+                    )
+                )
+            ),
+            etag = "none"
+        )
 
     @Before
     fun setUp() {
@@ -89,20 +104,4 @@ class ComicRepositoryImplTest {
         assert(response is Either.Error<FailureDomain>)
         coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
     }
-
-    private val getResponseMarvelDto =
-        ResponseMarvelDto(
-            code = 1,
-            data = DataDto(
-                results = listOf(
-                    ComicDto(
-                        id = 1,
-                        title = "Test Comic",
-                        description = "A test comic",
-                        thumbnail = ThumnailDto(path = "path", extension = "jpg"),
-                    )
-                )
-            ),
-            etag = "none"
-        )
 }

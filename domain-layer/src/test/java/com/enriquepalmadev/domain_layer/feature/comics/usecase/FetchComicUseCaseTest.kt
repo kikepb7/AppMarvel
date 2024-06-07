@@ -20,26 +20,6 @@ class FetchComicUseCaseTest {
 
     private val comicRepository = mockk<ComicRepository>()
     private lateinit var fetchComicUseCase: FetchComicUseCase
-
-    @Before
-    fun setUp() {
-        fetchComicUseCase = FetchComicUseCase(comicRepository)
-    }
-
-    @Test
-    fun `check if repository is called`() = runTest(UnconfinedTestDispatcher()) {
-
-        // Given
-        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
-
-        // When
-        val result = fetchComicUseCase.fetchComicList().first()
-
-        // Then
-        coVerify(exactly = 1) { comicRepository.fetchComicList() }
-        assertEquals(result, Either.Success(getComicListMocked()))
-    }
-
     private fun getComicListMocked() = listOf(
         ComicModel(
             id = 1,
@@ -56,4 +36,23 @@ class FetchComicUseCaseTest {
             thumbnail = "https://example.com"
         )
     )
+
+    @Before
+    fun setUp() {
+        fetchComicUseCase = FetchComicUseCase(comicRepository)
+    }
+
+    @Test
+    fun `GIVEN a mocked repository WHEN fetching comic list THEN repository is called once and returns expected result`() = runTest {
+
+        // GIVEN
+        coEvery { comicRepository.fetchComicList() } returns Either.Success(getComicListMocked())
+
+        // WHEN
+        val result = fetchComicUseCase.fetchComicList().first()
+
+        // THEN
+        coVerify(exactly = 1) { comicRepository.fetchComicList() }
+        assertEquals(result, Either.Success(getComicListMocked()))
+    }
 }
