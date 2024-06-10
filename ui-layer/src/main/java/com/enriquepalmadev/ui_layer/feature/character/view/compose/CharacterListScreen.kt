@@ -103,15 +103,14 @@ fun CharacterItem(character: CharacterModel, onCharacterClicked: (CharacterModel
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        character.favourite?.let {
-            CharacterImage(
-                imageUrl = character.thumbnailDTO,
-                isFavorite = it,
-                onFavClicked = onFavClicked,
-                modifier = Modifier.size(150.dp),
-                character = character
-            )
-        }
+        CharacterImage(
+            imageUrl = character.thumbnailDTO,
+            isFavorite = character.favourite,
+            onFavClicked = onFavClicked,
+            modifier = Modifier.size(150.dp),
+            character = character
+        )
+
         Text(
             modifier = Modifier.padding(top = 8.dp),
             text = character.name,

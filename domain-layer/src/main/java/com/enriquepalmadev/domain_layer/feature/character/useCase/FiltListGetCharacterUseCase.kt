@@ -3,7 +3,6 @@ package com.enriquepalmadev.domain_layer.feature.character.useCase
 import com.enriquepalmadev.domain_layer.commons.Either
 import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
 import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterLocalRepository
-import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
 import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +18,7 @@ class FiltListGetCharacterUseCase @Inject constructor(
             if(localCharacters != null) {
                 emit(Either.Success(localCharacters))
             }else{
-                emit(Either.Error(CharacterErrorModel.UnknownHostError))
+                emit(Either.Error(CharacterErrorModel.FilterError("Error al filtrar la búsqueda")))
             }
         }
     }

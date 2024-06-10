@@ -6,6 +6,6 @@ data class CharacterModel(
     val name: String,
     val description: String,
     val thumbnailDTO: String,
-    val favourite: Boolean?
+    val favourite: Boolean
 )
 

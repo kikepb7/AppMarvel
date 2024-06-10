@@ -34,7 +34,7 @@ fun CharacterModel.toCharacterEntity() = CharacterEntity(
     name = name,
     description = description,
     thumbnail = thumbnailDTO,
-    favourite = false
+    favourite = favourite
 )
 //Character Mapper Database(Entity to Model)
 fun CharacterEntity.toCharacterModel(): CharacterModel{
