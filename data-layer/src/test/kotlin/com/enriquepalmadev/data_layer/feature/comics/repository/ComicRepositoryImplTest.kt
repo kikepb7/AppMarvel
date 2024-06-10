@@ -54,25 +54,25 @@ class ComicRepositoryImplTest {
     }
 
     @Test
-    fun `WHEN 'fetchComicList' is Successful, response is a list of comic list`() = runTest {
+    fun `GIVEN a successful API fetch WHEN fetching comic list THEN response is a list of comic models`() = runTest {
 
-        // Given
+        // GIVEN
         coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Success(
             getResponseMarvelDto
         )
 
-        // When
+        // WHEN
         val response = comicRepositoryImpl.fetchComicList()
 
-        // Then
+        // THEN
         assert(response is Either.Success<List<ComicModel>?>)
         coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
     }
 
     @Test
-    fun `WHEN 'fetchComicList' is Successful, response is a null list of comic model`() = runTest {
+    fun `GIVEN a successful API fetch with null results WHEN fetching comic list THEN response is a null list of comic models`() = runTest {
 
-        // Given
+        // GIVEN
         coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Success(
             getResponseMarvelDto.copy(
                 data = DataDto(
@@ -81,26 +81,26 @@ class ComicRepositoryImplTest {
             )
         )
 
-        // When
+        // WHEN
         val response = comicRepositoryImpl.fetchComicList()
 
-        // Then
+        // THEN
         assert(response is Either.Success<List<ComicModel>?>)
         coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
     }
 
     @Test
-    fun `WHEN 'fetchComicList' is Error, response is a FailureDomain error`() = runTest {
+    fun `GIVEN an API fetch error WHEN fetching comic list THEN response is a FailureDomain error`() = runTest {
 
-        // Given
+        // GIVEN
         coEvery { comicRemoteDataSource.fetchComicsFromApi() } returns Either.Error(
             FailureDto(code = -1, message = "")
         )
 
-        // When
+        // WHEN
         val response = comicRepositoryImpl.fetchComicList()
 
-        // Then
+        // THEN
         assert(response is Either.Error<FailureDomain>)
         coVerify(exactly = 1) { comicRemoteDataSource.fetchComicsFromApi() }
     }

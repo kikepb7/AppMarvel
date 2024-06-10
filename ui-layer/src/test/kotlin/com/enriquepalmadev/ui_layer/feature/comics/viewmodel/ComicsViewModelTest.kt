@@ -71,9 +71,10 @@ class ComicsViewModelTest {
     }
 
     @Test
-    fun `GIVEN fetch comic list WHEN we call fetchComicListUseCase method and there's an service error THEN it return a failure object`() {
+    fun `GIVEN a service error WHEN fetching comic list through fetchComicListUseCase THEN it returns a failure object`() {
         return runTest {
 
+            // GIVEN
             coEvery { fetchComicUseCase.fetchComicList() } returns flow {
                 emit(
                     Either.Error(
@@ -90,6 +91,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // WHEN
                 viewModel.getComicsList()
 
                 // Updated state
@@ -99,6 +101,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // THEN
                 assertEquals(
                     ComicScreenState(
                         loadingScreenData = ComicListScreenLoading(loader = false),
@@ -113,9 +116,9 @@ class ComicsViewModelTest {
     }
 
     @Test
-    fun `GIVEN fetch comic list WHEN we call fetchComicListUseCase method and there's an exception THEN it return a throwable error`() {
+    fun `GIVEN an exception WHEN fetching comic list through fetchComicListUseCase THEN it returns a throwable error`() {
         return runTest {
-
+            // GIVEN
             coEvery { fetchComicUseCase.fetchComicList() } returns flow { throw Exception() }
 
             viewModel.state.test {
@@ -126,6 +129,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // WHEN
                 viewModel.getComicsList()
 
                 assertEquals(
@@ -134,6 +138,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // THEN
                 assertEquals(
                     ComicScreenState(
                         loadingScreenData = ComicListScreenLoading(loader = false),
@@ -148,7 +153,7 @@ class ComicsViewModelTest {
     }
 
     @Test
-    fun `GIVEN fetch comic list WHEN we call fetchComicListUseCase method and the response is success THEN it return an empty comic list`() {
+    fun `GIVEN a successful response with empty list WHEN fetching comic list through fetchComicListUseCase THEN it returns an empty comic list`() {
 
         return runTest {
             // GIVEN
@@ -193,8 +198,9 @@ class ComicsViewModelTest {
     }
 
     @Test
-    fun `GIVEN fetch comic list WHEN we call fetchComicListUseCase method and the response is success THEN it return a comic list`() {
+    fun `GIVEN a successful response with comics list WHEN fetching comic list through fetchComicListUseCase THEN it returns a comic list`() {
         return runTest {
+            // GIVEN
             coEvery { fetchComicUseCase.fetchComicList() } returns flow {
                 emit(
                     Either.Success(
@@ -211,6 +217,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // WHEN
                 viewModel.getComicsList()
 
                 // Updated state
@@ -220,6 +227,7 @@ class ComicsViewModelTest {
                     ), awaitItem()
                 )
 
+                // THEN
                 assertEquals(
                     ComicScreenState(
                         loadingScreenData = ComicListScreenLoading(loader = false),

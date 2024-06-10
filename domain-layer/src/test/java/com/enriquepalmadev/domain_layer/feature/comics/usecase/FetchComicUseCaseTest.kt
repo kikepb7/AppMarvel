@@ -16,7 +16,6 @@ import kotlin.test.assertEquals
 @ExperimentalCoroutinesApi
 class FetchComicUseCaseTest {
 
-
     private val comicRepository = mockk<ComicRepository>()
     private lateinit var fetchComicUseCase: FetchComicUseCase
     private fun getComicListMocked() = listOf(

@@ -1,27 +1,8 @@
 plugins {
     id("java-library")
     id("kotlin")
-
     kotlin("kapt")
 }
-
-/*java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-kapt {
-    correctErrorTypes = true
-    generateStubs = true
-}
-
-tasks.register("assembleDebug") {
-    dependsOn("build")
-}
-
-tasks.register("assembleDebugUnitTest") {
-    dependsOn("test")
-}*/
 
 dependencies {
     val kotlinCorutines = "1.8.0"
@@ -47,9 +28,5 @@ dependencies {
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
     testImplementation("app.cash.turbine:turbine:$turbineVersion")
-
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("org.mockito:mockito-core:3.+")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:3.+")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
 }
