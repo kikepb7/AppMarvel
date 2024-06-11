@@ -39,6 +39,9 @@ dependencies {
     val retrofitVersion = "2.11.0"
     val interceptorVersion = "4.12.0"
     val hiltVersion = "2.51"
+    val mockkVersion = "1.13.11"
+    val coroutinesTestVersion = "1.6.4"
+    val archCoreTestVersion = "2.2.0"
 
     implementation(project(":domain-layer"))
 
@@ -61,7 +64,11 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
+    // TEST
     testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
+    testImplementation("androidx.arch.core:core-testing:$archCoreTestVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }

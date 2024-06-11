@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material3:material3-android:1.2.1")
+
     val ktxVersion = "1.13.1"
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
@@ -61,6 +61,10 @@ dependencies {
     val composeUiVersion = "1.6.7"
     val material3Compose = "1.2.1"
     val navigationCompose = "2.7.7"
+    val mockkVersion = "1.13.11"
+    val coroutinesTestVersion = "1.6.4"
+    val archCoreTestVersion = "2.2.0"
+    val turbineVersion = "1.0.0"
 
     implementation(project(":domain-layer"))
 
@@ -114,7 +118,12 @@ dependencies {
     //MATERIAL 3 COMPOSE
     implementation("androidx.compose.material3:material3:$material3Compose")
 
+    // TEST
     testImplementation("junit:junit:$jUnitVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
+    testImplementation("androidx.arch.core:core-testing:$archCoreTestVersion")
+    testImplementation("app.cash.turbine:turbine:$turbineVersion")
     androidTestImplementation("androidx.test.ext:junit:$jUnitTestVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
 }
