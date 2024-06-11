@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material3:material3-android:1.2.1")
+
     val ktxVersion = "1.13.1"
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
@@ -61,10 +61,6 @@ dependencies {
     val composeUiVersion = "1.6.7"
     val material3Compose = "1.2.1"
     val navigationCompose = "2.7.7"
-    val material3Version = "1.2.1"
-    val composeCompilerVersion = "1.5.13"
-    val composeToolingVersion = "1.6.7"
-    val activityVersion = "1.9.0"
     val mockkVersion = "1.13.11"
     val coroutinesTestVersion = "1.6.4"
     val archCoreTestVersion = "2.2.0"
