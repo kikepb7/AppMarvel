@@ -12,7 +12,7 @@
     <!-- Error text -->
     <string name="unknownError">There\'s a conexion problem!</string>
     <string name="unknownHost">Host desconocido</string>
-
+    <string name= "emptyList">Lista no disponible</string>
 
     <!-- Fragments' placeholder text -->
     <string name="series_view">VISTA DE PELÍCULAS Y SERIES</string>
@@ -23,9 +23,18 @@
     <string name="search_button">Buscar</string>
     <string name="filter_button">Ordenar por</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Characters dialog "order by" texts -->
+    <string name="orderby_alphabet_A_Z">by alphabet A-Z</string>
+    <string name="orderby_alphabet_Z_A">by alphabet Z-A</string>
+    <string name="dialog_title_characters">Order characters…</string>
 
+
+    <!-- Characters Error texts -->
+    <string name="no_connection">No Connection</string>
+
+
+    <!-- Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Films and series' fragment's text -->
     <string name="orderby">Order by…</string>
@@ -36,12 +45,12 @@
     <string name="fav_on">on</string>
 
     <!-- Films and series' dialog "order by" texts -->
-    <string name="orderby_alphabet">by alphabet</string>
-    <string name="orderby_year">from newer to older</string>
-    <string name="orderby_fav_first">by Favourites first</string>
-    <string name="orderby_fav_only">by Favourites only</string>
+    <string name="orderby_alphabet">By alphabet</string>
+    <string name="orderby_year">From newer to older</string>
+    <string name="orderby_fav_first">By Favourites first</string>
+    <string name="orderby_fav_only">By Favourites only</string>
     <string name="msg_orderby">Ordering</string>
-    <string name="dialog_title">Order films and series…</string>
+    <string name="dialog_title">Select the order:</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_canceled">Canceled</string>
@@ -53,6 +62,10 @@
     <string name="title_401">Unauthorized</string>
     <string name="msg_401">Go out!</string>
 
+    <!-- Generic error -->
+    <string name="title_generic_error">Ups!</string>
+    <string name="msg_generic_error">An error occurred</string>
+
     <!-- EmptyErrorDomain -->
     <string name="title_empty_error">This is empty</string>
     <string name="msg_empty_error">Sorry, there\'s nothing to show :(</string>
@@ -61,7 +74,7 @@
     <string name="title_unknown_host_error">Do you have internet?</string>
     <string name="msg_unknown_host_error">It\'s probably the failure :)</string>
 
-    <!-- CoroutineErrorDomain -->
+    <!-- DefaultErrorDomain -->
     <string name="title_coroutine_error">We\'ve found and error</string>
     <string name="msg_coroutine_error">Please, go back :)</string>
 

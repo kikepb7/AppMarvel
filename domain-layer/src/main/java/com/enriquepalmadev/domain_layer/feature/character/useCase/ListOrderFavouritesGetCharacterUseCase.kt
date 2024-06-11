@@ -1,9 +1,9 @@
 package com.enriquepalmadev.domain_layer.feature.character.useCase
 
-import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
-import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
-import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.domain_layer.commons.Either
+import com.enriquepalmadev.domain_layer.feature.character.model.CharacterModel
+import com.enriquepalmadev.domain_layer.feature.character.repository.CharacterRepository
+import com.enriquepalmadev.domain_layer.feature.character.utils.CharacterErrorModel
 import com.enriquepalmadev.domain_layer.feature.character.utils.extensions.filterEmptyImageAndDescription
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +20,7 @@ class ListOrderFavouritesGetCharacterUseCase @Inject constructor(
                     emit(Either.Error(response.error))
                 }
                 is Either.Success-> {
-                    var filteredList = response.data?.sortedBy { item->
+                    val filteredList = response.data?.sortedBy { item->
                         item.name
                     }?.filterEmptyImageAndDescription()
                     emit(Either.Success(filteredList))

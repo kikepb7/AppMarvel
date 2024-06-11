@@ -27,8 +27,8 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.9"
     }
 
     compileOptions {
@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.material3:material3-android:1.2.1")
     val ktxVersion = "1.13.1"
     val appCompatVersion = "1.6.1"
     val materialVersion = "1.12.0"
@@ -56,6 +57,10 @@ dependencies {
     val espressoVersion = "3.5.1"
     val hiltVersion = "2.51"
     val facebookVersion = "0.5.0"
+    val composeVersion = "1.9.0"
+    val composeUiVersion = "1.6.7"
+    val material3Compose = "1.2.1"
+    val navigationCompose = "2.7.7"
     val material3Version = "1.2.1"
     val composeCompilerVersion = "1.5.13"
     val composeToolingVersion = "1.6.7"
@@ -89,6 +94,7 @@ dependencies {
 
     // GLIDE
     implementation("com.github.bumptech.glide:glide:$glideVersion")
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     // COIL
     implementation("io.coil-kt:coil-compose:2.5.0")
@@ -97,12 +103,24 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
+    // COMPOSE
+    implementation("androidx.activity:activity-compose:$composeVersion")
+    implementation("androidx.compose.material:material:$composeUiVersion")
+    implementation("androidx.compose.ui:ui:$composeUiVersion")
+    implementation("androidx.compose.ui:ui-graphics:$composeUiVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+    implementation("androidx.navigation:navigation-compose:$navigationCompose")
+
     // JETPACK COMPOSE
-    implementation("androidx.compose.material3:material3:$material3Version")
-    implementation("androidx.compose.compiler:compiler:$composeCompilerVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeToolingVersion")
-    implementation("androidx.compose.ui:ui-tooling:$composeToolingVersion")
-    implementation("androidx.activity:activity:$activityVersion")
+    implementation("androidx.compose.compiler:compiler:1.5.13")
+    implementation("androidx.activity:activity:1.9.0")
+
+    // SHIMMER ANIMATION
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.0")
+
+    //MATERIAL 3 COMPOSE
+    implementation("androidx.compose.material3:material3:$material3Compose")
 
     // TEST
     testImplementation("junit:junit:$jUnitVersion")

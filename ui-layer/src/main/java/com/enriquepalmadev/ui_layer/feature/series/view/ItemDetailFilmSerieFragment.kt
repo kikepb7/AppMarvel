@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.domain_layer.feature.series.failure.FailureDomain
+import com.enriquepalmadev.domain_layer.feature.series.models.FilmSerieModel
 import com.enriquepalmadev.ui_layer.R
 import com.enriquepalmadev.ui_layer.databinding.ItemDetailsFilmsSeriesBinding
 import com.enriquepalmadev.ui_layer.feature.series.view.utils.loadImage
@@ -33,7 +33,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         bindingItemDetailsFilmsSeries = ItemDetailsFilmsSeriesBinding.inflate(inflater)
         return bindingItemDetailsFilmsSeries.root
     }
@@ -74,7 +74,7 @@ class ItemDetailFilmSerieFragment : Fragment() {
                             showErrorView(true, R.drawable.captain_empty)
                         }
 
-                        is FailureDomain.CoroutineErrorDomain -> {
+                        is FailureDomain.DefaultErrorDomain -> {
                             setErrorView(
                                 getString(R.string.title_coroutine_error),
                                 getString(R.string.msg_coroutine_error)
@@ -104,7 +104,6 @@ class ItemDetailFilmSerieFragment : Fragment() {
     private fun showLoading(visible: Boolean) {
         bindingItemDetailsFilmsSeries.apply {
             loading.isVisible = visible
-            // detailFimsSeriesName.isVisible =!visible
         }
     }
 

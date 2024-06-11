@@ -4,6 +4,9 @@
 .DS_Store
 /build
 app/build
+data-layer/build
+domain-layer/build
+ui-layer/build
 /captures
 .externalNativeBuild
 .cxx
